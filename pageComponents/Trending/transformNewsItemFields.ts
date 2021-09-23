@@ -33,6 +33,7 @@ export interface NewsItemFields {
 	previewItems: Product_Preview_Items[]
 	isInternalProduct: boolean
 	isSuspended: boolean
+	categoryId: string
 }
 
 export const transformNewsItemToFields = (
@@ -132,6 +133,8 @@ export const transformNewsItemToFields = (
 	const isSuspended = newsItem?.isSuspended
 		|| internalProduct?.isSuspended
 
+	const categoryId = internalProduct.categoryId ?? externalProduct.categoryId
+
 	return {
 		productId,
 		externalProductId,
@@ -157,6 +160,7 @@ export const transformNewsItemToFields = (
 		previewItems,
 		isInternalProduct,
 		isSuspended,
+		categoryId,
 	}
 }
 
@@ -256,6 +260,8 @@ export const transformExternalProductToFields = (
 
 	const isSuspended = internalProduct?.isSuspended
 
+	const categoryId = internalProduct.categoryId ?? externalProduct.categoryId
+
 	return {
 		productId,
 		externalProductId,
@@ -281,5 +287,6 @@ export const transformExternalProductToFields = (
 		previewItems,
 		isInternalProduct,
 		isSuspended,
+		categoryId,
 	}
 }

@@ -5,7 +5,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { NewsItem, SoldOutStatus } from "typings/gqlTypes";
 import NewsItemCardAsRowDesktop from "./NewsItemCardAsRowDesktop";
-import ProductRowMedium from "components/ProductRowMedium";
+import NewsItemRowMedium from "components/NewsItemRowMedium";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
@@ -26,9 +26,8 @@ const NewsItemCardAsRow = (props: ReactProps) => {
         />
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
-        <ProductRowMedium
-          product={props.newsItem?.product}
-          externalProduct={props.newsItem?.externalProduct}
+        <NewsItemRowMedium
+          newsItem={props.newsItem}
         />
       </ShowOnMobileOrDesktopSSR>
     </>

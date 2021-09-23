@@ -15,13 +15,11 @@ import {
   NewsItem,
 } from "typings/gqlTypes";
 // Material UI
-// import NewsItemPreviewCard from "./NewsItemPreviewCard";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
-import DescriptionLoadingText from "components/ProductRowMedium/DescriptionLoadingText";
+import DescriptionLoadingText from "components/NewsItemRowMedium/DescriptionLoadingText";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import TextInfoRow from "./TextInfoRow";
 
 import {

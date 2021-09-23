@@ -6,16 +6,22 @@ import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { ChatRoomStatus, Conversation, ChatRoom, UserPrivate, BidStatus } from "typings/gqlTypes";
+import {
+  ChatRoomStatus,
+  Conversation,
+  ChatRoom,
+  UserPrivate,
+  BidStatus,
+  NewsItem,
+} from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
 import Typography from "@material-ui/core/Typography";
-import ProductPreviewThumb from "components/ProductPreviewThumb";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
-import ProductRowMedium from "components/ProductRowMedium";
+import NewsItemRowMedium from "components/NewsItemRowMedium";
 import CreateBidFormButton from "../CreateBidFormButton";
 
 
@@ -113,8 +119,8 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
         <div className={classes.productBidsContainer}>
           <div className={classes.productCardBox}>
             <div className={mdDown ? null : classes.marginOffset}>
-              <ProductRowMedium
-                product={product}
+              <NewsItemRowMedium
+                newsItem={{ product } as NewsItem}
                 loading={loading}
                 imageSize={{
                   mobile: {

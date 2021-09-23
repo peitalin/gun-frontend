@@ -2,13 +2,10 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
 // Router
 import Link from "next/link";
 // Typings
-import { Product, External_Products } from "typings/gqlTypes";
+import { NewsItem } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
@@ -29,7 +26,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import {
-  transformExternalProductToFields
+  transformNewsItemToFields
 } from "pageComponents/Trending/transformNewsItemFields";
 
 import AdType from "components/NewsItemChips/AdType";
@@ -37,10 +34,13 @@ import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 
 
-const ProductRowMedium = (props: ReactProps) => {
+const NewsItemRowMedium = (props: ReactProps) => {
 
-  const { classes, product, externalProduct } = props;
-  const featuredVariant = product?.featuredVariant;
+  const {
+    classes,
+    newsItem,
+  } = props;
+
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
@@ -66,7 +66,9 @@ const ProductRowMedium = (props: ReactProps) => {
 		featuredPreviewItem,
     previewItems,
 		isInternalProduct,
-  } = transformExternalProductToFields(product, externalProduct)
+    isSuspended,
+    categoryId,
+  } = transformNewsItemToFields(newsItem)
 
 
   return (
@@ -83,7 +85,7 @@ const ProductRowMedium = (props: ReactProps) => {
               isInternalProduct
               ? <Link
                   href="/p/[productId]"
-                  as={`/p/${product?.id}`}
+                  as={`/p/${newsItem?.product?.id}`}
                 >
                   <a>
                     <ProductPreviewThumb
@@ -112,7 +114,7 @@ const ProductRowMedium = (props: ReactProps) => {
               isInternalProduct
               ? <Link
                   href="/p/[productId]"
-                  as={`/p/${product?.id}`}
+                  as={`/p/${newsItem?.product?.id}`}
                 >
                   <a>
                     <ProductPreviewThumb
@@ -124,7 +126,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
                   <ProductPreviewThumbCategory
-                    categoryId={externalProduct?.categoryId}
+                    categoryId={categoryId}
                     // previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}
                     height={props.imageSize?.mobile?.height ?? 55}
@@ -153,7 +155,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   isInternalProduct
                   ? <Link
                       href="/p/[productId]"
-                      as={`/p/${product?.id}`}
+                      as={`/p/${newsItem?.product?.id}`}
                     >
                       <a>
                         <Typography className={classes.title} variant="body1">
@@ -176,7 +178,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   <PriceDisplayMainMobile
                     price={price}
                     soldOutStatus={soldOutStatus}
-                    isSuspended={product?.isSuspended ?? props.isExternalProductSuspended}
+                    isSuspended={isSuspended}
                   />
                 </div>
               </div>
@@ -194,7 +196,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   }}
                 /> */}
                 {
-                  product?.sellerLicense?.verified &&
+                  newsItem?.product?.sellerLicense?.verified &&
                   <VerifiedChip
                     title={"Verified"}
                     style={{
@@ -208,7 +210,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 }
 
                 <AdType
-                  productId={product?.id}
+                  productId={newsItem?.product?.id}
                   adType={adType}
                   sourceSiteUrl={sourceSiteUrl}
                   style={{
@@ -225,8 +227,7 @@ const ProductRowMedium = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product?: Product;
-  externalProduct?: External_Products;
+  newsItem: NewsItem
   isExternalProductSuspended?: boolean;
   loading?: boolean;
   refetch?(): void; // apollo refetch
@@ -377,4 +378,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(ProductRowMedium)
+export default withStyles(styles)(NewsItemRowMedium)

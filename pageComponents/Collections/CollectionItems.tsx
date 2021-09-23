@@ -19,7 +19,7 @@ import ConfirmActionModal from "components/ConfirmActionModal";
 
 import LoadingBar from "components/LoadingBar";
 import CreateCollectionMenu from "./CreateCollectionMenu";
-import ProductRowMedium from "components/ProductRowMedium";
+import NewsItemRowMedium from "components/NewsItemRowMedium";
 import TextInputUnderline from "components/Fields/TextInputUnderline";
 
 // types
@@ -30,6 +30,7 @@ import {
   Collection,
   CollectionItemMutationResponse,
   CollectionItemsEdge,
+  NewsItem,
 } from "typings/gqlTypes";
 // Graphql
 import { useMutation, useQuery } from "@apollo/client";
@@ -343,9 +344,11 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
                   lgDown ? classes.productItemMobile : classes.productItemDesktop
                 )}
               >
-                <ProductRowMedium
-                  product={citem?.product}
-                  externalProduct={citem?.externalProduct}
+                <NewsItemRowMedium
+                  newsItem={{
+                    product: citem?.product,
+                    externalProduct: citem?.externalProduct,
+                  } as NewsItem}
                 />
                 <div className={classes.flexRowCollectionButtons}>
                   <Tooltip title={"Add to another collection"}>

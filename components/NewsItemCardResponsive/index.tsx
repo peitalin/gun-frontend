@@ -8,7 +8,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "components/HiddenFix";
 // components
 import NewsItemCardRC from "./NewsItemCardRC";
-import ProductRowMedium from "components/ProductRowMedium"
+import NewsItemRowMedium from "components/NewsItemRowMedium"
 
 
 
@@ -63,10 +63,9 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
       <Hidden only={["md", "lg", "xl"]} implementation="css">
         {
           xsCardRow
-          ? <ProductRowMedium
+          ? <NewsItemRowMedium
               loading={props.loading}
-              product={newsItem?.product}
-              externalProduct={newsItem?.externalProduct}
+              newsItem={newsItem}
             />
           // ? <ProductCardAsRow
           //     newsItem={newsItem}
