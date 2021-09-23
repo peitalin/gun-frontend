@@ -7,6 +7,7 @@ import { styles } from "./styles";
 import {
   Colors, isThemeDark,
 } from "layout/AppTheme";
+import { UserPrivate } from "typings/gqlTypes";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // import { useScrollYPosition } from "utils/hooks";
@@ -46,6 +47,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
   // const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
   let router = useRouter()
   // console.log("router:", router.asPath)
+
+  let emailVerified = props.user?.emailVerified
 
   return (
     <nav className={clsx(
@@ -98,16 +101,19 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
 
 
-          <Link href="/trending">
-            <a className={classes.categoryLink} >
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                router.asPath === '/trending' && classes.categoryLinkTextSelected,
-              )}>
-                Trending
-              </Typography>
-            </a>
-          </Link>
+          {
+            emailVerified &&
+            <Link href="/trending">
+              <a className={classes.categoryLink} >
+                <Typography className={clsx(
+                  classes.categoryLinkTextMain,
+                  router.asPath === '/trending' && classes.categoryLinkTextSelected,
+                )}>
+                  Trending
+                </Typography>
+              </a>
+            </Link>
+          }
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}
@@ -159,16 +165,19 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           </Link>
 
 
-          <Link href="/trending/items">
-            <a className={classes.categoryLink} >
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                router.asPath === '/trending/items' && classes.categoryLinkTextSelected,
-              )}>
-                Items
-              </Typography>
-            </a>
-          </Link>
+          {
+            emailVerified &&
+            <Link href="/trending/items">
+              <a className={classes.categoryLink} >
+                <Typography className={clsx(
+                  classes.categoryLinkTextMain,
+                  router.asPath === '/trending/items' && classes.categoryLinkTextSelected,
+                )}>
+                  Items
+                </Typography>
+              </a>
+            </Link>
+        }
 
         </div>
 
@@ -202,7 +211,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   isStartPage: boolean
   isSellPage: boolean
   isFeaturedPage: boolean
-  isMobile: boolean
+  user: UserPrivate;
 }
 
 export default withStyles(styles)( CategoryBarDesktop );

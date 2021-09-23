@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import Login from "layout/Login";
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { UserPrivate } from "typings/gqlTypes"
 // Modals
 import { useDispatch, useSelector } from "react-redux";
 // Router
@@ -26,10 +27,8 @@ const MobileMainBar = (props: MobileMainBarProps) => {
   const {
     classes,
     endRoute,
-    loggedIn,
+    user,
     color,
-    isStartPage,
-    isMainPage,
     isDashboardPage,
   } = props;
 
@@ -48,7 +47,6 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       )}>
         <MobileMenuDropdown
           className={classes.navbarButtonMobile}
-          loggedIn={loggedIn}
           color={color}
           isDashboardPage={isDashboardPage}
           mobileMenuOpen={props.mobileMenuOpen}
@@ -124,7 +122,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>
         {
-          loggedIn
+          user
           ? <Button
               className={classes.navbarButton}
               variant={"text"}
@@ -193,15 +191,11 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface MobileMainBarProps extends ReactProps {
   endRoute: string;
-  loggedIn: boolean;
+  user: UserPrivate
   color: string;
   numUnclaimedOrders?: number;
   isDarkMode: boolean;
   // navbar
-  isMainPage: boolean
-  isStartPage: boolean
-  isSellPage: boolean
-  isFeaturedPage: boolean
   isDashboardPage: boolean
 }
 

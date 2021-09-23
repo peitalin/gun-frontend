@@ -7,7 +7,7 @@ import Hidden from "components/HiddenFix";
 // Components
 import CategoryBarDesktop from "./CategoryBarDesktop";
 import CategoryBarMobile from "./CategoryBarMobile";
-import { Categories } from "typings/gqlTypes";
+import { Categories, UserPrivate } from "typings/gqlTypes";
 import {
   isFeaturedPageFn,
   isMainPageFn,
@@ -33,28 +33,25 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
   return (
     <nav className={props.className}>
       {
-        !props.mobile &&
-        <Hidden lgDown implementation="css">
+        props.mobile
+        ? <Hidden xlUp implementation="css">
+            <CategoryBarMobile
+              categories={initialCategories}
+              isMainPage={_isMainPage}
+              isStartPage={_isStartPage}
+              isSellPage={_isSellPage}
+              isFeaturedPage={_isFeaturedPage}
+              user={props.user}
+            />
+          </Hidden>
+        : <Hidden lgDown implementation="css">
           <CategoryBarDesktop
             categories={initialCategories}
             isMainPage={_isMainPage}
             isStartPage={_isStartPage}
             isSellPage={_isSellPage}
             isFeaturedPage={_isFeaturedPage}
-            isMobile={false}
-          />
-        </Hidden>
-      }
-      {
-        props.mobile &&
-        <Hidden xlUp implementation="css">
-          <CategoryBarMobile
-            categories={initialCategories}
-            isMainPage={_isMainPage}
-            isStartPage={_isStartPage}
-            isSellPage={_isSellPage}
-            isFeaturedPage={_isFeaturedPage}
-            isMobile={true}
+            user={props.user}
           />
         </Hidden>
       }
@@ -67,6 +64,7 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   mobile?: boolean
+  user: UserPrivate;
 }
 
 export default withStyles(styles)( CategoryBar );

@@ -95,7 +95,6 @@ const MobileMenuExpander: React.FC<MobileMenuExpanderProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
-  loggedIn: boolean;
   color?: string;
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;

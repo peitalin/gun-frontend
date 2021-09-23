@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
 import { Colors, isThemeDark } from "layout/AppTheme";
+import { UserPrivate } from "typings/gqlTypes"
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
@@ -15,7 +16,7 @@ import Button from "@material-ui/core/Button";
 import Link from "next/link";
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 // import Tooltip from '@material-ui/core/Tooltip';
-import CategoryBar from "../CategoryBar";
+import CategoryBarDesktop from "../CategoryBar/CategoryBarDesktop";
 import TriangleSvg from "./TriangleSvg";
 import { useTheme } from "@material-ui/core"
 import {
@@ -25,6 +26,12 @@ import {
   logoBackgroundColorLight2,
 } from "../styles"
 
+import Hidden from "components/HiddenFix";
+import { Categories } from "typings/gqlTypes";
+import { useRouter, NextRouter } from "next/router";
+import { categoryPreviewsBackup } from "utils/categories";
+
+
 
 
 const DesktopMainBar = (props: DesktopMainBarProps) => {
@@ -32,7 +39,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
   const {
     classes,
     endRoute,
-    loggedIn,
+    user,
     color,
     isMainPage,
     isSellPage,
@@ -41,7 +48,9 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
   } = props;
 
   const theme = useTheme()
-  // const router = useRouter()
+  const router = useRouter()
+
+  let initialCategories: Categories[] = categoryPreviewsBackup as any
 
   return (
     <div className={clsx(
@@ -82,13 +91,23 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         />
       </div>
 
-      <CategoryBar/>
+      <Hidden lgDown implementation="css">
+        <CategoryBarDesktop
+          categories={initialCategories}
+          isMainPage={props.isMainPage}
+          isStartPage={props.isStartPage}
+          isSellPage={props.isSellPage}
+          isFeaturedPage={props.isFeaturedPage}
+          user={user}
+        />
+      </Hidden>
+
       <div style={{ flexGrow: 1}}/>
 
       <div className={classes.menuButtonsContainer}>
 
         {
-          !loggedIn &&
+          !user &&
           <ToggleDarkMode/>
         }
 
@@ -114,7 +133,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         </Link> */}
 
         {/* {
-          loggedIn
+          user
           ? <Link href="/orders">
               <a className={classes.buttonLink}>
                 <Button
@@ -145,7 +164,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         } */}
 
         {
-          !loggedIn &&
+          !user &&
           <Link href="/signup">
             <a className={classes.buttonLink}>
               <Button
@@ -169,12 +188,12 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         }
 
         {
-          loggedIn &&
+          user &&
           <NotificationsMenu className={classes.notificationsIcon} color={color} />
         }
 
         {
-          loggedIn
+          user
           ? <UserMenu className={classes.navbarButton} color={color} />
           : <Login
               className={classes.navbarButton}
@@ -191,7 +210,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
 
 interface DesktopMainBarProps extends WithStyles<typeof styles> {
   endRoute: string;
-  loggedIn: boolean;
+  user: UserPrivate;
   color: string;
   isDarkMode: boolean;
   // navbar

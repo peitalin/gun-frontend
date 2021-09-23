@@ -1,5 +1,4 @@
 import React from "react";
-import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -7,6 +6,7 @@ import { styles } from "./styles";
 import {
   Colors, isThemeDark,
 } from "layout/AppTheme";
+import { Categories, UserPrivate } from "typings/gqlTypes";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // hooks
@@ -28,6 +28,8 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
 
   const [hoverSearch, setHoverSearch] = React.useState(false)
   const [hoverStripeArrow, setHoverStripeArrow] = React.useState(false)
+
+  let emailVerified = props.user?.emailVerified
 
   return (
     <nav className={clsx(
@@ -71,17 +73,19 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             })
           } */}
 
-
-          <Link href={`/trending`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkAllMobile,
-                router.asPath === '/trending' && classes.categoryLinkTextSelected,
-              )}>
-                Trending
-              </Typography>
-            </a>
-          </Link>
+          {
+            emailVerified &&
+            <Link href={`/trending`}>
+              <a className={classes.categoryLink}>
+                <Typography className={clsx(
+                  classes.categoryLinkAllMobile,
+                  router.asPath === '/trending' && classes.categoryLinkTextSelected,
+                )}>
+                  Trending
+                </Typography>
+              </a>
+            </Link>
+          }
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}
@@ -131,16 +135,19 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
 
-          <Link href={`/trending/items`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkAllMobile,
-                router.asPath === '/trending/items' && classes.categoryLinkTextSelected,
-              )}>
-                Items
-              </Typography>
-            </a>
-          </Link>
+          {
+            emailVerified &&
+            <Link href={`/trending/items`}>
+              <a className={classes.categoryLink}>
+                <Typography className={clsx(
+                  classes.categoryLinkAllMobile,
+                  router.asPath === '/trending/items' && classes.categoryLinkTextSelected,
+                )}>
+                  Items
+                </Typography>
+              </a>
+            </Link>
+          }
 
         </div>
       </div>
@@ -156,7 +163,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   isStartPage: boolean
   isSellPage: boolean
   isFeaturedPage: boolean
-  isMobile: boolean
+  user: UserPrivate;
 }
 
 export default withStyles(styles)( CategoryBarMobile );

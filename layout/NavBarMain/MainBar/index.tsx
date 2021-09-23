@@ -1,6 +1,4 @@
 import React from "react";
-// Redux
-import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -8,6 +6,7 @@ import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
 // Modals
 import { useDispatch, useSelector } from "react-redux";
+import { UserPrivate } from "typings/gqlTypes"
 // Router
 import { useRouter, NextRouter } from "next/router";
 import Hidden from 'components/HiddenFix';
@@ -26,25 +25,12 @@ import { Y_SCROLL_NAVBAR_SHOW } from "../constants";
 
 const MainBar = (props: ReactProps) => {
 
-  const { classes } = props;
+  const { classes, user } = props;
   const router = useRouter()
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-
-  const {
-    loggedIn,
-  } = useSelector<GrandReduxState, ReduxProps>(state => ({
-    loggedIn: !!state?.reduxLogin?.user?.id,
-  }));
 
   const isDarkMode = theme.palette.type === 'dark'
-
-  let _isMainPage = isMainPageFn(router)
-  let _isSellPage = isSellPageFn(router)
-  let _isStartPage = isStartPageFn(router)
-  let _isFeaturedPage = isFeaturedPageFn(router)
-  let _isDashboardPage = isDashboardPageFn(router)
 
   let color = isDarkMode
     ? Colors.slateGrey
@@ -55,7 +41,6 @@ const MainBar = (props: ReactProps) => {
   const navBarProps = {
     classes,
     endRoute,
-    loggedIn,
     isDarkMode,
     color,
   };
@@ -63,26 +48,21 @@ const MainBar = (props: ReactProps) => {
   return (
     <MainBarSSRWrapper
       classes={classes}
-      isMainPage={_isMainPage}
-      isStartPage={_isStartPage}
-      isSellPage={_isSellPage}
-      isFeaturedPage={_isFeaturedPage}
-      isDashboardPage={_isDashboardPage}
-      isMobile={mdDown}
+      isMainPage={props.isMainPage}
+      isStartPage={props.isStartPage}
+      isSellPage={props.isSellPage}
+      isFeaturedPage={props.isFeaturedPage}
+      isMobile={props.isMobile}
       // for special fatter navbar on these routes
     >
 
       {/* MOBILE */}
       <Hidden className={classes.width100} xlUp implementation="css">
         <MobileMainBar
-          // Dither
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
-          isMainPage={_isMainPage}
-          isStartPage={_isStartPage}
-          isSellPage={_isSellPage}
-          isFeaturedPage={_isFeaturedPage}
-          isDashboardPage={_isDashboardPage}
+          isDashboardPage={props.isDashboardPage}
+          user={user}
           {...navBarProps}
         />
       </Hidden>
@@ -90,10 +70,11 @@ const MainBar = (props: ReactProps) => {
       {/* Desktop */}
       <Hidden className={classes.width100} only={["xs", "sm", "md", "lg"]} implementation="css">
         <DesktopMainBar
-          isMainPage={_isMainPage}
-          isStartPage={_isStartPage}
-          isSellPage={_isSellPage}
-          isFeaturedPage={_isFeaturedPage}
+          isMainPage={props.isMainPage}
+          isStartPage={props.isStartPage}
+          isSellPage={props.isSellPage}
+          isFeaturedPage={props.isFeaturedPage}
+          user={user}
           {...navBarProps}
         />
       </Hidden>
@@ -206,8 +187,7 @@ export const isDashboardPageFn = (router: NextRouter) => {
 interface ReactProps extends WithStyles<typeof styles> {
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
-}
-interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
+  user: UserPrivate
   isMainPage: boolean
   isStartPage: boolean
   isSellPage: boolean
@@ -215,9 +195,12 @@ interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
   isDashboardPage: boolean
   isMobile: boolean
 }
-
-interface ReduxProps {
-  loggedIn: boolean;
+interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
+  isMainPage: boolean
+  isStartPage: boolean
+  isSellPage: boolean
+  isFeaturedPage: boolean
+  isMobile: boolean
 }
 
 
