@@ -194,7 +194,8 @@ const Products: React.FC<ReactProps> = (props) => {
     return <ErrorPage statusCode={403} message={"Product is not published"}/>
   }
   if (!loading && !productIsYours && storeUserVerified !== true) {
-    return <ErrorPage statusCode={400} message={`Store's owner ${product?.storeId} has yet to be verified`}/>
+    let storeOwnerId = product?.store?.userId ?? product?.store?.user?.id
+    return <ErrorPage statusCode={400} message={`Store's owner ${storeOwnerId} has yet to be verified`}/>
   }
   if (error) {
     return <ErrorPage statusCode={404} message={"Product cannot be found"}/>
