@@ -1,10 +1,9 @@
 import { gql } from "@apollo/client";
 import {
   ProductFragment,
-  SavedSearchFragment,
-} from "./fragments";
-import {
+  ProductLiteFragment,
   ExternalProductsFragment,
+  SavedSearchFragment,
 } from "./fragments";
 
 
@@ -54,7 +53,7 @@ export const GET_SAVED_SEARCH_HITS_BY_USER = gql`
           }
           productId
           product {
-            ...ProductFragment
+            ...ProductLiteFragment
           }
           externalProductId
           externalProduct {
@@ -65,7 +64,7 @@ export const GET_SAVED_SEARCH_HITS_BY_USER = gql`
     }
   }
   ${SavedSearchFragment}
-  ${ProductFragment}
+  ${ProductLiteFragment}
   ${ExternalProductsFragment}
 `;
 
