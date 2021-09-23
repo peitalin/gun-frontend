@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Tooltip from "@material-ui/core/Tooltip";
+import { DISCORD_LINK } from 'utils/links'
 
 
 
@@ -41,7 +42,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
         <Tooltip title={"Join our Discord chat"} placement={"top"}>
           <div className={classes.iconBox}>
             <a className={classes.link} target={"_blank"}
-              href={"https://discord.gg/umAdYtsa9v"}
+              href={DISCORD_LINK}
             >
               <Discord color={color}/>
             </a>

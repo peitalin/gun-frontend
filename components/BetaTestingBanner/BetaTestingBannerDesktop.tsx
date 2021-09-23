@@ -3,6 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
+import { DISCORD_LINK } from 'utils/links'
 
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -67,7 +68,7 @@ const BetaTestingBannerDesktop: React.FC<ReactProps> = (props) => {
           <span className={classes.betaTestBannerText}>
             { "We're currently in live beta testing." }
             <br/>
-            <Link href={"https://discord.gg/umAdYtsa9v"}>
+            <Link href={DISCORD_LINK}>
               <a className={hover ? classes.discordLink : null}>
                 {"Please join our Discord for updates."}
               </a>

@@ -3,6 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
+import { DISCORD_LINK } from 'utils/links'
 
 // Utils Components
 import Tick from "components/Icons/Tick";
@@ -66,7 +67,7 @@ const BetaTestingBanner: React.FC<ReactProps> = (props) => {
           <span className={classes.betaTestBannerText}>
             { "We're currently in live beta testing." }
             <br/>
-            <Link href={"https://discord.gg/umAdYtsa9v"}>
+            <Link href={DISCORD_LINK}>
               <a className={hover ? classes.discordLink : null}>
                 {"please join our Discord for updates."}
               </a>

@@ -10,6 +10,7 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import { DISCORD_LINK } from "utils/links"
 
 
 const FaqSSR: React.FC<ReactProps> = (props) => {
@@ -46,9 +47,9 @@ const FaqSSR: React.FC<ReactProps> = (props) => {
           or join our discord server at
           <a className={classes.link}
             target={"_blank"}
-            href={"https://discord.gg/umAdYtsa9v"}
+            href={DISCORD_LINK}
           >
-            https://discord.gg/umAdYtsa9v
+            {`${DISCORD_LINK}`}
           </a>
         </div>
       </div>

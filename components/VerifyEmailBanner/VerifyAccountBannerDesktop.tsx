@@ -3,6 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius2x, Colors, Gradients } from "layout/AppTheme";
+import { DISCORD_LINK } from 'utils/links'
 
 // Utils Components
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
@@ -55,7 +56,7 @@ const VerifyAccountBannerDesktop: React.FC<ReactProps> = (props) => {
               {"admin@gunmarketplace.com.au"}
             </a>
             or dm a moderator in our
-            <a href={"https://discord.gg/umAdYtsa9v"}
+            <a href={DISCORD_LINK}
               target={"_blank"}
               className={hover ? classes.discordLinkHover : classes.discordLink}
               onMouseEnter={() => setHover(true)}

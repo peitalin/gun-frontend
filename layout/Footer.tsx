@@ -13,6 +13,7 @@ import Mastercard from 'components/Icons/Mastercard';
 // import GooglePay from 'components/Icons/GooglePay';
 // import Amex from 'components/Icons/Amex';
 import LogoCircle from "components/Icons/LogoCircle";
+import { DISCORD_LINK } from 'utils/links'
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -83,7 +84,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                     </Typography>
                   </a>
                 </Link>
-                <Link href={"https://discord.gg/umAdYtsa9v"} prefetch={false}>
+                <Link href={DISCORD_LINK} prefetch={false}>
                   <a className={classes.link}>
                     <Typography variant="body2" className={classes.linkText}>
                       Contact Us
