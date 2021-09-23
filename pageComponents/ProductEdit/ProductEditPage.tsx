@@ -108,7 +108,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {
   reduxToFormikCurrentVariants
 } from "pageComponents/ProductCreate/ProductCreatePage/utils";
-import { cacheUpdateEditProduct } from "./cacheUpdateEditProduct";
+import { cacheUpdateDashboardProduct } from "./cacheUpdateEditProduct";
 
 
 
@@ -181,9 +181,9 @@ const ProductEditPage = (props: ReactProps) => {
       }, 200)
     },
     update: (cache, { data: { editProduct }}) => {
-      cacheUpdateEditProduct({
+      cacheUpdateDashboardProduct({
         cache: cache,
-        editProduct: editProduct,
+        product: editProduct?.product,
       })
     }
   })

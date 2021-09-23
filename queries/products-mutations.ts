@@ -43,3 +43,29 @@ export const EDIT_PRODUCT = gql`
   ${ProductFragment}
 `;
 
+
+export const PUBLISH_PRODUCT = gql`
+  mutation publishProduct($productId: String!) {
+    publishProduct(productId: $productId) {
+      product {
+        ...ProductFragment
+      }
+    }
+  }
+  ${ProductFragment}
+`;
+
+export const UNPUBLISH_PRODUCT = gql`
+  mutation unpublishProduct($productId: String!) {
+    unpublishProduct(productId: $productId) {
+      product {
+        ...ProductFragment
+      }
+    }
+  }
+  ${ProductFragment}
+`;
+
+
+
+

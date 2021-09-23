@@ -12,12 +12,12 @@ import {
 } from "pageComponents/SellerDashboard/PublishedProductsList";
 
 
-export const cacheUpdateEditProduct = <T extends {}>({
+export const cacheUpdateDashboardProduct = <T extends {}>({
   cache,
-  editProduct,
+  product,
 }: {
   cache: ApolloCache<T>,
-  editProduct: { product: Product },
+  product: Product,
 }) => {
 
     // console.log("incomingProduct.id: ", editProduct?.product?.id)
@@ -32,9 +32,11 @@ export const cacheUpdateEditProduct = <T extends {}>({
       variables: initialDashboardVariables,
     });
 
+    console.log("existingData: ", existingData)
+
     if (existingData?.dashboardProductsConnection) {
       let newEdges = existingData?.dashboardProductsConnection.edges.map(edge => {
-        if (editProduct.product.id !== edge.node.id) {
+        if (product.id !== edge.node.id) {
           return edge
         } else {
           console.log(`found product ${edge.node.id}!, replacing`)
@@ -42,7 +44,7 @@ export const cacheUpdateEditProduct = <T extends {}>({
             __typename: "ProductsEdge",
             node: {
               __typename: "ProductPrivate",
-              ...editProduct.product,
+              ...product,
             },
           } as ProductsEdge
         }
@@ -103,4 +105,6 @@ export const cacheUpdateDeleteProduct = <T extends {}>({
       },
     });
 
+    console.log("cache AFTER: ", cache)
 }
+

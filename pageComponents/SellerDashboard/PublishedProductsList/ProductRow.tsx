@@ -5,7 +5,6 @@ import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { ProductsConnection, ProductsEdge, SoldOutStatus, UserPrivate } from "typings/gqlTypes";
-import { GrandReduxState } from "reduxStore/grand-reducer";
 // Router
 import Link from "next/link";
 // Typings
@@ -33,7 +32,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
-import { EDIT_PRODUCT } from "queries/products-mutations";
+import {
+  PUBLISH_PRODUCT,
+  UNPUBLISH_PRODUCT,
+} from "queries/products-mutations";
 import { DELETE_PRODUCT } from "queries/deletions-mutations";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 import { useApolloClient, useMutation, gql } from "@apollo/client";
@@ -42,7 +44,7 @@ import { productToProductEditInput } from "utils/conversions";
 import ConfirmDeleteModal from "components/ConfirmActionModal";
 // Copy
 import copy from "clipboard-copy";
-import { cacheUpdateDeleteProduct, cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
+import { cacheUpdateDeleteProduct, cacheUpdateDashboardProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
 
 
 
@@ -71,25 +73,45 @@ const ProductRow = (props: ReactProps) => {
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
 
-  const [editProduct, editProductResponse] = useMutation<MData, MVar>(
-    EDIT_PRODUCT, {
+  const [publishProduct, publishProductResponse] = useMutation<MData3, MVar3>(
+    PUBLISH_PRODUCT, {
     variables: {
-      productEditInput: productToProductEditInput(product)
+      productId: product?.id
     },
     onCompleted: (data) => { },
-    update: (cache, { data: { editProduct } }) => {
-      cacheUpdateEditProduct({
+    update: (cache, { data: { publishProduct } }) => {
+      console.log("incomingProduct.id: ", publishProduct?.product?.id)
+      console.log("incomingProduct.isPublished: ", publishProduct?.product?.isPublished)
+      cacheUpdateDashboardProduct({
         cache: cache,
-        editProduct: editProduct
+        product: publishProduct?.product
       })
     },
-    // refetchQueries: [props.refetchQuery],
   });
+
+  const [unpublishProduct, unpublishProductResponse] = useMutation<MData4, MVar4>(
+    UNPUBLISH_PRODUCT, {
+    variables: {
+      productId: product?.id
+    },
+    onCompleted: (data) => { },
+    update: (cache, { data: { unpublishProduct } }) => {
+      console.log("incomingProduct.id: ", unpublishProduct?.product?.id)
+      console.log("incomingProduct.isPublished: ", unpublishProduct?.product?.isPublished)
+      cacheUpdateDashboardProduct({
+        cache: cache,
+        product: unpublishProduct?.product
+      })
+    },
+  });
+
+
+
 
   const [
     deleteProduct,
     deleteProductResponse
-  ] = useMutation<MData2, { productId: string }>(
+  ] = useMutation<MData2, MVar2>(
     DELETE_PRODUCT, {
     variables: {
       productId: product.id
@@ -124,13 +146,10 @@ const ProductRow = (props: ReactProps) => {
     }
     setLoadingPublish(true)
     handleClose()
-    // remove files, not a valid field in productEditInput graphql call
-    await editProduct({
+
+    await publishProduct({
       variables: {
-        productEditInput: {
-          ...productToProductEditInput(product),
-          isPublished: true
-        }
+        productId: product?.id
       }
     })
     // await before refetching
@@ -151,13 +170,10 @@ const ProductRow = (props: ReactProps) => {
     }
     setLoadingPublish(true)
     handleClose()
-    // remove files, not a valid field in productEditInput graphql call
-    await editProduct({
+
+    await unpublishProduct({
       variables: {
-        productEditInput: {
-          ...productToProductEditInput(product),
-          isPublished: false
-        }
+        productId: product?.id
       }
     })
     // await before refetching
@@ -445,16 +461,23 @@ interface ReactProps extends WithStyles<typeof styles> {
   refetchQuery: { query: any, variables: any };
 }
 
-interface MData {
-  editProduct: { product: Product }
-}
-interface MVar {
-  productEditInput: ProductEditInput
-}
 interface MData2 {
   deleteProduct: { products: Product[] }
 }
 interface MVar2 {
+  productId: string
+}
+
+interface MData3 {
+  publishProduct: { product: Product }
+}
+interface MVar3 {
+  productId: string
+}
+interface MData4 {
+  unpublishProduct: { product: Product }
+}
+interface MVar4 {
   productId: string
 }
 
