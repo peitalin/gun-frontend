@@ -133,7 +133,8 @@ export const transformNewsItemToFields = (
 	const isSuspended = newsItem?.isSuspended
 		|| internalProduct?.isSuspended
 
-	const categoryId = internalProduct.categoryId ?? externalProduct.categoryId
+	const categoryId = internalProduct?.categoryId
+		?? externalProduct?.categoryId
 
 	return {
 		productId,
@@ -260,7 +261,8 @@ export const transformExternalProductToFields = (
 
 	const isSuspended = internalProduct?.isSuspended
 
-	const categoryId = internalProduct.categoryId ?? externalProduct.categoryId
+	const categoryId = internalProduct?.categoryId
+		?? externalProduct?.categoryId
 
 	return {
 		productId,
