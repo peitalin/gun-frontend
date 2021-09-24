@@ -26,14 +26,6 @@ import {
   transformNewsItemToFields,
   NewsItemFields,
 } from "../../../transformNewsItemFields";
-// graphql
-import { useMutation } from '@apollo/client';
-import {
-  UPVOTE_NEWS_ITEM,
-  DOWNVOTE_NEWS_ITEM,
-  UNVOTE_NEWS_ITEM,
-  SUSPEND_UNSUSPEND_NEWS_ITEM,
-} from "queries/news-items-mutations";
 // Snackbar
 import { useSnackbar } from "notistack";
 import ButtonLoading from "components/ButtonLoading";

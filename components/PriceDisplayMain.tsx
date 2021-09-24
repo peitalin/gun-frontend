@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // money
@@ -26,7 +26,11 @@ const PriceDisplayMain = (props: ReactProps) => {
   const priceDisplay = currency(price/100, { formatWithSymbol: true })
 
 
-  if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
+  if (
+    soldOutStatus === SoldOutStatus.ABANDONED ||
+    soldOutStatus === SoldOutStatus.RESERVED ||
+    soldOutStatus === SoldOutStatus.SOLD_OUT
+  ) {
     return (
       <div className={classes.priceOuterContainer}>
         <div className={classes.innerContainerSpread}>
@@ -38,8 +42,26 @@ const PriceDisplayMain = (props: ReactProps) => {
         </div>
       </div>
     )
-  }
-  if (props.isSuspended) {
+  } else if (
+    soldOutStatus &&
+    soldOutStatus !== SoldOutStatus.AVAILABLE
+  ) {
+    // external products with arbitrary soldOutStatus / soldText
+    return (
+      <div className={classes.priceOuterContainer}>
+        <div className={classes.innerContainerSpread}>
+          <div className={classes.priceInnerContainer}>
+            <Typography className={classes.price} variant="body1">
+              {priceDisplay.format()}
+            </Typography>
+            <div className={classes.soldTag}>
+              Sold
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  } else if (props.isSuspended) {
     return (
       <div className={classes.priceOuterContainer}>
         <div className={classes.innerContainerSpread}>
@@ -52,6 +74,7 @@ const PriceDisplayMain = (props: ReactProps) => {
       </div>
     )
   }
+  // else if SoldOutStatus.AVAILABLE
 
   return (
     <div className={classes.priceOuterContainer}>
@@ -82,9 +105,10 @@ const styles = (theme: Theme) => createStyles({
   },
   priceInnerContainer: {
     display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
+    flexDirection: "column",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: "relative",
   },
   innerContainerSpread: {
     display: 'flex',
@@ -100,7 +124,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     lineHeight: 1.2, // needed to aligned price, priceWas, quantity
     // color: Colors.gradientUniswapBlue1,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.secondaryBright
       : Colors.secondaryBright,
     // background: Gradients.gradientUniswapFluro.background,
@@ -111,6 +135,22 @@ const styles = (theme: Theme) => createStyles({
     textDecoration: "line-through",
     fontSize: "1rem",
     color: Colors.darkGrey, // grey
+  },
+  soldTag: {
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    position: "absolute",
+    right: '-1rem',
+    top: '-0.5rem',
+    padding: '0.1rem 0.2rem',
+    borderRadius: BorderRadius,
+    border: `2px solid ${Colors.lightRed}`,
+    textTransform: "uppercase",
+    color: Colors.lightRed,
+    background: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
+    transform: "rotate(20deg)",
   },
 });
 

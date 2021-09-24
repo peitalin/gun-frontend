@@ -204,8 +204,7 @@ export type ConnectionQuery = {
   /** orderBy: products_order_by # hasura's orderby */
   orderBy?: Maybe<ProductsOrderBy>;
   where?: Maybe<Products_Bool_Exp>;
-  filters?: Maybe<Scalars['String']>;
-  facetFilters?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
+  filter?: Maybe<Scalars['String']>;
 };
 
 export type ConnectionQueryNewsItem = {
@@ -214,8 +213,7 @@ export type ConnectionQueryNewsItem = {
   /** orderBy: products_order_by # hasura's orderby */
   orderBy?: Maybe<News_Items_Order_By>;
   where?: Maybe<News_Items_Bool_Exp>;
-  filters?: Maybe<Scalars['String']>;
-  facetFilters?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
+  filter?: Maybe<Scalars['String']>;
 };
 
 export type ConnectionQueryOrders = {
@@ -303,15 +301,6 @@ export type ExternalProductMutationResponse = {
   __typename?: 'ExternalProductMutationResponse';
   externalProduct: External_Products;
 };
-
-export enum FacetAttributes {
-  _CATEGORYSLUGFACET = '_categorySlugFacet',
-  _STOREIDFACET = '_storeIdFacet',
-  _ISPUBLISHEDFACET = '_isPublishedFacet',
-  _ACTIONTYPEFACET = '_actionTypeFacet',
-  _CALIBERFACET = '_caliberFacet',
-  _DEALERSTATEFACET = '_dealerStateFacet'
-}
 
 export type FacetsDistributionObject = {
   __typename?: 'FacetsDistributionObject';
@@ -1306,6 +1295,7 @@ export type Mutation = {
   deleteSavedSearch?: Maybe<Saved_Searches>;
   markSavedSearchHitsAsSeen: Array<SavedSearchHit>;
   createNewsItemWithExternalProduct: NewsItem;
+  markExternalProductAsSold: NewsItem;
   editExternalProduct: NewsItem;
   suspendUnsuspendNewsItem: NewsItem;
   upvoteNewsItem: NewsItem;
@@ -3077,6 +3067,7 @@ export type MutationUploadSaveImageArgs = {
   description?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  isInternal?: Maybe<Scalars['Boolean']>;
   rescrape?: Maybe<Scalars['Boolean']>;
 };
 
@@ -3603,6 +3594,14 @@ export type MutationMarkSavedSearchHitsAsSeenArgs = {
 export type MutationCreateNewsItemWithExternalProductArgs = {
   externalProductCreateInput?: Maybe<ExternalProductCreateInput>;
   rescrape?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationMarkExternalProductAsSoldArgs = {
+  sourceSiteId: Scalars['String'];
+  soldText: Scalars['String'];
+  isSold: Scalars['Boolean'];
+  price?: Maybe<Scalars['Int']>;
 };
 
 
@@ -10979,6 +10978,7 @@ export type External_Product_Snapshots = {
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
   externalProductId: Scalars['String'];
+  hrsToSold?: Maybe<Scalars['numeric']>;
   id: Scalars['String'];
   isSold?: Maybe<Scalars['Boolean']>;
   licenseNumber: Scalars['String'];
@@ -11072,11 +11072,13 @@ export type External_Product_Snapshots_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type External_Product_Snapshots_Avg_Fields = {
   __typename?: 'external_product_snapshots_avg_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Avg_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
@@ -11094,6 +11096,7 @@ export type External_Product_Snapshots_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   externalProductId?: Maybe<String_Comparison_Exp>;
+  hrsToSold?: Maybe<Numeric_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   isSold?: Maybe<Boolean_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
@@ -11117,6 +11120,7 @@ export enum External_Product_Snapshots_Constraint {
 
 /** input type for incrementing numeric columns in table "external_product_snapshots" */
 export type External_Product_Snapshots_Inc_Input = {
+  hrsToSold?: Maybe<Scalars['numeric']>;
   price?: Maybe<Scalars['Int']>;
 };
 
@@ -11131,6 +11135,7 @@ export type External_Product_Snapshots_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   externalProductId?: Maybe<Scalars['String']>;
+  hrsToSold?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
   isSold?: Maybe<Scalars['Boolean']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -11158,6 +11163,7 @@ export type External_Product_Snapshots_Max_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   externalProductId?: Maybe<Scalars['String']>;
+  hrsToSold?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   make?: Maybe<Scalars['String']>;
@@ -11182,6 +11188,7 @@ export type External_Product_Snapshots_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   externalProductId?: Maybe<Order_By>;
+  hrsToSold?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
   make?: Maybe<Order_By>;
@@ -11207,6 +11214,7 @@ export type External_Product_Snapshots_Min_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   externalProductId?: Maybe<Scalars['String']>;
+  hrsToSold?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   make?: Maybe<Scalars['String']>;
@@ -11231,6 +11239,7 @@ export type External_Product_Snapshots_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   externalProductId?: Maybe<Order_By>;
+  hrsToSold?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
   make?: Maybe<Order_By>;
@@ -11278,6 +11287,7 @@ export type External_Product_Snapshots_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   externalProductId?: Maybe<Order_By>;
+  hrsToSold?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   isSold?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
@@ -11319,6 +11329,8 @@ export enum External_Product_Snapshots_Select_Column {
   /** column name */
   EXTERNALPRODUCTID = 'externalProductId',
   /** column name */
+  HRSTOSOLD = 'hrsToSold',
+  /** column name */
   ID = 'id',
   /** column name */
   ISSOLD = 'isSold',
@@ -11355,6 +11367,7 @@ export type External_Product_Snapshots_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   externalProductId?: Maybe<Scalars['String']>;
+  hrsToSold?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
   isSold?: Maybe<Scalars['Boolean']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -11372,44 +11385,52 @@ export type External_Product_Snapshots_Set_Input = {
 /** aggregate stddev on columns */
 export type External_Product_Snapshots_Stddev_Fields = {
   __typename?: 'external_product_snapshots_stddev_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Stddev_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type External_Product_Snapshots_Stddev_Pop_Fields = {
   __typename?: 'external_product_snapshots_stddev_pop_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Stddev_Pop_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type External_Product_Snapshots_Stddev_Samp_Fields = {
   __typename?: 'external_product_snapshots_stddev_samp_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Stddev_Samp_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
 export type External_Product_Snapshots_Sum_Fields = {
   __typename?: 'external_product_snapshots_sum_fields';
+  hrsToSold?: Maybe<Scalars['numeric']>;
   price?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Sum_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
@@ -11433,6 +11454,8 @@ export enum External_Product_Snapshots_Update_Column {
   DESCRIPTION = 'description',
   /** column name */
   EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
+  HRSTOSOLD = 'hrsToSold',
   /** column name */
   ID = 'id',
   /** column name */
@@ -11462,33 +11485,39 @@ export enum External_Product_Snapshots_Update_Column {
 /** aggregate var_pop on columns */
 export type External_Product_Snapshots_Var_Pop_Fields = {
   __typename?: 'external_product_snapshots_var_pop_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Var_Pop_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type External_Product_Snapshots_Var_Samp_Fields = {
   __typename?: 'external_product_snapshots_var_samp_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Var_Samp_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type External_Product_Snapshots_Variance_Fields = {
   __typename?: 'external_product_snapshots_variance_fields';
+  hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Variance_Order_By = {
+  hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
 };
 
@@ -11958,6 +11987,7 @@ export type Image_Parents = {
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  isInternal?: Maybe<Scalars['Boolean']>;
   /** An object relationship */
   original?: Maybe<Image_Variants>;
   originalVariantId: Scalars['String'];
@@ -12018,6 +12048,7 @@ export type Image_Parents_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  isInternal?: Maybe<Boolean_Comparison_Exp>;
   original?: Maybe<Image_Variants_Bool_Exp>;
   originalVariantId?: Maybe<String_Comparison_Exp>;
   tags?: Maybe<String_Comparison_Exp>;
@@ -12035,6 +12066,7 @@ export type Image_Parents_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  isInternal?: Maybe<Scalars['Boolean']>;
   original?: Maybe<Image_Variants_Obj_Rel_Insert_Input>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
@@ -12089,6 +12121,7 @@ export type Image_Parents_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  isInternal?: Maybe<Order_By>;
   original?: Maybe<Image_Variants_Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
@@ -12109,6 +12142,8 @@ export enum Image_Parents_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
+  ISINTERNAL = 'isInternal',
+  /** column name */
   ORIGINALVARIANTID = 'originalVariantId',
   /** column name */
   TAGS = 'tags'
@@ -12119,6 +12154,7 @@ export type Image_Parents_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  isInternal?: Maybe<Scalars['Boolean']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -12131,6 +12167,8 @@ export enum Image_Parents_Update_Column {
   DESCRIPTION = 'description',
   /** column name */
   ID = 'id',
+  /** column name */
+  ISINTERNAL = 'isInternal',
   /** column name */
   ORIGINALVARIANTID = 'originalVariantId',
   /** column name */

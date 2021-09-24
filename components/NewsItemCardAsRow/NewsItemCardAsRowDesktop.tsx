@@ -29,6 +29,12 @@ import {
 } from "utils/limitsAndRules"
 import { useTheme } from "@material-ui/core/styles";
 
+import CollectionsIcon from 'components/Collections/CollectionsIcon';
+import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
+import NewsItemAdminSetCategoryIcon from "components/NewsItems/NewsItemAdminSetCategoryIcon"
+import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
+import Portal from "@material-ui/core/Portal"
+
 
 
 
@@ -39,6 +45,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
     newsItem,
   } = props;
 
+  const [hover, setHover] = React.useState(false)
   const theme = useTheme()
 
   const {
@@ -74,10 +81,14 @@ const NewsItemCardAsRow = (props: ReactProps) => {
   // console.log("NEWSITEM: ", newsItem)
 
   return (
-    <ErrorBounds className={clsx(
-      classes.root,
-      classes.flexRowWithBorder,
-    )}>
+    <div
+      className={clsx(
+        classes.root,
+        classes.flexRowWithBorder,
+      )}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       {
         !(product && product.id)
         ? <DescriptionLoading
@@ -174,6 +185,45 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                     : <span style={{ color: Colors.grey }}></span>
                   }
                 </div>
+
+                {
+                  hover &&
+                  <>
+                    <NewsItemAdminSuspendIcon
+                      newsItem={newsItem}
+                      style={{
+                        top: "unset",
+                        bottom: '-1rem',
+                        right: '-2rem',
+                        width: '28px',
+                        height: '28px',
+                      }}
+                    />
+
+                    <NewsItemAdminRescrapeIcon
+                      newsItem={newsItem}
+                      style={{
+                        top: "unset",
+                        bottom: '-1rem',
+                        right: '-4.5rem',
+                        width: '28px',
+                        height: '28px',
+                      }}
+                    />
+
+                    <NewsItemAdminSetCategoryIcon
+                      newsItem={newsItem}
+                      style={{
+                        top: "unset",
+                        bottom: '-1rem',
+                        right: '-7rem',
+                        width: '28px',
+                        height: '28px',
+                      }}
+                    />
+                  </>
+                }
+
               </div>
 
 
@@ -208,9 +258,27 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
               </div>
             </div>
+
         </div>
       }
-    </ErrorBounds>
+
+
+
+        <CollectionsIcon
+          productId={newsItem?.productId}
+          externalProductId={newsItem?.externalProductId}
+          // refetch={refetch}
+          style={{
+            top: 'unset',
+            // bottom: '-1rem',
+            right: '-0.75rem',
+            // marginTop: '0.5rem',
+            width: '28px',
+            height: '28px',
+          }}
+        />
+
+    </div>
   );
 }
 
@@ -224,6 +292,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     position: 'relative',
+    paddingRight: '0.75rem',
+    marginRight: '0.5rem',
   },
   flexCol: {
     display: 'flex',
@@ -242,20 +312,20 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginRight: '0rem',
+    // marginRight: '0rem',
     // paddingBottom: '0.5rem',
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 0,
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
+    background: isThemeDark(theme)
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.cream}`,
-    // "&:hover": {
-    //   background: theme.palette.type === 'dark'
-    //     ? `${Colors.uniswapLightNavy}`
-    //     : `${Colors.slateGrey}`,
-    // },
+    "&:hover": {
+      background: isThemeDark(theme)
+        ? `${Colors.uniswapLightNavy}`
+        : `${Colors.slateGrey}`,
+    },
   },
   flexCellItem: {
     flexBasis: '45%',
@@ -267,6 +337,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "flex-end",
     alignItems: "center",
     paddingRight: '1rem',
+    position: 'relative',
   },
   flexGrowItem: {
     flexGrow: 1,
@@ -282,7 +353,7 @@ const styles = (theme: Theme) => createStyles({
     overflow: 'hidden',
   },
   priceAbsoluteBottom: {
-    // position: "relative",
+    position: "relative",
     // position: "absolute",
   },
   previewCard: {
