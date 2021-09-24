@@ -295,6 +295,7 @@ export type ExternalProductCreateInput = {
   sourceSiteId: Scalars['String'];
   previewItems: Array<ProductPreviewItemInput>;
   barrelLength?: Maybe<Scalars['String']>;
+  hrsToSold?: Maybe<Scalars['Int']>;
 };
 
 export type ExternalProductMutationResponse = {
