@@ -12,7 +12,6 @@ import {
   NewsItemsConnection,
   Product,
   FacetsDistributionObject,
-  FacetAttributes,
   Categories,
   DealerState,
 } from "typings/gqlTypes";
