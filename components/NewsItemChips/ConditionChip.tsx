@@ -23,8 +23,8 @@ const ConditionChip = (props: ReactProps) => {
         conditionScore === Condition.VERY_GOOD && classes.green,
         conditionScore === Condition.GOOD && classes.yellow,
         conditionScore === Condition.FAIR && classes.orange,
-        conditionScore === Condition.POOR && classes.red,
-        conditionScore === Condition.NA && classes.lightRed,
+        conditionScore === Condition.POOR && classes.lightRed,
+        conditionScore === Condition.NA && classes.grey,
       )}
       style={style}
     >
@@ -59,7 +59,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapGrey
       : Colors.slateGreyDark,
     color: Colors.uniswapBlack,
-    fontSize: "0.9rem",
+    fontSize: "0.825rem",
     borderRadius: BorderRadius,
     fontWeight: 600,
     // background: isThemeDark(theme)
@@ -89,6 +89,15 @@ const styles = (theme: Theme) => createStyles({
   },
   lightRed: {
     background: Colors.lighterRed,
+  },
+  grey: {
+    fontSize: "0.825rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+    background: isThemeDark(theme)
+      ? Colors.uniswapNavy
+      : Colors.slateGreyDark,
   },
 });
 
