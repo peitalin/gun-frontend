@@ -167,11 +167,11 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
           {
             emailVerified &&
-            <Link href="/trending/items">
+            <Link href="/trending-items">
               <a className={classes.categoryLink} >
                 <Typography className={clsx(
                   classes.categoryLinkTextMain,
-                  router.asPath === '/trending/items' && classes.categoryLinkTextSelected,
+                  router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
                 )}>
                   Items
                 </Typography>

@@ -3603,6 +3603,7 @@ export type MutationMarkExternalProductAsSoldArgs = {
   soldText: Scalars['String'];
   isSold: Scalars['Boolean'];
   price?: Maybe<Scalars['Int']>;
+  skipHrsToSold?: Maybe<Scalars['Boolean']>;
 };
 
 

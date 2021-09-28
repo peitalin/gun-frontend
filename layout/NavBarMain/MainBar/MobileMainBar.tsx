@@ -128,7 +128,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
               variant={"text"}
               color="primary"
               onClick={() => {
-                router.push(navbarRoutes.admin)
+                router.push(navbarRoutes.savedSearches)
                 props.setMobileMenuOpen(s => false)
               }}
             >
