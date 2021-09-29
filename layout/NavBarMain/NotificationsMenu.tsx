@@ -346,10 +346,10 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   menu: {
-    padding: '1rem',
+    padding: '0rem 1rem',
     background: 'transparent',
     boxShadow: 'unset',
-    top: "2.25rem !important",
+    top: "3.25rem !important",
     right: 0,
     width: 320,
     borderRadius: BorderRadius2x,
