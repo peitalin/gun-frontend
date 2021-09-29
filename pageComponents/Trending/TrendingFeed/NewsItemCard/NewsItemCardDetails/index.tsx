@@ -39,6 +39,8 @@ import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
 import NewsItemAdminSetCategoryIcon from "components/NewsItems/NewsItemAdminSetCategoryIcon"
 import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
+import NewsItemAdminGenerateClaimIdIcon from "components/NewsItems/NewsItemAdminGenerateClaimIdIcon"
+
 import FeaturedPreview from "pageComponents/P/ImageGallery/FeaturedPreview";
 import BottomImageCarouselDesktop from "pageComponents/P/ImageGallery/ImageGalleryDesktop/BottomImageCarouselDesktop";
 
@@ -196,6 +198,18 @@ const NewsItemCardDetails = (props: ReactProps) => {
             top: 'unset',
             bottom: '-1rem',
             left: 'calc(6rem)',
+            marginTop: '0.5rem',
+            width: '28px',
+            height: '28px',
+          }}
+        />
+
+        <NewsItemAdminGenerateClaimIdIcon
+          newsItem={newsItem}
+          style={{
+            top: 'unset',
+            bottom: '-1rem',
+            left: 'calc(8.5rem)',
             marginTop: '0.5rem',
             width: '28px',
             height: '28px',

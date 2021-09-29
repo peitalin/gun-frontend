@@ -87,7 +87,7 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
         updatedAt: new Date(),
         productId: p.node?.product?.id,
         externalProductId: undefined,
-        sourceSite: "www.gunmarketplace.com.au",
+        sourceSite: "gunmarketplace.com.au",
         product: p.node?.product,
         isSuspended: false,
         isDeleted: false,

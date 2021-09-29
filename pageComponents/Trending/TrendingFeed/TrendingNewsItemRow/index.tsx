@@ -31,6 +31,7 @@ import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 // Snackbar
 import { useSnackbar } from "notistack";
+import { printRelativeTime } from "utils/dates";
 
 
 const TrendingNewsItemRow = (props: ReactProps) => {
@@ -66,6 +67,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
 		featuredPreviewItem,
 		previewItems,
     isInternalProduct,
+    createdAtSnapshot,
   } = transformNewsItemToFields(newsItem)
 
 
@@ -238,6 +240,13 @@ const TrendingNewsItemRow = (props: ReactProps) => {
             existingVoteScore={existingVoteScore}
           />
 
+          {/* promoted items that are old have no score */}
+          {
+            !newsItem?.id?.startsWith('promoted_slot') &&
+            <Typography className={classes.createdAt} variant="body1">
+              {`${printRelativeTime(createdAtSnapshot)}`}
+            </Typography>
+          }
         </div>
       </div>
     </div>
@@ -266,6 +275,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   productPanelRoot: {
     width: '100%',
+    position: 'relative',
   },
   productCardBox: {
     height: "100%",
@@ -392,6 +402,17 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: "wrap",
+  },
+  createdAt: {
+    position: "absolute",
+    bottom: '0.75rem',
+    right: '0.75rem',
+    fontWeight: 500,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarkest,
+    // textTransform: "uppercase",
+    fontSize: '0.8rem',
   },
 });
 
