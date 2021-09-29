@@ -70,14 +70,14 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       ...s,
       email: "",
       password: "",
-      firstName: "",
-      lastName: "",
-      licenseNumber: "",
-      licenseExpiry: undefined,
-      licenseCategory: [] as string[],
-      licenseState: undefined,
-      phoneNumber: "",
-      countryCode: "",
+      // firstName: "",
+      // lastName: "",
+      // licenseNumber: "",
+      // licenseExpiry: undefined,
+      // licenseCategory: [] as string[],
+      // licenseState: undefined,
+      // phoneNumber: "",
+      // countryCode: "",
     }));
   }
 
@@ -86,14 +86,14 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
     props.dispatchCreateUser({
       email: state.email,
       password: state.password,
-      firstName: state.firstName,
-      lastName: state.lastName,
-      licenseNumber: state.licenseNumber,
-      licenseExpiry: state.licenseExpiry,
-      licenseCategory: state.licenseCategory.join(", "),
-      licenseState: state.licenseState,
-      phoneNumber: state.phoneNumber,
-      countryCode: state.countryCode,
+      // firstName: state.firstName,
+      // lastName: state.lastName,
+      // licenseNumber: state.licenseNumber,
+      // licenseExpiry: state.licenseExpiry,
+      // licenseCategory: state.licenseCategory.join(", "),
+      // licenseState: state.licenseState,
+      // phoneNumber: state.phoneNumber,
+      // countryCode: state.countryCode,
     });
   }
 
@@ -191,7 +191,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       </FormControl>
 
 
-      <FormControl margin="dense" fullWidth>
+      {/* <FormControl margin="dense" fullWidth>
         <div className={classes.phoneNumberContainer}>
           <MuiPhoneNumber
             //@ts-ignore
@@ -217,10 +217,10 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
             </span>
           </Tooltip>
         </div>
-      </FormControl>
+      </FormControl> */}
 
 
-      <Typography className={classes.miniTitle} variant={"body1"}>
+      {/* <Typography className={classes.miniTitle} variant={"body1"}>
         License Details
       </Typography>
 
@@ -336,7 +336,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
           // errorMessage={formik.errors?.licenseCategory?.[0]}
           // touched={formik.touched?.licenseCategory?.[0]}
         />
-      </FormControl>
+      </FormControl> */}
 
 
       <ButtonLoading
@@ -378,19 +378,19 @@ interface ReactProps extends WithStyles<typeof styles> {
   dispatchCreateUser(payload: {
     email: string,
     password: string,
-    firstName?: string,
-    lastName?: string
-    licenseNumber: string,
-    licenseExpiry: Date,
-    licenseCategory: string,
-    licenseState: string,
-    phoneNumber?: string,
-    countryCode?: string,
+    // firstName?: string,
+    // lastName?: string
+    // licenseNumber: string,
+    // licenseExpiry: Date,
+    // licenseCategory: string,
+    // licenseState: string,
+    // phoneNumber?: string,
+    // countryCode?: string,
   }): void;
   email?: string;
   title?: string;
-  requiresFirstName?: boolean;
-  requiresLastName?: boolean;
+  // requiresFirstName?: boolean;
+  // requiresLastName?: boolean;
   buttonLoading?: boolean;
 }
 
