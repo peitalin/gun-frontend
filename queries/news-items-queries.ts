@@ -212,3 +212,13 @@ export const GET_HOT_MISC_ITEMS_LAST_WEEK = gql`
   }
   ${NewsItemFragment}
 `;
+
+
+// export const GET_NEWS_ITEM_BY_CLAIM_ID = gql`
+//   query($claimId: String!) {
+//     getNewsItemByClaimId(claimId: $claimId) {
+//       ...NewsItemFragment
+//     }
+//   }
+//   ${NewsItemFragment}
+// `;

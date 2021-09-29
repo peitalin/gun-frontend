@@ -4,7 +4,6 @@ import { Product, ID } from "typings/gqlTypes";
 import { GET_PRODUCT } from "queries/products-queries";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-// import { serverApolloClient } from "utils/apollo";
 import { ApolloClient, useQuery } from "@apollo/client";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -19,6 +18,7 @@ const ProductId = dynamic(() => import("pageComponents/P/ProductId"), {
   ssr: false,
 })
 import PageWithStripe from "layout/PageWithStripe";
+
 
 
 

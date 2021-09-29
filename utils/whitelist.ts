@@ -2,9 +2,8 @@
 export const whitelist = [
 	'uk9z253nha6hf', // peita@protonmail.com
 	'u9q5bf6rp9veh', //	kelvin.cv.lo@gmail.com
-	'uk9z253nha6hf', //	peita@protonmail.com
 	'uz1gf6r6e5f6q', //	marvinwong@live.com
-	'u4cnfhmq1dwds', //	peita_lin@hotmail.com
+	// 'u4cnfhmq1dwds', //	peita_lin@hotmail.com
 	'uvhm5dagvrd4x', //	admin@gunmarketplace.com.au
 	'unsqykrqepp29', //	cassidy.shorland@gmail.com
 	// 'u1k5x4eyxhtmt', //	thomaspierce@gmail.com

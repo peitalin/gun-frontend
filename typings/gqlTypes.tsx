@@ -138,6 +138,13 @@ export enum ChatRoomStatus {
   COMPLETED = 'COMPLETED'
 }
 
+export type ClaimProductLink = {
+  __typename?: 'ClaimProductLink';
+  claimId: Scalars['String'];
+  claimLink: Scalars['String'];
+  newsItemId: Scalars['String'];
+};
+
 export type ClassifiedAdPaymentInput = {
   total: Scalars['Int'];
   internationalFee: Scalars['Int'];
@@ -1304,6 +1311,9 @@ export type Mutation = {
   unvoteNewsItem: NewsItem;
   rescrapeExternalProduct: AggregatorScrapeResponse;
   setNewsItemCategory: NewsItem;
+  reindexProductOrNewsItem?: Maybe<BlankMutationResponse>;
+  generateClaimProductRefId?: Maybe<ClaimProductLink>;
+  swapImagesForClaim?: Maybe<NewsItem>;
 };
 
 
@@ -3644,6 +3654,23 @@ export type MutationRescrapeExternalProductArgs = {
 export type MutationSetNewsItemCategoryArgs = {
   newsItemId: Scalars['String'];
   categoryId: Scalars['String'];
+};
+
+
+export type MutationReindexProductOrNewsItemArgs = {
+  productId?: Maybe<Scalars['String']>;
+  newsItemId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationGenerateClaimProductRefIdArgs = {
+  newsItemId: Scalars['String'];
+};
+
+
+export type MutationSwapImagesForClaimArgs = {
+  claimId: Scalars['String'];
+  previewItems: Array<ProductPreviewItemInput>;
 };
 
 /** Something that went wrong during a mutation. */
