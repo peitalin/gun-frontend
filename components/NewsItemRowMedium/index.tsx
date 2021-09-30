@@ -87,7 +87,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
                   href={
                     isInternalProduct
                       ? "/p/[productId]"
-                      : undefined
+                      : sourceSiteUrl
                   }
                   as={
                     isInternalProduct
