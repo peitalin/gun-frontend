@@ -246,7 +246,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
           {
             !newsItem?.id?.startsWith('promoted_slot') &&
             <Typography className={classes.createdAt} variant="body1">
-              {`${printRelativeTime(createdAtSnapshot)}`}
+              {`${printRelativeTime(createdAt)}`}
             </Typography>
           }
         </div>
