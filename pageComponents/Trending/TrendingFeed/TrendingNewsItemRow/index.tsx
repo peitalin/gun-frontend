@@ -68,6 +68,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
 		previewItems,
     isInternalProduct,
     createdAtSnapshot,
+    createdAt,
   } = transformNewsItemToFields(newsItem)
 
 
