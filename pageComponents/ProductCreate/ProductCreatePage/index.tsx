@@ -562,7 +562,7 @@ const ProductCreatePage = (props: ReactProps) => {
           <PreviewItemUploader
             reducerName={reducerName}
             productInput={productCreateInput}
-            storeId={storeId}
+            ownerId={storeId}
             dzuPreviewItems={dzuPreviewItems}
             dzuPreviewOrder={dzuPreviewOrder}
             activeStep={activeStep}

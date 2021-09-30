@@ -17,6 +17,9 @@ import {
   ProductVariantInput,
   UserPrivate,
   ID,
+  ListingType,
+  ProductType,
+  External_Products,
 } from "typings/gqlTypes";
 import { Colors } from "layout/AppTheme";
 
@@ -35,7 +38,7 @@ import Button from "@material-ui/core/Button";
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
 // Subcomponents
-import ProductEditFormLayout from "./ProductEditFormLayout";
+import ProductClaimFormLayout from "./ProductClaimFormLayout";
 import Title from "pageComponents/ProductCreate/TitleSerialNumber";
 import BackTo from "components/BackTo";
 import Typography from "@material-ui/core/Typography";
@@ -118,8 +121,6 @@ const ProductEditPage = (props: ReactProps) => {
   // Props & State
   const {
     classes,
-    asModal,
-    closeModal,
   } = props;
   const router = useRouter();
 
@@ -188,7 +189,8 @@ const ProductEditPage = (props: ReactProps) => {
     }
   })
 
-  const productEditInput = productToProductEditInput(props.product)
+  // const productEditInput = productToProductEditInput(props.externalProduct as any)
+  const productEditInput = productToProductEditInput(undefined)
 
   const formik = useFormik({
     initialValues: {
@@ -220,8 +222,8 @@ const ProductEditPage = (props: ReactProps) => {
             magazineCapacity: values.magazineCapacity,
             barrelLength: values.barrelLength,
             sellerLicenseId: values.sellerLicenseId,
-            listingType: props.product?.listingType, // can't be edited
-            productType: props.product?.productType, // can't be edited
+            listingType: ListingType.CLASSIFIED, // can't be edited
+            productType: ProductType.FIREARM, // can't be edited
           }
         },
       }).finally(() => {
@@ -237,16 +239,16 @@ const ProductEditPage = (props: ReactProps) => {
       console.log("seeding product edit data")
       const actions = Actions.reduxProductEdit;
 
-      let dzuPreviewItemInputs = previewsToDzuPreviews(
-        props.product?.featuredVariant?.previewItems ?? []
-      );
+      // let dzuPreviewItemInputs = previewsToDzuPreviews(
+      //   props.product?.featuredVariant?.previewItems ?? []
+      // );
 
-      batch(() => {
-        dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))
-        dispatch(actions.SET_PREVIEW_ITEMS(dzuPreviewItemInputs))
-      })
+      // batch(() => {
+      //   dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))
+      //   dispatch(actions.SET_PREVIEW_ITEMS(dzuPreviewItemInputs))
+      // })
     }
-  }, [props.product])
+  }, [props.externalProduct])
 
 
   React.useEffect(() => {
@@ -263,14 +265,12 @@ const ProductEditPage = (props: ReactProps) => {
 
   // console.log("formik.values", formik.values)
   // console.log("formik.errors", formik.errors)
-  console.log("productEditInput", productEditInput)
+  // console.log("productEditInput", productEditInput)
 
   return (
     <PreventDragDropContainer>
-      <ProductEditFormLayout
+      <ProductClaimFormLayout
         classes={classes}
-        asModal={asModal}
-        closeModal={closeModal}
         onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
       >
         <Typography className={classes.title} variant="h2">
@@ -284,11 +284,11 @@ const ProductEditPage = (props: ReactProps) => {
           <SelectCategories
             {...formik}
           />
-          <SelectSellerLicense
+          {/* <SelectSellerLicense
             user={user}
-            sellerLicenseId={props.product?.sellerLicenseId} // only for product edit
+            // sellerLicenseId={props.product?.sellerLicenseId} // only for product edit
             {...formik}
-          />
+          /> */}
         </SectionBorder>
 
         <SectionBorder thickPadding={true}>
@@ -326,8 +326,8 @@ const ProductEditPage = (props: ReactProps) => {
           <PreviewItemUploaderGrid
             reducerName={reducerName}
             productInput={productEditInput}
-            ownerId={props.product.store.id}
-            productId={props.product.id}
+            ownerId={props.externalProduct.id}
+            productId={props.externalProduct.id}
             dzuPreviewItems={dzuPreviewItems}
             dzuPreviewOrder={dzuPreviewOrder}
             {...formik}
@@ -392,7 +392,7 @@ const ProductEditPage = (props: ReactProps) => {
             </ButtonLoading>
           </div>
         </ErrorBounds>
-      </ProductEditFormLayout>
+      </ProductClaimFormLayout>
     </PreventDragDropContainer>
   )
 }
@@ -436,9 +436,7 @@ const printValidationErrors = (
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  asModal?: boolean;
-  closeModal(): void;
-  product: Product;
+  externalProduct: External_Products;
 }
 
 interface ReduxState {

@@ -198,6 +198,8 @@ export const styles = (theme: Theme) => createStyles({
     position: "relative",
     overflowX: "hidden",
     marginBottom: '1rem',
+    marginTop: '2rem', // to match productCard floating offset
+    // in .NewsItemCard-newsItemModalPageRootDesktop
   },
   flexMobile: {
     flexBasis: "100%",

@@ -28,6 +28,7 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { useRouter } from "next/router";
+import ProductClaim from "pageComponents/ProductClaim";
 
 
 
@@ -38,7 +39,7 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
   } = props;
 
   const router = useRouter()
-  const client = useApolloClient()
+  // const client = useApolloClient()
 
   const claimId = router?.query?.c
   const newsItemId: string = router?.query?.newsItemId as any;
@@ -55,6 +56,7 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
       newsItemId: newsItemId
     },
   })
+
 
   return (
     <>
@@ -76,6 +78,17 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
         newsItem:
         { JSON.stringify(data?.getNewsItemById)}
       </div>
+
+      {
+        data?.getNewsItemById &&
+        <div className={classes.contentContainer}>
+          <div className={classes.rootOuter}>
+            <ProductClaim
+              newsItem={data.getNewsItemById}
+            />
+          </div>
+        </div>
+      }
       {/* <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
           return (
@@ -100,13 +113,26 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
 
 
 const styles = (theme: Theme) => createStyles({
-  contentContainerPublicPage: {
-    position: "relative",
+  // contentContainerPublicPage: {
+  //   position: "relative",
+  //   flexGrow: 1,
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   justifyContent: 'center',
+  //   marginBottom: '1rem',
+  // },
+  rootOuter: {
+    // backgroundColor: Colors.foregroundColor,
+  },
+  contentContainer: {
+    flexBasis: '65%',
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: '1rem',
+    justifyContent: 'flex-start',
+    maxWidth: 800,
+    // marginTop: '2rem',
+    // padding: '0rem 1rem 2rem 1rem',
   },
 })
 

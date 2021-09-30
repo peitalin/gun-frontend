@@ -4235,6 +4235,7 @@ export type ProductPreviewItemInput = {
   /** ID of uploaded product image or a link to YouTube embedded video */
   imageId?: Maybe<Scalars['ID']>;
   youTubeEmbedLink?: Maybe<Scalars['String']>;
+  isInternal?: Maybe<Scalars['Boolean']>;
 };
 
 /** Private information about something that can be bought */
@@ -16306,6 +16307,7 @@ export type Product_Preview_Items = {
   /** An object relationship */
   image?: Maybe<Image_Parents>;
   imageId?: Maybe<Scalars['String']>;
+  isInternal?: Maybe<Scalars['Boolean']>;
   position: Scalars['Int'];
   variantSnapshotId?: Maybe<Scalars['String']>;
   youTubeEmbedLink?: Maybe<Scalars['String']>;
@@ -16382,6 +16384,7 @@ export type Product_Preview_Items_Bool_Exp = {
   id?: Maybe<String_Comparison_Exp>;
   image?: Maybe<Image_Parents_Bool_Exp>;
   imageId?: Maybe<String_Comparison_Exp>;
+  isInternal?: Maybe<Boolean_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   variantSnapshotId?: Maybe<String_Comparison_Exp>;
   youTubeEmbedLink?: Maybe<String_Comparison_Exp>;
@@ -16403,6 +16406,7 @@ export type Product_Preview_Items_Insert_Input = {
   id?: Maybe<Scalars['String']>;
   image?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   imageId?: Maybe<Scalars['String']>;
+  isInternal?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
   youTubeEmbedLink?: Maybe<Scalars['String']>;
@@ -16474,6 +16478,7 @@ export type Product_Preview_Items_Order_By = {
   id?: Maybe<Order_By>;
   image?: Maybe<Image_Parents_Order_By>;
   imageId?: Maybe<Order_By>;
+  isInternal?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   variantSnapshotId?: Maybe<Order_By>;
   youTubeEmbedLink?: Maybe<Order_By>;
@@ -16491,6 +16496,8 @@ export enum Product_Preview_Items_Select_Column {
   /** column name */
   IMAGEID = 'imageId',
   /** column name */
+  ISINTERNAL = 'isInternal',
+  /** column name */
   POSITION = 'position',
   /** column name */
   VARIANTSNAPSHOTID = 'variantSnapshotId',
@@ -16502,6 +16509,7 @@ export enum Product_Preview_Items_Select_Column {
 export type Product_Preview_Items_Set_Input = {
   id?: Maybe<Scalars['String']>;
   imageId?: Maybe<Scalars['String']>;
+  isInternal?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
   youTubeEmbedLink?: Maybe<Scalars['String']>;
@@ -16557,6 +16565,8 @@ export enum Product_Preview_Items_Update_Column {
   ID = 'id',
   /** column name */
   IMAGEID = 'imageId',
+  /** column name */
+  ISINTERNAL = 'isInternal',
   /** column name */
   POSITION = 'position',
   /** column name */

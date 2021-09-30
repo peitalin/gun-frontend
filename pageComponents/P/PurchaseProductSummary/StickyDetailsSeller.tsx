@@ -49,7 +49,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
   };
 
   const sellerLicense = product?.sellerLicense
-  console.log("productClassifieidAd, ", productClassifiedAd)
+  // console.log("productClassifieidAd, ", productClassifiedAd)
 
   return (
     <div className={clsx(

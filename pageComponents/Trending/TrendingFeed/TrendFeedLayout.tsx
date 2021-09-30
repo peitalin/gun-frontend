@@ -111,6 +111,8 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "space-between",
     alignItems: "flex-end",
     width: '60%',
+    marginBottom: '-2rem', // to match productCard floating offset
+    // in .NewsItemCard-newsItemModalPageRootDesktop
   },
   titleContainerMobile: {
     display: "flex",

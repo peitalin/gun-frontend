@@ -122,7 +122,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       let googleUpload = googleUploads.find(g => g.metaId === meta.id);
 
       // Owner is going to be the store, but may also be the product if it already exists
-      const ownerIds = [props.storeId];
+      const ownerIds = [props.ownerId];
       if (props.productId) {
         ownerIds.push(props.productId);
       }
@@ -168,7 +168,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
     classes,
     productInput,
     reducerName,
-    storeId,
+    ownerId,
     productId,
     ...fprops
   } = props;
@@ -319,7 +319,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
 interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName;
   productInput: ProductCreateEditCommonInput;
-  storeId: ID;
+  ownerId: ID;
   productId?: ID;
   dzuPreviewItems: DzuPreviewItem[];
   dzuPreviewOrder: DzuPreviewOrder[],

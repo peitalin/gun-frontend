@@ -234,7 +234,7 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Product Search Index
+                  Search Indexing
                 </Typography>
               </div>
             </a>

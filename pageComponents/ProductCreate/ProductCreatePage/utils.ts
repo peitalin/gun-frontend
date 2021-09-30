@@ -173,6 +173,7 @@ export const reduxToFormikCurrentVariants = ({
       return {
         imageId: pv.fileId,
         youTubeEmbedLink: pv.youTubeVimeoEmbedLink,
+        isInternal: true,
       }
     })
 

@@ -78,6 +78,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
   )
 
   // console.log("newsItem::::::", newsItem)
+  console.log("previewItems::::::", newsItem.externalProduct?.currentExternalProductSnapshot?.previewItems)
 
   return (
 

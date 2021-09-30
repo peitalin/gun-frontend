@@ -5,8 +5,10 @@ import {
   Product_Preview_Items,
   ListingType,
   ProductType,
+  External_Products,
 } from "typings/gqlTypes";
 import { DzuPreviewItem } from "typings/dropzone";
+import { Condition } from "typings";
 
 
 export const productToProductEditInput = (
@@ -56,6 +58,7 @@ export const productToProductEditInput = (
           .map((p, index) => ({
             imageId: p?.image?.id,
             youTubeEmbedLink: p.youTubeEmbedLink,
+            isInternal: p?.isInternal,
           }))
       } as ProductVariantEditInput
     ],
@@ -97,3 +100,79 @@ export const previewsToDzuPreviews = (
   })
 }
 
+// missing sellerLicenseId
+// need to create an account before claiming
+//
+
+
+
+// export const externalProductToProductEditInput = (
+//   externalProduct: External_Products,
+// ): ProductEditInput => {
+
+//   let p = externalProduct
+
+//   if (!p) {
+//     return {
+//       productId: "",
+//       title: "",
+//       categoryId: "",
+//       description: "<p></p>",
+//       currentVariants: [],
+//       isPublished: false,
+//       allowBids: true,
+//       condition: "",
+//       make: "",
+//       model: "",
+//       ammoType: "",
+//       actionType: "",
+//       caliber: "",
+//       serialNumber: "",
+//       location: "",
+//       dealerId: "",
+//       magazineCapacity: "",
+//       barrelLength: "",
+//       sellerLicenseId: "",
+//       listingType: ListingType.CLASSIFIED,
+//       productType: ProductType.FIREARM,
+//     }
+//   }
+
+//   return {
+//     productId: p.id,
+//     title: p.currentExternalProductSnapshot?.title,
+//     categoryId: p.category.id,
+//     description: "<p></p>",
+//     currentVariants: [
+//       {
+//         variantId: p.featuredVariant?.variantId,
+//         variantName: product.featuredVariant?.variantName,
+//         variantDescription: product.featuredVariant?.variantDescription,
+//         priceWas: product.featuredVariant?.priceWas,
+//         price: product.featuredVariant?.price,
+//         isDefault: product.featuredVariant?.isDefault,
+//         previewItems: (product.featuredVariant?.previewItems ?? [])
+//           .map((p, index) => ({
+//             imageId: p?.image?.id,
+//             youTubeEmbedLink: p.youTubeEmbedLink,
+//           }))
+//       } as ProductVariantEditInput
+//     ],
+//     isPublished: true,
+//     allowBids: true,
+//     condition: p.currentExternalProductSnapshot.condition,
+//     make: p.currentExternalProductSnapshot.make,
+//     model: p.currentExternalProductSnapshot.model,
+//     ammoType: p.currentExternalProductSnapshot.ammoType,
+//     actionType: p.currentExternalProductSnapshot.actionType,
+//     caliber: p.currentExternalProductSnapshot.caliber,
+//     serialNumber: p.currentExternalProductSnapshot.serialNumber,
+//     location: p.currentExternalProductSnapshot.location,
+//     dealerId: p.currentExternalProductSnapshot.dealer.id,
+//     magazineCapacity: p.currentExternalProductSnapshot.magazineCapacity,
+//     barrelLength: p.currentExternalProductSnapshot.barrelLength,
+//     sellerLicenseId: p.sellerLicenseId,
+//     listingType: p.listingType,
+//     productType: p.productType,
+//   };
+// }

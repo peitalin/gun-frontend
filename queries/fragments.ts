@@ -139,6 +139,7 @@ export const ProductVariantsFragment = gql`
       position
       youTubeEmbedLink
       variantSnapshotId
+      isInternal
       image {
         ...ImageFragment
       }
@@ -1120,6 +1121,7 @@ export const ExternalProductSnapshotsFragment = gql`
       position
       youTubeEmbedLink
       variantSnapshotId
+      isInternal
       image {
         ...ImageFragment
       }

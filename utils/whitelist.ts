@@ -9,6 +9,8 @@ export const whitelist = [
 	// 'u1k5x4eyxhtmt', //	thomaspierce@gmail.com
 	// 'uk5q2w2ak2rz4', //	thomaspierce@email.com
 
+	// 'u32p6x2arxee7', // hehaijiang@gmail.com
+
 	// 'u37sh3brbszbv', //	hellokunyang@gmail.com
 	// 'up7awqcqzpsyh', //	johnsonzhang0207@hotmail.com
 	// 'uf62cs2b5vbdt', //	micksands71@gmail.com
