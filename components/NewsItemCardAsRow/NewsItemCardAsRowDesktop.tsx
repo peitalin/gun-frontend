@@ -75,7 +75,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   let product = newsItem?.product ?? newsItem?.externalProduct
   let categoryId = product?.category?.id ?? product?.categoryId
-  let featuredPreview = previewItems?.[0]
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
   // console.log("NEWSITEM: ", newsItem)
@@ -99,9 +98,9 @@ const NewsItemCardAsRow = (props: ReactProps) => {
             <div className={classes.flexCol}>
               {
                 // (props.showExternalImages && featuredPreview)
-                props.showExternalImages
+                featuredPreviewItem?.id
                 ? <ProductPreviewThumb
-                    previewItem={featuredPreview}
+                    previewItem={featuredPreviewItem}
                     className={classes.previewCard}
                     height={46}
                     width={46 * 1.5}
@@ -284,7 +283,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem;
-  showExternalImages: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({

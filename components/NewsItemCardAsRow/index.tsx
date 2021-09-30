@@ -14,7 +14,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   const {
     classes,
-    showExternalImages,
   } = props;
 
   return (
@@ -22,7 +21,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
       <ShowOnMobileOrDesktopSSR desktop>
         <NewsItemCardAsRowDesktop
           newsItem={props.newsItem}
-          showExternalImages={showExternalImages}
         />
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
@@ -36,7 +34,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem;
-  showExternalImages: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
