@@ -32,10 +32,15 @@ const FeaturedTitle = (props: ReactProps) => {
             {product?.currentSnapshot?.make}
           </span>
           <span className={clsx(
-            classes.collabX,
-            isMobile ? classes.collabXMobile : classes.collabXDesktop,
-          )} >
-            x
+              classes.collabX,
+              isMobile ? classes.collabXMobile : classes.collabXDesktop,
+            )}
+          >
+            {
+              (product?.currentSnapshot?.make && product?.currentSnapshot?.model)
+              ? "x"
+              : ""
+            }
           </span>
           <span className={isMobile ? classes.titleModelMobile : classes.titleModel}>
             {product?.currentSnapshot?.model}
