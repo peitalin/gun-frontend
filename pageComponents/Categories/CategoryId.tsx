@@ -46,7 +46,7 @@ import BannerCategoryPage from "./BannerCategoryPage";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
-import { isWhitelisted } from "utils/whitelist";
+
 
 
 
@@ -336,7 +336,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                       rowMode
                         ? <NewsItemCardAsRow
                             newsItem={newsItem}
-                            showExternalImages={isWhitelisted(props.user?.id)}
                           />
                         : <div style={{ marginLeft: '0.5rem'}}>
                             <NewsItemCardResponsive

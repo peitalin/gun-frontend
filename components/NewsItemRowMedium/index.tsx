@@ -82,10 +82,18 @@ const NewsItemRowMedium = (props: ReactProps) => {
             classes.flexColPadding,
           )}>
             {
-              isInternalProduct
+              featuredPreviewItem?.id
               ? <Link
-                  href="/p/[productId]"
-                  as={`/p/${newsItem?.product?.id}`}
+                  href={
+                    isInternalProduct
+                      ? "/p/[productId]"
+                      : undefined
+                  }
+                  as={
+                    isInternalProduct
+                      ? `/p/${newsItem?.product?.id}`
+                      : sourceSiteUrl
+                  }
                 >
                   <a>
                     <ProductPreviewThumb
@@ -96,8 +104,8 @@ const NewsItemRowMedium = (props: ReactProps) => {
                   </a>
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
-                  <ProductPreviewThumb
-                    previewItem={featuredPreviewItem}
+                  <ProductPreviewThumbCategory
+                    categoryId={categoryId}
                     width={props.imageSize?.desktop?.width ?? 135}
                     height={props.imageSize?.desktop?.height ?? 90}
                   />

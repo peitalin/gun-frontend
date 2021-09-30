@@ -20,8 +20,8 @@ export const cacheUpdateDashboardProduct = <T extends {}>({
   product: Product,
 }) => {
 
-    // console.log("incomingProduct.id: ", editProduct?.product?.id)
-    // console.log("incomingProduct.isPublished: ", editProduct?.product?.isPublished)
+    console.log("incomingProduct.id: ", product?.id)
+    // console.log("incomingProduct.isPublished: ", product?.isPublished)
 
     // Fetch the cached dashboardProductsConnection item with associated variables
     // remember, variables need to match, or cache will not return the data

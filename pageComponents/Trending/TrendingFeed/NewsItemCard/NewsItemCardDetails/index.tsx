@@ -139,7 +139,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
       >
         <div className={classes.overflowHidden}>
           {
-            props.showExternalImages
+            featuredPreviewItem?.id
             ? <FeaturedPreview
                 featuredPreviewItem={featuredPreviewItem}
                 previewItems={previewItems}
@@ -248,7 +248,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
       </div>
 
       {
-        props.showExternalImages &&
         previewItems?.length > 1 &&
         <div className={classes.bottomImageGalleryBox}>
           <BottomImageCarouselDesktop
@@ -420,7 +419,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   }
   index: number
   setIndex(i: number): void
-  showExternalImages: boolean;
 }
 
 // interface MData1 {

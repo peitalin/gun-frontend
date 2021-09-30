@@ -12,12 +12,9 @@ import {
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 // components
-import IconButton from '@material-ui/core/IconButton';
-import CheckIcon from "@material-ui/icons/Check";
 import Link from "next/link";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
-import Tooltip from "@material-ui/core/Tooltip";
-import Loading from "components/Loading";
+import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 // typings
 import {
   SavedSearchHit,
@@ -38,6 +35,7 @@ import MarkHitAsSeenButton from "./MarkHitAsSeenButton"
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useSnackbar } from "notistack"
+import { categoryPreviewsBackup } from "utils/categories"
 
 
 
@@ -125,6 +123,10 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
     ? `"${props.caliber}"`
     : `-`
 
+  const categoryId = categoryPreviewsBackup.find(c => c.slug === categorySlug)?.id
+
+  const featuredPreviewItem = props.previewItem
+
   return (
     <div className={clsx(
       mdDown
@@ -138,11 +140,23 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
       {
         props.externalLink
         ? <a className={classes.link} href={props.externalLink}>
-            <ProductPreviewThumb
-              previewItem={props.previewItem}
-                width={90}
-                height={60}
-            />
+            {
+              featuredPreviewItem
+              ? <ProductPreviewThumb
+                  previewItem={featuredPreviewItem}
+                    width={90}
+                    height={60}
+                    style={{
+                      minWidth: 90,
+                      minHeight: 60,
+                    }}
+                />
+              : <ProductPreviewThumbCategory
+                  categoryId={categoryId}
+                  width={90}
+                  height={60}
+                />
+            }
           </a>
         : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
             <a className={classes.link}>

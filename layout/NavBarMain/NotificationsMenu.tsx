@@ -18,6 +18,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
 import IconButton from '@material-ui/core/IconButton';
 import ProductPreviewThumb from "components/ProductPreviewThumb";
+import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 
 import Badge from '@material-ui/core/Badge';
 
@@ -200,6 +201,9 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
               let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
                 ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
 
+              let categoryId = hit?.product?.categoryId
+                ?? hit?.externalProduct?.categoryId
+
               // console.log('hit: ', hit?.seen)
 
               return (
@@ -211,15 +215,23 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                           href={externalLink}
                           target={"_blank"}
                         >
-                          <ProductPreviewThumb
-                            previewItem={featuredPreviewItem}
-                              height={40}
-                              width={60}
-                              style={{
-                                minWidth: 60,
-                                minHeight: 40,
-                              }}
-                          />
+                          {
+                            featuredPreviewItem
+                            ? <ProductPreviewThumb
+                                previewItem={featuredPreviewItem}
+                                  height={40}
+                                  width={60}
+                                  style={{
+                                    minWidth: 60,
+                                    minHeight: 40,
+                                  }}
+                              />
+                            : <ProductPreviewThumbCategory
+                                categoryId={categoryId}
+                                width={60}
+                                height={40}
+                              />
+                          }
                           <div className={classes.textBox}>
                             <span className={classes.menuText1}>
                               {`${make}`}
