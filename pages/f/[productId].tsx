@@ -108,15 +108,15 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
       {
         p?.id &&
         <MetaHeadersPage
-          title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
-          ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
+          title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace`}
+          ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace`}
           description={
-            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace.
             Location: ${p?.currentSnapshot?.dealer?.state}
             `
           }
           ogDescription={
-            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace.
             Location: ${p?.currentSnapshot?.dealer?.state}
             `
           }
@@ -129,13 +129,9 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
         />
       }
       <PageWithStripe>
-        {
-          // only for promoted products
-          p?.id &&
-          <FeaturedProductId
-            initialProduct={p}
-          />
-        }
+        <FeaturedProductId
+          initialProduct={p}
+        />
       </PageWithStripe>
     </>
   )

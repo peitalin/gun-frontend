@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 // Components
 import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";
-
+import Link from "next/link";
 
 
 
@@ -20,11 +20,11 @@ const ErrorPage = (props: ReactProps) => {
   const router = useRouter();
 
   return (
-    <div className={clsx(classes.root, classes.flexRow)}>
+    <div className={clsx(classes.root, classes.flexRow, props.className)}>
       <div className={clsx(classes.flexCol, classes.maxWidth)}>
         <div className={classes.noResultsContainer}>
           <Typography variant="h4" className={classes.title}>
-            This page does not exist.
+            This page is unavailable.
           </Typography>
           <Typography>
             The link you used may be broken,
@@ -45,15 +45,19 @@ const ErrorPage = (props: ReactProps) => {
             </Typography>
           }
           <br/>
-          <Button
-            variant="outlined"
-            classes={{
-              root: classes.callToActionButton
-            }}
-            onClick={() => router.push("/")}
-          >
-            Browse Marketplace
-          </Button>
+          <Link href={`/`}>
+            <a href={'/'}>
+              <Button
+                variant="outlined"
+                classes={{
+                  root: classes.callToActionButton
+                }}
+                // onClick={() => router.push("/")}
+              >
+                Browse Marketplace
+              </Button>
+            </a>
+          </Link>
         </div>
       </div>
     </div>
@@ -64,6 +68,7 @@ const ErrorPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   statusCode?: string | number;
   message?: string;
+  className?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

@@ -185,22 +185,29 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   //   return <ErrorPage statusCode={400} message={"Product has been sold"}/>
   // }
   if (!loading && product?.store?.isSuspended === true) {
-    return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
+    return <ErrorPage statusCode={400}
+      message={"Store has been suspended"} className={classes.paddingTop1}/>
   }
   if (!loading && product?.isSuspended === true) {
-    return <ErrorPage statusCode={400} message={"Product has been suspended"}/>
+    return <ErrorPage statusCode={400}
+      message={"Product has been suspended"} className={classes.paddingTop1}/>
   }
   if (!loading && product?.isDeleted === true) {
-    return <ErrorPage statusCode={404} message={"Product has been deleted"}/>
+    return <ErrorPage statusCode={404}
+      message={"Product has been deleted"} className={classes.paddingTop1}/>
   }
   if (!loading && !product?.isPublished === true) {
-    return <ErrorPage statusCode={403} message={"Product is not published"}/>
+    return <ErrorPage statusCode={403}
+      message={"Product is not published"} className={classes.paddingTop1}/>
   }
   if (!loading && !productIsYours && storeUserVerified !== true) {
-    return <ErrorPage statusCode={400} message={`Store's owner ${product?.storeId} has yet to be verified`}/>
+    let storeOwnerId = product?.store?.userId ?? product?.store?.user?.id
+    return <ErrorPage statusCode={400}
+      message={`Store's owner "${storeOwnerId}" has yet to be verified`} className={classes.paddingTop1}/>
   }
   if (error) {
-    return <ErrorPage statusCode={404} message={"Product cannot be found"}/>
+    return <ErrorPage statusCode={404}
+      message={"Product cannot be found"} className={classes.paddingTop1}/>
   }
 
 
@@ -433,6 +440,9 @@ const styles = (theme: Theme) => createStyles({
   },
   width100: {
     width: '100%',
+  },
+  paddingTop1: {
+    paddingTop: '4rem',
   },
 });
 
