@@ -90,3 +90,28 @@ export const printRelativeTime = (d: Date): string => {
   // @ts-ignore
   return dayjs().to(dayjs(d)) // "31 years ago"
 };
+
+
+
+export const displayHrsToSold = (hr: number) => {
+  if (hr < 0) {
+    return ``
+  } else if (hr < 0.2) {
+    return `Sold Instantly`
+  } else if (hr < 1) {
+    return `Sold in ${Math.round(hr * 60)} mins`
+  } else if (hr < 24) {
+    // round to 2 decimal places
+    return `Sold in ${Math.round(hr * 100)/100} hrs`
+  } else if (hr < 24*30*6) {
+    // within 6 months, display in days
+    return `Sold in ${Math.round(hr / 24)} days`
+  } else if (hr < 24*30*12) {
+    // withing 12 months, display in months
+    return `Sold in ${Math.round(hr / 24 / 30)} months`
+  } else {
+    // too long to sell
+    // return `Sold in ${Math.round(hr / 24 / 30 / 12)} years`
+    return ``
+  }
+}

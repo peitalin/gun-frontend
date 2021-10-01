@@ -1115,6 +1115,7 @@ export const ExternalProductSnapshotsFragment = gql`
     state
     soldText
     isSold
+    hrsToSold
     previewItems {
       id
       imageId

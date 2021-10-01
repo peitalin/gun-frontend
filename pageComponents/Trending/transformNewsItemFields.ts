@@ -36,6 +36,7 @@ export interface NewsItemFields {
 	categoryId: string
 	createdAt: Date
 	createdAtSnapshot: Date
+	isSold: boolean
 }
 
 export const transformNewsItemToFields = (
@@ -134,6 +135,13 @@ export const transformNewsItemToFields = (
 	const isSuspended = newsItem?.isSuspended
 		|| internalProduct?.isSuspended
 
+	const isSold = (
+		newsItem?.product?.isSoldElsewhere ||
+		newsItem?.product?.soldOutStatus === SoldOutStatus.SOLD_OUT ||
+		newsItem.externalProduct?.currentExternalProductSnapshot?.isSold
+	) ? true
+		: false
+
 	const categoryId = internalProduct?.categoryId
 		?? externalProduct?.categoryId
 
@@ -177,6 +185,7 @@ export const transformNewsItemToFields = (
 		categoryId,
 		createdAtSnapshot,
 		createdAt,
+		isSold,
 	}
 }
 
@@ -276,6 +285,13 @@ export const transformExternalProductToFields = (
 
 	const isSuspended = internalProduct?.isSuspended
 
+	const isSold = (
+		internalProduct?.isSoldElsewhere ||
+		internalProduct?.soldOutStatus === SoldOutStatus.SOLD_OUT ||
+		externalProduct?.currentExternalProductSnapshot?.isSold
+	) ? true
+		: false
+
 	const categoryId = internalProduct?.categoryId
 		?? externalProduct?.categoryId
 
@@ -319,5 +335,6 @@ export const transformExternalProductToFields = (
 		categoryId,
 		createdAtSnapshot,
 		createdAt,
+		isSold,
 	}
 }

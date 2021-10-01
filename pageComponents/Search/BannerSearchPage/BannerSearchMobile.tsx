@@ -53,8 +53,8 @@ const BannerSearchMobile: NextPage<ReactProps> = (props) => {
         className={
           pathname.includes('new')
           ? isDarkMode
-            ? "background-monte-carlo"
-            : "background-velvet-sun"
+            ? "background-atlas"
+            : "background-monte-carlo"
           : isDarkMode
             ? "background-miaka"
             : "background-velvet-sun"

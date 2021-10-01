@@ -27,6 +27,7 @@ import NewsItemLink from "./NewsItemLink"
 import {
   maxLengthTitle
 } from "utils/limitsAndRules"
+import { displayHrsToSold } from "utils/dates"
 import { useTheme } from "@material-ui/core/styles";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
@@ -70,6 +71,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 		previewItems,
     isInternalProduct,
     isSuspended,
+    isSold,
   } = transformNewsItemToFields(newsItem)
 
 
@@ -78,6 +80,10 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
   // console.log("NEWSITEM: ", newsItem)
+  let dateSold = newsItem?.externalProduct?.currentExternalProductSnapshot?.createdAt
+  let hrsToSold = newsItem?.externalProduct?.currentExternalProductSnapshot?.hrsToSold
+  // console.log("dateSold: ", dateSold)
+  // console.log("hrsToSold: ", hrsToSold)
 
   return (
     <div
@@ -120,7 +126,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
             </div>
             <div className={classes.flexRow}>
               <div className={classes.flexCellItem}>
-              <NewsItemLink newsItem={newsItem} >
+                <NewsItemLink newsItem={newsItem} >
                   <Typography
                     className={clsx(
                       classes.makeModelText,
@@ -138,6 +144,12 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                   >
                     {caliber}
                   </Typography>
+                  {
+                    isSold &&
+                    <div className={classes.soldInHrsText} >
+                      {`${displayHrsToSold(hrsToSold)}`}
+                    </div>
+                  }
                 </NewsItemLink>
               </div>
 
@@ -328,6 +340,7 @@ const styles = (theme: Theme) => createStyles({
   flexCellItem: {
     flexBasis: '45%',
     maxWidth: '43%', // constrain width for textOverflow: ellipsis
+    position: "relative",
   },
   flexCellItemSmall: {
     flexBasis: '15%',
@@ -389,6 +402,18 @@ const styles = (theme: Theme) => createStyles({
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
+  },
+  soldInHrsText: {
+    fontWeight: 500,
+    fontSize: '0.75rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapGrey
+      : Colors.slateGreyDarkest,
+    minWidth: 100,
+    lineHeight: '1rem',
+    position: 'absolute',
+    bottom: '0rem',
+    right: '0.5rem',
   },
 });
 

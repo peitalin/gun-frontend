@@ -470,6 +470,8 @@ textarea {
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }
+
+/* https://uigradients.com*/
 .background-velvet-sun {
     background: linear-gradient(-45deg, #E3ECC6, #E3D3B3, #E2A691, #E18175, #E05F5B );
     background-size: 400% 400%;
@@ -485,6 +487,7 @@ textarea {
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }
+/* https://uigradients.com/#Atlas */
 .background-atlas {
     background: linear-gradient(-45deg,#F3AE6D, #E3A088, #D6949F, #BF80C7, #A790CA, #89A6C8, #6CBCC6 );
     background-size: 400% 400%;
