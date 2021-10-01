@@ -140,6 +140,35 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           </Link>
 
 
+
+          {
+            emailVerified &&
+            <Link href="/sold">
+              <a className={classes.categoryLink} >
+                <Typography className={clsx(
+                  classes.categoryLinkTextMain,
+                  router.asPath === '/sol' && classes.categoryLinkTextSelected,
+                )}>
+                  Sold
+                </Typography>
+              </a>
+            </Link>
+          }
+
+          {
+            emailVerified &&
+            <Link href="/trending-items">
+              <a className={classes.categoryLink} >
+                <Typography className={clsx(
+                  classes.categoryLinkTextMain,
+                  router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
+                )}>
+                  Items
+                </Typography>
+              </a>
+            </Link>
+          }
+
           <Link href="/sell">
             <a className={classes.categoryLink}
               onMouseEnter={() => setHoverStripeArrow(true)}
@@ -163,21 +192,6 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
               />
             </a>
           </Link>
-
-
-          {
-            emailVerified &&
-            <Link href="/trending-items">
-              <a className={classes.categoryLink} >
-                <Typography className={clsx(
-                  classes.categoryLinkTextMain,
-                  router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
-                )}>
-                  Items
-                </Typography>
-              </a>
-            </Link>
-        }
 
         </div>
 

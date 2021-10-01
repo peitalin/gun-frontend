@@ -63,7 +63,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
       {/* <div style={{ flexBasis: '0.5rem' }}></div> */}
 
       <div className={classes.logoContainer}>
-        <Link href="/home">
+        <Link href="/">
           <a className={classes.buttonLinkLogo}>
             <Logo fillColor={
               // override logo color for desktop /start page light mode

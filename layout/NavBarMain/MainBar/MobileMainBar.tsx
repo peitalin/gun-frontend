@@ -84,7 +84,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
 
       {
         !hide &&
-        <Link href="/home">
+        <Link href="/">
           <a className={clsx(
               classes.logoMobile,
               !hide && "fadeIn"

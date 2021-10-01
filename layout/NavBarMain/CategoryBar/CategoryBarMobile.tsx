@@ -111,6 +111,35 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
 
+
+          {
+            emailVerified &&
+            <Link href={`/sold`}>
+              <a className={classes.categoryLink}>
+                <Typography className={clsx(
+                  classes.categoryLinkAllMobile,
+                  router.asPath === '/sold' && classes.categoryLinkTextSelected,
+                )}>
+                  Sold
+                </Typography>
+              </a>
+            </Link>
+          }
+
+          {
+            emailVerified &&
+            <Link href={`/trending-items`}>
+              <a className={classes.categoryLink}>
+                <Typography className={clsx(
+                  classes.categoryLinkAllMobile,
+                  router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
+                )}>
+                  Items
+                </Typography>
+              </a>
+            </Link>
+          }
+
           <Link href={`/sell`}>
             <a className={classes.categoryLink}
               onMouseEnter={() => setHoverStripeArrow(true)}
@@ -134,20 +163,6 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
               />
             </a>
           </Link>
-
-          {
-            emailVerified &&
-            <Link href={`/trending-items`}>
-              <a className={classes.categoryLink}>
-                <Typography className={clsx(
-                  classes.categoryLinkAllMobile,
-                  router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
-                )}>
-                  Items
-                </Typography>
-              </a>
-            </Link>
-          }
 
         </div>
       </div>
