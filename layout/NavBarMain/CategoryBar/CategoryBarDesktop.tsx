@@ -147,7 +147,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
               <a className={classes.categoryLink} >
                 <Typography className={clsx(
                   classes.categoryLinkTextMain,
-                  router.asPath === '/sol' && classes.categoryLinkTextSelected,
+                  router.asPath === '/sold' && classes.categoryLinkTextSelected,
                 )}>
                   Sold
                 </Typography>

@@ -150,7 +150,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                   {
                     isSold &&
                     <div className={classes.soldInHrsText} >
-                      {`Sold ${printRelativeTime(dateSold)}`}
+                      {`${printRelativeTime(dateSold)}`}
                     </div>
                   }
                 </NewsItemLink>
