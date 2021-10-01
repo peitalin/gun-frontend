@@ -724,24 +724,24 @@ const styles = (theme: Theme) => createStyles({
     height: 50,
     transition: theme.transitions.create(['width', 'height', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: "200ms",
-      delay: 200,
+      duration: "150ms",
+      delay: 150,
     }),
   },
   height40: {
     height: 40,
     transition: theme.transitions.create(['width', 'height', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: "200ms",
-      delay: 200,
+      duration: "150ms",
+      delay: 150,
     }),
   },
   searchShort: {
     width: 260,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "200ms",
-      delay: 200,
+      duration: "150ms",
+      delay: 150,
     }),
   },
   searchWide: {
@@ -762,8 +762,8 @@ const styles = (theme: Theme) => createStyles({
     width: 160,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "200ms",
-      delay: 200,
+      duration: "150ms",
+      delay: 150,
     }),
   },
   boxShadow: {
