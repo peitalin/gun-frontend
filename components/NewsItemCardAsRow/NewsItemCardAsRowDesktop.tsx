@@ -27,7 +27,10 @@ import NewsItemLink from "./NewsItemLink"
 import {
   maxLengthTitle
 } from "utils/limitsAndRules"
-import { displayHrsToSold } from "utils/dates"
+import {
+  displayHrsToSold,
+  printRelativeTime,
+} from "utils/dates"
 import { useTheme } from "@material-ui/core/styles";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
@@ -147,7 +150,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                   {
                     isSold &&
                     <div className={classes.soldInHrsText} >
-                      {`${displayHrsToSold(hrsToSold)}`}
+                      {`Sold ${printRelativeTime(dateSold)}`}
                     </div>
                   }
                 </NewsItemLink>
