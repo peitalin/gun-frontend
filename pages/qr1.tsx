@@ -33,8 +33,8 @@ const QR1SSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Gun Marketplace Australia - Buy and sell firearms safely with escrow"
-        ogTitle="Gun Marketplace Australia - Buy and sell firearms safely with escrow"
+        title="Gun Marketplace - Buy guns smarter. Sell guns faster."
+        ogTitle="Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={`
           Sell used guns online with free listings.
           Upload and edit unlimited product listings for free.

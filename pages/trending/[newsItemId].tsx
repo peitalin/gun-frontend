@@ -61,8 +61,8 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Claim your product listing - gunmarketplace.com.au"
-        ogTitle="Claim your product listing - gunmarketplace.com.au"
+        title="Claim your product listing - Gun Marketplace"
+        ogTitle="Claim your product listing - Gun Marketplace"
         description={"Claim your product listing."}
         ogDescription={"Claim your product listing."}
       />

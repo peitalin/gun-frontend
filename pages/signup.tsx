@@ -18,8 +18,8 @@ const SignupPage: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Sign Up - gunmarketplace.com.au"
-        ogTitle="Sign Up - gunmarketplace.com.au"
+        title="Sign Up - Gun Marketplace - Buy guns smarter. Sell guns faster."
+        ogTitle="Sign Up - Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={`
           Create an account for free.
         `}

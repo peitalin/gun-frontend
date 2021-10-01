@@ -15,14 +15,15 @@ const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Sell Used Guns - List for Free | Gun Marketplace Australia"
+        title="Sell on Gun Marketplace - Buy guns smarter. Sell guns faster."
+        ogTitle="Sell on Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={`
-          Sell used guns online with free listings.
-          Upload and edit unlimited product listings for free.
+          Sell used guns online with escrow and classified ads.
+          Upload and edit unlimited product listings.
         `}
         ogDescription={`
-          Sell used guns online with free listings.
-          Upload and edit unlimited product listings for free.
+          Sell used guns online with escrow and classified ads.
+          Upload and edit unlimited product listings.
         `}
       />
       <PageWithStripe>

@@ -28,13 +28,13 @@ const SoldProductsSSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title={"Browse recently sold guns - Gun Marketplace"}
+        title="Sold Used Guns - Gun Marketplace - Buy guns smarter. Sell guns faster."
+        ogTitle="Sold Used Guns - Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={`
-          Browse newly sold used guns.
+          Browse recently sold used guns across the web on Gun Marketplace
         `}
-        ogTitle={"Browse recently sold guns - Gun Marketplace"}
         ogDescription={`
-          Browse newly sold used guns.
+          Browse recently sold used guns across the web on Gun Marketplace
         `}
         // ogImage={
         //   "https://image-content.gunmarketplace.com.au/og-img-category.png"

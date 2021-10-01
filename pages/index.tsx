@@ -39,15 +39,15 @@ const HomePage: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Gun Marketplace Australia - Buy used guns with escrow. Free to list."
-        ogTitle="Gun Marketplace Australia - Buy used guns with escrow. Free to list."
+        title="Gun Marketplace - Buy guns smarter. Sell guns faster."
+        ogTitle="Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={`
-          Buy used guns with escrow protection.
-          Sell your guns with free escrow listings.
+          Browse the latest used guns on the market.
+          Buy and sell used guns with escrow listings and classified ads.
         `}
         ogDescription={`
-          Buy used guns with escrow protection.
-          Sell your guns with free escrow listings.
+          Browse the latest used guns on the market.
+          Buy and sell used guns with escrow listings and classified ads.
         `}
       />
       {/* <MetaHeadersPage
