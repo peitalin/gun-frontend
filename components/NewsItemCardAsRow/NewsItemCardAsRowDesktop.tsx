@@ -83,6 +83,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
   // console.log("NEWSITEM: ", newsItem)
+  let dateListed = newsItem?.createdAt
   let dateSold = newsItem?.externalProduct?.currentExternalProductSnapshot?.createdAt
   let hrsToSold = newsItem?.externalProduct?.currentExternalProductSnapshot?.hrsToSold
   // console.log("dateSold: ", dateSold)
@@ -148,10 +149,13 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                     {caliber}
                   </Typography>
                   {
-                    isSold &&
-                    <div className={classes.soldInHrsText} >
-                      {`${printRelativeTime(dateSold)}`}
-                    </div>
+                    isSold
+                    ? <div className={classes.soldInHrsText} >
+                        {`Sold ${printRelativeTime(dateSold)}`}
+                      </div>
+                    : <div className={classes.soldInHrsText} >
+                        {`${printRelativeTime(dateSold)}`}
+                      </div>
                   }
                 </NewsItemLink>
               </div>
