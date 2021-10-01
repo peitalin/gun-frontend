@@ -226,6 +226,7 @@ export const useFacetSearchOptions = ({
           if (
             urlPath.startsWith('/categories') && key === 'categorySlug'
             || urlPath.startsWith('/new') && key === 'categorySlug'
+            || urlPath.startsWith('/sold') && key === 'categorySlug'
           ) {
             return null
           } else {
