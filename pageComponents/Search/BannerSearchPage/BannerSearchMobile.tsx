@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -16,22 +16,28 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { UserPrivate } from "typings/gqlTypes";
+// Router
+import { useRouter } from 'next/router';
 
 
 
-const BannerCategoryMobile: NextPage<ReactProps> = (props) => {
+const BannerSearchMobile: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
-    bannerForegroundImageUrl,
-    bannerBackgroundImageUrl,
+    // bannerForegroundImageUrl,
+    // bannerBackgroundImageUrl,
     bannerDither,
     categorySlug,
   } = props;
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
+  // const user = useSelector<GrandReduxState, UserPrivate>(
+  //   s => s.reduxLogin.user
+  // )
+  const router = useRouter()
+  const theme = useTheme();
+  const isDarkMode = isThemeDark(theme)
+  let pathname = router.pathname
 
   return (
     <div className={
@@ -44,7 +50,16 @@ const BannerCategoryMobile: NextPage<ReactProps> = (props) => {
         bannerContainerStyles={{
           marginBottom: "1rem",
         }}
-        src={bannerBackgroundImageUrl}
+        className={
+          pathname.includes('new')
+          ? isDarkMode
+            ? "background-monte-carlo"
+            : "background-velvet-sun"
+          : isDarkMode
+            ? "background-miaka"
+            : "background-velvet-sun"
+        }
+        // src={bannerBackgroundImageUrl}
         titleStyle={{
           // position: 'absolute',
           display: 'flex',
@@ -97,12 +112,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   blurb?: string
   categoryName?: string
   categorySlug?: string
-  bannerForegroundImageUrl: string
-  bannerBackgroundImageUrl: string
+  // bannerForegroundImageUrl: string
+  // bannerBackgroundImageUrl: string
   isExpanded: boolean
 }
 
-export default withStyles(styles)( BannerCategoryMobile );
+export default withStyles(styles)( BannerSearchMobile );
 
 
 

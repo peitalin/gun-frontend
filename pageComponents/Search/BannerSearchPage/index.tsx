@@ -3,20 +3,18 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import { styles } from "./styles";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 // typings
 import { Categories } from "typings/gqlTypes";
 import Hidden from 'components/HiddenFix';
-import BannerCategoryDesktop from "./BannerCategoryDesktop";
-import BannerCategoryMobile from "./BannerCategoryMobile";
+import BannerSearchDesktop from "./BannerSearchDesktop";
+import BannerSearchMobile from "./BannerSearchMobile";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
 import CategorySearchbar from "./CategorySearchbar";
 import RowOrCardsButtons from "./RowOrCardsButtons";
 
 
 
-const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
+const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
 
   const {
     classes,
@@ -68,31 +66,41 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
   const [focusedOuter, setFocusedOuter] = React.useState(false)
 
 
-  const getBannerImageUrl = (selectedCategorySlug: string) => {
-    let slug = selectedCategorySlug
-    switch (slug) {
-      case "handguns": {
-        return "/img/banner5.jpg"
-      }
-      case "rifles": {
-        return "/img/banner10.jpg"
-      }
-      case "shotguns": {
-        return "/img/banner10.jpg"
-      }
-      case "combination": {
-        return "/img/banner4.jpg"
-      }
-      default: {
-        return "/img/banner5.jpg"
-      }
-    }
-  }
+  // const getBannerImageUrl = () => {
+  //   // let slug = selectedCategorySlug
+  //   let pathname = router.pathname
+  //   if (pathname.includes("/new")) {
+  //     return "/img/banner5.jpg"
+  //   }
+  //   if (pathname.includes("/category")) {
+  //     return "/img/banner4.jpg"
+  //   }
+  //   if (pathname.includes("/sold")) {
+  //     return "/img/banner10.jpg"
+  //   }
 
-  // let selectedCategorySlug = currentCategories?.[0];
+  //   return "/img/banner5.jpg"
+  //   // switch (path) {
+  //   //   case "handguns": {
+  //   //     return "/img/banner5.jpg"
+  //   //   }
+  //   //   case "rifles": {
+  //   //     return "/img/banner10.jpg"
+  //   //   }
+  //   //   case "shotguns": {
+  //   //     return "/img/banner10.jpg"
+  //   //   }
+  //   //   case "combination": {
+  //   //     return "/img/banner4.jpg"
+  //   //   }
+  //   //   default: {
+  //   //     return "/img/banner5.jpg"
+  //   //   }
+  //   // }
+  // }
+
   let selectedCategorySlug = props.categorySlugsForGql?.[0];
   let selectedCategory = (currentCategories ?? []).find(c => c.slug === selectedCategorySlug)
-  // console.log('selectedCategory', selectedCategory)
 
   const selectedCategoryName: string = selectedCategory
     ? selectedCategory?.name
@@ -106,21 +114,17 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
   //   ? selectedCategory?.slug
   //   : "all"
 
-
-  const bannerImageUrl = getBannerImageUrl(selectedCategorySlug)
-  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.4) 10%, rgba(25,25,25,0.4) 90%)'
-  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.4) 10%, rgba(25,25,25,0.4) 90%)'
-  // console.log("categorySlugForGql: ", props.categorySlug)
+  // const bannerImageUrl = getBannerImageUrl()
+  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.01) 10%, rgba(25,25,25,0.01) 90%)'
+  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.01) 10%, rgba(25,25,25,0.01) 90%)'
 
   return (
     <>
       {/* Mobile */}
       <Hidden lgUp implementation='css' className={classes.width100}>
-        <BannerCategoryMobile
+        <BannerSearchMobile
           categoryName={props.bannerTitle ?? selectedCategoryName}
           blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
-          bannerForegroundImageUrl={bannerImageUrl}
-          bannerBackgroundImageUrl={bannerImageUrl}
           bannerDither={bannerDitherMobile}
           isExpanded={focusedOuter}
         >
@@ -170,16 +174,14 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
             setRowMode={setRowMode}
             isMobile={true}
           />
-        </BannerCategoryMobile>
+        </BannerSearchMobile>
       </Hidden>
 
       {/* Desktop */}
       <Hidden mdDown implementation="css" className={classes.width100}>
-        <BannerCategoryDesktop
+        <BannerSearchDesktop
           categoryName={props.bannerTitle ?? selectedCategoryName}
           blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
-          bannerForegroundImageUrl={undefined}
-          bannerBackgroundImageUrl={bannerImageUrl}
           bannerDither={bannerDither}
         >
           <CategorySearchbar
@@ -228,7 +230,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
             setRowMode={setRowMode}
             isMobile={false}
           />
-        </BannerCategoryDesktop>
+        </BannerSearchDesktop>
       </Hidden>
     </>
   )
@@ -256,7 +258,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)(BannerCategoryPage);
+export default withStyles(styles)(BannerSearchPage);
 
 
 

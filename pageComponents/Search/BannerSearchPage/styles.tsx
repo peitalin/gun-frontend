@@ -85,13 +85,13 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '2rem',
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.slateGrey,
+    color: Colors.black,
     lineHeight: '1.5rem',
   },
   mainTitleXs: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.slateGrey,
+    color: Colors.black,
     lineHeight: '1.5rem',
     fontSize: '1.5rem',
     // textShadow: '1px 1px 2px #444',
@@ -119,7 +119,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   subline1: {
-    color: Colors.slateGreyDarkest,
+    color: Colors.charcoal,
     fontFamily: fontFam,
     lineHeight: "1.5",
     fontWeight: 500,
@@ -128,7 +128,7 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 480,
   },
   subline1Xs: {
-    color: Colors.slateGreyDarkest,
+    color: Colors.charcoal,
     fontFamily: fontFam,
     lineHeight: "1.5",
     // fontWeight: 500,

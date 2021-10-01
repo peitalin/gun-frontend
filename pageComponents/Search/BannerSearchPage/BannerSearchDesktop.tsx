@@ -28,7 +28,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 
 
-const BannerCategory: NextPage<ReactProps> = (props) => {
+const BannerSearch: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -39,16 +39,28 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
   } = props;
 
 
+  const router = useRouter()
   const theme = useTheme();
+  const isDarkMode = isThemeDark(theme)
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+
+  let pathname = router.pathname
 
   return (
     <div className={classes.rootDesktop}>
       <Banner
         // in /public/img
-        src={bannerBackgroundImageUrl}
+        // src={bannerBackgroundImageUrl}
+        className={
+          pathname.includes('new')
+          ? isDarkMode
+            ? "background-atlas"
+            : "background-monte-carlo"
+          : isDarkMode
+            ? "background-miaka"
+            : "background-velvet-sun"
+        }
         titleStyle={{
-          color: Colors.cream,
           alignItems: 'flex-start',
           paddingLeft: '3rem',
           flexDirection: 'row',
@@ -62,7 +74,7 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
           borderRadius: BorderRadius3x,
           border: isThemeDark(theme)
             ? `1px solid ${Colors.uniswapLightNavy}`
-            : `1px solid ${Colors.slateGreyBlack}`
+            : `1px solid ${Colors.slateGreyDark}`
         }}
         dither={true}
         height={mdDown ? 240 : 300 }
@@ -112,12 +124,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   blurb?: string
   categoryName?: string
   categorySlug?: string
-  bannerForegroundImageUrl: string
-  bannerBackgroundImageUrl: string
+  bannerForegroundImageUrl?: string
+  bannerBackgroundImageUrl?: string
 }
 
 
-export default withStyles(styles)( BannerCategory );
+export default withStyles(styles)( BannerSearch );
 
 
 

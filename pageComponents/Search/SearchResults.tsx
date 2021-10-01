@@ -42,7 +42,7 @@ import {
   useFacetSearchOptions,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
-import BannerCategoryPage from "./BannerCategoryPage";
+import BannerSearchPage from "./BannerSearchPage";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
@@ -50,7 +50,7 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
-const CategoryId: React.FC<ReactProps> = (props) => {
+const SearchResults: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -142,10 +142,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   // rowMode by default
   const [rowMode, setRowMode] = React.useState(true)
 
-  // React.useEffect(() => {
-  //   setRowMode(mdDown)
-  // }, [mdDown])
-
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
     SEARCH_NEWS_ITEMS_CONNECTION, {
@@ -153,6 +149,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       query: {
         limit: limit,
         offset: offset,
+        filter: props.filter,
       },
       sortByDate: true,
       // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
@@ -230,7 +227,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         classes.maxWidth
       )}>
 
-        <BannerCategoryPage
+        <BannerSearchPage
           disableMetaHeader={disableMetaHeader}
           bannerTitle={props.bannerTitle}
           bannerBlurb={props.bannerBlurb}
@@ -363,6 +360,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerTitle?: string;
   bannerBlurb?: string;
   user: UserPrivate;
+  filter?: string;
 }
 interface QueryData1 {
   // productsByCategoryConnection: ProductsConnection
@@ -476,7 +474,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( CategoryId );
+export default withStyles(styles)( SearchResults );
 
 
 
