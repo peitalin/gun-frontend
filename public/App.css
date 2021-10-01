@@ -470,6 +470,28 @@ textarea {
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }
+.background-velvet-sun {
+    background: linear-gradient(-45deg, #E3ECC6, #E3D3B3, #E2A691, #E18175, #E05F5B );
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+.background-miaka {
+    background: linear-gradient(-45deg, #57B9B8, #76A3A4, #9D8589, #B47378, #C96369, #DA555D, #E94A53);
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+.background-monte-carlo {
+    background: linear-gradient(-45deg, #C79DC1, #CCACBC, #D1BCBA, #D9D2B7, #BEC3BE, #A5B5C5, #83A2CD);
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+.background-atlas {
+    background: linear-gradient(-45deg,#F3AE6D, #E3A088, #D6949F, #BF80C7, #A790CA, #89A6C8, #6CBCC6 );
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+
+
 
 .background-slide-loop {
     /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */

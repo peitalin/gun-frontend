@@ -7,8 +7,8 @@ import { Categories } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from 'components/ErrorBounds';
 // components
-import CategoriesComponent from "pageComponents/Categories";
-import CategoriesWall from "pageComponents/Categories/CategoriesWall";
+import SearchComponent from "pageComponents/Search";
+import CategoriesWall from "pageComponents/Search/CategoriesWall";
 // GQL
 import { GET_CATEGORIES } from "queries/categories-queries";
 // SSR
@@ -26,23 +26,23 @@ const CategoriesPage: NextPage<ReactProps> = (props) => {
   return (
     <ErrorBounds className={props.classes.root}>
       <MetaHeadersPage
-        title={"Browse used guns for sale by category | Gun Marketplace Australia"}
+        title={"Browse used guns for sale by category | Gun Marketplace"}
         description={`
-          Shop Gun Marketplace and browse local second hand firearms to trade.
+          Shop Gun Marketplace and browse local second hand gun to trade.
         `}
-        ogTitle={"Browse used guns for sale by category | Gun Marketplace Australia"}
+        ogTitle={"Browse used guns for sale by category | Gun Marketplace"}
         ogDescription={`
-          Shop Gun Marketplace and browse local second hand firearms to trade.
+          Shop Gun Marketplace and browse local second hand guns to trade.
         `}
         // ogImage={
         //   "https://image-content.gunmarketplace.com.au/og-img-category.png"
         // }
       />
-      <CategoriesComponent>
+      <SearchComponent>
         <CategoriesWall
           categories={props.initialCategories}
         />
-      </CategoriesComponent>
+      </SearchComponent>
     </ErrorBounds>
   )
 }

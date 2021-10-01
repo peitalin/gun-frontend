@@ -5,7 +5,7 @@ import { GET_CATEGORIES } from "queries/categories-queries";
 import {
   Categories,
 } from "typings/gqlTypes";
-import CategoryId from "pageComponents/Categories/CategoryId";
+import SearchResults from "pageComponents/Search/SearchResults";
 // SSR
 import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { serverApolloClient } from "utils/apollo";
@@ -49,11 +49,11 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
             <>
               {
                 user?.emailVerified
-                ? <CategoryId
+                ? <SearchResults
                     initialRouteCategory={props.selectedCategory}
                     initialDropdownCategories={props.initialCategories}
                     disableCategoriesFilter={false}
-                    bannerTitle={"New Listings"}
+                    bannerTitle={"Search New Listings"}
                     bannerBlurb={"Browse and search through new listings"}
                     user={user}
                   />
