@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -7,8 +8,7 @@ import { Actions } from "reduxStore/actions";
 import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
 import { PaginatorVariables } from "reduxStore/paginator-variables-actions";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from '../commonStyles';
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -72,7 +72,7 @@ import ButtonLoading from 'components/ButtonLoading';
 // SSR Subcomponents
 import dynamic from 'next/dynamic'
 import UploadPreviewPlaceholder from "../SSR/UploadPreviewPlaceholder";
-const PreviewItemUploader = dynamic(() => import("../PreviewItemUploaderGrid"), {
+const PreviewItemUploaderGrid = dynamic(() => import("../PreviewItemUploaderGrid"), {
   loading: () => <UploadPreviewPlaceholder/>,
   ssr: false,
 })
@@ -93,6 +93,7 @@ import {
   initialDashboardVariables,
   QueryDataDashboardProducts,
 } from "pageComponents/SellerDashboard/PublishedProductsList";
+import { buttonWidthClassified } from "./constants"
 
 // Typings
 import {
@@ -149,8 +150,8 @@ import VisaPurchaseClassifiedAd from "./VisaPurchaseClassifiedAd";
 
 const ProductCreatePage = (props: ReactProps) => {
 
-  // Props + State
   const { classes } = props;
+
   const [state, setState] = React.useState<{ loading: boolean }>({
     loading: false,
   });
@@ -388,6 +389,22 @@ const ProductCreatePage = (props: ReactProps) => {
     return <StoreSuspended/>
   }
 
+  /////// Hooks ////////
+
+  React.useEffect(() => {
+    // update formik variants whenever redux variants change
+    formik.setFieldValue(
+      "currentVariants",
+      reduxToFormikCurrentVariants({
+        productCreateInput: productCreateInput as ProductCreateInputFrontEnd,
+        dzuPreviewItems: dzuPreviewItems,
+        dzuPreviewOrder: dzuPreviewOrder,
+      })
+    );
+    formik.validateForm()
+  }, [dzuPreviewItems, dzuPreviewOrder])
+
+
   return (
     <ProductCreateLayout
       productPreviewSticky={productCreateInputToProduct(
@@ -559,9 +576,8 @@ const ProductCreatePage = (props: ReactProps) => {
 
 
         <SectionBorder thickPadding={true}>
-          <PreviewItemUploader
+          <PreviewItemUploaderGrid
             reducerName={reducerName}
-            productInput={productCreateInput}
             ownerId={storeId}
             dzuPreviewItems={dzuPreviewItems}
             dzuPreviewOrder={dzuPreviewOrder}
@@ -735,6 +751,56 @@ interface MutationVar {
   productCreateInput: ProductCreateInputFrontEnd
   classifiedAdPaymentInput: ClassifiedAdPaymentInput
 }
+
+
+
+export const styles = (theme: Theme) => createStyles({
+  maxWidth: {
+    maxWidth: 540,
+    width: '100%',
+  },
+  title: {
+    lineHeight: '1.5rem',
+    marginBottom: '0.5rem',
+  },
+  // Buttons
+  flexButtons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    width: '100%',
+    maxWidth: buttonWidthClassified,
+  },
+  flexButtonSpacer: {
+    marginBottom: '1rem',
+    justifyContent: 'center',
+    flexGrow: 1,
+    flexBasis: '5%',
+  },
+  policyBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: '100%',
+  },
+  policy: {
+    width: 'calc(100% - 2rem)',
+    maxWidth: buttonWidthClassified,
+    fontWeight: 400,
+    marginBottom: '1rem',
+    color: Colors.grey,
+    lineHeight: '1rem',
+    textAlign: 'center',
+  },
+  stepperSectionText: {
+    marginBottom: '1rem',
+    color: isThemeDark(theme)
+    ? Colors.uniswapMediumGrey
+    : Colors.slateGreyLightBlack,
+  },
+})
+
 
 export default withStyles(styles)(React.memo(
   (props: ReactProps) => <ProductCreatePage {...props}/>,

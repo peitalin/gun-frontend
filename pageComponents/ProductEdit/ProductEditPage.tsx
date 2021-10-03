@@ -118,8 +118,6 @@ const ProductEditPage = (props: ReactProps) => {
   // Props & State
   const {
     classes,
-    asModal,
-    closeModal,
   } = props;
   const router = useRouter();
 
@@ -248,6 +246,7 @@ const ProductEditPage = (props: ReactProps) => {
     }
   }, [props.product])
 
+  /////// Hooks ////////
 
   React.useEffect(() => {
     console.log("updating formik.currentVariants")
@@ -259,18 +258,18 @@ const ProductEditPage = (props: ReactProps) => {
         dzuPreviewOrder,
       })
     );
-  }, [dzuPreviewItems])
+    formik.validateForm()
+  }, [dzuPreviewItems, dzuPreviewOrder])
 
-  // console.log("formik.values", formik.values)
+
+  console.log("formik.values", formik.values)
   // console.log("formik.errors", formik.errors)
-  console.log("productEditInput", productEditInput)
+  // console.log("productEditInput", productEditInput)
 
   return (
     <PreventDragDropContainer>
       <ProductEditFormLayout
         classes={classes}
-        asModal={asModal}
-        closeModal={closeModal}
         onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
       >
         <Typography className={classes.title} variant="h2">
@@ -325,7 +324,6 @@ const ProductEditPage = (props: ReactProps) => {
         <SectionBorder thickPadding={true}>
           <PreviewItemUploaderGrid
             reducerName={reducerName}
-            productInput={productEditInput}
             ownerId={props.product.store.id}
             productId={props.product.id}
             dzuPreviewItems={dzuPreviewItems}
@@ -436,8 +434,6 @@ const printValidationErrors = (
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  asModal?: boolean;
-  closeModal(): void;
   product: Product;
 }
 

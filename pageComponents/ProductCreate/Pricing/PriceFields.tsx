@@ -199,41 +199,10 @@ export const styles = (theme: Theme) => createStyles({
   marginRight: {
     marginRight: '0.5rem',
   },
-  flexItem: {
-    flexGrow: 1,
-    flexBasis: '20%',
-  },
-  title: {
-    marginBottom: '1rem',
-  },
   container: {
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
     color: Colors.uniswapLighterGrey,
-  },
-  priceFlexRow: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  priceLabel: {
-    marginRight: '0.5rem',
-    marginBottom: '0.5rem',
-    fontSize: '0.9rem',
-    color: Colors.uniswapLighterGrey,
-  },
-  priceValue: {
-    color: Colors.lightBlue,
-    textAlign: 'end',
-    marginBottom: '0.5rem',
-    fontSize: '0.9rem',
-  },
-  priceOptional: {
-    color: Colors.mediumGrey,
-    textAlign: 'end',
-    marginBottom: '0.5rem',
-    fontSize: '0.9rem',
   },
   textField: {
     width: "100%",

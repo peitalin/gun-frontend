@@ -21,7 +21,6 @@ import { payoutDoesNotExist, storeDoesNotExist } from "utils/store";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-import Link from "next/link";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -153,18 +152,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  errorMessage: {
-    position: 'absolute',
-    bottom: 0,
-    right: '0.25rem',
-    fontSize: '0.8rem',
-    color: `${fade(theme.palette.error.light, 0.6)}`,
-    fontFamily: fontFam,
-    transition: theme.transitions.create('color', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
-    }),
-  },
   storeLogin: {
     position: "relative",
     margin: '1rem 0rem',
@@ -174,17 +161,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     zIndex: 2,
   },
-  storeLogin2: {
-    position: "relative",
-    marginTop: '1rem',
-    marginBottom: '2rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 2,
-  },
-
   // Buttons
   buttonCreateAccount: {
     // marginRight: '0.5rem',
@@ -203,26 +179,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonCreateAccountMaxWidth: {
     maxWidth: 350,
-  },
-  buttonCreateAccountMaxWidthMd: {
-    maxWidth: 260,
-  },
-  productCreateLinkButton: {
-    backgroundColor: Colors.ultramarineBlue,
-    border: `1px solid ${Colors.ultramarineBlue}`,
-    color: Colors.cream,
-    width: 240,
-    "&:hover": {
-      backgroundColor: fade(Colors.ultramarineBlueDark, 1),
-      border: `1px solid ${Colors.ultramarineBlueDark}`,
-      transition: theme.transitions.create(['color', 'border'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: "100ms",
-      })
-    }
-  },
-  productCreateLinkButtonText: {
-    fontSize: '1.125rem',
   },
   biggerButtons: {
     fontSize: '1rem',
@@ -252,12 +208,6 @@ export const styles = (theme: Theme) => createStyles({
     flexWrap: "wrap",
     width: '100%',
   },
-  loginButtonSpacer: {
-    width: '2rem',
-  },
-  loginButton: {
-    width: '100%',
-  },
   loginTitle: {
     marginTop: '1rem',
     marginBottom: '1rem',
@@ -265,45 +215,9 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 2,
     textAlign: 'center',
   },
-  loggedInUserText: {
-    flexBasis: '60%',
-  },
-  loggedInUserContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-  },
-  logout: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    fontSize: '0.9rem',
-    marginTop: '0.5rem',
-    fontWeight: 600,
-    flexBasis: '20%',
-  },
-  link: {
-    color: Colors.blue,
-    cursor: 'pointer',
-    "&:hover": {
-      color: Colors.lightBlue,
-    },
-  },
   maxWidthButton: {
     width: '100%',
     margin: '0rem 0.5rem',
-  },
-  divider: {
-    width: '100%',
-    marginTop: '1rem',
-  },
-  divider2: {
-    width: '100%',
-    marginTop: '2rem',
-  },
-  createStoreButtonContainer: {
-    marginTop: '0.5rem',
   },
 })
 

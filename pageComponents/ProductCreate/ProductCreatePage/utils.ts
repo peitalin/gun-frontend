@@ -5,6 +5,8 @@ import {
   Categories,
   ProductVariantInput,
   StorePrivate,
+  ProductPreviewItem,
+  ProductPreviewItemInput,
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
@@ -165,21 +167,40 @@ export const reduxToFormikCurrentVariants = ({
   return (productInput?.currentVariants ?? []).map(v => {
 
     // pull preview items from redux into each current variant in formik
-    let previewItems = dzuPreviewOrder.map(
-      order => dzuPreviewItems.find(p => p.id === order.id)
-    )
-    .filter(pv => !!pv?.fileId || !!pv?.youTubeVimeoEmbedLink)
-    .map(pv => {
-      return {
-        imageId: pv.fileId,
-        youTubeEmbedLink: pv.youTubeVimeoEmbedLink,
-        isInternal: true,
-      }
+    let previewItemsInput = reduxPreviewsToProductPreviewItemInput({
+      dzuPreviewItems,
+      dzuPreviewOrder
     })
 
     return {
       ...v,
-      previewItems: previewItems,
+      previewItems: previewItemsInput,
     }
   })
+}
+
+
+
+export const reduxPreviewsToProductPreviewItemInput = ({
+  dzuPreviewItems,
+  dzuPreviewOrder,
+}: {
+  dzuPreviewItems: DzuPreviewItem[],
+  dzuPreviewOrder: DzuPreviewOrder[],
+}): ProductPreviewItemInput[] => {
+
+  // pull preview items from redux into each current variant in formik
+  let previewItems = (dzuPreviewOrder ?? []).map(
+    order => dzuPreviewItems.find(p => p.id === order.id)
+  )
+  .filter(pv => !!pv?.fileId || !!pv?.youTubeVimeoEmbedLink)
+  .map(pv => {
+    return {
+      imageId: pv.fileId,
+      youTubeEmbedLink: pv.youTubeVimeoEmbedLink,
+      isInternal: true,
+    }
+  })
+
+  return previewItems
 }

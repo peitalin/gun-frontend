@@ -18,11 +18,8 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
 
   const {
     user,
-    avatarBorderStyle,
     classes
   } = props;
-  // imgloaded
-  const [avatarImgLoaded, setAvatarImgLoaded] = React.useState(false);
 
   return (
     <ErrorBounds className={clsx(classes.container)}>
@@ -53,7 +50,6 @@ type StoreProps = ReactProps;
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
-  avatarBorderStyle?: any;
 }
 
 
@@ -87,41 +83,6 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
     flexDirection: 'row',
     width: '100%',
-  },
-  flexItem: {
-    flexBasis: '70%',
-    paddingRight: '1rem',
-  },
-  title: {
-    marginBottom: '1rem',
-  },
-  avatar: {
-    height: 60,
-    width: 60,
-    margin: theme.spacing(1),
-    border: `4px solid ${theme.colors.uniswapLightNavy}`,
-  },
-  avatarBorder: {
-    marginBottom: '0.5rem',
-    // outer fluro circle
-    height: '66px',
-    width: '66px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '100%',
-    background: Gradients.gradientUniswapFluro.background,
-  },
-  avatarButton: {
-    padding: theme.spacing(1),
-  },
-  editStoreLink: {
-    color: "#2484FF",
-    textDecoration: "underline",
-  },
-  link: {
-    cursor: 'pointer',
-    color: theme.colors.blue,
   },
   name: {
     marginLeft: '0.5rem',

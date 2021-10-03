@@ -8,7 +8,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { User_Licenses, UserPrivate } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -156,7 +156,7 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
                     padding: '0px',
                     width: '100%'
                   }}>
-                    <div className={classes.categoryButtonsContainer}>
+                    <div className={classes.accordionButtonsBox}>
                       {
                         (user?.licenses ?? []).map((license, i) => {
                           let categories = license.licenseCategory?.replace("Category", "")

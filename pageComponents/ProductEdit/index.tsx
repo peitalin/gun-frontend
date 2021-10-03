@@ -3,12 +3,9 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
-// Material UI
-import Dialog from "@material-ui/core/Dialog";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Components
 import ProductEditPage from "./ProductEditPage";
 import ErrorBounds from 'components/ErrorBounds';
@@ -23,68 +20,30 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const ProductEditModal: React.FC<ReactProps> = (props) => {
 
-  const [fadeOut, setFadeOut] = React.useState(false);
-  const { classes, asModal, product } = props;
+  const { classes, product } = props;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-
   const dispatch = useDispatch();
-  const productEditModalOpen = useSelector<GrandReduxState, boolean>(
-    state => state.reduxModals.productEditModalOpen
-  );
 
-  const closeModal = () => {
-    setFadeOut(true);
-    dispatch(Actions.reduxProductEdit.RESET_PRODUCT_EDIT())
-    setTimeout(() => {
-      dispatch(Actions.reduxModals.TOGGLE_PRODUCT_EDIT_MODAL(false))
-    }, 100)
-  }
-
-  if (!asModal) {
-    return (
-      <ErrorBounds className={clsx(
-        classes.pageRoot,
-        mdDown ? classes.paddingMobile : classes.paddingDesktop,
-      )}>
-        <div className={classes.outerContainer}>
-          <div className={classes.flexRowInner}>
-            <ProductEditPage
-              asModal={false}
-              closeModal={closeModal}
-              product={product}
-            />
-          </div>
+  return (
+    <ErrorBounds className={clsx(
+      classes.pageRoot,
+      mdDown ? classes.paddingMobile : classes.paddingDesktop,
+    )}>
+      <div className={classes.outerContainer}>
+        <div className={classes.flexRowInner}>
+          <ProductEditPage
+            product={product}
+          />
         </div>
-      </ErrorBounds>
-    )
-  } else {
-    return (
-      <Dialog
-        open={productEditModalOpen}
-        onClose={() => closeModal()}
-        BackdropProps={{
-          classes: { root: classes.modalBackdrop }
-        }}
-        PaperProps={{
-          classes: { root: classes.modalPaperScrollPaper }
-        }}
-        scroll={"body"}
-      >
-        <ProductEditPage
-          asModal={true}
-          closeModal={closeModal}
-          product={product}
-        />
-      </Dialog>
-    )
-  }
+      </div>
+    </ErrorBounds>
+  )
 }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  asModal: boolean;
   product: Product;
 }
 

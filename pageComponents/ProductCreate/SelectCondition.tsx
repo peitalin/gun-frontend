@@ -3,7 +3,7 @@ import clsx from "clsx";
 // Typings
 import { Conditions, Condition, getConditionDescription } from "typings";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -109,7 +109,7 @@ const SelectCondition = (props: ReactProps & FormikProps<FormikFields>) => {
                 padding: '0px',
                 width: '100%'
               }}>
-                <div className={classes.categoryButtonsContainer}>
+                <div className={classes.accordionButtonsBox}>
                   {
                     conditionChoices.map((cond, i) => {
                       let conditionDescription = getConditionDescription(cond)

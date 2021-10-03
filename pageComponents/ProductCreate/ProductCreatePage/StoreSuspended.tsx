@@ -79,18 +79,6 @@ export const styles = (theme: Theme) => createStyles({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 export default withStyles(styles)(React.memo(
   (props: ReactProps) => <StoreSuspended {...props}/>,
 ));

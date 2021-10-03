@@ -6,7 +6,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // Typings
 import { UserPrivate, Role } from "typings/gqlTypes";

@@ -3,7 +3,7 @@ import clsx from "clsx";
 // Typings
 import { ListingType, UserPrivate } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";

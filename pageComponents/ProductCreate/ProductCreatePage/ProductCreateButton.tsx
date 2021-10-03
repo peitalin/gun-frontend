@@ -7,7 +7,6 @@ import clsx from "clsx";
 import { Product, Connection, ProductCreateInput } from "typings/gqlTypes";
 // Material UI
 import ButtonLoading from "components/ButtonLoading";
-import Typography from "@material-ui/core/Typography";
 // Utility Components
 import ErrorBounds from "components/ErrorBounds";
 // Validation
@@ -19,7 +18,6 @@ import { buttonWidthClassified } from "./constants";
 const ProductCreateButton = (props: ReactProps) => {
 
   const {
-    errors,
     postInstantly = true,
     disabled = true,
   } = props;

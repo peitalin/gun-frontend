@@ -1,5 +1,8 @@
 import React from "react";
 import clsx from "clsx";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+// Styles
+import { styles } from './commonStyles';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -10,9 +13,6 @@ import { useQuery } from '@apollo/client';
 // Typings
 import { Categories } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
@@ -135,9 +135,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 padding: '0px',
                 width: '100%'
               }}>
-                  {/* // error
-                  // ? <ErrorDisplay title={"SelectCategories"} error={error}/> : */}
-                  <div className={classes.categoryButtonsContainer}>
+                  <div className={classes.accordionButtonsBox}>
                       {
                         categories.map((category, i) => {
                           return (

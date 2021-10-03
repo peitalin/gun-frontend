@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -56,35 +56,6 @@ const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
     <ErrorBounds className={classes.positionRelative}>
 
       <RefLink refId={refLinks.title}/>
-
-      {/* <Typography
-        color={"primary"}
-        variant="subtitle1"
-        gutterBottom
-      >
-        Title
-      </Typography>
-      <TextInput
-        name="title"
-        placeholder="The title of your product"
-        className={classes.textField}
-        value={title}
-        onChange={(e) => {
-          if (e.target.value.length <= maxLengthTitle) {
-            setTitle(e.target.value)
-            updateTitle(e.target.value)
-          }
-          fprops.setFieldTouched('title', true)
-        }}
-        inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.title}
-        touched={!!touched.title}
-        disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthTitle,
-          count: title.length
-        }}
-      /> */}
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
         Serial Number

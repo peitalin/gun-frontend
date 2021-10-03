@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 import { ReducerName } from "typings/dropzone";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";

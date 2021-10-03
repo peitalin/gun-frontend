@@ -3,7 +3,7 @@ import clsx from "clsx";
 // Redux
 import { ActionTypes, ActionType } from "typings";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -111,7 +111,7 @@ const SelectActionType = (props: ReactProps & FormikProps<FormikFields>) => {
                 padding: '0px',
                 width: '100%'
               }}>
-                <div className={classes.categoryButtonsContainer}>
+                <div className={classes.accordionButtonsBox}>
                   {
                     actionTypeChoices.map((aType, i) => {
                       return (
@@ -158,7 +158,6 @@ const SelectActionType = (props: ReactProps & FormikProps<FormikFields>) => {
     </ErrorBounds>
   )
 }
-
 
 
 export interface SelectOption {

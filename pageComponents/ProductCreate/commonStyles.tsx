@@ -13,25 +13,6 @@ import { buttonWidthClassified } from "./ProductCreatePage/constants"
 
 
 export const styles = (theme: Theme) => createStyles({
-  topButtonContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  maxWidth: {
-    maxWidth: 540,
-    width: '100%',
-  },
-  marginSm: {
-    marginLeft: '1rem',
-  },
-  modalMargin: {
-    margin: '0rem',
-    paddingTop: '3rem',
-    paddingBottom: '3rem',
-    paddingLeft: '2rem',
-    paddingRight: '2rem',
-  },
   sectionBorder: {
     // border: `1px solid ${Colors.mediumLightGrey}`,
     borderRadius: BorderRadius2x,
@@ -40,59 +21,11 @@ export const styles = (theme: Theme) => createStyles({
     background: Colors.uniswapDarkNavy,
     boxShadow: BoxShadows.shadow4.boxShadow,
   },
-  // sectionBorderSm: {
-  //   borderRadius: '0px',
-  //   padding: '1rem',
-  //   marginBottom: '0rem',
-  //   background: Colors.uniswapDarkNavy,
-  //   // boxShadow: BoxShadows.shadow4.boxShadow,
-  //   borderBottom: `1px solid ${Colors.uniswapNavy}`,
-  // },
-  padding1: {
-    padding: '1rem',
-  },
-  padding2: {
-    padding: '2rem',
-  },
-  titleBox: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  titleBoxSm: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    margin: '0rem 1rem'
-  },
-  title: {
-    lineHeight: '1.5rem',
-    marginBottom: '0.5rem',
-  },
-  subtitle: {
-    fontWeight: 400,
-    fontSize: '0.9rem',
-    lineHeight: '1rem',
-    color: Colors.grey,
-  },
-  orderTitle: {
-    marginBottom: '1rem',
-  },
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
   marginBottom1: {
     marginBottom: "1rem",
   },
   formContainer: {
     position: 'relative',
-  },
-  container: {
-    marginBottom: "0.5rem",
-  },
-  selecTagsRoot: {
-    marginTop: '2rem',
-    // marginBottom: '1rem',
   },
   tagsTitle: {
     marginBottom: '0.5rem',
@@ -102,20 +35,6 @@ export const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     width: '100%',
     justifyContent: "center",
-  },
-  dense: {
-    marginTop: 0,
-  },
-  imageContainer: {
-    width: "50%",
-    height: "50%",
-  },
-  menu: {
-    width: 200,
-  },
-  discountContainer: {
-    marginTop: '0.5rem',
-    marginRight: '0.5rem',
   },
   textField: {
     width: "100%",
@@ -132,108 +51,21 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.charcoal,
     },
   },
-  flexContainer: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-  },
-  flexRow: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
   flexCol: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
   },
-  flexCol50: {
-    flexBasis: '40%',
-    flexGrow: 1,
-    margin: '0.5rem',
-  },
-  flexEnd: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  flexItem: {
-    flexGrow: 1,
-    flexBasis: '20%',
-  },
-  variantCell: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  optionValues: {
-    flexBasis: '100%',
-    marginRight: '0rem',
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
-    marginTop: '0.5rem',
-  },
-  errorMessage: {
-    position: 'absolute',
-    bottom: 0,
-    right: '0.25rem',
-    fontSize: '0.8rem',
-    color: `${fade(theme.palette.error.light, 0.6)}`,
-    fontFamily: fontFam,
-    transition: theme.transitions.create('color', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
-    }),
-  },
   positionRelative: {
     position: 'relative',
   },
-
-  // Buttons
-  flexButtons: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-    width: '100%',
-    maxWidth: buttonWidthClassified,
-  },
-  flexButtonSpacer: {
-    marginBottom: '1rem',
-    justifyContent: 'center',
-    flexGrow: 1,
-    flexBasis: '5%',
-  },
-  formIncomplete: {
-    color: "#ccc",
-    textAlign: "center",
-    marginTop: '0.25rem',
-  },
-  policyBox: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: '100%',
-  },
-  policy: {
-    width: 'calc(100% - 2rem)',
-    maxWidth: buttonWidthClassified,
-    fontWeight: 400,
-    marginBottom: '1rem',
-    color: Colors.grey,
-    lineHeight: '1rem',
-    textAlign: 'center',
-  },
-  greyedOut: {
-    color: Colors.grey,
-    opacity: 0.6,
-  },
+  // SelectTags
   optionalText: {
     color: Colors.mediumGrey,
     fontWeight: 500,
     fontSize: '0.9rem',
   },
+  // SelectTags
   tagsTip: {
     color: Colors.uniswapLighterGrey,
     marginTop: '0.25rem',
@@ -249,7 +81,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   // Categories
-  categoryButtonsContainer: {
+  accordionButtonsBox: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
@@ -378,25 +210,15 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '1rem',
     fontWeight: 400,
   },
-  uploaderSwitcherTitle: {
-    width: '100%',
-    display: "flex",
-    flexDirection: 'row',
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
   titleDim: {
     color: Colors.darkGrey,
   },
-  // Product Preview Page Modal
+  // Listing Type: Escrow PayoutMethod Modal
   modalBackdrop: {
     backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     borderRadius: BorderRadius2x,
-    // maxHeight: "calc(100% - 4rem)",
-    // width: '100%',
-    // margin: 0,
   },
   fullMaxHeight: {
     maxHeight: "100%",
@@ -410,20 +232,6 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.lightGrey,
     padding: 2, // determines button size
   },
-  previewIconButton: {
-    position: "fixed",
-    right: '1rem',
-    top: '1rem',
-    zIndex: 1502,
-  },
-  svgIcon: {
-    fill: "#eaeaea",
-    width: '2rem',
-    height: '2rem',
-    "&:hover": {
-      fill: "#fafafa",
-    },
-  },
   descriptionRoot: {
     marginBottom: '1rem',
   },
@@ -432,29 +240,12 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     marginTop: '0.5rem',
   },
-  dealerDropdown: {
-    flexGrow: 1,
-    minWidth: 200,
-    // marginRight: '1rem',
-    // marginLeft: '1rem',
-    marginBottom: '0.5rem',
-  },
   caliberDropdown: {
     flexGrow: 1,
     minWidth: 200,
     // marginRight: '1rem',
     // marginLeft: '1rem',
     paddingBottom: '1rem',
-  },
-  dontSeeDealerLink: {
-    color: Colors.uniswapLighterGrey,
-    textAlign: "center",
-    width: "100%",
-    marginTop: "1rem",
-    "&:hover": {
-      cursor: "pointer",
-      color: Colors.gradientUniswapBlue1,
-    }
   },
   marginTop1: {
     marginTop: '1rem',
@@ -615,17 +406,6 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 
