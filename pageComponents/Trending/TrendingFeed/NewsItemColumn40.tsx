@@ -58,6 +58,7 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
             >
               <NewsItemCard
                 newsItem={currentNewsItem}
+                className={classes.paddingTop3}
                 user={userRedux}
                 closeModal={() => setOpenModal(false)}
                 isModal={true}
@@ -130,6 +131,9 @@ const styles = (theme: Theme) => createStyles({
   desktopWidth: {
     minWidth: 400,
     flexBasis: "40%",
+  },
+  paddingTop3: {
+    paddingTop: "3rem",
   },
 })
 

@@ -35,16 +35,20 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
       props.isModal
         ? classes.newsItemModalPageRootMobile
         : classes.newsItemModalPageRootDesktop,
+      props.className,
     )}>
-      <IconButton
-        className={clsx(
-          classes.closeButton,
-          props.isModal ? classes.closeButtonMobile : classes.closeButtonDesktop,
-        )}
-        onClick={props.closeModal}
-      >
-        <ClearIcon className={classes.clearIcon}/>
-      </IconButton>
+      {
+        props.closeModal &&
+        <IconButton
+          className={clsx(
+            classes.closeButton,
+            props.isModal ? classes.closeButtonMobile : classes.closeButtonDesktop,
+          )}
+          onClick={props.closeModal}
+        >
+          <ClearIcon className={classes.clearIcon}/>
+        </IconButton>
+      }
       <div className={clsx(
         classes.newsItemInnerContainer,
         // previewLoaded && classes.previewLoaded,
@@ -77,17 +81,18 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem
   user: UserPrivate
-  closeModal(): void;
-  isModal: boolean;
-  index: number
-  setIndex(i: number): void
+  closeModal?(): void;
+  isModal?: boolean;
+  index?: number
+  setIndex?(i: number): void
+  className?: any;
 }
 
 
 const styles = (theme: Theme) => createStyles({
   newsItemModalPageRootDesktop: {
     position: "relative",
-    paddingTop: "3rem",
+    // paddingTop: "3rem",
   },
   newsItemModalPageRootMobile: {
     position: "relative",

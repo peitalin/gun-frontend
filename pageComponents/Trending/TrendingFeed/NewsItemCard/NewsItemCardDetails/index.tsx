@@ -59,28 +59,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"))
   // const snackbar = useSnackbar();
 
-  // const [
-  //   upvote,
-  //   upvoteResponse
-  // ] = useMutation<MData1, MVar>(UPVOTE_NEWS_ITEM, {
-  //   onError: (err) => console.log(err)
-  // })
-
-  // const [
-  //   unvote,
-  //   unvoteResponse
-  // ] = useMutation<MData2, MVar>(UNVOTE_NEWS_ITEM, {
-  //   onError: (err) => console.log(err)
-  // })
-
-  // const [
-  //   downvote,
-  //   downvoteResponse
-  // ] = useMutation<MData3, MVar>(DOWNVOTE_NEWS_ITEM, {
-  //   onError: (err) => console.log(err)
-  // })
-
-
   const {
 		model,
 		make,
@@ -105,21 +83,11 @@ const NewsItemCardDetails = (props: ReactProps) => {
   } = transformNewsItemToFields(newsItem)
 
 
-  // locally update score optimistic, so you get instant feedback when voting
-  // instead of waiting for mutation to return to update score
-  const [existingVoteScore, setExistingVoteScore] = React.useState(
-    newsItem?.yourVote?.score ?? 0
-  )
   const [
     featuredPreviewItem,
     setFeaturedPreviewItem
   ] = React.useState(_featuredPreviewItem);
   // console.log("newsITEM:", newsItem)
-
-  const downvoted = existingVoteScore === -1
-  const upvoted = existingVoteScore === 1
-  // console.log("yourVote:", yourVote)
-  // console.log("previewItem:", previewItem)
 
   // if there is a gallery, constrain aspect ratio so the
   // image box doesnt jitter in size when browsing through the gallery
@@ -152,9 +120,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
                 style={{
                   width: props.imageSize?.desktop?.width,
                   height: props.imageSize?.desktop?.height,
-                  // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
-                  // overflow: 'hidden',
-                  // maxHeight: 285,
                   maxHeight: 266,
                 }}
                 swipeableStyle={{
@@ -231,20 +196,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
           }}
         />
 
-        {/* <ButtonLoading
-          className={props.classes.claimButton}
-          variant={"contained"}
-          loadingIconColor={Colors.cream}
-          replaceTextWhenLoading={true}
-          // loading={loading}
-          // disabled={ }
-          disabled={true}
-          onClick={() => {
-            console.log("Convert externalProduct to Product")
-          }}
-        >
-          Claim Listing
-        </ButtonLoading> */}
       </div>
 
       {
@@ -421,18 +372,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setIndex(i: number): void
 }
 
-// interface MData1 {
-//   upvoteNewsItem: NewsItem
-// }
-// interface MData2 {
-//   unvoteNewsItem: NewsItem
-// }
-// interface MData3 {
-//   downvoteNewsItem: NewsItem
-// }
-// interface MVar {
-//   newsItemId: string
-// }
+
 
 const styles = (theme: Theme) => createStyles({
   newsItemCardDetailsRoot: {

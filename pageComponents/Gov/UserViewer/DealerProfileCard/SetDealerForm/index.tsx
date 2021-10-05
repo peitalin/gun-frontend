@@ -318,16 +318,6 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '2rem',
     marginBottom: '2rem',
   },
-  dontSeeDealerLink: {
-    color: Colors.secondary,
-    textAlign: "center",
-    width: "100%",
-    marginTop: "0.5rem",
-    "&:hover": {
-      cursor: "pointer",
-      color: Colors.secondaryBright,
-    }
-  },
   buttonBlue: {
     marginTop: '2rem',
     maxWidth: 250,
@@ -337,6 +327,13 @@ export const styles = (theme: Theme) => createStyles({
     "&:hover": {
       border: `1px solid ${Colors.secondaryBright}`,
       backgroundColor: Colors.secondaryBright,
+    }
+  },
+  dontSeeDealerLink: {
+    color: Colors.uniswapLighterGrey,
+    "&:hover": {
+      cursor: "pointer",
+      color: Colors.gradientUniswapBlue1,
     }
   },
 })

@@ -105,13 +105,6 @@ export const styles = (theme: Theme) => createStyles({
     // marginLeft: '1rem',
     marginBottom: '0.5rem',
   },
-  dontSeeDealerLink: {
-    color: Colors.uniswapLighterGrey,
-    "&:hover": {
-      cursor: "pointer",
-      color: Colors.gradientUniswapBlue1,
-    }
-  },
 })
 
 export default withStyles(styles)( ChooseDealerDropdown );
