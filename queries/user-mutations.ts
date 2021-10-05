@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { UserPrivateFragment, StorePrivateFragment } from "./fragments";
 
+
 export const SIGN_UP_USING_EMAIL = gql`
   mutation signUpUsingEmail(
     $email: String!
@@ -12,8 +13,6 @@ export const SIGN_UP_USING_EMAIL = gql`
     # $licenseExpiry: Date!
     # $licenseCategory: String
     # $licenseState: String
-    # $phoneNumber: String!
-    # $countryCode: String!
   ) {
     signUpUsingEmail(
       email: $email
@@ -25,8 +24,6 @@ export const SIGN_UP_USING_EMAIL = gql`
       # licenseExpiry: $licenseExpiry
       # licenseCategory: $licenseCategory
       # licenseState: $licenseState
-      # phoneNumber: $phoneNumber
-      # countryCode: $countryCode
     ) {
       user {
         ...UserPrivateFragment
