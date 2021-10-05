@@ -1314,6 +1314,7 @@ export type Mutation = {
   reindexProductOrNewsItem?: Maybe<BlankMutationResponse>;
   generateClaimProductRefId?: Maybe<ClaimProductLink>;
   swapImagesForClaim?: Maybe<NewsItem>;
+  getNewsItemByClaimId?: Maybe<NewsItem>;
 };
 
 
@@ -3671,6 +3672,11 @@ export type MutationGenerateClaimProductRefIdArgs = {
 export type MutationSwapImagesForClaimArgs = {
   claimId: Scalars['String'];
   previewItems: Array<ProductPreviewItemInput>;
+};
+
+
+export type MutationGetNewsItemByClaimIdArgs = {
+  claimId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */

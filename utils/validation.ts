@@ -310,11 +310,58 @@ export const validationSchemas = {
     }),
 
   // Sign Up
-  SignupEmail:
+  SignUpEmail:
     Yup.object().shape({
       email: Yup.string()
         .email("Not a valid email")
         .required('An email is needed'),
+      password: Yup.string()
+        .min(6, "Must be at least 6 letters")
+        .required('A password is needed'),
+      claimId: Yup.string(),
+    }),
+
+  // Sign Up/Log In And Claim
+  SignUpAndClaimItem:
+    Yup.object().shape({
+      claimId: Yup.string(),
+      dealerId: Yup.string(),
+      email: Yup.string()
+        .email("Not a valid email")
+        .required('An email is needed'),
+      password: Yup.string()
+        .min(6, "Must be at least 6 letters")
+        .required('A password is needed'),
+      firstName: Yup.string()
+        .min(2, "Must be at least 2 chars!")
+        .max(20, "Must be less than 20 chars!")
+        .required("required"),
+      lastName: Yup.string()
+        .min(2, "Must be at least 2 chars!")
+        .max(20, "Must be less than 20 chars!")
+        .required("required"),
+      licenseNumber: Yup.string()
+        .min(5, "Must be at least 5 digits!")
+        .max(20, "Must be less than 20 digits!")
+        .required("required"),
+      licenseExpiry: Yup.date()
+        .required("required"),
+      licenseCategory: Yup.array().of(Yup.string())
+        .required("required"),
+      licenseState: Yup.string()
+        .required("required"),
+    }),
+  // Log In And Claim
+  LogInAndClaim:
+    Yup.object().shape({
+      claimId: Yup.string(),
+      dealerId: Yup.string(),
+      email: Yup.string()
+        .email("Not a valid email")
+        .required('An email is needed'),
+      password: Yup.string()
+        .min(6, "Must be at least 6 letters")
+        .required('A password is needed'),
     }),
 
   // Edit UserProfile form
@@ -344,11 +391,11 @@ export const validationSchemas = {
         .required("required"),
       lastName: Yup.string()
         .min(2, "Must be at least 2 chars!")
-        .max(20, "Must be less than 15 chars!")
+        .max(20, "Must be less than 20 chars!")
         .required("required"),
       licenseNumber: Yup.string()
         .min(5, "Must be at least 5 digits!")
-        .max(15, "Must be less than 15 digits!")
+        .max(20, "Must be less than 20 digits!")
         .required("required"),
       licenseExpiry: Yup.date()
         .required("required"),
@@ -572,4 +619,19 @@ export const validationSchemas = {
       reservePrice: Yup.number().nullable(),
       durationInHours: Yup.number().nullable(),
     }),
+
+
+  SwapImagesForExternalProduct:
+    Yup.object().shape({
+      claimId: Yup.string().required(),
+      previewItems: Yup.array().of(
+          Yup.object({
+            id: Yup.string().nullable(),
+            position: Yup.number().nullable(),
+            imageId: Yup.string().nullable(),
+            youTubeEmbedLink: Yup.string().nullable(),
+          })
+        ).min(1, "Must have at least 1 image"),
+    }),
+
 }

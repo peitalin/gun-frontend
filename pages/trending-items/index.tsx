@@ -32,6 +32,7 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
         ogTitle="Trending - Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={"Browse trending used gun items for sale."}
         ogDescription={"Browse trending used gun items for sale."}
+        robots="noindex"
       />
       <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {

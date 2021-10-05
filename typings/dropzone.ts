@@ -13,6 +13,8 @@ export interface GoogleUpload {
 export enum ReducerName {
   reduxProductCreate = "reduxProductCreate",
   reduxProductEdit = "reduxProductEdit",
+  reduxProductClaim = "reduxProductClaim",
+  reduxImageSwapClaim = "reduxImageSwapClaim",
 }
 
 export interface DzuFilePreview {

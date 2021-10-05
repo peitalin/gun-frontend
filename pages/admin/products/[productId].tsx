@@ -81,7 +81,6 @@ const ProductEditPage = (props: ReactProps) => {
               <div className={classes.contentContainer}>
                 <div className={classes.rootOuter}>
                   <ProductEdit
-                    asModal={false}
                     product={data.getProductById}
                   />
                 </div>

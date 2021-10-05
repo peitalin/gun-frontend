@@ -5,15 +5,15 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import {
   NextPage, NextPageContext
 } from 'next';
-import { ApolloClient, useApolloClient, useQuery } from "@apollo/client";
+import { ApolloClient, useApolloClient, useLazyQuery } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import Trending from "pageComponents/Trending";
 import VerifyEmailBanner from "components/VerifyGunLicenseBanner";
 import {
-  GET_NEWS_ITEM_BY_ID,
-} from "queries/news-items-queries"
+  GET_NEWS_ITEM_BY_CLAIM_ID,
+} from "queries/news-items-claims-mutations"
 import {
   NewsItem
 } from "typings/gqlTypes"
@@ -41,8 +41,7 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
   const router = useRouter()
   // const client = useApolloClient()
 
-  const claimId = router?.query?.c
-  const newsItemId: string = router?.query?.newsItemId as any;
+  const claimId = router?.query?.claimId as string
   console.log("claimId: ", claimId)
   // dispatch ref Id to backend to see if its valid.
   // if valid, display a "claim/edit" product page
@@ -50,13 +49,20 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
   // 1. upon image upload, swap out all images
   // 2. then offer to create an account + claim the item
   // externalproduct -> internalProduct
-  const { data } = useQuery<QueryData, QueryVar>(
-    GET_NEWS_ITEM_BY_ID, {
+  const [getNewsItemByClaimId, response] = useLazyQuery<QueryData, QueryVar>(
+    GET_NEWS_ITEM_BY_CLAIM_ID, {
     variables: {
-      newsItemId: newsItemId
+      claimId: claimId
     },
   })
 
+  React.useEffect(() => {
+    if (claimId?.startsWith('c')) {
+      getNewsItemByClaimId()
+    }
+  }, [claimId])
+
+  let newsItem = response?.data?.getNewsItemByClaimId
 
   return (
     <>
@@ -65,30 +71,26 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
         ogTitle="Claim your product listing - Gun Marketplace"
         description={"Claim your product listing."}
         ogDescription={"Claim your product listing."}
+        robots="noindex"
       />
-      <div>
-        c:
-        { router?.query?.c }
-      </div>
-      <div>
-        newsItemId:
-        { router?.query?.newsItemId }
-      </div>
-      <div>
-        newsItem:
-        { JSON.stringify(data?.getNewsItemById)}
+
+      <div className={classes.rootOuter}>
+        <div>
+          { `claimId: ${claimId}` }
+        </div>
+        <div>
+          {`newsItemId: ${newsItem?.id}`}
+        </div>
       </div>
 
       {
-        data?.getNewsItemById &&
-        <div className={classes.contentContainer}>
-          <div className={classes.rootOuter}>
-            <ProductClaim
-              newsItem={data.getNewsItemById}
-            />
-          </div>
-        </div>
+        newsItem &&
+        <ProductClaim
+          newsItem={newsItem}
+          claimId={claimId}
+        />
       }
+
       {/* <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
           return (
@@ -113,26 +115,8 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
 
 
 const styles = (theme: Theme) => createStyles({
-  // contentContainerPublicPage: {
-  //   position: "relative",
-  //   flexGrow: 1,
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   justifyContent: 'center',
-  //   marginBottom: '1rem',
-  // },
   rootOuter: {
-    // backgroundColor: Colors.foregroundColor,
-  },
-  contentContainer: {
-    flexBasis: '65%',
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    maxWidth: 800,
-    // marginTop: '2rem',
-    // padding: '0rem 1rem 2rem 1rem',
+    padding: '1rem',
   },
 })
 
@@ -158,14 +142,14 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   try {
     const { data } = await serverApolloClient(ctx).query<QueryData, QueryVar>({
-      query: GET_NEWS_ITEM_BY_ID,
+      query: GET_NEWS_ITEM_BY_CLAIM_ID,
       variables: {
-        newsItemId: newsItemId
+        claimId: claimId
       },
     })
     return {
       props: {
-        initialNewsItem: data?.getNewsItemById,
+        initialNewsItem: data?.getNewsItemByClaimId,
         classes: null,
       }
     };
@@ -180,10 +164,10 @@ export async function getServerSideProps(ctx: NextPageContext) {
 }
 
 interface QueryData {
-  getNewsItemById: NewsItem
+  getNewsItemByClaimId: NewsItem
 }
 interface QueryVar {
-  newsItemId: String
+  claimId: String
 }
 
 export default withStyles(styles)( EditTrendingNewsItem );
