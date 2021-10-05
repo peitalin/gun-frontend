@@ -138,6 +138,13 @@ export enum ChatRoomStatus {
   COMPLETED = 'COMPLETED'
 }
 
+export type ClaimItemMutationResponse = {
+  __typename?: 'ClaimItemMutationResponse';
+  user: UserPrivate;
+  claim?: Maybe<ClaimProductLink>;
+  newsItem?: Maybe<NewsItem>;
+};
+
 export type ClaimProductLink = {
   __typename?: 'ClaimProductLink';
   claimId: Scalars['String'];
@@ -976,16 +983,10 @@ export type Mutation = {
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
-  /**
-   * Create a new account using an email address and password.
-   * AccessRule – PUBLIC
-   */
   signUpUsingEmail: SignUpMutationResponse;
-  /**
-   * Log in using an email address and password.
-   * AccessRule – PUBLIC
-   */
   logInUsingEmail: LoginMutationResponse;
+  signUpAndClaimItem: ClaimItemMutationResponse;
+  logInAndClaimItem: ClaimItemMutationResponse;
   /**
    * Log out and invalidate access tokens.
    * AccessRule – LOGGED_IN
@@ -1313,8 +1314,7 @@ export type Mutation = {
   setNewsItemCategory: NewsItem;
   reindexProductOrNewsItem?: Maybe<BlankMutationResponse>;
   generateClaimProductRefId?: Maybe<ClaimProductLink>;
-  swapImagesForClaim?: Maybe<NewsItem>;
-  getNewsItemByClaimId?: Maybe<NewsItem>;
+  swapImagesForExternalProduct?: Maybe<NewsItem>;
 };
 
 
@@ -2978,6 +2978,28 @@ export type MutationLogInUsingEmailArgs = {
 };
 
 
+export type MutationSignUpAndClaimItemArgs = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+  licenseNumber: Scalars['String'];
+  licenseExpiry: Scalars['Date'];
+  licenseCategory: Scalars['String'];
+  licenseState: Scalars['String'];
+  claimId: Scalars['String'];
+  dealerId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationLogInAndClaimItemArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  claimId: Scalars['String'];
+  dealerId?: Maybe<Scalars['String']>;
+};
+
+
 export type MutationSendResetPasswordEmailArgs = {
   email: Scalars['String'];
 };
@@ -3669,14 +3691,9 @@ export type MutationGenerateClaimProductRefIdArgs = {
 };
 
 
-export type MutationSwapImagesForClaimArgs = {
+export type MutationSwapImagesForExternalProductArgs = {
   claimId: Scalars['String'];
   previewItems: Array<ProductPreviewItemInput>;
-};
-
-
-export type MutationGetNewsItemByClaimIdArgs = {
-  claimId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -4159,7 +4176,8 @@ export type ProductCreateInput = {
   caliber: Scalars['String'];
   serialNumber: Scalars['String'];
   location: Scalars['String'];
-  dealerId: Scalars['String'];
+  /** dealerId optional for CLASSIFIED_AD but required for ESCROW */
+  dealerId?: Maybe<Scalars['String']>;
   /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
@@ -4188,7 +4206,8 @@ export type ProductEditInput = {
   caliber: Scalars['String'];
   serialNumber: Scalars['String'];
   location: Scalars['String'];
-  dealerId: Scalars['String'];
+  /** dealerId optional for CLASSIFIED_AD but required for ESCROW */
+  dealerId?: Maybe<Scalars['String']>;
   /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
@@ -4344,8 +4363,6 @@ export type ProductVariantEditInput = {
    * Will be sorted as per the provided order, and cannot be empty.
    */
   previewItems: Array<ProductPreviewItemInput>;
-  /** Amount that can be purchased now (main stock level, irrelevant of specialDeal). */
-  quantityAvailable?: Maybe<Scalars['Int']>;
 };
 
 export type ProductVariantInput = {
@@ -4363,8 +4380,6 @@ export type ProductVariantInput = {
    * Will be sorted as per the provided order, and cannot be empty.
    */
   previewItems: Array<ProductPreviewItemInput>;
-  /** Amount that can be purchased now (main stock level, irrelevant of specialDeal). */
-  quantityAvailable?: Maybe<Scalars['Int']>;
 };
 
 export type ProductsConnection = Connection & {
@@ -5018,6 +5033,7 @@ export type Query = {
   buyerOrdersConnection?: Maybe<OrdersConnection>;
   sellerOrdersConnection?: Maybe<OrdersConnection>;
   sellerOrdersActionItemsConnection?: Maybe<OrdersConnection>;
+  getNewsItemByClaimId?: Maybe<NewsItem>;
 };
 
 
@@ -6557,6 +6573,11 @@ export type QuerySellerOrdersConnectionArgs = {
 
 export type QuerySellerOrdersActionItemsConnectionArgs = {
   query?: Maybe<ConnectionQueryOrders>;
+};
+
+
+export type QueryGetNewsItemByClaimIdArgs = {
+  claimId: Scalars['String'];
 };
 
 export type ResetPasswordResponse = {

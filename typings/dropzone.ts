@@ -14,8 +14,9 @@ export enum ReducerName {
   reduxProductCreate = "reduxProductCreate",
   reduxProductEdit = "reduxProductEdit",
   reduxProductClaim = "reduxProductClaim",
-  reduxImageSwapClaim = "reduxImageSwapClaim",
+  reduxImageSwap = "reduxImageSwap",
 }
+// these names must match actions names in /reduxStore/actions
 
 export interface DzuFilePreview {
   id: string;
