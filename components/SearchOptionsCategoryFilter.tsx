@@ -347,12 +347,6 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.grey,
     fontSize: '1rem',
   },
-  categoryButtonsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '0px',
-    width: '100%'
-  },
 });
 
 
