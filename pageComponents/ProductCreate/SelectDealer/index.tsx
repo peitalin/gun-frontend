@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
 // Util components
 import ErrorBounds from 'components/ErrorBounds';
-import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 // Graphql
 import { GET_ALL_DEALERS } from "queries/dealers-queries";

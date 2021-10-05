@@ -75,6 +75,10 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
   // console.log("fprops.touched: ", fprops.touched)
   // console.log("licenseOptions: ", licenseOptions)
 
+  let showCreateLicenseButton = props.user?.id
+    && !props?.user?.defaultLicense?.licenseNumber
+  // Show if user exists, but has no license yet.
+
   return (
     <ErrorBounds className={classes.positionRelative}>
       <div className={clsx(classes.formContainer)}>
@@ -85,7 +89,7 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
           className={clsx(classes.formGroup, classes.marginTop05)}
         >
           {
-            !props?.user?.defaultLicense?.licenseNumber
+            showCreateLicenseButton
             ? <AddLicenseModal
                 callback={(user: UserPrivate) => {
                   let license = user?.defaultLicense

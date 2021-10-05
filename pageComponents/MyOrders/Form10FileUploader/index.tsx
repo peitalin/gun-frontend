@@ -7,6 +7,7 @@ import { styles } from "./styles";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";
+import UploadInput from "pageComponents/MyOrders/Form10FileUploader/UploadInput";
 import {
   google_storage_register,
   google_storage_save_file_to_db,
@@ -32,7 +33,6 @@ import { GoogleUpload } from "typings/dropzone";
 // Material UI
 import ErrorBounds from 'components/ErrorBounds';
 // Uploader components
-import UploadInput from "./UploadInput";
 import UploadLayoutPreviews from "./UploadLayoutPreviews";
 // Snackbar
 import { useSnackbar } from "notistack";

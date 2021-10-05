@@ -10,8 +10,8 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 
 import Button from "@material-ui/core/Button";
 import LoadingBar from "components/LoadingBar";
-import Form10PreviewCard from "./Form10PreviewCard";
-import { cardDimensionsDefault } from "./Form10PreviewCard";
+import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
+import { cardDimensionsDefault } from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 // Typings
 import { Order, OrderStatus } from "typings/gqlTypes";
 import Tooltip from '@material-ui/core/Tooltip';

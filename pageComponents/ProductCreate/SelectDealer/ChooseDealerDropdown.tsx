@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Dealers, DealerState } from "typings/gqlTypes";
 // Styles
@@ -21,8 +21,10 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
     ...fprops
   } = props;
 
-  const setDealerId = (newCat: SelectOption) => {
-    fprops.setFieldValue("dealerId", newCat?.value)
+  const setDealerId = (newCat: DealerOption) => {
+    fprops.setFieldValue("dealerId", newCat?.value?.dealerId)
+    /// location is ununsed field
+    // fprops.setFieldValue("location", newCat?.value?.dealerState)
   }
 
   let dealerOptions = createDealerSuggestions(props.dealers)
@@ -41,8 +43,9 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
         className={classes.dealerDropdown}
         initialState={initialDealer}
         disableAutocomplete={true}
+        isClearable={true}
         menuPortalTarget={document?.body} // solves z-index problems
-        onChange={(option: SelectOption) =>
+        onChange={(option: DealerOption) =>
           setDealerId({
             label: option?.label,
             value: option?.value,
@@ -64,6 +67,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
           }}
         />
       </div>
+
     </>
   )
 }
@@ -142,24 +146,35 @@ const createDealerSuggestions = (dealers: Dealers[]): GroupedSelectOption[] => {
 }
 
 
-const createDealerOption = (dealer: Dealers) => {
+
+const createDealerOption = (dealer: Dealers): DealerOption => {
   if (!dealer) {
     return undefined
   } else {
     return {
       label: `${dealer?.name}, ${dealer?.postCode} #${dealer?.licenseNumber}`,
-      value: dealer?.id,
+      value: {
+        dealerId: dealer?.id,
+        dealerState: dealer?.state
+      },
     }
   }
 }
 
-export interface SelectOption {
-  label: string;
-  value: string | any;
+// export interface SelectOption {
+//   label: string;
+//   value: string | any;
+// }
+interface DealerOption {
+  label: string
+  value: {
+    dealerId: string
+    dealerState: string
+  }
 }
 export interface GroupedSelectOption {
   label: string;
-  options: SelectOption[]
+  options: DealerOption[]
 }
 
 
@@ -169,6 +184,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   dealerId?: string;
+  // location?: string;
   // dealer?: {
   //   name?: string;
   //   address?: string;
@@ -192,6 +208,14 @@ export const styles = (theme: Theme) => createStyles({
     // marginRight: '1rem',
     // marginLeft: '1rem',
     marginBottom: '0.5rem',
+  },
+  stateLocation: {
+    fontSize: "1rem",
+    fontWeight: 500,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+
   },
 })
 

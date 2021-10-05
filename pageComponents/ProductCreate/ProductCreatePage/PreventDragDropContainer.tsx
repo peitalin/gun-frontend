@@ -46,6 +46,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: "wrap",
+    width: '100%',
   },
 })
 
