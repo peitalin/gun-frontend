@@ -11,6 +11,7 @@ import { ReduxStateFollowingStores } from './following-stores-reducer';
 import { ReduxStateRefetch } from './refetch-reducer';
 import { ReduxStateConversation } from './conversation-reducer';
 import { ReduxStatePaginatorVariables } from './paginator-variables-reducer';
+import { ReduxStateImageSwap } from './image_swap-reducer';
 // Reducers
 import { reduxReducerLogin } from "./login-reducer";
 import { reduxReducerModals } from "./modals-reducer";
@@ -21,6 +22,9 @@ import { reduxReducerFollowingStores } from "./following-stores-reducer";
 import { reduxReducerRefetch } from "./refetch-reducer";
 import { reduxReducerConversation } from "./conversation-reducer";
 import { reduxReducerPaginatorVariables } from "./paginator-variables-reducer";
+// Claim Reducers
+import { reduxReducerImageSwap } from "./image_swap-reducer";
+
 
 import { Actions } from "./actions";
 export { Actions }
@@ -38,6 +42,7 @@ export const makeStore = (initialState) => {
       reduxRefetch: reduxReducerRefetch,
       reduxConversation: reduxReducerConversation,
       reduxPaginatorVariables: reduxReducerPaginatorVariables,
+      reduxImageSwap: reduxReducerImageSwap,
     }),
     initialState,
     applyMiddleware(thunk),
@@ -55,6 +60,7 @@ export interface GrandReduxState {
   reduxRefetch: ReduxStateRefetch;
   reduxConversation: ReduxStateConversation;
   reduxPaginatorVariables: ReduxStatePaginatorVariables;
+  reduxImageSwap: ReduxStateImageSwap,
 }
 
 
