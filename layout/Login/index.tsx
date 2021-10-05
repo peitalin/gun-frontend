@@ -10,7 +10,7 @@ import { Actions } from 'reduxStore/actions';
 import { SIGN_UP_USING_EMAIL } from "queries/user-mutations";
 import { LOG_IN_USING_EMAIL, GET_USER } from "queries/user-queries";
 import { SEND_RESET_PASSWORD_EMAIL } from "queries/emails-mutations";
-import { UserPrivate } from "typings/gqlTypes";
+import { SendResetPasswordResponse, UserPrivate } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
 import {
   LoginMutationResponse,
@@ -36,6 +36,9 @@ import {
   isSignUpInputOk,
   isResetPasswordInputOk,
 } from "./utils";
+// error
+import { handleGqlError } from "./utils"
+// redux
 import { reduxBatchUpdate } from "layout/GetUser";
 import { useSnackbar, ProviderContext } from "notistack";
 import { ApolloRefetch, refetchUser } from "layout/GetUser";
@@ -96,8 +99,8 @@ const Login: React.FC<ReactProps> = (props) => {
     onCompleted: (data) => {
       let user = data?.logInUsingEmail?.user
       if (user) {
-        // Update redux user and cart state and refetch
-        dispatch(reduxBatchUpdate.userStore({ user: user }))
+        // Update redux user and collections state
+        dispatch(reduxBatchUpdate.userAndCollections({ user: user }))
         handleUpdateLoginState(user)
         // if login/signup succeeded, and there is a redirect...
         handleRedirect({ delay: props.redirectDelay ?? 0 })
@@ -105,7 +108,7 @@ const Login: React.FC<ReactProps> = (props) => {
       }
     },
     onError: (error) => {
-      handleGqlError(error)
+      handleGqlError(error, snackbar)
     },
     fetchPolicy: "no-cache", // always do a network request, no caches
     // errorPolicy: "all", // propagate errors from backend to Snackbar
@@ -129,8 +132,8 @@ const Login: React.FC<ReactProps> = (props) => {
     onCompleted: (data) => {
       let user = data?.signUpUsingEmail?.user;
       if (user) {
-        // Update redux user and cart state and refetch
-        dispatch(reduxBatchUpdate.userStore({ user: user }))
+        // Update redux user and collections state
+        dispatch(reduxBatchUpdate.userAndCollections({ user: user }))
         handleUpdateLoginState(user)
         // if login/signup succeeded, and there is a redirect...
         handleRedirect({ delay: props.redirectDelay ?? 0 })
@@ -139,7 +142,7 @@ const Login: React.FC<ReactProps> = (props) => {
     },
     update: (cache, { data: { signUpUsingEmail } }) => { },
     onError: (error) => {
-      handleGqlError(error)
+      handleGqlError(error, snackbar)
     },
     // errorPolicy: "all", // propagate errors from backend to Snackbar
   })
@@ -170,7 +173,7 @@ const Login: React.FC<ReactProps> = (props) => {
       }
     },
     onError: (error) => {
-      handleGqlError(error)
+      handleGqlError(error, snackbar)
     },
     fetchPolicy: "no-cache", // always do a network request, no caches
     // errorPolicy: "all", // propagate errors from backend to Snackbar
@@ -206,28 +209,6 @@ const Login: React.FC<ReactProps> = (props) => {
       setTimeout(() => {
         router.replace(props.redirectOnComplete);
       }, delay)
-    }
-  }
-
-  const handleGqlError = (error: ApolloError) => {
-    // console.log("logIn error:", JSON.stringify(error))
-    if (error?.networkError) {
-      snackbar.enqueueSnackbar(
-        `Server is down. StatusCode: ${(error?.networkError as any)?.statusCode}`,
-        { variant: "error" }
-      )
-      return
-    }
-    if (error?.graphQLErrors) {
-      snackbar.enqueueSnackbar(
-        translateErrorMsg(error?.graphQLErrors?.[0]?.message),
-        { variant: "error" }
-      )
-    } else {
-      snackbar.enqueueSnackbar(
-        error?.message,
-        { variant: "error" }
-      )
     }
   }
 
@@ -366,24 +347,6 @@ const Login: React.FC<ReactProps> = (props) => {
   //// Effects
   /////////////////////////////////////////////////
 
-  // React.useEffect(() => {
-  //   if (logInUsingEmailResponse?.error) {
-  //     handleGqlError(logInUsingEmailResponse?.error)
-  //   }
-  // }, [logInUsingEmailResponse])
-
-  // React.useEffect(() => {
-  //   if (signUpUsingEmailResponse?.error) {
-  //     handleGqlError(signUpUsingEmailResponse?.error)
-  //   }
-  // }, [signUpUsingEmailResponse])
-
-  // React.useEffect(() => {
-  //   if (sendResetPasswordEmailResponse?.error) {
-  //     handleGqlError(sendResetPasswordEmailResponse?.error)
-  //   }
-  // }, [sendResetPasswordEmailResponse])
-
   /// Not currently used, user-service does not have an expiry on
   /// efc-auth session-cookie. But if it did, this hook will auto-logout
   /// on expiry
@@ -493,7 +456,7 @@ interface MData2 {
   signUpUsingEmail: SignUpMutationResponse;
 }
 interface MData3 {
-  sendResetPasswordEmail: SendPasswordResetResponse;
+  sendResetPasswordEmail: SendResetPasswordResponse;
 }
 
 

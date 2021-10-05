@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 import styles from './commonStylesPageRedirect';
 import SignUp from './SignUpPageRedirect';
-import SignIn from './SignInPageRedirect';
+import LogIn from './LogInPageRedirect';
 import ResetPassword from './ResetPassword';
 import ErrorBounds from "components/ErrorBounds";
 
@@ -18,7 +18,7 @@ const LoginPageRedirect: React.FC<ReactProps> = (props) => {
     const { tabIndex, setTabIndex } = props;
 
     if (tabIndex === 0) {
-      return <SignIn
+      return <LogIn
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
                 title={props.titleLogin}
@@ -38,7 +38,7 @@ const LoginPageRedirect: React.FC<ReactProps> = (props) => {
                 buttonLoading={props.buttonLoading}
               />
     } else {
-      return <SignIn
+      return <LogIn
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
                 title={props.titleLogin}

@@ -97,8 +97,8 @@ export const setUserOnCompleted =
   // console.log("update redux user with data: ", data)
   // update Redux user state on initial page load
   if (data?.user?.id && refetch) {
-    // set User profile, and userRefetch in REDUX
-    dispatch(reduxBatchUpdate.userStore(data, refetch))
+    // set User profile, and user collections in REDUX
+    dispatch(reduxBatchUpdate.userAndCollections(data, refetch))
   } else {
     // set User profile
     dispatch(Actions.reduxLogin.SET_USER(data.user))
@@ -107,10 +107,9 @@ export const setUserOnCompleted =
 
 //////////////// REDUX THUNK CREATORS /////////////////////
 export const reduxBatchUpdate = {
-  userStore: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
+  userAndCollections: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
     batch(() => {
       // set User Profile in REDUX
-      // console.log("setting user.store in redux: ", data.user.store)
       dispatch(Actions.reduxLogin.SET_USER(data.user));
 
       dispatch(Actions.reduxCollections.SET_COLLECTIONS(

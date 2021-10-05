@@ -1,16 +1,6 @@
 import { ProviderContext } from "notistack";
+import { useApolloClient, useMutation, ApolloError } from "@apollo/client";
 
-type SetState = (value: React.SetStateAction<{
-    openModal: boolean;
-    loading: boolean;
-    showError: boolean;
-    dataExists: boolean;
-    error: {
-        message: string;
-    };
-    status: string;
-    tabIndex: number;
-}>) => void;
 
 // ProviderContext is the type from snackbar = useSnackbar() hook
 export const isLoginInputOk =
@@ -209,3 +199,40 @@ export const formatPhoneNumber = (s: string) => {
     number
   }
 };
+
+
+export const passwordPreview = (password: string) => {
+  if (password?.length > 0) {
+    return  [...new Array(password?.length - 1).keys()]
+        .map(x => "*")
+        .join("") + password.slice(-1)
+  } else {
+    return ""
+  }
+}
+
+
+export const handleGqlError = (
+  error: ApolloError,
+  snackbar: ProviderContext,
+) => {
+  // console.log("logIn error:", JSON.stringify(error))
+  if (error?.networkError) {
+    snackbar.enqueueSnackbar(
+      `Server is down. StatusCode: ${(error?.networkError as any)?.statusCode}`,
+      { variant: "error" }
+    )
+    return
+  }
+  if (error?.graphQLErrors) {
+    snackbar.enqueueSnackbar(
+      translateErrorMsg(error?.graphQLErrors?.[0]?.message),
+      { variant: "error" }
+    )
+  } else {
+    snackbar.enqueueSnackbar(
+      error?.message,
+      { variant: "error" }
+    )
+  }
+}

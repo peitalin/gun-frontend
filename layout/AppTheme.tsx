@@ -666,6 +666,26 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
               : `1px solid ${Colors.uniswapLightestGrey}`,
             // borderBottomColor: `${Colors.red} !important`,
           },
+          // '&:not($disabled):after': {
+          //   borderBottom: darkMode
+          //     ? `1px solid ${Colors.purple}`
+          //     : `1px solid ${Colors.purple}`,
+          // },
+          // '&:not($disabled):before': {
+          //   borderBottom: darkMode
+          //     ? `1px solid ${Colors.purple}`
+          //     : `1px solid ${Colors.purple}`,
+          // },
+          // '&:hover:not($disabled):after': {
+          //   borderBottom: darkMode
+          //     ? `1px solid ${Colors.purple}`
+          //     : `1px solid ${Colors.purple}`,
+          // },
+          // '&:hover:not($disabled):before': {
+          //   borderBottom: darkMode
+          //     ? `1px solid ${Colors.purple}`
+          //     : `1px solid ${Colors.purple}`,
+          // },
         },
       },
       MuiOutlinedInput: {

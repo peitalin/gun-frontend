@@ -14,7 +14,7 @@ import Or from "layout/Login/Or";
 import ButtonLoading from "components/ButtonLoading";
 
 
-const SignInPageRedirect = (props: ReactProps) => {
+const LogInPageRedirect = (props: ReactProps) => {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -24,6 +24,7 @@ const SignInPageRedirect = (props: ReactProps) => {
   const { classes } = props;
 
   const handleClick = (event) => {
+    // prevent form submission and page refresh
     event.preventDefault();
     props.dispatchLogin({
       email: email,
@@ -138,4 +139,4 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonLoading?: boolean;
 }
 
-export default withStyles(styles)(SignInPageRedirect);
+export default withStyles(styles)(LogInPageRedirect);

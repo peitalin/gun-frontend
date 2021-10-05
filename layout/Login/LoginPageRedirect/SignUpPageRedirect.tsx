@@ -26,7 +26,7 @@ const MultiDropdownSelect = dynamic(() => import('components/Fields/MultiDropdow
   loading: () => <SelectTagsPlaceholder />,
   ssr: false
 })
-import { createOption } from "components/Fields/MultiDropdownSelect";
+import { passwordPreview } from "layout/Login/utils";
 
 import dynamic from "next/dynamic";
 import Loading from 'components/Loading';
@@ -82,6 +82,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
   }
 
   const handleClick = (event) => {
+    // prevent form submission and page refresh
     event.preventDefault();
     props.dispatchCreateUser({
       email: state.email,
@@ -139,12 +140,6 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
   }
 
 
-  let passwordPreview = (state.password.length > 0)
-    ? [...new Array(state?.password?.length - 1).keys()]
-        .map(x => "*")
-        .join("") + state.password.slice(-1)
-    : ""
-
   return (
   <ErrorBounds className={classes.outerContainer}>
 
@@ -177,7 +172,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         <InputLabel className={classes.labelBox} htmlFor="password">
           Password
           <LockIcon className={classes.secureCheckoutIcon} />
-          { passwordPreview }
+          { passwordPreview(state?.password) }
         </InputLabel>
         <Input
           name="sign-up-password"

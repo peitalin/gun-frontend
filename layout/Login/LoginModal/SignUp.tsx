@@ -37,15 +37,15 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
   ssr: false,
 })
 import { formatPhoneNumber } from "layout/Login/utils";
-
-import HelpIcon from "components/Icons/HelpIcon";
-import Tooltip from "@material-ui/core/Tooltip"
-import DateFnsUtils from '@date-io/dayjs';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+// import HelpIcon from "components/Icons/HelpIcon";
+// import Tooltip from "@material-ui/core/Tooltip"
+// import DateFnsUtils from '@date-io/dayjs';
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from '@material-ui/pickers';
+import { passwordPreview } from "layout/Login/utils";
 
 
 
@@ -142,12 +142,6 @@ const SignUp: React.FC<ReactProps> = (props) => {
     setState(s => ({ ...s, licenseCategory: newCategories }))
   }
 
-  let passwordPreview = (state.password.length > 0)
-    ? [...new Array(state?.password?.length - 1).keys()]
-        .map(x => "*")
-        .join("") + state.password.slice(-1)
-    : ""
-
   return (
     <ErrorBounds className={classes.outerContainer}>
       <div className={classes.paper}>
@@ -189,7 +183,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <InputLabel className={classes.labelBox} htmlFor="password">
               Password
               <LockIcon className={classes.secureCheckoutIcon}/>
-              { passwordPreview }
+              { passwordPreview(state?.password) }
             </InputLabel>
             <Input
               name="sign-up-password"

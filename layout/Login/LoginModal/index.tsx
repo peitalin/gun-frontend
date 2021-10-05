@@ -9,7 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 
 import styles from './commonStyles';
 import SignUp from './SignUp';
-import SignIn from './SignIn';
+import LogIn from './LogIn';
 import ResetPassword from './ResetPassword';
 import CheckEmail from './CheckEmail';
 import ErrorBounds from "components/ErrorBounds";
@@ -40,7 +40,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
   const renderLoginTab = () => {
 
     if (tabIndex === 0) {
-      return <SignIn
+      return <LogIn
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
                 handleToggleModal={props.handleToggleModal}
@@ -70,7 +70,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
                 handleToggleModal={props.handleToggleModal}
               />
     } else {
-      return <SignIn
+      return <LogIn
               dispatchLogin={props.dispatchLogin}
               setTabIndex={setTabIndex}
               handleToggleModal={props.handleToggleModal}

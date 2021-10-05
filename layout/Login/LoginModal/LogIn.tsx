@@ -22,7 +22,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ButtonLoading from "components/ButtonLoading";
 
 
-const SignIn = (props: ReactProps) => {
+const LogIn = (props: ReactProps) => {
 
   const [email, setEmail] = React.useState(props.initialEmail);
   const [password, setPassword] = React.useState("");
@@ -156,4 +156,4 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialEmail?: string;
 }
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(LogIn);

@@ -33,6 +33,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '0rem 1rem',
   },
   dividerLine: {
     flexGrow: 1,
