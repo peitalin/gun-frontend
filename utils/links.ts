@@ -1,6 +1,6 @@
 import { Product, Store } from "typings/gqlTypes";
 
-export const DISCORD_LINK = "https://discord.gg/ZSQMFGFVGg"
+export const DISCORD_LINK = "https://discord.gg/t3GfcXUDCR"
 
 export const isYouTubeVimeoLink = (link: string) => {
 

@@ -383,7 +383,6 @@ const EditProductPage = (props: {
           refetchQuery={props.refetchQuery}
         />
         <ProductEdit
-          asModal={false}
           product={product}
         />
       </div>

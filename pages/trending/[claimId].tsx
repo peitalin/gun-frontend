@@ -29,6 +29,7 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { useRouter } from "next/router";
 import ProductClaim from "pageComponents/ProductClaim";
+import { useSnackbar } from "notistack";
 
 
 
@@ -39,7 +40,9 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
   } = props;
 
   const router = useRouter()
-  // const client = useApolloClient()
+  const snackbar = useSnackbar()
+
+  const [errMsg, setErrMsg] = React.useState(undefined)
 
   const claimId = router?.query?.claimId as string
   console.log("claimId: ", claimId)
@@ -53,6 +56,12 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
     GET_NEWS_ITEM_BY_CLAIM_ID, {
     variables: {
       claimId: claimId
+    },
+    onError: (err) => {
+      setErrMsg(err.graphQLErrors?.[0]?.message)
+      snackbar.enqueueSnackbar(err.graphQLErrors?.[0]?.message, {
+        variant: "error"
+      })
     },
   })
 
@@ -74,21 +83,29 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
         robots="noindex"
       />
 
-      <div className={classes.rootOuter}>
+      <div className={classes.fixedOuter}>
         <div>
           { `claimId: ${claimId}` }
         </div>
         <div>
-          {`newsItemId: ${newsItem?.id}`}
+          {`newsItemId: ${newsItem?.id ?? "NA"}`}
         </div>
+        {
+          errMsg &&
+          <div>
+            {errMsg}
+          </div>
+        }
       </div>
 
       {
         newsItem &&
-        <ProductClaim
-          newsItem={newsItem}
-          claimId={claimId}
-        />
+        <div className={classes.rootClaim}>
+          <ProductClaim
+            newsItem={newsItem}
+            claimId={claimId}
+          />
+        </div>
       }
 
       {/* <UserProfileWrapper>
@@ -115,8 +132,13 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
 
 
 const styles = (theme: Theme) => createStyles({
-  rootOuter: {
-    padding: '1rem',
+  rootClaim: {
+    marginTop: '2rem',
+  },
+  fixedOuter: {
+    right: '1rem',
+    bottom: '1rem',
+    position: "fixed",
   },
 })
 
@@ -126,42 +148,42 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export async function getServerSideProps(ctx: NextPageContext) {
+// export async function getServerSideProps(ctx: NextPageContext) {
 
-  const claimId: string = ctx.query.c as any;
-  const newsItemId: string = ctx.query.newsItemId as any
+//   const claimId: string = ctx.query.c as any;
+//   const newsItemId: string = ctx.query.newsItemId as any
 
-  if (!claimId) {
-    return {
-      props: {
-        initialNewsItem: null,
-        classes: null,
-      }
-    };
-  }
+//   if (!claimId) {
+//     return {
+//       props: {
+//         initialNewsItem: null,
+//         classes: null,
+//       }
+//     };
+//   }
 
-  try {
-    const { data } = await serverApolloClient(ctx).query<QueryData, QueryVar>({
-      query: GET_NEWS_ITEM_BY_CLAIM_ID,
-      variables: {
-        claimId: claimId
-      },
-    })
-    return {
-      props: {
-        initialNewsItem: data?.getNewsItemByClaimId,
-        classes: null,
-      }
-    };
-  } catch(e) {
-    return {
-      props: {
-        initialNewsItem: null,
-        classes: null,
-      }
-    };
-  }
-}
+//   try {
+//     const { data } = await serverApolloClient(ctx).query<QueryData, QueryVar>({
+//       query: GET_NEWS_ITEM_BY_CLAIM_ID,
+//       variables: {
+//         claimId: claimId
+//       },
+//     })
+//     return {
+//       props: {
+//         initialNewsItem: data?.getNewsItemByClaimId,
+//         classes: null,
+//       }
+//     };
+//   } catch(e) {
+//     return {
+//       props: {
+//         initialNewsItem: null,
+//         classes: null,
+//       }
+//     };
+//   }
+// }
 
 interface QueryData {
   getNewsItemByClaimId: NewsItem
