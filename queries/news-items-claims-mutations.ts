@@ -2,7 +2,10 @@ import gql from "graphql-tag";
 import {
   NewsItemFragment,
   UserPrivateFragment,
+  ImageFragment,
 } from "./fragments";
+
+
 
 
 export const GENERATE_CLAIM_PRODUCT_REF_ID = gql`
@@ -23,11 +26,11 @@ export const GENERATE_CLAIM_PRODUCT_REF_ID = gql`
 export const SWAP_IMAGES_FOR_EXTERNAL_PRODUCT = gql`
   mutation swapImagesForExternalProduct(
     $claimId: String!
-    $previewItems: [ProductPreviewItemInput!]!
+    $newPreviewItems: [ProductPreviewItemInput!]!
   ) {
     swapImagesForExternalProduct(
       claimId: $claimId
-      previewItems: $previewItems
+      newPreviewItems: $newPreviewItems
     ) {
       ...NewsItemFragment
     }
@@ -58,6 +61,8 @@ export const SIGN_UP_AND_CLAIM_ITEM = gql`
     $licenseExpiry: Date!
     $licenseCategory: String!
     $licenseState: String!
+    $dealerId: String
+    $newPreviewItems: [ProductPreviewItemInput!]!
   ) {
     signUpAndClaimItem(
       claimId: $claimId
@@ -69,12 +74,10 @@ export const SIGN_UP_AND_CLAIM_ITEM = gql`
       licenseExpiry: $licenseExpiry
       licenseCategory: $licenseCategory
       licenseState: $licenseState
+      dealerId: $dealerId
+      newPreviewItems: $newPreviewItems
     ) {
-      claim {
-        claimId
-        claimLink
-        newsItemId
-      }
+      claimId
       user {
         ...UserPrivateFragment
       }
@@ -92,17 +95,17 @@ export const LOG_IN_AND_CLAIM_ITEM = gql`
     $claimId: String!
     $email: String!
     $password: String!
+    $dealerId: String
+    $newPreviewItems: [ProductPreviewItemInput!]!
   ) {
     logInAndClaimItem(
       claimId: $claimId
       email: $email
       password: $password
+      dealerId: $dealerId
+      newPreviewItems: $newPreviewItems
     ) {
-      claim {
-        claimId
-        claimLink
-        newsItemId
-      }
+      claimId
       user {
         ...UserPrivateFragment
       }
@@ -114,3 +117,4 @@ export const LOG_IN_AND_CLAIM_ITEM = gql`
   ${UserPrivateFragment}
   ${NewsItemFragment}
 `;
+

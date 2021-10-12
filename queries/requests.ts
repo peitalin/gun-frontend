@@ -83,13 +83,15 @@ export const google_storage_register = async (
   uploadType: UploadType,
   mimeType: string,
   fileSize: number,
-  aClient: ApolloClient<object>
+  aClient: ApolloClient<object>,
+  claimId?: string,
 ): Promise<GSRegisterResponse> => {
 
   interface Mvar {
     uploadType: UploadType;
     mimeType: string;
     fileSize: number;
+    claimId?: string,
   }
   interface Mdata {
     uploadRegisterGoogleUrl: {
@@ -103,7 +105,8 @@ export const google_storage_register = async (
     variables: {
       uploadType: uploadType,
       mimeType: mimeType,
-      fileSize: fileSize
+      fileSize: fileSize,
+      claimId: claimId
     }
   });
   const result = response.data.uploadRegisterGoogleUrl
@@ -124,7 +127,8 @@ export const google_storage_save_image_to_db = async(
   description: string | null,
   tags: string,
   ownerIds: string[],
-  aClient: ApolloClient<object>
+  aClient: ApolloClient<object>,
+  claimId?: string,
 ): Promise<Image_Parents> => {
 
   interface Mvar {
@@ -132,6 +136,7 @@ export const google_storage_save_image_to_db = async(
     description?: string;
     tags?: string;
     ownerIds?: string[]
+    claimId?: string,
   }
   interface Mdata {
     uploadSaveImage: {
@@ -145,7 +150,8 @@ export const google_storage_save_image_to_db = async(
       uploadId: uploadId,
       description: description,
       tags: tags,
-      ownerIds: ownerIds
+      ownerIds: ownerIds,
+      claimId: claimId
     }
   });
   console.log("response ........", response)

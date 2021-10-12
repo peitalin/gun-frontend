@@ -7,11 +7,13 @@ export const UPLOAD_STEP1_REGISTER_GOOGLE_URL = gql`
     $uploadType: UploadType!
     $mimeType: String!
     $fileSize: Int!
+    $claimId: String
   ) {
     uploadRegisterGoogleUrl(
       uploadType: $uploadType
       mimeType: $mimeType
       fileSize: $fileSize
+      claimId: $claimId
     ) {
       ... on UploadRegisterMutationResponse {
         uploadId
@@ -27,12 +29,14 @@ export const UPLOAD_SAVE_IMAGE = gql`
     $description: String
     $tags: String
     $ownerIds: [String]
+    $claimId: String
   ) {
     uploadSaveImage(
       uploadId: $uploadId
       description: $description
       tags: $tags
       ownerIds: $ownerIds
+      claimId: $claimId
     ) {
       ... on UploadSaveImageMutationResponse {
         image {

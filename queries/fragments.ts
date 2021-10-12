@@ -173,6 +173,7 @@ export const ProductFragment = gql`
     isSoldElsewhere
     allowBids
     storeId
+    categoryId
     soldOutStatus
     listingType
     currentSnapshot {
@@ -246,6 +247,7 @@ export const ProductLiteFragment = gql`
     #     }
     #   }
     # }
+    categoryId
     category {
       id
       name
