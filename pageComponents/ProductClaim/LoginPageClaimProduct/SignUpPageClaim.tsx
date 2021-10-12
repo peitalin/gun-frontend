@@ -48,6 +48,13 @@ import {
 import { useSnackbar } from 'notistack';
 import { FormikProps } from 'formik';
 import { FormikFieldsSignUp } from "."
+// phone
+import Loading from 'components/Loading';
+const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
+  loading: () => <Loading/>,
+  ssr: false,
+})
+import { formatPhoneNumber } from "layout/Login/utils";
 
 
 
@@ -74,6 +81,14 @@ const SignUpPageClaim: React.FC<ReactProps> = (props) => {
       formikSignUp.setFieldValue("licenseExpiry", null)
     }
   };
+
+
+  const handleSetPhoneNumber = (s: string) => {
+    let { countryCode, number } = formatPhoneNumber(s)
+    formikSignUp.setFieldValue("phoneNumber", number)
+    formikSignUp.setFieldValue("countryCode", countryCode)
+  };
+
 
   let licenseStateOptions = createLicenseStateSuggestions()
   let initialStateLicense = licenseStateOptions
@@ -228,11 +243,6 @@ const SignUpPageClaim: React.FC<ReactProps> = (props) => {
         disableInitialValidationMessage={true}
       />
 
-      {/* <FormControl margin="dense" fullWidth>
-        <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
-        <Input
-        />
-      </FormControl> */}
 
       <FormControl margin="dense" required fullWidth>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -317,6 +327,33 @@ const SignUpPageClaim: React.FC<ReactProps> = (props) => {
         />
       </FormControl>
 
+      <FormControl margin="dense" fullWidth>
+        <div className={classes.phoneNumberContainer}>
+          <MuiPhoneNumber
+            //@ts-ignore
+            name={"phone"}
+            label="Mobile number e.g: +61 333 666 777"
+            // label={`${values.countryCode} ${values.phoneNumber}`}
+            data-cy="user-phone"
+            defaultCountry={"au"}
+            onlyCountries={["au"]}
+            countryCodeEditable={false}
+            // preferredCountries={["au"]}
+            // disableCountryCode={true}
+            // https://github.com/alexplumb/material-ui-phone-number
+            value={`${formikSignUp.values.countryCode} ${formikSignUp.values.phoneNumber}`}
+            onChange={handleSetPhoneNumber}
+          />
+          <Tooltip title={
+            `We may use this number to contact you about
+            your orders if we cannot reach you via email.`
+          }>
+            <span>
+              <HelpIcon className={classes.helpIcon}/>
+            </span>
+          </Tooltip>
+        </div>
+      </FormControl>
 
       <ButtonLoading
         type="submit" // dispatch form onSubmit

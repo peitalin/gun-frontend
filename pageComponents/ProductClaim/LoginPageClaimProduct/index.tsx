@@ -102,6 +102,9 @@ export interface FormikFieldsSignUp {
   dealerId?: string,
   email: string,
   password: string,
+  // phone args
+  phoneNumber?: string
+  countryCode?: string
   // license args
   firstName: string,
   lastName: string,

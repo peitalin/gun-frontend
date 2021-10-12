@@ -27,6 +27,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import LinkIcon from '@material-ui/icons/Link';
 import Tooltip from '@material-ui/core/Tooltip';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 // media query
 import { useTheme } from "@material-ui/core/styles";
@@ -35,6 +36,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {
   PUBLISH_PRODUCT,
   UNPUBLISH_PRODUCT,
+  MARK_PRODUCT_SOLD,
 } from "queries/products-mutations";
 import { DELETE_PRODUCT } from "queries/deletions-mutations";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
@@ -63,8 +65,11 @@ const ProductRow = (props: ReactProps) => {
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-  const [loadingPublish, setLoadingPublish] = React.useState(false);
+  const [openMarkProductSoldModal, setOpenMarkProductSoldModal] = React.useState(false);
+
+  const [loadingState, setLoadingState] = React.useState(false);
   const open = Boolean(anchorEl);
 
   const snackbar = useSnackbar();
@@ -105,7 +110,21 @@ const ProductRow = (props: ReactProps) => {
     },
   });
 
-
+  const [markProductSold, markProductSoldResponse] = useMutation<MData5, MVar5>(
+    MARK_PRODUCT_SOLD, {
+    variables: {
+      productId: product?.id
+    },
+    onCompleted: (data) => { },
+    update: (cache, { data: { markProductSold } }) => {
+      console.log("incomingProduct.id: ", markProductSold?.product?.id)
+      console.log("incomingProduct.isPublished: ", markProductSold?.product?.isPublished)
+      cacheUpdateDashboardProduct({
+        cache: cache,
+        product: markProductSold?.product
+      })
+    },
+  });
 
 
   const [
@@ -144,7 +163,7 @@ const ProductRow = (props: ReactProps) => {
       )
       return
     }
-    setLoadingPublish(true)
+    setLoadingState(true)
     handleClose()
 
     await publishProduct({
@@ -154,7 +173,7 @@ const ProductRow = (props: ReactProps) => {
     })
     // await before refetching
     // await props.refetchProducts()
-    setLoadingPublish(false)
+    setLoadingState(false)
   };
 
   const handleUnpublish = async() => {
@@ -168,7 +187,7 @@ const ProductRow = (props: ReactProps) => {
       )
       return
     }
-    setLoadingPublish(true)
+    setLoadingState(true)
     handleClose()
 
     await unpublishProduct({
@@ -178,7 +197,31 @@ const ProductRow = (props: ReactProps) => {
     })
     // await before refetching
     // await props.refetchProducts()
-    setLoadingPublish(false)
+    setLoadingState(false)
+  };
+
+  const handleMarkProductSold = async() => {
+    if (
+      product.soldOutStatus !== SoldOutStatus.AVAILABLE
+      && product.soldOutStatus !== SoldOutStatus.ABANDONED
+    ) {
+      snackbar.enqueueSnackbar(
+        `${product.soldOutStatus} product cannot be marked sold.`,
+        { variant: "info"}
+      )
+      return
+    }
+    setLoadingState(true)
+    handleClose()
+
+    await markProductSold({
+      variables: {
+        productId: product?.id
+      }
+    })
+    // await before refetching
+    // await props.refetchProducts()
+    setLoadingState(false)
   };
 
   const handleDelete = async() => {
@@ -192,7 +235,7 @@ const ProductRow = (props: ReactProps) => {
       )
       return
     }
-    setLoadingPublish(true)
+    setLoadingState(true)
     handleClose()
     deleteProduct({
       variables: {
@@ -201,7 +244,7 @@ const ProductRow = (props: ReactProps) => {
     })
     // await before refetching
     await props.refetchProducts()
-    setLoadingPublish(false)
+    setLoadingState(false)
   };
 
 
@@ -221,32 +264,7 @@ const ProductRow = (props: ReactProps) => {
   let productName = product?.currentSnapshot?.title
   let viewCount = (product as ProductPrivate)?.uniqueProductViews?.aggregate?.count ?? 0
 
-
-  const displayProductStatus = () => {
-    if (product.isSuspended) {
-      return "SUSPENDED"
-    }
-    if (
-      product.soldOutStatus === SoldOutStatus.SOLD_OUT
-      || product.isSoldElsewhere
-    ) {
-      return "SOLD"
-    }
-    if (product.soldOutStatus === SoldOutStatus.ABANDONED) {
-      return "ABANDONED"
-    }
-    if (product.isDeleted) {
-      return "DELETED"
-    }
-    if (loadingPublish) {
-      return "PENDING"
-    }
-    if (product.isPublished) {
-      return "PUBLISHED"
-    } else {
-      return "UNPUBLISHED"
-    }
-  }
+  let dealerMissing = !product.currentSnapshot?.dealerId
 
 
   if (!product?.featuredVariant) {
@@ -323,40 +341,54 @@ const ProductRow = (props: ReactProps) => {
           <div className={mdDown ? classes.rowCell2Mobile : classes.rowCell2}>
             <Typography variant="caption"
               className={clsx(
-                (loadingPublish)
+                (loadingState)
                   ? classes.loading
                   : product.isPublished
                     ? classes.published
                     : classes.unpublished,
-                !(loadingPublish) && "fadeIn",
-                (loadingPublish) && "pulseFast",
+                !(loadingState) && "fadeIn",
+                (loadingState) && "pulseFast",
               )}
             >
-              { displayProductStatus() }
+              { displayProductStatus(product, loadingState) }
             </Typography>
           </div>
 
           <div className={mdDown ? classes.rowCell3Mobile : classes.rowCell3}>
-            <Link href="/admin/products/[productId]"
-              as={`/admin/products/${product.id}`} // as
+
+            <Tooltip title="Add a Dealer"
+              placement="top"
+              arrow={true}
+              open={dealerMissing}
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
             >
-              <a>
-                <Tooltip title="Edit Product">
-                  <Button
-                    variant="text"
-                    color="primary"
-                    classes={{
-                      root: classes.button40,
-                    }}
-                  >
-                    <EditIcon className={clsx(
-                      classes.iconOuter,
-                      // classes.fillHoverMagenta,
-                    )}/>
-                  </Button>
-                </Tooltip>
-              </a>
-            </Link>
+              <div>
+                <Link href="/admin/products/[productId]"
+                  as={`/admin/products/${product.id}`} // as
+                >
+                  <a>
+                    <Tooltip title="Edit Product">
+                      <Button
+                        variant="text"
+                        color="primary"
+                        classes={{
+                          root: dealerMissing
+                            ? classes.button40Highlight
+                            : classes.button40,
+                        }}
+                      >
+                        <EditIcon className={clsx(
+                          dealerMissing ? classes.iconOuterHighlight : classes.iconOuter,
+                          // classes.fillHoverMagenta,
+                        )}/>
+                      </Button>
+                    </Tooltip>
+                  </a>
+                </Link>
+              </div>
+            </Tooltip>
 
 
             {
@@ -426,14 +458,32 @@ const ProductRow = (props: ReactProps) => {
                   </a>
                 </Link>
               }
+
+              <MenuItem onClick={() => setOpenMarkProductSoldModal(true)}>
+                <>
+                  Mark as Sold
+                  <ErrorOutlineIcon className={classes.warningIcon} />
+                </>
+              </MenuItem>
+
               {
                 !hideDelete &&
                 <MenuItem onClick={() => setOpenDeleteModal(true)}>
-                  Delete
+                  <>
+                    Delete
+                    <ErrorOutlineIcon className={classes.warningIcon} />
+                  </>
                 </MenuItem>
               }
+
             </Menu>
 
+            <ConfirmDeleteModal
+              title={"Do you wish to mark this product sold?"}
+              showModal={openMarkProductSoldModal}
+              setShowModal={() => setOpenMarkProductSoldModal(s => !s)}
+              onConfirmFunction={handleMarkProductSold}
+            />
             <ConfirmDeleteModal
               title={"Do you wish to delete this product?"}
               showModal={openDeleteModal}
@@ -447,6 +497,35 @@ const ProductRow = (props: ReactProps) => {
     );
   }
 }
+
+
+const displayProductStatus = (product: Product, loadingState: boolean) => {
+  if (product.isSuspended) {
+    return "SUSPENDED"
+  }
+  if (
+    product.soldOutStatus === SoldOutStatus.SOLD_OUT
+    || product.isSoldElsewhere
+  ) {
+    return "SOLD"
+  }
+  if (product.soldOutStatus === SoldOutStatus.ABANDONED) {
+    return "ABANDONED"
+  }
+  if (product.isDeleted) {
+    return "DELETED"
+  }
+  if (loadingState) {
+    return "PENDING"
+  }
+  if (product.isPublished) {
+    return "PUBLISHED"
+  } else {
+    return "UNPUBLISHED"
+  }
+}
+
+
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
@@ -478,6 +557,12 @@ interface MData4 {
   unpublishProduct: { product: Product }
 }
 interface MVar4 {
+  productId: string
+}
+interface MData5 {
+  markProductSold: { product: Product }
+}
+interface MVar5 {
   productId: string
 }
 
@@ -685,6 +770,9 @@ const styles = (theme: Theme) => createStyles({
   iconOuter: {
     fill: theme.palette.primary.main,
   },
+  iconOuterHighlight: {
+    fill: Colors.ultramarineBlue,
+  },
   button40: {
     height: '40px',
     backgroundColor: "rgba(152,152,152,0.1)",
@@ -693,6 +781,16 @@ const styles = (theme: Theme) => createStyles({
     },
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
+  },
+  button40Highlight: {
+    height: '40px',
+    backgroundColor: "rgba(152,152,152,0.1)",
+    '&:hover': {
+      backgroundColor: "rgba(152,152,152,0.15)",
+    },
+    marginRight: '0.5rem',
+    marginBottom: '0.5rem',
+    border: `2px solid ${Colors.ultramarineBlue}`,
   },
   button40b: {
     height: '40px',
@@ -720,6 +818,9 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       opacity: 0.7,
     },
+  },
+  warningIcon: {
+    marginLeft: '0.25rem',
   },
 });
 
