@@ -2988,6 +2988,8 @@ export type MutationSignUpAndClaimItemArgs = {
   licenseExpiry: Scalars['Date'];
   licenseCategory: Scalars['String'];
   licenseState: Scalars['String'];
+  phoneNumber?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
   claimId: Scalars['String'];
   dealerId?: Maybe<Scalars['String']>;
   newPreviewItems: Array<ProductPreviewItemInput>;
@@ -3096,6 +3098,7 @@ export type MutationUploadRegisterGoogleUrlArgs = {
   uploadType: UploadType;
   mimeType: Scalars['String'];
   fileSize: Scalars['Int'];
+  claimId?: Maybe<Scalars['String']>;
 };
 
 
@@ -3106,6 +3109,7 @@ export type MutationUploadSaveImageArgs = {
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   isInternal?: Maybe<Scalars['Boolean']>;
   rescrape?: Maybe<Scalars['Boolean']>;
+  claimId?: Maybe<Scalars['String']>;
 };
 
 

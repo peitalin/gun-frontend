@@ -141,6 +141,9 @@ const ProductClaimPage = (props: ReactProps) => {
       password: undefined,
       dealerId: undefined,
       newPreviewItems: undefined,
+      // phone args
+      phoneNumber: undefined,
+      countryCode: undefined,
       // license args
       firstName: undefined,
       lastName: undefined,
@@ -186,6 +189,9 @@ const ProductClaimPage = (props: ReactProps) => {
       password: undefined,
       dealerId: undefined,
       previewItems: [],
+      // phone args
+      phoneNumber: undefined,
+      countryCode: undefined,
       // license args
       firstName: undefined,
       lastName: undefined,
@@ -217,6 +223,9 @@ const ProductClaimPage = (props: ReactProps) => {
             password: values.password,
             dealerId: values.dealerId,
             newPreviewItems: values.previewItems,
+            // phone args
+            phoneNumber: values.phoneNumber,
+            countryCode: values.countryCode,
             // license args
             firstName: values.firstName,
             lastName: values.lastName,
@@ -341,6 +350,9 @@ interface MVar2 {
   password: string,
   newPreviewItems: ProductPreviewItemInput[]
   dealerId?: string,
+  // phone args
+  phoneNumber?: string
+  countryCode?: string
   // license args
   firstName: string,
   lastName: string,
@@ -358,6 +370,9 @@ interface FormikFields {
   password: string,
   previewItems: ProductPreviewItemInput[]
   dealerId?: string,
+  // phone args
+  phoneNumber?: string
+  countryCode?: string
   // license args
   firstName: string,
   lastName: string,

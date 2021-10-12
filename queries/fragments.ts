@@ -892,6 +892,7 @@ export const StorePublicFragment = gql`
         }
       }
       ...on UserWithMobileNumber {
+        email
         defaultLicense {
           ...UserLicenseFragment
         }
@@ -915,6 +916,7 @@ export const StorePublicFragment = gql`
         }
       }
       ...on UserPrivate {
+        email
         defaultLicense {
           ...UserLicenseFragment
         }

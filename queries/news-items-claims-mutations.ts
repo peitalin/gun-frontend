@@ -55,6 +55,10 @@ export const SIGN_UP_AND_CLAIM_ITEM = gql`
     $claimId: String!
     $email: String!
     $password: String!
+    # phone args
+    $phoneNumber: String
+    $countryCode: String
+    # license args
     $firstName: String!
     $lastName: String!
     $licenseNumber: String!
@@ -68,6 +72,10 @@ export const SIGN_UP_AND_CLAIM_ITEM = gql`
       claimId: $claimId
       email: $email
       password: $password
+      # phone args
+      phoneNumber: $phoneNumber
+      countryCode: $countryCode
+      # license args
       firstName: $firstName
       lastName: $lastName
       licenseNumber: $licenseNumber

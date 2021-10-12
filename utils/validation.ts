@@ -625,6 +625,10 @@ export const validationSchemas = {
       password: Yup.string()
         .min(6, "Must be at least 6 letters")
         .required('A password is needed'),
+      phoneNumber: Yup.string()
+        .nullable(),
+      countryCode: Yup.string()
+        .nullable(),
       firstName: Yup.string()
         .min(2, "Must be at least 2 chars!")
         .max(20, "Must be less than 20 chars!")

@@ -21,6 +21,7 @@ import HelpSideRoutesMenu from "pageComponents/Help/HelpSideRoutesMenu";
 import HelpDashboardMobileMenu from "pageComponents/Help/HelpDashboardMobileMenu";
 
 import VerifyGunLicenseBanner from "components/VerifyGunLicenseBanner";
+import VerifyPhoneBanner from "components/VerifyPhoneBanner";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -82,6 +83,11 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
   // at least one license is verified
   let isVerified = user?.licenses?.some(l => l.verified)
 
+  // has phone number
+  let hasPhoneNumber = user?.phoneNumber?.number
+
+  console.log("userrrrrr:", user)
+
   if (!lgDown) {
     // desktop
     return (
@@ -98,6 +104,12 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
                 <VerifyGunLicenseBanner/>
               </div>
             }
+            {
+              !hasPhoneNumber &&
+              <div className={classes.bannerPadding}>
+                <VerifyPhoneBanner/>
+              </div>
+            }
             {props.children}
           </div>
         </div>
@@ -111,8 +123,15 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
           { renderRoleMenuMobile(user) }
           {
             !isVerified &&
+            !isHelpRoute &&
             <div className={classes.bannerPaddingMobile}>
               <VerifyGunLicenseBanner/>
+            </div>
+          }
+          {
+            !hasPhoneNumber &&
+            <div className={classes.bannerPaddingMobile}>
+              <VerifyPhoneBanner/>
             </div>
           }
           {props.children}

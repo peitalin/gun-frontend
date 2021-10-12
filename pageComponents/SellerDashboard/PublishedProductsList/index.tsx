@@ -73,14 +73,14 @@ const PublishedProductsList = (props: ReactProps) => {
   } = props;
 
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
   const productId = router?.query?.productId;
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  // const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -349,11 +349,24 @@ const PublishedProductsList = (props: ReactProps) => {
         </div>
         {
           connection &&
-          <EditProductPage
-            productsConnection={connection}
-            loading={getProductsResponse.loading}
-            refetchQuery={refetchQuery}
-          />
+          <>
+            {
+              connection?.edges
+                .filter(({ node: product }) => product.id === router.query.productId)
+                .map(({ node: product }) =>
+                  <div key={product.id}>
+                    <ProductRow
+                      product={product}
+                      loading={getProductsResponse.loading}
+                      refetchQuery={refetchQuery}
+                    />
+                    <ProductEdit
+                      product={product}
+                    />
+                  </div>
+                )
+            }
+          </>
         }
       </ResponsivePadding>
     )
@@ -362,34 +375,6 @@ const PublishedProductsList = (props: ReactProps) => {
 
 
 
-const EditProductPage = (props: {
-  productsConnection: ProductsConnection,
-  loading: boolean,
-  refetchQuery: { query: any, variables: any }
-}) => {
-
-  const { productsConnection, loading } = props;
-  const router = useRouter();
-
-  return <>
-  {
-    productsConnection.edges
-    .filter(({ node: product }) => product.id === router.query.productId)
-    .map(({ node: product }) =>
-      <div key={product.id}>
-        <ProductRow
-          product={product}
-          loading={loading}
-          refetchQuery={props.refetchQuery}
-        />
-        <ProductEdit
-          product={product}
-        />
-      </div>
-    )
-  }
-  </>
-}
 
 interface ReactProps extends WithStyles<typeof styles> {
   store?: StorePrivate;

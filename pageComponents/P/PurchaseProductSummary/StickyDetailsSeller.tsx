@@ -49,7 +49,13 @@ const StickyDetailsSeller = (props: ReactProps) => {
   };
 
   const sellerLicense = product?.sellerLicense
-  // console.log("productClassifieidAd, ", productClassifiedAd)
+  console.log("productClassifieidAd, ", productClassifiedAd)
+  const phoneNumber = productClassifiedAd?.store?.user?.phoneNumber?.number
+    ? `0${productClassifiedAd?.store?.user?.phoneNumber?.number}`
+    : undefined
+
+  const email = productClassifiedAd?.store?.user?.email
+
 
   return (
     <div className={clsx(
@@ -72,27 +78,35 @@ const StickyDetailsSeller = (props: ReactProps) => {
         <div className={classes.flexRow}>
 
           <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
-            <Typography className={classes.caption} variant="body1">
+            <div className={classes.caption}>
               License Number:
-            </Typography>
-            <Typography className={classes.caption} variant="body1">
+            </div>
+            <div className={classes.caption}>
               State:
-            </Typography>
+            </div>
             {
-              product?.listingType === ListingType.CLASSIFIED &&
-              <Typography className={classes.caption} variant="body1">
-                Phone Number:
-              </Typography>
+              productClassifiedAd &&
+              <>
+                {
+                  phoneNumber
+                  ? <div className={classes.caption}>
+                      Phone Number:
+                    </div>
+                  : <div className={classes.caption}>
+                      Email:
+                    </div>
+                }
+              </>
             }
           </div>
 
           <div className={clsx(classes.flexCol)}>
-            <Typography className={classes.caption} variant="body1">
+            <div className={classes.caption}>
               {`${sellerLicense?.licenseNumber ?? "-"}`}
-            </Typography>
-            <Typography className={classes.caption} variant="body1">
+            </div>
+            <div className={classes.caption}>
               {`${sellerLicense?.licenseState ?? "-"}`}
-            </Typography>
+            </div>
             {/* {
               seller?.license?.licenseExpiry &&
               <Typography className={classes.caption} variant="body1">
@@ -102,9 +116,17 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
             {
               productClassifiedAd &&
-              <Typography className={classes.caption} variant="body1">
-                {`0${productClassifiedAd?.store?.user?.phoneNumber?.number}`}
-              </Typography>
+              <>
+              {
+                phoneNumber
+                ? <div className={classes.caption}>
+                    {phoneNumber}
+                  </div>
+                : <a className={classes.caption}>
+                    {email}
+                  </a>
+              }
+              </>
             }
             {
               // seller?.license?.verified &&
@@ -214,6 +236,8 @@ const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,
+    fontWeight: 400,
+    lineHeight: '1.25',
   },
   captionSmall: {
     fontSize: '0.8rem',
