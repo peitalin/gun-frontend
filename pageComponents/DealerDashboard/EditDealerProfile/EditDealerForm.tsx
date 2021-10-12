@@ -114,7 +114,7 @@ const EditDealerForm: React.FC<ReactProps> = (props) => {
         if (editAsAdmin) {
           dealerEditAsAdmin({
             variables: {
-              dealerId: dealer.id,
+              dealerId: dealer?.id,
               name: values.name,
               address: values.address,
               city: values.city,

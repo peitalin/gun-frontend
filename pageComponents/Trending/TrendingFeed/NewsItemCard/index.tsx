@@ -136,7 +136,7 @@ const styles = (theme: Theme) => createStyles({
   },
   closeButtonDesktop: {
     position: "absolute",
-    top: '2.5rem',
+    top: '-1rem',
     right: '0rem',
   },
   closeButton: {

@@ -34,7 +34,7 @@ const ProductModelMake = (props: ReactProps) => {
     return parseFloat(s).toFixed(2)
   }
 
-  let barrelLength = product?.currentSnapshot?.barrelLength.includes('mm')
+  let barrelLength = product?.currentSnapshot?.barrelLength?.includes('mm')
     ? product?.currentSnapshot?.barrelLength
     : `${roundToTwoDigits(product?.currentSnapshot?.barrelLength)} mm`
 

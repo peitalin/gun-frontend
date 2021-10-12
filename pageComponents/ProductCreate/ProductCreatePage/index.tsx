@@ -138,6 +138,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Stepper for multiple fields
 import ProductCreateStepper from "./ProductCreateStepper";
 import VisaPurchaseClassifiedAd from "./VisaPurchaseClassifiedAd";
+import { debounce, useDebounce } from "utils/debounce"
 
 // NOTES:
 // <Button type="submit".../> must be inside <form onSubmit={onSubmit} ... />
@@ -391,7 +392,7 @@ const ProductCreatePage = (props: ReactProps) => {
 
   /////// Hooks ////////
 
-  React.useEffect(() => {
+  useDebounce(() => {
     // update formik variants whenever redux variants change
     formik.setFieldValue(
       "currentVariants",
@@ -402,7 +403,8 @@ const ProductCreatePage = (props: ReactProps) => {
       })
     );
     formik.validateForm()
-  }, [dzuPreviewItems, dzuPreviewOrder])
+  }, [dzuPreviewItems, dzuPreviewOrder], 500)
+
 
 
   return (

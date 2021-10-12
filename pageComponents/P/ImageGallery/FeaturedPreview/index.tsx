@@ -26,9 +26,18 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
     setOpenedModals(openedModals => openedModals.filter(x => x !== id))
   }
 
+  React.useEffect(() => {
+    if (props.index >= (props.previewItems?.length)) {
+      // reset index, when we remove a previewItem
+      props.setIndex(0)
+    }
+  }, [props.previewItems])
+
+
   if (props.loading || props.previewItems?.length === 0) {
     return <FeaturedImagePlaceholder
-            previewsMissing={props.previewItems?.length === 0}
+              previewsMissing={props.previewItems?.length === 0}
+              previewsMissingMessage={props.previewsMissingMessage}
            />
   } else {
     if (constrainAspectRatio) {
@@ -48,6 +57,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
             style={props.style}
             swipeableStyle={props.swipeableStyle}
             animateTransitions={props.animateTransitions}
+            previewsMissingMessage={props.previewsMissingMessage}
           />
         </AspectRatioConstraint>
       )
@@ -67,6 +77,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
           style={props.style}
           swipeableStyle={props.swipeableStyle}
           animateTransitions={props.animateTransitions}
+          previewsMissingMessage={props.previewsMissingMessage}
         />
       )
     }
@@ -87,6 +98,7 @@ interface ReactProps {
   constrainAspectRatio?: boolean;
   previewImageClassName?: any;
   animateTransitions?: boolean;
+  previewsMissingMessage?: React.ReactNode
 }
 
 

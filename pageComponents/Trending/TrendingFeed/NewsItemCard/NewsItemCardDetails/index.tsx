@@ -106,30 +106,27 @@ const NewsItemCardDetails = (props: ReactProps) => {
         )}
       >
         <div className={classes.overflowHidden}>
-          {
-            featuredPreviewItem?.id
-            ? <FeaturedPreview
-                featuredPreviewItem={featuredPreviewItem}
-                previewItems={previewItems}
-                setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-                loading={props.loading || !process.browser} // for SSR
-                index={props.index}
-                setIndex={props.setIndex}
-                isPromoted={false}
-                disableModalPopup={false}
-                style={{
-                  width: props.imageSize?.desktop?.width,
-                  height: props.imageSize?.desktop?.height,
-                  maxHeight: 266,
-                }}
-                swipeableStyle={{
-                }}
-                previewImageClassName={classes.previewImageClass}
-                constrainAspectRatio={constrainAspect}
-                animateTransitions={true}
-              />
-            : <div style={{ height: '1.5rem'}}></div>
-          }
+          <FeaturedPreview
+            featuredPreviewItem={featuredPreviewItem}
+            previewItems={previewItems}
+            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+            loading={props.loading || !process.browser} // for SSR
+            index={props.index}
+            setIndex={props.setIndex}
+            isPromoted={false}
+            disableModalPopup={false}
+            style={{
+              width: props.imageSize?.desktop?.width,
+              height: props.imageSize?.desktop?.height,
+              maxHeight: 266,
+            }}
+            swipeableStyle={{
+            }}
+            previewImageClassName={classes.previewImageClass}
+            constrainAspectRatio={constrainAspect}
+            animateTransitions={true}
+            previewsMissingMessage={"Add an image"}
+          />
         </div>
 
 

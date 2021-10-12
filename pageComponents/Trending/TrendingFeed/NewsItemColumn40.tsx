@@ -123,6 +123,7 @@ const styles = (theme: Theme) => createStyles({
     position: "sticky",
     height: '100%',
     marginTop: '-1rem',
+    paddingTop: "3rem",
   },
   mobileWidth: {
     flexBasis: "0%",

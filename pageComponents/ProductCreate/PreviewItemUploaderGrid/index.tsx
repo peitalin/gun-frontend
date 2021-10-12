@@ -50,7 +50,8 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       UploadType.IMAGE,
       meta.type,
       meta.size,
-      aClient
+      aClient,
+      props.claimId,
     )
 
     setGoogleUploads(state => [
@@ -122,8 +123,14 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       const description = null;
       const tags = "";
 
-      google_storage_save_image_to_db(googleUpload.googleUploadId, description, tags, ownerIds, aClient)
-        .then(image => {
+      google_storage_save_image_to_db(
+        googleUpload.googleUploadId,
+        description,
+        tags,
+        ownerIds,
+        aClient,
+        props.claimId,
+      ).then(image => {
           // console.log("save_to_db response:", image.id)
           let newPreview: DzuPreviewItem = {
             id: meta.id,
@@ -289,6 +296,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   productId?: ID;
   dzuPreviewItems: DzuPreviewItem[];
   dzuPreviewOrder: DzuPreviewOrder[],
+  // claim images only
+  claimId?: string
   // stepper
   activeStep?: number
   setActiveStep?(a?: any): void

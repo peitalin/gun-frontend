@@ -1,12 +1,8 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "./commonStyles";
-// Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -37,6 +33,35 @@ const ProductClaimFormLayout: React.FC<ProductClaimFormProps> = (props) => {
 interface ProductClaimFormProps extends WithStyles<typeof styles> {
   onSubmit(e: React.FormEvent<HTMLFormElement>): void;
 }
+
+export const styles = (theme: Theme) => createStyles({
+  root: {
+    flexGrow: 1,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  rootSm: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingBottom: '2rem',
+  },
+  maxWidth500: {
+    // maxWidth: 500,
+    width: '100%',
+  },
+  pageMargin: {
+    margin: '0rem',
+    paddingTop: '0rem',
+    paddingBottom: '0rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+  },
+})
+
 
 export default withStyles(styles)( ProductClaimFormLayout );
 

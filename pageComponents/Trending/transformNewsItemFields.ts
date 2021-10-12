@@ -43,6 +43,9 @@ export const transformNewsItemToFields = (
 	newsItem: NewsItem
 ): NewsItemFields => {
 
+	// NOTE: internalProduct has preference over externalProduct
+	// will display internalProduct data first
+
   const externalProduct = newsItem?.externalProduct
   const internalProduct = newsItem?.product
 

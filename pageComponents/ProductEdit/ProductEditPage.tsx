@@ -109,7 +109,7 @@ import {
   reduxToFormikCurrentVariants
 } from "pageComponents/ProductCreate/ProductCreatePage/utils";
 import { cacheUpdateDashboardProduct } from "./cacheUpdateEditProduct";
-
+import { debounce, useDebounce } from "utils/debounce"
 
 
 
@@ -248,7 +248,7 @@ const ProductEditPage = (props: ReactProps) => {
 
   /////// Hooks ////////
 
-  React.useEffect(() => {
+  useDebounce(() => {
     console.log("updating formik.currentVariants")
     formik.setFieldValue(
       "currentVariants",
@@ -259,7 +259,7 @@ const ProductEditPage = (props: ReactProps) => {
       })
     );
     formik.validateForm()
-  }, [dzuPreviewItems, dzuPreviewOrder])
+  }, [dzuPreviewItems, dzuPreviewOrder], 500)
 
 
   console.log("formik.values", formik.values)

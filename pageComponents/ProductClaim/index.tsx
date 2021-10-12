@@ -3,22 +3,34 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
-// Components
-import ProductClaimPage from "./ProductClaimPage";
-import ErrorBounds from 'components/ErrorBounds';
 // Typings
 import { NewsItem } from "typings/gqlTypes";
+// css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Components
+import ErrorBounds from 'components/ErrorBounds';
+// components
+import NewsItemCard from "pageComponents/Trending/TrendingFeed/NewsItemCard";
+import ProductClaimPage from "./ProductClaimPage"
 
 
 
 const ProductClaim: React.FC<ReactProps> = (props) => {
 
-  const { classes, newsItem } = props;
+  const {
+    classes,
+    claimId,
+    newsItem,
+  } = props;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
+  // image gallery index
+  const [index, setIndex] = React.useState(0);
+  // for login menu tab
+  const [tabIndex, setTabIndex] = React.useState(1);
 
 
   return (
@@ -26,12 +38,25 @@ const ProductClaim: React.FC<ReactProps> = (props) => {
       classes.pageRoot,
       mdDown ? classes.paddingMobile : classes.paddingDesktop,
     )}>
-      <div className={classes.outerContainer}>
-        <div className={classes.flexRowInner}>
-          <ProductClaimPage
-            externalProduct={newsItem?.externalProduct}
+      <div className={classes.productColumn60}>
+        <ProductClaimPage
+          claimId={claimId}
+          externalProduct={newsItem?.externalProduct}
+          tabIndex={tabIndex}
+          setTabIndex={setTabIndex}
+        />
+      </div>
+      <div className={classes.productColumn40}>
+        {
+          newsItem &&
+          <NewsItemCard
+            user={undefined}
+            newsItem={newsItem}
+            className={classes.paddingTop1}
+            index={index}
+            setIndex={setIndex}
           />
-        </div>
+        }
       </div>
     </ErrorBounds>
   )
@@ -39,53 +64,38 @@ const ProductClaim: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  newsItem: NewsItem;
+  newsItem: NewsItem
+  claimId: string
 }
 
 const styles = (theme: Theme) => createStyles({
   pageRoot: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   paddingDesktop: {
-    padding: '2rem 2rem 2rem 2rem',
+    padding: '1rem',
   },
   paddingMobile: {
-    padding: '2rem 0.5rem 2rem 0.5rem',
-  },
-  modalBackdrop: {
-    backgroundColor: Colors.modalBackground,
-  },
-  modalPaperScrollPaper: {
-    maxHeight: "calc(100% - 32px)",
-    width: '100%',
-  },
-  outerContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  flexRowInner: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: '100%',
-    justifyContent: 'center',
+    padding: '1rem 0.5rem 1rem 0.5rem',
   },
   productColumn60: {
     flexBasis: '60%',
     flexGrow: 1,
     minWidth: 300,
+    width: '100%',
   },
   productColumn40: {
     flexBasis: '40%',
     flexGrow: 1,
     minWidth: 280,
     maxWidth: 400,
+    width: '100%',
   },
-  title: {
+  paddingTop1: {
+    paddingTop: '1rem',
   },
 });
 

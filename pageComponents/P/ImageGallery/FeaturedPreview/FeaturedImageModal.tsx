@@ -67,6 +67,7 @@ const FeaturedImageModal = (props: ReactProps) => {
             previewItem={featuredPreviewItem}
             // onClick={() => openModal(imageId)}
             showLoadingBar={false}
+            previewsMissingMessage={props.previewsMissingMessage}
           />
         : <BindKeyboardSwipeableViews
             enableMouseEvents={false}
@@ -110,7 +111,11 @@ const FeaturedImageModal = (props: ReactProps) => {
                     // otherwise render an empty placeholder
                     // transitioning: shows a black background for fadeIn
                     return (
-                      <FeaturedImagePlaceholder key={i} transitioning={true}/>
+                      <FeaturedImagePlaceholder
+                        key={i}
+                        transitioning={true}
+                        previewsMissingMessage={props.previewsMissingMessage}
+                      />
                     )
                   }
                 }
@@ -186,6 +191,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   swipeableStyle?: any;
   previewImageClassName?: any;
   animateTransitions?: boolean;
+  previewsMissingMessage?: React.ReactNode
 }
 
 export default withStyles(styles)( FeaturedImageModal );

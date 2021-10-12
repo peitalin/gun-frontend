@@ -85,6 +85,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
   // console.log("image:", image)
   // console.log("image src:", urlSrc)
   // console.log("image src after:", urlSrcAfter)
+  // console.log("message:", props.previewsMissingMessage)
 
   return (
     <Card
@@ -121,7 +122,13 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
         }
         {
           props.previewsMissing &&
-          <div className={classes.previewsMissing}>Image Missing</div>
+          <div className={classes.previewsMissing}>
+            {
+              props.previewsMissingMessage
+                ? props.previewsMissingMessage
+                : "Image Missing"
+            }
+          </div>
         }
         {
           !loaded &&
@@ -147,6 +154,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   transitioning?: boolean; // for when transition between slide images
   // and you want to show a black fade in
   previewsMissing?: boolean;
+  previewsMissingMessage?: React.ReactNode
 }
 
 // const objectFit = 'contain';

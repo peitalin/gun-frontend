@@ -1,10 +1,12 @@
 import React from "react";
 import clsx from "clsx";
+// Styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
+
 // Redux
-import { useDispatch, useSelector, batch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-import { ReduxStateProductEdit } from "reduxStore/product_edit-reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import {
   productToProductEditInput,
   previewsToDzuPreviews,
@@ -12,16 +14,14 @@ import {
 
 // Typings
 import {
-  Product,
   ProductEditInput,
-  ProductVariantInput,
-  UserPrivate,
-  ID,
+  ProductPreviewItemInput,
   ListingType,
   ProductType,
   External_Products,
+  NewsItem,
+  ClaimItemMutationResponse,
 } from "typings/gqlTypes";
-import { Colors } from "layout/AppTheme";
 
 import {
   ReducerName,
@@ -29,267 +29,248 @@ import {
   DzuPreviewOrder,
   DzuPreviewItem
 } from "typings/dropzone";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "./commonStyles";
-// MUI
-import Button from "@material-ui/core/Button";
-// Errors
-import ErrorBounds from 'components/ErrorBounds';
-import ButtonLoading from "components/ButtonLoading";
 // Subcomponents
 import ProductClaimFormLayout from "./ProductClaimFormLayout";
-import Title from "pageComponents/ProductCreate/TitleSerialNumber";
-import BackTo from "components/BackTo";
-import Typography from "@material-ui/core/Typography";
-// Subcomponents
-import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
-import MakeModel from "pageComponents/ProductCreate/MakeModel";
-import GunAttributes from "pageComponents/ProductCreate/GunAttributes";
-import Description from "pageComponents/ProductCreate/Description";
-import Pricing from "pageComponents/ProductCreate/Pricing";
 import PreventDragDropContainer from "pageComponents/ProductCreate/ProductCreatePage/PreventDragDropContainer";
 
-import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectFieldPlaceholder";
-// const SelectTags = dynamic(() => import("pageComponents/ProductCreate/SelectTags"), {
-//   loading: () => <SelectTagsPlaceholder/>,
-//   ssr: false,
-// })
-// import SelectCategories from "pageComponents/ProductCreate/SelectCategories"
-const SelectCaliber = dynamic(() => import("pageComponents/ProductCreate/SelectCaliber"), {
-  loading: () => <SelectFieldPlaceholder title={"Caliber"}/>,
-  ssr: false,
-})
-const SelectCategories = dynamic(() => import("pageComponents/ProductCreate/SelectCategories"), {
-  loading: () => <SelectFieldPlaceholder title={"Category"}/>,
-  ssr: false,
-})
-const SelectSellerLicense = dynamic(() => import("pageComponents/ProductCreate/SelectSellerLicense"), {
-  loading: () => <SelectFieldPlaceholder title={"License"}/>,
-  ssr: false,
-})
-// import SelectActionType from "pageComponents/ProductCreate/SelectFieldPlaceholder"
-const SelectActionType = dynamic(() => import("pageComponents/ProductCreate/SelectActionType"), {
-  loading: () => <SelectFieldPlaceholder title={"Action Type"}/>,
-  ssr: false,
-})
-// import SelectCondition from "pageComponents/ProductCreate/SelectCondition"
-const SelectCondition = dynamic(() => import("pageComponents/ProductCreate/SelectCondition"), {
-  loading: () => <SelectFieldPlaceholder title={"Condition"}/>,
-  ssr: false,
-})
-// import SelectDealer from "pageComponents/ProductCreate/SelectDealer"
+import dynamic from 'next/dynamic'
 const SelectDealer = dynamic(() => import("pageComponents/ProductCreate/SelectDealer"), {
   loading: () => <SelectFieldPlaceholder title={"Dealer"}/>,
   ssr: false,
 })
-// same dir components
+import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectFieldPlaceholder";
 import SectionBorder from "pageComponents/ProductCreate/ProductCreatePage/SectionBorder";
-// Product Preview Page
-import Tooltip from '@material-ui/core/Tooltip';
-
 // SSR Subcomponents
-import dynamic from 'next/dynamic'
-import UploadInputPlaceholder from "pageComponents/ProductCreate/SSR/UploadInputPlaceholder";
-import UploadPreviewPlaceholder from "pageComponents/ProductCreate/SSR/UploadPreviewPlaceholder";
-const PreviewItemUploaderGrid = dynamic(() => import("pageComponents/ProductCreate/PreviewItemUploaderGrid"), {
-  loading: () => <UploadPreviewPlaceholder/>,
-  ssr: false,
-})
+import LoginPageClaimProduct from "./LoginPageClaimProduct"
+import ImageSwapComponent from "./ImageSwapComponent";
 
 // Validation
 import { FormikErrors, useFormik } from 'formik';
 import { validationSchemas } from "utils/validation";
 // Graphql
-import { useQuery, useMutation, useApolloClient } from "@apollo/client";
-import { EDIT_PRODUCT } from "queries/products-mutations";
+import { useQuery, useMutation } from "@apollo/client";
+import {
+  SWAP_IMAGES_FOR_EXTERNAL_PRODUCT,
+} from "queries/news-items-claims-mutations";
 import { useRouter } from "next/router";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 import {
-  reduxToFormikCurrentVariants
+  SIGN_UP_AND_CLAIM_ITEM,
+  LOG_IN_AND_CLAIM_ITEM,
+} from "queries/news-items-claims-mutations";
+
+import { reduxBatchUpdate } from "layout/GetUser";
+import {
+  passwordPreview,
+  handleGqlError,
+} from "layout/Login/utils";
+import {
+  printValidationErrorsClaims
+} from "./utils"
+import {
+  reduxPreviewsToProductPreviewItemInput,
 } from "pageComponents/ProductCreate/ProductCreatePage/utils";
-import { cacheUpdateDashboardProduct } from "./cacheUpdateEditProduct";
 
 
 
 
-const ProductEditPage = (props: ReactProps) => {
+const ProductClaimPage = (props: ReactProps) => {
 
-  // Props & State
   const {
     classes,
   } = props;
-  const router = useRouter();
 
+  const router = useRouter();
+  const snackbar = useSnackbar();
   // Redux
-  const reducerName: ReducerName = ReducerName.reduxProductEdit;
+  const reducerName: ReducerName = ReducerName.reduxImageSwap;
   const actions = Actions[reducerName];
   const dispatch = useDispatch();
-  const snackbar = useSnackbar();
 
-  const [loading, setLoading] = React.useState(false)
 
   const {
     dzuPreviewOrder,
     dzuPreviewItems,
-    user,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
       dzuPreviewOrder: state[reducerName]?.dzuPreviewOrder,
       dzuPreviewItems: state[reducerName]?.dzuPreviewItems,
-      user: state.reduxLogin.user,
     }
   });
 
 
-  const [
-    productEdit,
-    { data, loading: apolloLoading }
-  ] = useMutation<MutationData, MutationVar>(
-    EDIT_PRODUCT, {
+  let [logInAndClaimItem, { loading: loading1 }] = useMutation<MData1, MVar1>(
+    LOG_IN_AND_CLAIM_ITEM, {
     variables: {
-      productEditInput: undefined
+      claimId: props.claimId,
+      email: undefined,
+      password: undefined,
+      dealerId: undefined,
+      newPreviewItems: undefined,
     },
-    onError: (err) => {
-      let errMsg = err?.graphQLErrors?.[0]?.message ?? JSON.stringify(err)
-      if (errMsg) {
-        snackbar.enqueueSnackbar(
-          `${errMsg}`,
-          { variant: "error", autoHideDuration: 6000 }
-        )
+    onCompleted: (data) => {
+      let user = data?.logInAndClaimItem?.user;
+      console.log("returned user: ", user)
+      if (user) {
+        // Update redux user and collections
+        dispatch(reduxBatchUpdate.userAndCollections({ user: user }))
+      }
+      if (data?.logInAndClaimItem) {
+        setTimeout(() => {
+          alert('/admin/products')
+          // router.push("/admin/products")
+        }, 500)
         formik.resetForm()
       }
     },
-    onCompleted: async(data: MutationData) => {
-
-      dispatch(Actions.reduxModals.TOGGLE_PRODUCT_EDIT_MODAL(false))
-
-      let editProductTitle = data?.editProduct?.product?.currentSnapshot?.title;
-      snackbar.enqueueSnackbar(
-        `Successfully edited listing: ${editProductTitle}`,
-        { variant: "success", autoHideDuration: 3000 }
-      )
-      // router.back()
-      router.push("/admin/products")
-      setLoading(false)
-
-      setTimeout(() => {
-        // reset redux form
-        dispatch(actions.RESET_PRODUCT_EDIT())
-      }, 200)
+    onError: (error) => {
+      handleGqlError(error, snackbar)
     },
-    update: (cache, { data: { editProduct }}) => {
-      cacheUpdateDashboardProduct({
-        cache: cache,
-        product: editProduct?.product,
-      })
-    }
+    // errorPolicy: "all", // propagate errors from backend to Snackbar
   })
 
-  // const productEditInput = productToProductEditInput(props.externalProduct as any)
-  const productEditInput = productToProductEditInput(undefined)
+  let [signUpAndClaimItem, { loading: loading2 }] = useMutation<MData2, MVar2>(
+    SIGN_UP_AND_CLAIM_ITEM, {
+    variables: {
+      claimId: props.claimId,
+      email: undefined,
+      password: undefined,
+      dealerId: undefined,
+      newPreviewItems: undefined,
+      // license args
+      firstName: undefined,
+      lastName: undefined,
+      licenseNumber: undefined,
+      licenseExpiry: undefined,
+      licenseCategory: undefined,
+      licenseState: undefined,
+    },
+    onCompleted: (data) => {
+      let user = data?.signUpAndClaimItem?.user;
+      console.log("returned user: ", user)
+      if (user) {
+        // Update redux user and collections
+        dispatch(reduxBatchUpdate.userAndCollections({ user: user }))
+      }
+      if (data?.signUpAndClaimItem) {
+        setTimeout(() => {
+          alert('/admin/products')
+          router.replace("/admin/products")
+        }, 500)
+        formik.resetForm()
+      }
+    },
+    onError: (error) => {
+      handleGqlError(error, snackbar)
+    },
+    // errorPolicy: "all", // propagate errors from backend to Snackbar
+  })
 
-  const formik = useFormik({
+   ///////////////////////////
+  ///////// FORMIK //////////
+  ///////////////////////////
+
+  let validationSchema = props.tabIndex === 0
+    ? validationSchemas.LogInAndClaim
+    : validationSchemas.SignUpAndClaimItem
+
+
+  const formik = useFormik<FormikFields>({
     initialValues: {
-      ...productEditInput
+      claimId: props.claimId,
+      email: undefined,
+      password: undefined,
+      dealerId: undefined,
+      previewItems: [],
+      // license args
+      firstName: undefined,
+      lastName: undefined,
+      licenseNumber: undefined,
+      licenseExpiry: undefined,
+      licenseCategory: undefined,
+      licenseState: undefined,
     },
-    validationSchema: validationSchemas.ProductEdit,
+    validationSchema: validationSchema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      console.log("dispatching productEdit with values: ", values)
-      // // Dispatch Apollo Mutation after validation
-      productEdit({
-        variables: {
-          productEditInput: {
-            title: values.title,
-            description: values.description,
-            condition: values.condition,
-            make: values.make,
-            model: values.model,
-            ammoType: values.ammoType,
-            actionType: values.actionType,
-            caliber: values.caliber,
-            serialNumber: values.serialNumber,
-            location: values.location,
-            categoryId: values.categoryId,
-            currentVariants: values.currentVariants,
-            isPublished: values.isPublished,
-            allowBids: values.allowBids,
-            productId: values.productId,
+      // Dispatch Apollo Mutation after validation
+      if (props.tabIndex === 0) {
+        console.log("dispatching LogInAndClaim with values: ", values)
+        logInAndClaimItem({
+          variables: {
+            claimId: values.claimId,
             dealerId: values.dealerId,
-            magazineCapacity: values.magazineCapacity,
-            barrelLength: values.barrelLength,
-            sellerLicenseId: values.sellerLicenseId,
-            listingType: ListingType.CLASSIFIED, // can't be edited
-            productType: ProductType.FIREARM, // can't be edited
+            newPreviewItems: values.previewItems,
+            email: values.email,
+            password: values.password,
           }
-        },
-      }).finally(() => {
-        setLoading(false)
-      })
+        })
+      } else {
+        console.log("dispatching SignUpAndClaim with values: ", values)
+        signUpAndClaimItem({
+          variables: {
+            claimId: values.claimId,
+            email: values.email,
+            password: values.password,
+            dealerId: values.dealerId,
+            newPreviewItems: values.previewItems,
+            // license args
+            firstName: values.firstName,
+            lastName: values.lastName,
+            licenseNumber: values.licenseNumber,
+            licenseExpiry: values.licenseExpiry,
+            licenseCategory: values.licenseCategory.join(','),
+            licenseState: values.licenseState,
+          }
+        })
+      }
     }
   })
 
+  let loading = loading1 || loading2
 
+
+  // Any time we dynamically change the validation schema revalidate form
   React.useEffect(() => {
-    if (productEditInput?.productId) {
+    formik.validateForm();
+  }, [validationSchema]);
 
-      console.log("seeding product edit data")
-      const actions = Actions.reduxProductEdit;
-
-      // let dzuPreviewItemInputs = previewsToDzuPreviews(
-      //   props.product?.featuredVariant?.previewItems ?? []
-      // );
-
-      // batch(() => {
-      //   dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))
-      //   dispatch(actions.SET_PREVIEW_ITEMS(dzuPreviewItemInputs))
-      // })
-    }
-  }, [props.externalProduct])
+  // // Any time we dynamically change the validation schema revalidate the
+  React.useEffect(() => {
+    printValidationErrorsClaims(formik.errors)
+  }, [formik.errors]);
 
 
   React.useEffect(() => {
-    console.log("updating formik.currentVariants")
+    // console.log("updating formik.previewItems. isInternal images only")
     formik.setFieldValue(
-      "currentVariants",
-      reduxToFormikCurrentVariants({
-        productEditInput,
+      "previewItems",
+      reduxPreviewsToProductPreviewItemInput({
         dzuPreviewItems,
         dzuPreviewOrder,
-      })
+      }).filter(p => p.isInternal)
     );
-  }, [dzuPreviewItems])
+  }, [dzuPreviewItems, dzuPreviewOrder])
+
 
   // console.log("formik.values", formik.values)
   // console.log("formik.errors", formik.errors)
-  // console.log("productEditInput", productEditInput)
+  // console.log("formik.touched", formik.touched)
+  // console.log("dzuPreviewItems ", dzuPreviewItems)
+
 
   return (
     <PreventDragDropContainer>
       <ProductClaimFormLayout
-        classes={classes}
         onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
       >
-        <Typography className={classes.title} variant="h2">
-          Edit Product
-        </Typography>
-        <BackTo
-          textLink={true}
-          title={"Back to Products"}
+        <ImageSwapComponent
+          claimId={props.claimId}
+          externalProduct={props.externalProduct}
         />
-        <SectionBorder thickPadding={true}>
-          <SelectCategories
-            {...formik}
-          />
-          {/* <SelectSellerLicense
-            user={user}
-            // sellerLicenseId={props.product?.sellerLicenseId} // only for product edit
-            {...formik}
-          /> */}
-        </SectionBorder>
 
         <SectionBorder thickPadding={true}>
           <SelectDealer
@@ -297,101 +278,27 @@ const ProductEditPage = (props: ReactProps) => {
           />
         </SectionBorder>
 
-        <SectionBorder thickPadding={true}>
-          <TitleSerialNumber {...formik} />
-          <MakeModel {...formik} />
-          <SelectCondition
-            {...formik}
+        <div className={classes.flexCol2}>
+          <LoginPageClaimProduct
+            claimId={props.claimId}
+            tabIndex={props.tabIndex}
+            setTabIndex={props.setTabIndex}
+            titleLogin={
+              <div className={classes.loginTitle}>
+                2. Log in and claim listing
+              </div>
+            }
+            titleSignup={
+              <div className={classes.loginTitle}>
+                2. Create an account and Claim Listing
+              </div>
+            }
+            formik={formik}
+            loading={loading}
           />
-        </SectionBorder>
+        </div>
 
-        <SectionBorder thickPadding={true}>
-          <SelectActionType
-            {...formik}
-          />
-          <SelectCaliber
-            reducerName={reducerName}
-            {...formik}
-          />
-          <GunAttributes {...formik} />
-        </SectionBorder>
 
-        <SectionBorder thickPadding={true}>
-          <Description
-            {...formik}
-          />
-        </SectionBorder>
-
-        <SectionBorder thickPadding={true}>
-          <PreviewItemUploaderGrid
-            reducerName={reducerName}
-            productInput={productEditInput}
-            ownerId={props.externalProduct.id}
-            productId={props.externalProduct.id}
-            dzuPreviewItems={dzuPreviewItems}
-            dzuPreviewOrder={dzuPreviewOrder}
-            {...formik}
-          />
-        </SectionBorder>
-
-        <SectionBorder thickPadding={true}>
-          <Pricing
-            reducerName={reducerName}
-            currentVariants={formik.values.currentVariants}
-            {...formik}
-          />
-        </SectionBorder>
-
-        <ErrorBounds className={classes.flexButtons}>
-          <div className={classes.flexButtonItem}>
-            <Button
-              style={{ width: 150 }}
-              variant={"outlined"}
-              color={"primary"}
-              onClick={() => router.back()}
-              className={props.classes.backButton}
-            >
-              Back to Listings
-            </Button>
-          </div>
-
-          <div className={classes.flexButtonSpacer}/>
-          <div className={classes.flexButtonSpacer}/>
-          <div className={classes.flexButtonItem}>
-            <ButtonLoading
-              type="submit" // this sets off Form submit
-              className={props.classes.editButton}
-              variant={"outlined"}
-              color={"secondary"}
-              style={{
-                width: '150px',
-                height: 40,
-              }}
-              loadingIconColor={Colors.ultramarineBlue}
-              replaceTextWhenLoading={true}
-              loading={loading || apolloLoading}
-              disabled={!process.browser || apolloLoading}
-              // disable during apolloDispatch, not when state.loading = true
-              // state.loading comes first, don't disable the form accidentally
-              onClick={() => {
-                // need to await formikCurrentVariants update
-                if (isFormikDisabled(formik.errors)) {
-                  snackbar.enqueueSnackbar(
-                    printValidationErrors(formik.errors),
-                    { variant: "error", autoHideDuration: 5000 }
-                  )
-                  setLoading(false)
-                } else {
-                  setLoading(true)
-                }
-                console.log('errors: ', formik.errors);
-                console.log('values: ', formik.values);
-              }}
-            >
-              Save Changes
-            </ButtonLoading>
-          </div>
-        </ErrorBounds>
       </ProductClaimFormLayout>
     </PreventDragDropContainer>
   )
@@ -405,53 +312,101 @@ const isFormikDisabled = (
   return formikErrors.length > 0
 }
 
-const printValidationErrors = (
-  errors: FormikErrors<ProductEditInput>
-): string => {
-  // watch out for nested objects which may not be strings
-  // if using Object.values()
-  console.log("errors:", errors)
-  // let priceError = errors?.currentVariants?.[0]?.price;
-  // let priceWasError = errors?.currentVariants?.[0]?.priceWas;
-  // let previewItemsError = errors?.currentVariants?.[0]?.previewItems;
-
-  let priceError = errors?.currentVariants?.[0];
-  let priceWasError = errors?.currentVariants?.[0];
-  let previewItemsError = errors?.currentVariants?.[0];
-
-  let { currentVariants, ...filterErrors }: any = errors
-
-  if (priceError) {
-    filterErrors = { ...filterErrors, price: priceError }
-  }
-  if (priceWasError) {
-    filterErrors = { ...filterErrors, priceWas: priceWasError }
-  }
-  if (previewItemsError) {
-    filterErrors = { ...filterErrors, previewItems: previewItemsError }
-  }
-
-  const errorMsg = Object.keys(filterErrors).join(", ")
-  return `Please check: ${errorMsg}`
-}
 
 interface ReactProps extends WithStyles<typeof styles> {
   externalProduct: External_Products;
+  claimId: string
+  tabIndex: number
+  setTabIndex(t: number): void
 }
 
 interface ReduxState {
   dzuPreviewOrder: DzuPreviewOrder[];
   dzuPreviewItems: DzuPreviewItem[];
-  user: UserPrivate
 }
 
-export interface MutationData {
-  editProduct: { product: Product }
+interface MVar1 {
+  claimId: string
+  email: string,
+  password: string,
+  newPreviewItems: ProductPreviewItemInput[]
+  dealerId?: string,
 }
-interface MutationVar {
-  productEditInput: ProductEditInput
+interface MData1 {
+  logInAndClaimItem: ClaimItemMutationResponse;
+}
+interface MVar2 {
+  claimId: string,
+  email: string,
+  password: string,
+  newPreviewItems: ProductPreviewItemInput[]
+  dealerId?: string,
+  // license args
+  firstName: string,
+  lastName: string,
+  licenseNumber: string,
+  licenseExpiry: Date,
+  licenseCategory: string,
+  licenseState: string,
+}
+interface MData2 {
+  signUpAndClaimItem: ClaimItemMutationResponse;
+}
+interface FormikFields {
+  claimId: string,
+  email: string,
+  password: string,
+  previewItems: ProductPreviewItemInput[]
+  dealerId?: string,
+  // license args
+  firstName: string,
+  lastName: string,
+  licenseNumber: string,
+  licenseExpiry: Date,
+  licenseCategory: string[],
+  licenseState: string,
 }
 
 
-export default withStyles(styles)( ProductEditPage );
+export const styles = (theme: Theme) => createStyles({
+  confirmButton: {
+    margin: 0,
+    color: Colors.ultramarineBlue,
+  },
+  // Buttons
+  flexButtons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    width: '100%',
+    marginTop: "2rem",
+  },
+  flexButtonItem: {
+    marginBottom: '1rem',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexGrow: 1,
+    flexBasis: '30%',
+    maxWidth: '150px',
+  },
+  loginTitle: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    fontSize: '1.25rem',
+    fontWeight: 600,
+    color: Colors.magenta,
+  },
+  flexCol2: {
+    padding: '0rem 3rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
+
+export default withStyles(styles)( ProductClaimPage );
 
