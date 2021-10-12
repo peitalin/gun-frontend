@@ -1,3 +1,4 @@
+import { ListingType } from 'typings/gqlTypes';
 import * as Yup from 'yup';
 import {
   imageIdRegex,
@@ -28,7 +29,7 @@ export const validationSchemas = {
     Yup.object().shape({
       title: Yup.string()
         .min(minLengthProductName, `Title must be longer than ${minLengthTitle} chars`)
-        .max(maxLengthProductName, `title can't be longer than ${maxLengthTitle} chars`)
+        .max(maxLengthProductName, `Title can't be longer than ${maxLengthTitle} chars`)
         .required('Title is required'),
       description: Yup.string()
         .required('Needs a description')
@@ -70,8 +71,23 @@ export const validationSchemas = {
       barrelLength: Yup.string()
         .max(100)
         .nullable(),
+      // dealerId: Yup.string()
+      //   .required('Must choose a dealer'),
       dealerId: Yup.string()
-        .required('Must choose a dealer'),
+        .test("dealerId", "Pick a dealer for escrow listings", function(value) {
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          if (this.parent.listingType !== ListingType.CLASSIFIED) {
+            // value = dealerId must be supplied
+            return value
+          } else {
+            // no dealerid needed for classified Ads, return true
+            return true
+          }
+        }),
       categoryId: Yup.string()
         .required("Pick a category"),
       sellerLicenseId: Yup.string()
@@ -95,7 +111,6 @@ export const validationSchemas = {
           previewItems: Yup.array().of(
               Yup.object({
                 id: Yup.string().nullable(),
-                position: Yup.number().nullable(),
                 // imageId: Yup.string().nullable().matches(imageIdRegex),
                 imageId: Yup.string().nullable(),
                 youTubeEmbedLink: Yup.string().nullable(),
@@ -157,8 +172,23 @@ export const validationSchemas = {
       barrelLength: Yup.string()
         .max(100)
         .nullable(),
+      // dealerId: Yup.string()
+      //   .required('Must choose a dealer'),
       dealerId: Yup.string()
-        .required('Must choose a dealer'),
+        .test("dealerId", "Pick a dealer for escrow listings", function(value) {
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          if (this.parent.listingType !== ListingType.CLASSIFIED) {
+            // value = dealerId must be supplied
+            return value
+          } else {
+            // no dealerid needed for classified Ads, return true
+            return true
+          }
+        }),
       categoryId: Yup.string()
         .required("Pick a category"),
       sellerLicenseId: Yup.string()
@@ -195,7 +225,6 @@ export const validationSchemas = {
             previewItems: Yup.array().of(
                 Yup.object({
                   id: Yup.string().nullable(),
-                  position: Yup.number().nullable(),
                   // imageId: Yup.string().nullable().matches(imageIdRegex),
                   imageId: Yup.string().nullable(),
                   youTubeEmbedLink: Yup.string().nullable(),
@@ -302,67 +331,13 @@ export const validationSchemas = {
         .required('A license number required.'),
     }),
 
-  // Dealer Profiel deletions
+  // Dealer Profile deletions
   DeleteDealer:
     Yup.object().shape({
       dealerId: Yup.string()
         .required('dealerId required'),
     }),
 
-  // Sign Up
-  SignUpEmail:
-    Yup.object().shape({
-      email: Yup.string()
-        .email("Not a valid email")
-        .required('An email is needed'),
-      password: Yup.string()
-        .min(6, "Must be at least 6 letters")
-        .required('A password is needed'),
-      claimId: Yup.string(),
-    }),
-
-  // Sign Up/Log In And Claim
-  SignUpAndClaimItem:
-    Yup.object().shape({
-      claimId: Yup.string(),
-      dealerId: Yup.string(),
-      email: Yup.string()
-        .email("Not a valid email")
-        .required('An email is needed'),
-      password: Yup.string()
-        .min(6, "Must be at least 6 letters")
-        .required('A password is needed'),
-      firstName: Yup.string()
-        .min(2, "Must be at least 2 chars!")
-        .max(20, "Must be less than 20 chars!")
-        .required("required"),
-      lastName: Yup.string()
-        .min(2, "Must be at least 2 chars!")
-        .max(20, "Must be less than 20 chars!")
-        .required("required"),
-      licenseNumber: Yup.string()
-        .min(5, "Must be at least 5 digits!")
-        .max(20, "Must be less than 20 digits!")
-        .required("required"),
-      licenseExpiry: Yup.date()
-        .required("required"),
-      licenseCategory: Yup.array().of(Yup.string())
-        .required("required"),
-      licenseState: Yup.string()
-        .required("required"),
-    }),
-  // Log In And Claim
-  LogInAndClaim:
-    Yup.object().shape({
-      claimId: Yup.string(),
-      dealerId: Yup.string(),
-      email: Yup.string()
-        .email("Not a valid email")
-        .required('An email is needed'),
-      password: Yup.string()
-        .min(6, "Must be at least 6 letters")
-        .required('A password is needed'),
-    }),
 
   // Edit UserProfile form
   EditUserProfile:
@@ -620,18 +595,87 @@ export const validationSchemas = {
       durationInHours: Yup.number().nullable(),
     }),
 
-
-  SwapImagesForExternalProduct:
+  // Sign Up
+  SignUpEmail:
     Yup.object().shape({
-      claimId: Yup.string().required(),
+      email: Yup.string()
+        .email("Not a valid email")
+        .required('An email is needed'),
+      password: Yup.string()
+        .min(6, "Must be at least 6 letters")
+        .required('A password is needed'),
+      claimId: Yup.string(),
+    }),
+
+  // Sign Up/Log In And Claim
+  SignUpAndClaimItem:
+    Yup.object().shape({
+      claimId: Yup.string(),
+      dealerId: Yup.string(),
       previewItems: Yup.array().of(
           Yup.object({
             id: Yup.string().nullable(),
-            position: Yup.number().nullable(),
             imageId: Yup.string().nullable(),
             youTubeEmbedLink: Yup.string().nullable(),
           })
         ).min(1, "Must have at least 1 image"),
+      email: Yup.string()
+        .email("Not a valid email")
+        .required('An email is needed'),
+      password: Yup.string()
+        .min(6, "Must be at least 6 letters")
+        .required('A password is needed'),
+      firstName: Yup.string()
+        .min(2, "Must be at least 2 chars!")
+        .max(20, "Must be less than 20 chars!")
+        .required("required"),
+      lastName: Yup.string()
+        .min(2, "Must be at least 2 chars!")
+        .max(20, "Must be less than 20 chars!")
+        .required("required"),
+      licenseNumber: Yup.string()
+        .min(5, "Must be at least 5 digits!")
+        .max(20, "Must be less than 20 digits!")
+        .required("required"),
+      licenseExpiry: Yup.date()
+        .required("required"),
+      licenseCategory: Yup.array().of(Yup.string())
+        .required("required"),
+      licenseState: Yup.string()
+        .required("required"),
+    }),
+  // Log In And Claim
+  LogInAndClaim:
+    Yup.object().shape({
+      claimId: Yup.string(),
+      dealerId: Yup.string(),
+      previewItems: Yup.array().of(
+          Yup.object({
+            id: Yup.string().nullable(),
+            imageId: Yup.string().nullable(),
+            youTubeEmbedLink: Yup.string().nullable(),
+          })
+        ),
+        // allow 0 images
+      email: Yup.string()
+        .email("Not a valid email")
+        .required('An email is needed'),
+      password: Yup.string()
+        .min(6, "Must be at least 6 letters")
+        .required('A password is needed'),
+    }),
+
+  SwapImagesForExternalProduct:
+    Yup.object().shape({
+      claimId: Yup.string(),
+      previewItems: Yup.array().of(
+          Yup.object({
+            id: Yup.string().nullable(),
+            imageId: Yup.string().nullable(),
+            youTubeEmbedLink: Yup.string().nullable(),
+          })
+        )
+        // allow 0 images
     }),
 
 }
