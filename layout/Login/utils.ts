@@ -116,11 +116,18 @@ export const translateErrorMsg = (msg: string) => {
   if (msg?.includes('Authentication is required')) {
     return "Incorrect password"
   }
-  if (msg?.includes('NotFound')) {
+  if (msg?.match('NotFound')) {
     return "That email is not a user"
   }
   if (msg?.includes('duplicate')) {
     return "Email has already been taken"
+  }
+  // claim items errors
+  if (msg?.match(/claim/i) && msg?.match(/expire/i)) {
+    return `${msg}`
+  }
+  if (msg?.match(/image/i) && msg?.match(/upload/i)) {
+    return `${msg}`
   }
   return `An unexpected login error occurred: ${msg}`
 }

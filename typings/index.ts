@@ -88,7 +88,8 @@ export interface ProductCreateEditCommonInput {
   location: string;
   magazineCapacity?: string;
   barrelLength?: string;
-  dealerId: string;
+  // optional for external listings
+  dealerId?: string;
   isPublished: boolean;
   allowBids?: boolean;
   sellerLicenseId: string;

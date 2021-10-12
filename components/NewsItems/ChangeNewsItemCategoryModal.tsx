@@ -64,14 +64,13 @@ const ChangeNewsItemCategoryModal: React.FC<ReactProps> = (props) => {
   // console.log("handgunId: ", handgunCategoryId)
   // console.log("shotgunId: ", shotgunCategoryId)
   // console.log("itemId: ", itemCategoryId)
-
-  // console.log("newsItem: ", props.newsItem)
+  // console.log("chhange newsItem: ", props.newsItem)
 
   let newsItemCategory = props.newsItem?.externalProduct?.category
     || props.newsItem?.product?.category
 
   let newsItemCategoryId = props.newsItem?.externalProduct?.categoryId
-    || props.newsItem?.product?.categoryId
+    || props.newsItem?.product?.category?.id
 
   return (
     <Dialog

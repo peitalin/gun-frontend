@@ -140,8 +140,8 @@ export enum ChatRoomStatus {
 
 export type ClaimItemMutationResponse = {
   __typename?: 'ClaimItemMutationResponse';
-  user: UserPrivate;
-  claim?: Maybe<ClaimProductLink>;
+  user?: Maybe<UserPrivate>;
+  claimId?: Maybe<Scalars['String']>;
   newsItem?: Maybe<NewsItem>;
 };
 
@@ -291,6 +291,7 @@ export type ExternalProductCreateInput = {
   make?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   condition?: Maybe<Scalars['String']>;
   action?: Maybe<Scalars['String']>;
   adType?: Maybe<Scalars['String']>;
@@ -2989,6 +2990,7 @@ export type MutationSignUpAndClaimItemArgs = {
   licenseState: Scalars['String'];
   claimId: Scalars['String'];
   dealerId?: Maybe<Scalars['String']>;
+  newPreviewItems: Array<ProductPreviewItemInput>;
 };
 
 
@@ -2997,6 +2999,7 @@ export type MutationLogInAndClaimItemArgs = {
   password: Scalars['String'];
   claimId: Scalars['String'];
   dealerId?: Maybe<Scalars['String']>;
+  newPreviewItems: Array<ProductPreviewItemInput>;
 };
 
 
@@ -3693,7 +3696,7 @@ export type MutationGenerateClaimProductRefIdArgs = {
 
 export type MutationSwapImagesForExternalProductArgs = {
   claimId: Scalars['String'];
-  previewItems: Array<ProductPreviewItemInput>;
+  newPreviewItems: Array<ProductPreviewItemInput>;
 };
 
 /** Something that went wrong during a mutation. */
@@ -11047,6 +11050,7 @@ export type External_Product_Snapshots = {
   /** An aggregate relationship */
   previewItems_aggregate: Product_Preview_Items_Aggregate;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   serialNumber: Scalars['String'];
   soldText?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
@@ -11131,12 +11135,14 @@ export type External_Product_Snapshots_Avg_Fields = {
   __typename?: 'external_product_snapshots_avg_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Avg_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "external_product_snapshots". All fields are combined with a logical 'AND'. */
@@ -11162,6 +11168,7 @@ export type External_Product_Snapshots_Bool_Exp = {
   phoneNumber?: Maybe<String_Comparison_Exp>;
   previewItems?: Maybe<Product_Preview_Items_Bool_Exp>;
   price?: Maybe<Int_Comparison_Exp>;
+  priceWas?: Maybe<Int_Comparison_Exp>;
   serialNumber?: Maybe<String_Comparison_Exp>;
   soldText?: Maybe<String_Comparison_Exp>;
   state?: Maybe<String_Comparison_Exp>;
@@ -11179,6 +11186,7 @@ export enum External_Product_Snapshots_Constraint {
 export type External_Product_Snapshots_Inc_Input = {
   hrsToSold?: Maybe<Scalars['numeric']>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "external_product_snapshots" */
@@ -11201,6 +11209,7 @@ export type External_Product_Snapshots_Insert_Input = {
   phoneNumber?: Maybe<Scalars['String']>;
   previewItems?: Maybe<Product_Preview_Items_Arr_Rel_Insert_Input>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   serialNumber?: Maybe<Scalars['String']>;
   soldText?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
@@ -11227,6 +11236,7 @@ export type External_Product_Snapshots_Max_Fields = {
   model?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   serialNumber?: Maybe<Scalars['String']>;
   soldText?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
@@ -11252,6 +11262,7 @@ export type External_Product_Snapshots_Max_Order_By = {
   model?: Maybe<Order_By>;
   phoneNumber?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
   serialNumber?: Maybe<Order_By>;
   soldText?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
@@ -11278,6 +11289,7 @@ export type External_Product_Snapshots_Min_Fields = {
   model?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   serialNumber?: Maybe<Scalars['String']>;
   soldText?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
@@ -11303,6 +11315,7 @@ export type External_Product_Snapshots_Min_Order_By = {
   model?: Maybe<Order_By>;
   phoneNumber?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
   serialNumber?: Maybe<Order_By>;
   soldText?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
@@ -11353,6 +11366,7 @@ export type External_Product_Snapshots_Order_By = {
   phoneNumber?: Maybe<Order_By>;
   previewItems_aggregate?: Maybe<Product_Preview_Items_Aggregate_Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
   serialNumber?: Maybe<Order_By>;
   soldText?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
@@ -11402,6 +11416,8 @@ export enum External_Product_Snapshots_Select_Column {
   /** column name */
   PRICE = 'price',
   /** column name */
+  PRICEWAS = 'priceWas',
+  /** column name */
   SERIALNUMBER = 'serialNumber',
   /** column name */
   SOLDTEXT = 'soldText',
@@ -11432,6 +11448,7 @@ export type External_Product_Snapshots_Set_Input = {
   model?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   serialNumber?: Maybe<Scalars['String']>;
   soldText?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
@@ -11444,12 +11461,14 @@ export type External_Product_Snapshots_Stddev_Fields = {
   __typename?: 'external_product_snapshots_stddev_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Stddev_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -11457,12 +11476,14 @@ export type External_Product_Snapshots_Stddev_Pop_Fields = {
   __typename?: 'external_product_snapshots_stddev_pop_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Stddev_Pop_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -11470,12 +11491,14 @@ export type External_Product_Snapshots_Stddev_Samp_Fields = {
   __typename?: 'external_product_snapshots_stddev_samp_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Stddev_Samp_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -11483,12 +11506,14 @@ export type External_Product_Snapshots_Sum_Fields = {
   __typename?: 'external_product_snapshots_sum_fields';
   hrsToSold?: Maybe<Scalars['numeric']>;
   price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Sum_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** update columns of table "external_product_snapshots" */
@@ -11528,6 +11553,8 @@ export enum External_Product_Snapshots_Update_Column {
   /** column name */
   PRICE = 'price',
   /** column name */
+  PRICEWAS = 'priceWas',
+  /** column name */
   SERIALNUMBER = 'serialNumber',
   /** column name */
   SOLDTEXT = 'soldText',
@@ -11544,12 +11571,14 @@ export type External_Product_Snapshots_Var_Pop_Fields = {
   __typename?: 'external_product_snapshots_var_pop_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Var_Pop_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -11557,12 +11586,14 @@ export type External_Product_Snapshots_Var_Samp_Fields = {
   __typename?: 'external_product_snapshots_var_samp_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Var_Samp_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -11570,12 +11601,14 @@ export type External_Product_Snapshots_Variance_Fields = {
   __typename?: 'external_product_snapshots_variance_fields';
   hrsToSold?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "external_product_snapshots" */
 export type External_Product_Snapshots_Variance_Order_By = {
   hrsToSold?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 /** columns and relationships of "external_products" */
