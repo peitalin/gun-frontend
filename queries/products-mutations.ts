@@ -67,5 +67,19 @@ export const UNPUBLISH_PRODUCT = gql`
 `;
 
 
+export const MARK_PRODUCT_SOLD = gql`
+  mutation markProductSold($productId: String!) {
+    marketProductSold(productId: $productId) {
+      product {
+        ...ProductFragment
+      }
+    }
+  }
+  ${ProductFragment}
+`;
+
+
+
+
 
 
