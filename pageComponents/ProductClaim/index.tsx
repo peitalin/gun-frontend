@@ -13,6 +13,7 @@ import ErrorBounds from 'components/ErrorBounds';
 // components
 import NewsItemCard from "pageComponents/Trending/TrendingFeed/NewsItemCard";
 import ProductClaimPage from "./ProductClaimPage"
+import AlignCenterLayout from "components/AlignCenterLayout"
 
 
 
@@ -34,31 +35,36 @@ const ProductClaim: React.FC<ReactProps> = (props) => {
 
 
   return (
-    <ErrorBounds className={clsx(
-      classes.pageRoot,
-      mdDown ? classes.paddingMobile : classes.paddingDesktop,
-    )}>
-      <div className={classes.productColumn60}>
-        <ProductClaimPage
-          claimId={claimId}
-          externalProduct={newsItem?.externalProduct}
-          tabIndex={tabIndex}
-          setTabIndex={setTabIndex}
-        />
-      </div>
-      <div className={classes.productColumn40}>
-        {
-          newsItem &&
-          <NewsItemCard
-            user={undefined}
-            newsItem={newsItem}
-            className={classes.paddingTop1}
-            index={index}
-            setIndex={setIndex}
+    <AlignCenterLayout
+      maxWidth={900}
+      withRecommendations={false}
+    >
+      <div className={clsx(
+        classes.pageRoot,
+        mdDown ? classes.paddingMobile : classes.paddingDesktop,
+      )}>
+        <div className={classes.productColumn60}>
+          <ProductClaimPage
+            claimId={claimId}
+            externalProduct={newsItem?.externalProduct}
+            tabIndex={tabIndex}
+            setTabIndex={setTabIndex}
           />
-        }
+        </div>
+        <div className={classes.productColumn40}>
+          {
+            newsItem &&
+            <NewsItemCard
+              user={undefined}
+              newsItem={newsItem}
+              className={classes.paddingTop1}
+              index={index}
+              setIndex={setIndex}
+            />
+          }
+        </div>
       </div>
-    </ErrorBounds>
+    </AlignCenterLayout>
   )
 }
 
@@ -82,17 +88,18 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem 0.5rem 1rem 0.5rem',
   },
   productColumn60: {
-    flexBasis: '60%',
+    flexBasis: '55%',
     flexGrow: 1,
     minWidth: 300,
-    width: '100%',
+    // width: '100%',
   },
   productColumn40: {
     flexBasis: '40%',
     flexGrow: 1,
     minWidth: 280,
     maxWidth: 400,
-    width: '100%',
+    // width: '100%',
+    paddingTop: '2rem',
   },
   paddingTop1: {
     paddingTop: '1rem',

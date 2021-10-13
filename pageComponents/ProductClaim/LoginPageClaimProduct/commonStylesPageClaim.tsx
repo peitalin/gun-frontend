@@ -173,7 +173,8 @@ const styles = (theme: Theme) => createStyles({
   phoneNumberContainer: {
     position: "relative",
     width: '100%',
-    marginTop: "0.5rem",
+    // marginTop: "0.5rem",
+    marginBottom: "1rem",
     "& > div": {
       width: '100%',
     }

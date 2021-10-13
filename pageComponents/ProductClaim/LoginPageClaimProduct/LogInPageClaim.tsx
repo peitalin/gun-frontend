@@ -142,7 +142,6 @@ const LogInPageClaim = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   claimId: string
   setTabIndex(tabIndex: number): void;
-  handlePostClaim(): void
   title?: React.ReactNode;
   formikLogIn: FormikProps<FormikFieldsLogIn>
   loading: boolean

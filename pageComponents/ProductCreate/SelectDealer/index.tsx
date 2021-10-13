@@ -52,6 +52,7 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
             : "New Dealer"
           }
         </Typography>
+        { props.instructions }
         <FormGroup row
           className={clsx(classes.formGroup, classes.marginTop1)}
         >
@@ -63,12 +64,13 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 
+interface ReactProps extends WithStyles<typeof styles> {
+  defaultChooseDealer ?: boolean
+  instructions?: React.ReactNode;
+}
 export interface SelectOption {
   label: string;
   value: string | any;
-}
-interface ReactProps extends WithStyles<typeof styles> {
-  defaultChooseDealer ?: boolean
 }
 interface QueryData {
   getAllDealers: Dealers[]

@@ -121,8 +121,8 @@ const ProductClaimPage = (props: ReactProps) => {
       }
       if (data?.logInAndClaimItem) {
         setTimeout(() => {
-          alert('/admin/products')
-          // router.push("/admin/products")
+          // alert('/admin/products')
+          router.push("/admin/products")
         }, 500)
         formik.resetForm()
       }
@@ -161,7 +161,7 @@ const ProductClaimPage = (props: ReactProps) => {
       }
       if (data?.signUpAndClaimItem) {
         setTimeout(() => {
-          alert('/admin/products')
+          // alert('/admin/products')
           router.replace("/admin/products")
         }, 500)
         formik.resetForm()
@@ -283,6 +283,13 @@ const ProductClaimPage = (props: ReactProps) => {
 
         <SectionBorder thickPadding={true}>
           <SelectDealer
+            instructions={
+              <div className={classes.instructions}>
+                Select a dealer. This determines the listing state.<br/>
+                If your dealer is missing, please skip this step and contact us
+                to add the missing dealer. You will be able to add it later.
+              </div>
+            }
             {...formik}
           />
         </SectionBorder>
@@ -420,6 +427,14 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  instructions: {
+    marginBottom: "0.5rem",
+    marginTop: "0.5rem",
+    color: Colors.uniswapLighterGrey,
+    fontSize: '0.825rem',
+    fontWeight: 400,
+    lineHeight: '0.9rem',
   },
 })
 

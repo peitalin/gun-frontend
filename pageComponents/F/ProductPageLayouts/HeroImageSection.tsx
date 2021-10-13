@@ -18,7 +18,7 @@ const HeroImageSection: React.FC<ReactProps> = (props) => {
       props.isMobile && classes.heroLandscapeContainerMobile,
     )}>
       <AlignCenterLayout
-        maxWidth={720}
+        maxWidth={1860}
         withRecommendations={false}
       >
         {props.children}

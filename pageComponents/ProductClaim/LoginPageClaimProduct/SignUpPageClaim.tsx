@@ -345,8 +345,8 @@ const SignUpPageClaim: React.FC<ReactProps> = (props) => {
             onChange={handleSetPhoneNumber}
           />
           <Tooltip title={
-            `We may use this number to contact you about
-            your orders if we cannot reach you via email.`
+            `Optional - Make it easier for buyers to contact you.
+             We may use this number to contact you about your orders`
           }>
             <span>
               <HelpIcon className={classes.helpIcon}/>
@@ -393,7 +393,6 @@ const SignUpPageClaim: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   claimId: string
-  handlePostClaim(): void
   setTabIndex(tabIndex: number): void;
   title?: React.ReactNode;
   formikSignUp: FormikProps<FormikFieldsSignUp>

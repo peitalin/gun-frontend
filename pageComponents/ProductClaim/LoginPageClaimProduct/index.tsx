@@ -21,21 +21,12 @@ const LoginPageRedirect = (props: ReactProps) => {
     formik,
   } = props;
 
-  const router = useRouter()
-
-  const handlePostClaim = () => {
-    // things to do after item is successfully claimed
-    alert('/admin/products')
-    router.replace("/admin/products")
-  }
-
   const renderLoginTab = () => {
 
     if (tabIndex === 0) {
       return <LogInPageClaim
                 claimId={props.claimId}
                 setTabIndex={setTabIndex}
-                handlePostClaim={handlePostClaim}
                 title={props.titleLogin}
                 formikLogIn={formik}
                 loading={props.loading}
@@ -44,7 +35,6 @@ const LoginPageRedirect = (props: ReactProps) => {
       return <SignUpPageClaim
                 claimId={props.claimId}
                 setTabIndex={setTabIndex}
-                handlePostClaim={handlePostClaim}
                 title={props.titleSignup}
                 formikSignUp={formik as FormikProps<FormikFieldsSignUp>}
                 loading={props.loading}
@@ -58,7 +48,6 @@ const LoginPageRedirect = (props: ReactProps) => {
       return <LogInPageClaim
                 claimId={props.claimId}
                 setTabIndex={setTabIndex}
-                handlePostClaim={handlePostClaim}
                 title={props.titleLogin}
                 formikLogIn={formik}
                 loading={props.loading}

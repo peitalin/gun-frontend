@@ -52,7 +52,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
           })
         }
         options={dealerOptions}
-        placeholder={initialDealer?.label}
+        placeholder={initialDealer?.label ?? "Select a dealer"}
       />
 
       <div className={classes.errorMsgContainer}>
