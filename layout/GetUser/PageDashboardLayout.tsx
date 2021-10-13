@@ -86,7 +86,6 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
   // has phone number
   let hasPhoneNumber = user?.phoneNumber?.number
 
-  console.log("userrrrrr:", user)
 
   if (!lgDown) {
     // desktop
