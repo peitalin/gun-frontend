@@ -29,6 +29,7 @@ import { useSnackbar } from "notistack";
 import { GET_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 import { SelectOptionCaliber } from "typings"
+import { useScrollYPosition } from "utils/hooks"
 
 
 
@@ -55,6 +56,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
   const router = useRouter();
   // const snackbar = useSnackbar();
+  let y = useScrollYPosition()
 
   const {
     totalCount,
@@ -148,6 +150,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   // console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
   // console.log('searchTerm: ', searchTerm)
+  const floatPaginator = y > 300
 
   return (
     <div className={clsx(
@@ -328,6 +331,8 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
           classes.arrowContainer,
           classes.height50,
           // focused ? classes.height65 : classes.height50,
+          (isMobile && floatPaginator) && classes.arrowContainerMobile,
+          (isMobile && floatPaginator) ? 'fadeInFast' : undefined,
           isMobile && classes.marginTop,
           (isMobile && focused) && classes.displayNoneDelayed,
           // hide on mobile when menu is focused/expanded
@@ -355,6 +360,9 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               }
               //////////////////// adding this lags page transitions
               // setIndex(page - 1)
+              if (floatPaginator) {
+                window.scrollTo({ top: 170 })
+              }
 
               // then update pageParams (gQL request) + index change in carousel
               // debounceSetPageParam(page)
@@ -849,6 +857,17 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: BorderRadius4x,
+  },
+  arrowContainerMobile: {
+    position: "fixed",
+    bottom: '1rem',
+    zIndex: 1,
+    // border: theme.palette.type === 'dark'
+    //   ? `4px solid ${Colors.uniswapLightNavy}`
+    //   : `4px solid ${Colors.slateGreyDarker}`,
+    border: theme.palette.type === 'dark'
+      ? `4px solid ${Colors.purple}`
+      : `4px solid ${Colors.blue}`,
   },
   backButton: {
   },
