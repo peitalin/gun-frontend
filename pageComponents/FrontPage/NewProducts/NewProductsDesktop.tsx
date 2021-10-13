@@ -70,7 +70,6 @@ const NewProductsDesktop = (props: ReactProps) => {
               >
                 <div className={clsx(
                   smDown ? classes.flexItemMobile : classes.flexItem,
-                  "staggerFadeIn",
                   classes.flexItemHover,
                 )}>
                   <ProductPreviewResponsive
