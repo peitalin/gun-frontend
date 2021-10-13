@@ -82,7 +82,7 @@ const NewsItemCardRC = (props: ReactProps) => {
 		phoneNumber,
 		sourceSite,
 		sourceSiteUrl,
-		featuredPreviewItem: _featuredPreviewItem,
+		featuredPreviewItem,
 		previewItems,
     isInternalProduct,
     isSuspended,
@@ -108,22 +108,12 @@ const NewsItemCardRC = (props: ReactProps) => {
 
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  const imgSizesSrcSet = getImgSrcSetSizes(cardsPerRow, props.screenSize)
 
-  let firstPreview = previewItems?.[0]
 
-  let youTubeVimeoPreview = getYouTubeVimeoImagePreview(
-    firstPreview?.youTubeEmbedLink
-  );
-  const showDiscountBadge = () => {
-    if (price && priceWas) {
-      return price < priceWas
-    } else {
-      return false
-    }
-  }
-
-  const showDiscount = React.useMemo(() => showDiscountBadge(), [price, priceWas])
+  const showDiscount = React.useMemo(
+    () => showDiscountBadge(price, priceWas),
+    [price, priceWas]
+  )
 
   return (
     <div className={classes.rootContainer}
@@ -146,13 +136,14 @@ const NewsItemCardRC = (props: ReactProps) => {
       }
 
       <MainPreviewImage
-        newsItem={newsItem}
+        featuredPreviewItem={featuredPreviewItem}
+        productId={productId}
+        promotedSlotId={props.promotedSlotId}
         screenSize={props.screenSize}
         fit={fit}
         cardsPerRow={cardsPerRow}
         previewImageEmptyMessage={props.previewImageEmptyMessage}
         onClick={props.onClick}
-        promotedSlotId={props.promotedSlotId}
         disableLink={
           !props.newsItem?.product?.storeId ||
           typeof props.onClick === 'function'
@@ -286,6 +277,13 @@ const NewsItemCardRC = (props: ReactProps) => {
   );
 }
 
+const showDiscountBadge = (price: number, priceWas: number) => {
+  if (price && priceWas) {
+    return price < priceWas
+  } else {
+    return false
+  }
+}
 
 
 

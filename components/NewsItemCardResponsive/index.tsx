@@ -115,7 +115,6 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
 
 
 interface NewsItemCardResponsiveProps {
-  // newsItem: Product;
   newsItem: NewsItem;
   refetch?(): void;
   showWatchlistButton?: boolean;

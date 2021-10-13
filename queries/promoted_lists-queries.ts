@@ -1,5 +1,8 @@
 import gql from "graphql-tag";
-import { ProductFragment } from "./fragments";
+import {
+  ProductFragment,
+  ProductLiteFragment,
+} from "./fragments";
 
 export const GET_PROMOTED_LIST = gql`
   query(
@@ -32,7 +35,7 @@ export const GET_PROMOTED_LIST = gql`
             promotedListId
             productId
             product {
-              ...ProductFragment
+              ...ProductLiteFragment
             }
             ownerId
             reservePrice
@@ -46,7 +49,7 @@ export const GET_PROMOTED_LIST = gql`
       }
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 export const ADD_PRODUCT_TO_PROMOTED_LIST = gql`
@@ -68,7 +71,7 @@ export const ADD_PRODUCT_TO_PROMOTED_LIST = gql`
         promotedListId
         productId
         product {
-          ...ProductFragment
+          ...ProductLiteFragment
         }
         ownerId
         reservePrice
@@ -80,7 +83,7 @@ export const ADD_PRODUCT_TO_PROMOTED_LIST = gql`
       }
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 
@@ -112,7 +115,7 @@ export const REMOVE_PRODUCT_FROM_PROMOTED_LIST = gql`
               promotedListId
               productId
               product {
-                ...ProductFragment
+                ...ProductLiteFragment
               }
               ownerId
               reservePrice
@@ -127,7 +130,7 @@ export const REMOVE_PRODUCT_FROM_PROMOTED_LIST = gql`
       }
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 
@@ -142,7 +145,7 @@ export const GET_PROMOTED_SLOT = gql`
       promotedListId
       productId
       product {
-        ...ProductFragment
+        ...ProductLiteFragment
       }
       ownerId
       reservePrice
@@ -151,7 +154,7 @@ export const GET_PROMOTED_SLOT = gql`
       position
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 export const GET_PROMOTED_SLOT_BY_PRODUCT_ID = gql`
@@ -167,7 +170,7 @@ export const GET_PROMOTED_SLOT_BY_PRODUCT_ID = gql`
       promotedListId
       productId
       product {
-        ...ProductFragment
+        ...ProductLiteFragment
       }
       ownerId
       reservePrice
@@ -176,5 +179,5 @@ export const GET_PROMOTED_SLOT_BY_PRODUCT_ID = gql`
       position
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;

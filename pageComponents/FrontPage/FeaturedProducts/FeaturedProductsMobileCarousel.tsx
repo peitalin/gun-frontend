@@ -44,9 +44,6 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
   const promotedSlots = connection?.edges?.map(
     promotedItem => promotedItem.node
   );
-  const products = connection?.edges?.map(
-    promotedItem => promotedItem?.node?.product
-  )
 
   return (
     <main className={classes.root}>

@@ -119,6 +119,51 @@ export const ProductSnapshotsFragment = gql`
   }
 `;
 
+
+export const ProductSnapshotsLiteFragment = gql`
+  fragment ProductSnapshotsLiteFragment on product_snapshots {
+    id
+    createdAt
+    productId
+    title
+    description
+    condition
+    make
+    model
+    ammoType
+    actionType
+    caliber
+    serialNumber
+    location
+    magazineCapacity
+    barrelLength
+    dealer {
+      id
+      name
+      address
+      city
+      state
+      postCode
+      licenseNumber
+      createdAt
+      # user {
+      #   id
+      #   firstName
+      #   lastName
+      #   email
+      #   userRole
+      #   defaultLicenseId
+      #   phoneNumberId
+      #   phoneNumber {
+      #     countryCode
+      #     number
+      #   }
+      # }
+    }
+  }
+`;
+
+
 export const ProductVariantsFragment = gql`
   fragment ProductVariantsFragment on product_variants {
     variantSnapshotId
@@ -230,7 +275,7 @@ export const ProductLiteFragment = gql`
     storeId
     soldOutStatus
     currentSnapshot {
-      ...ProductSnapshotsFragment
+      ...ProductSnapshotsLiteFragment
     }
     featuredVariant {
       ...ProductVariantsFragment
@@ -263,7 +308,42 @@ export const ProductLiteFragment = gql`
     # }
   }
   ${ProductVariantsFragment}
-  ${ProductSnapshotsFragment}
+  ${ProductSnapshotsLiteFragment}
+`;
+
+
+/// Much faster to load, as it only uses dat afrom SearchIndex
+/// without needing to hit the database
+export const ProductPreviewFragment = gql`
+  fragment ProductPreviewFragment on ProductPreview {
+    id
+    featuredPreviewItemId
+    featuredPreview {
+      id
+      imageId
+      position
+      youTubeEmbedLink
+      variantSnapshotId
+      isInternal
+      image {
+        ...ImageFragment
+      }
+    }
+    title
+    make
+    model
+    caliber
+    actionType
+    price
+    priceWas
+    isSuspended
+    isSoldElsewhere
+    soldOutStatus
+    sellerLicenseVerified
+    sellerLicenseId
+    dealerState
+  }
+  ${ImageFragment}
 `;
 
 

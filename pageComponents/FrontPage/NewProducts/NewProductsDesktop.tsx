@@ -7,14 +7,14 @@ import { styles } from "../FeaturedProducts/stylesDesktop";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import ProductCardResponsive from "components/ProductCardResponsive";
+import ProductPreviewResponsive from "components/ProductPreviewResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // GraphQL Typings
 import {
   Product,
   Order_By,
   PromotedSlotsConnection,
-  ProductsConnection,
+  ProductPreviewsConnection,
 } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
@@ -45,7 +45,7 @@ const NewProductsDesktop = (props: ReactProps) => {
   // jumboXL preview card on sm screen size only, remove right margin
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  const products = connection?.edges?.map(
+  const productPreviews = connection?.edges?.map(
     edge => edge.node
   )
 
@@ -63,9 +63,9 @@ const NewProductsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          products?.length > 0
-          ? products?.filter(p => !!p).map((product, i) =>
-              <div key={product?.id + `_${i}`}
+          productPreviews?.length > 0
+          ? productPreviews?.filter(p => !!p).map((productPreview, i) =>
+              <div key={productPreview?.id + `_${i}`}
                 className={classes.productCardWrapper}
               >
                 <div className={clsx(
@@ -73,8 +73,8 @@ const NewProductsDesktop = (props: ReactProps) => {
                   "staggerFadeIn",
                   classes.flexItemHover,
                 )}>
-                  <ProductCardResponsive
-                    product={product}
+                  <ProductPreviewResponsive
+                    productPreview={productPreview}
                     cardsPerRow={cardsPerRow}
                   />
                 </div>
@@ -112,7 +112,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  connection: ProductsConnection;
+  connection: ProductPreviewsConnection;
   loading?: boolean;
   showSeeMore?: boolean;
   categorySlug?: string

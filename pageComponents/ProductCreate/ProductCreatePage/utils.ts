@@ -2,6 +2,7 @@
 import {
   ProductCreateInput,
   Product,
+  ProductPreview,
   Categories,
   ProductVariantInput,
   StorePrivate,
@@ -203,4 +204,55 @@ export const reduxPreviewsToProductPreviewItemInput = ({
   })
 
   return previewItems
+}
+
+
+
+export const convertProductToProductPreview = (
+  product: Product
+): ProductPreview => {
+
+  let price = product?.featuredVariant?.price
+  let priceWas = product?.featuredVariant?.priceWas
+  let featuredPreviewItem = product?.featuredVariant?.previewItems?.[0]
+  let storeId = product.storeId ?? product.store?.id
+
+  // order matters in search ranking, resettable ranking
+  //  by setting SEARCHABLE_ATTRIBUTES with field in different orders
+  return {
+    id: product.id,
+    createdAt: product.createdAt,
+    // updatedAt: product.updatedAt,
+    // currentSnapshotId: product?.currentSnapshot?.id,
+    categoryId: product?.categoryId,
+    // isPublished: product?.isPublished ?? false,
+    isSuspended: product?.isSuspended ?? false,
+    // isDeleted: product?.isDeleted ?? false,
+    // isExcludedFromSearch: product?.isExcludedFromSearch ?? false,
+    isSoldElsewhere: product?.isSoldElsewhere ?? false,
+    // allowBids: product?.allowBids,
+    // listingType: product?.listingType,
+    // storeId: product?.storeId ?? product?.store?.id,
+    soldOutStatus: product?.soldOutStatus,
+    sellerLicenseId: product?.sellerLicenseId,
+    featuredPreviewItemId: featuredPreviewItem?.id,
+    featuredPreview: featuredPreviewItem,
+    price: price,
+    priceWas: priceWas,
+    sellerLicenseVerified: product.sellerLicense?.verified,
+    title: product?.currentSnapshot?.title,
+    model: product?.currentSnapshot?.model,
+    make: product?.currentSnapshot?.make,
+    caliber: product?.currentSnapshot?.caliber,
+    // additional searchable fields.
+    // _createdAt: new Date(product.createdAt).getTime(), // rank by createdAt
+    // _categoryName: product?.category?.name,
+    // _storeName: product?.store?.name ?? "",
+    // filter fields (hidden from displayable/searchable attributes)
+    // _storeId: product?.storeId ?? product?.store?.id,
+    // _isSuspended: product.isSuspended ? StringBoolean.yes : StringBoolean.no,
+    // _categorySlug: product?.category?.slug ?? null,
+    dealerState: product?.currentSnapshot?.dealer?.state ?? null,
+    actionType: product?.currentSnapshot?.actionType ?? null,
+  } as ProductPreview
 }

@@ -68,7 +68,6 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
               >
                 <div className={clsx(
                   classes.flexItem,
-                  "staggerFadeIn",
                   classes.flexItemHover,
                 )}>
                   <ProductCardResponsive
@@ -83,7 +82,16 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
                 </div>
               </div>
             )
-          : <LoadingCards count={4} />
+          : <LoadingCards
+              count={3}
+              cardsPerRow={{
+                xs: 1,
+                sm: 2,
+                md: 2,
+                lg: 3,
+                xl: 3,
+              }}
+            />
         }
         {
           showSeeMore &&

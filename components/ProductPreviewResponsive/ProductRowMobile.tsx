@@ -1,10 +1,9 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
 // Typings
 import { Product } from "typings/gqlTypes";
 // Utils
@@ -12,23 +11,25 @@ import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
-import PriceDisplayMain from "components/PriceDisplayMain";
+import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
-// Modals
-import { goToModalConnect } from "utils/modals";
 // helpers
-import { useRouter } from "next/router";
+import { trimTitle } from "utils/strings";
 // next
 import Link from "next/link";
 
 
 
-const ProductRow = (props: ReactProps) => {
+const ProductRowMobile = (props: ReactProps) => {
 
   const { classes, product } = props;
 
-  const featuredVariant = product?.featuredVariant;
-  const dispatch = useDispatch();
+  const productId = product?.id;
+  const previewItems = product?.featuredVariant?.previewItems ?? []
+
+  const title = product?.currentSnapshot?.title
+  const price = product?.featuredVariant?.price;
+  const priceWas = product?.featuredVariant?.price;
 
   const cardWidthStyle = {
     width: `calc(${100}vw - ${1+1}rem)`,
@@ -42,7 +43,7 @@ const ProductRow = (props: ReactProps) => {
       classes.flexRowWithBorder,
     )}>
       {
-        !(product && product.id)
+        !product?.id
         ? <DescriptionLoading
             isMobile
             style={cardWidthStyle}
@@ -79,24 +80,24 @@ const ProductRow = (props: ReactProps) => {
                   <Typography
                     className={clsx(
                       classes.title,
-                      !product?.currentSnapshot.title ? "pulse" : null
+                      !title ? "pulse" : null
                     )}
                     variant="body1"
                     component="div"
                   >
-                    {product?.currentSnapshot.title}
+                    {trimTitle(title, 48)}
                   </Typography>
 
-                  <div className={clsx(
-                    classes.priceAbsoluteBottom,
-                    !product?.featuredVariant.price ? "pulse" : null
-                  )}>
-                    <PriceDisplayMain
-                      price={product?.featuredVariant?.price}
-                      priceWas={product?.featuredVariant?.priceWas}
-                      soldOutStatus={product?.soldOutStatus}
-                      isSuspended={product?.isSuspended}
-                    />
+                  <div className={classes.priceAbsoluteBottom}>
+                    {
+                      price !== undefined &&
+                      <PriceDisplayMainMobile
+                        price={price}
+                        priceWas={priceWas}
+                        soldOutStatus={product.soldOutStatus}
+                        isSuspended={product?.isSuspended}
+                      />
+                    }
                   </div>
                 </div>
               </div>
@@ -148,17 +149,6 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     paddingBottom: '1rem',
     paddingTop: 0,
-    borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapNavy}`
-      : `1px solid ${Colors.slateGreyDark}`,
-    "&:hover": {
-      borderBottom: theme.palette.type === 'dark'
-        ? `1px solid ${Colors.uniswapLightNavy}`
-        : `1px solid ${Colors.slateGreyDarker}`,
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-      })
-    },
   },
   marginLeft: {
     marginLeft: "1rem",
@@ -199,4 +189,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(ProductRow);
+export default withStyles(styles)(ProductRowMobile);

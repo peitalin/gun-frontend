@@ -1,22 +1,22 @@
 import React from "react";
 import clsx from "clsx";
 // Typings
-import { Product, SoldOutStatus } from "typings/gqlTypes";
+import { ProductPreview, SoldOutStatus } from "typings/gqlTypes";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "components/HiddenFix";
 // components
-import ProductCardRC from "./ProductCardRC";
+import ProductPreviewCardRC from "./ProductPreviewCardRC";
 import NewsItemRowMedium from "components/NewsItemRowMedium"
 
 
 
 
-const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
+const ProductPreviewResponsive: React.FC<ProductPreviewResponsiveProps> = (props) => {
 
   const {
-    product,
+    productPreview,
     refetch,
     cardsPerRow = {
       xs: 1,
@@ -30,7 +30,7 @@ const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
   } = props;
 
   // const theme = useTheme();
-  const featuredPreviewItem = product?.featuredVariant?.previewItems?.[0];
+  const featuredPreviewItem = productPreview?.featuredPreview
 
   const commonPreviewCardProps = {
     refetch: refetch,
@@ -44,7 +44,7 @@ const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
     onMouseEnter: props.onMouseEnter,
     onMouseLeave: props.onMouseLeave,
     // hideActionType: xs || sm || md
-    hideActionType: product?.soldOutStatus !== SoldOutStatus.AVAILABLE,
+    hideActionType: productPreview?.soldOutStatus !== SoldOutStatus.AVAILABLE,
     disableLoadingAnimation: props.disableLoadingAnimation,
     promotedSlotId: props.promotedSlotId,
   }
@@ -58,33 +58,39 @@ const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
     <>
       {/* xs */}
       <Hidden only={["md", "lg", "xl"]} implementation="css">
-        {
+        {/* {
           xsCardRow
           ? <NewsItemRowMedium
               loading={props.loading}
               newsItem={
                 {
-                  product
+                  productPreview
                 } as any
               }
             />
           // ? <ProductCardAsRow
           //     product={product}
           //   />
-          : <ProductCardRC
-              product={product}
+          : <ProductPreviewCardRC
+              productPreview={productPreview}
               {...commonPreviewCardProps}
               screenSize={"xs"}
               cardsPerRow={cardsPerRow.xs} // 1 default
             />
-        }
+        } */}
+            <ProductPreviewCardRC
+              productPreview={productPreview}
+              {...commonPreviewCardProps}
+              screenSize={"xs"}
+              cardsPerRow={cardsPerRow.xs} // 1 default
+            />
       </Hidden>
 
 
       {/* sm + md  */}
       <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
-        <ProductCardRC
-          product={product}
+        <ProductPreviewCardRC
+          productPreview={productPreview}
           {...commonPreviewCardProps}
           screenSize={"md"}
           cardsPerRow={cardsPerRow.md} // 2 default
@@ -93,8 +99,8 @@ const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
 
       {/* lg */}
       <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
-        <ProductCardRC
-          product={product}
+        <ProductPreviewCardRC
+          productPreview={productPreview}
           {...commonPreviewCardProps}
           screenSize={"lg"}
           cardsPerRow={cardsPerRow.lg} // 3 default
@@ -103,8 +109,8 @@ const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
 
       {/* xl */}
       <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
-        <ProductCardRC
-          product={product}
+        <ProductPreviewCardRC
+          productPreview={productPreview}
           {...commonPreviewCardProps}
           screenSize={"xl"}
           cardsPerRow={cardsPerRow.xl} // 4 default
@@ -115,8 +121,8 @@ const ProductCardResponse: React.FC<ProductCardResponseProps> = (props) => {
 }
 
 
-interface ProductCardResponseProps {
-  product: Product;
+interface ProductPreviewResponsiveProps {
+  productPreview: ProductPreview;
   refetch?(): void;
   showWatchlistButton?: boolean;
   cardsPerRow?: {
@@ -143,5 +149,5 @@ interface ProductCardResponseProps {
 
 
 export default React.memo(
-  (props: ProductCardResponseProps) => <ProductCardResponse {...props}/>,
+  (props: ProductPreviewResponsiveProps) => <ProductPreviewResponsive {...props}/>,
 )

@@ -3738,6 +3738,7 @@ export type NewsItem = {
   externalProduct?: Maybe<External_Products>;
   productId?: Maybe<Scalars['String']>;
   product?: Maybe<Product>;
+  productPreview?: Maybe<ProductPreview>;
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   sourceSite?: Maybe<Scalars['String']>;
@@ -4260,6 +4261,30 @@ export type ProductMutationResponse = {
   product: Product;
 };
 
+/** Product Preview for both Internal and External Products */
+export type ProductPreview = {
+  __typename?: 'ProductPreview';
+  id: Scalars['String'];
+  featuredPreviewItemId?: Maybe<Scalars['String']>;
+  /** only 1, even thouse typename is plural cuz of hasura naming convention */
+  featuredPreview?: Maybe<Product_Preview_Items>;
+  title?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  actionType?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
+  isSuspended: Scalars['Boolean'];
+  isSoldElsewhere?: Maybe<Scalars['Boolean']>;
+  soldOutStatus: Scalars['String'];
+  sellerLicenseVerified?: Maybe<Scalars['Boolean']>;
+  sellerLicenseId?: Maybe<Scalars['String']>;
+  dealerState?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
+  listingType?: Maybe<ListingType>;
+};
+
 /** An item that shows off the product (image, YouTube link, hosted videos to come) */
 export type ProductPreviewItem = {
   __typename?: 'ProductPreviewItem';
@@ -4274,6 +4299,18 @@ export type ProductPreviewItemInput = {
   imageId?: Maybe<Scalars['ID']>;
   youTubeEmbedLink?: Maybe<Scalars['String']>;
   isInternal?: Maybe<Scalars['Boolean']>;
+};
+
+export type ProductPreviewsConnection = Connection & {
+  __typename?: 'ProductPreviewsConnection';
+  totalCount?: Maybe<Scalars['Int']>;
+  pageInfo: PageInfo;
+  edges: Array<ProductPreviewsEdge>;
+};
+
+export type ProductPreviewsEdge = {
+  __typename?: 'ProductPreviewsEdge';
+  node: ProductPreview;
 };
 
 /** Private information about something that can be bought */
@@ -4437,6 +4474,7 @@ export type PromotedSlot = {
   promotedListId: Scalars['ID'];
   productId?: Maybe<Scalars['ID']>;
   product?: Maybe<Product>;
+  productPreview?: Maybe<ProductPreview>;
   ownerId?: Maybe<Scalars['ID']>;
   reservePrice?: Maybe<Scalars['Int']>;
   isAvailableForPurchase: Scalars['Boolean'];
@@ -4816,7 +4854,7 @@ export type Query = {
    * Retrieve all of the products on the platform that can be purchased.
    * AccessRule – PUBLIC
    */
-  productsNewReleasesConnection: ProductsConnection;
+  productsNewReleasesConnection: ProductPreviewsConnection;
   /**
    * Search all of the products on the platform that can be purchased.
    * AccessRule – PUBLIC

@@ -209,10 +209,18 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
   })
 
   React.useEffect(() => {
-    // if (collectionModalOpen) {
-    // }
-    getCollections()
+    // fetch collections 3seconds later after page loads
+    setTimeout(() => {
+      getCollections()
+    }, 3000)
   }, [])
+
+  React.useEffect(() => {
+    // fetch collections when opening addToCollections modal
+    if (collectionModalOpen && !data?.getCollectionsByUserId) {
+      getCollections()
+    }
+  }, [collectionModalOpen])
 
   let collections = data?.getCollectionsByUserId;
   // console.log("collections", collections)

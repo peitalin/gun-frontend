@@ -8,7 +8,7 @@ import clsx from "clsx";
 import {
   Connection,
   Product,
-  ProductsConnection,
+  ProductPreviewsConnection,
   Order_By,
   PromotedList,
   ConnectionQuery,
@@ -112,7 +112,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 export interface QueryData {
-  productsNewReleasesConnection: ProductsConnection;
+  productsNewReleasesConnection: ProductPreviewsConnection;
 }
 interface QueryVar {
   searchTerm?: string;

@@ -10,7 +10,7 @@ import {
   GET_RECOMMENDED_PRODUCTS,
 } from "queries/products-queries";
 // Components
-import ProductCardResponse from "components/ProductCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Typings
 import {
@@ -102,7 +102,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
                   smDown ? classes.flexItemMobile : classes.flexItem,
                   classes.flexItemHover,
                 )}>
-                  <ProductCardResponse
+                  <ProductCardResponsive
                     product={product}
                     // refetch={watchListConnectionResponse.refetch}
                     style={{

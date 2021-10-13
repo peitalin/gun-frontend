@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
-import { NewsItem } from "typings/gqlTypes";
+import { ProductPreview } from "typings/gqlTypes";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -19,6 +19,7 @@ const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
+    productPreview,
     disable = false,
   } = props;
 
@@ -33,7 +34,7 @@ const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
           props.promotedSlotId
           ? <LinkLoading
               href={"/f/[productId]"}
-              as={`/f/${props.productId}`}
+              as={`/f/${productPreview?.id}`}
               disable={disable}
             >
               <CardActionArea classes={{ root: classes.cardActionArea }}>
@@ -42,7 +43,7 @@ const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
             </LinkLoading>
           : <LinkLoading
               href={"/p/[productId]"}
-              as={`/p/${props.productId}`}
+              as={`/p/${productPreview?.id}`}
               disable={disable}
             >
               <CardActionArea classes={{ root: classes.cardActionArea }}>
@@ -57,9 +58,9 @@ const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  promotedSlotId: string
-  productId: string
+  productPreview: ProductPreview;
   disable?: boolean;
+  promotedSlotId?: string
   style?: any;
 }
 

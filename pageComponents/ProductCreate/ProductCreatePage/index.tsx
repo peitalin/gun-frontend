@@ -104,6 +104,8 @@ import {
   UserPrivate,
   ProductVariantInput,
   StorePrivate,
+  ProductPreviewsEdge,
+  ProductPreviewsConnection,
   ProductsEdge,
   ProductsConnection,
   ClassifiedAdPaymentInput,
@@ -139,6 +141,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ProductCreateStepper from "./ProductCreateStepper";
 import VisaPurchaseClassifiedAd from "./VisaPurchaseClassifiedAd";
 import { debounce, useDebounce } from "utils/debounce"
+import { convertProductToProductPreview } from "./utils";
 
 // NOTES:
 // <Button type="submit".../> must be inside <form onSubmit={onSubmit} ... />
@@ -232,7 +235,9 @@ const ProductCreatePage = (props: ReactProps) => {
     },
     update: (cache, { data: { createProduct }}) => {
       // update NEWEST PRODUCTS connection
-      let newProduct = createProduct?.product;
+
+      let newProduct = createProduct?.product
+      let newProductPreview = convertProductToProductPreview(newProduct)
       console.log("new product: ", newProduct)
 
       const cacheData = cache.readQuery<QueryDataNewProducts, any>({
@@ -251,11 +256,11 @@ const ProductCreatePage = (props: ReactProps) => {
             productsNewReleasesConnection: {
               ...cacheData?.productsNewReleasesConnection,
               edges: [
-                { node: newProduct, __typename: "ProductsEdge" } as ProductsEdge,
+                { node: newProductPreview, __typename: "ProductPreviewsEdge" } as ProductPreviewsEdge,
                 ...(cacheData?.productsNewReleasesConnection?.edges ?? []),
               ],
               totalCount: (cacheData?.productsNewReleasesConnection?.edges?.length ?? 0) + 1,
-            } as ProductsConnection
+            } as ProductPreviewsConnection
           },
         });
       }

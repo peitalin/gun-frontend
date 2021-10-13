@@ -6,7 +6,9 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Material UI
 import CardMedia from "@material-ui/core/CardMedia";
 // Typings
-import { NewsItem } from "typings/gqlTypes";
+import {
+  Product_Preview_Items,
+} from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/links";
 // Responsiveness
@@ -32,25 +34,17 @@ const MainPreviewImage = (props: ReactProps) => {
 
   const {
     classes,
-    newsItem,
+    cardsPerRow,
     fit = false,
-    cardsPerRow = 1,
   } = props;
 
-  const previewItems = newsItem?.product?.featuredVariant?.previewItems
-    ?? newsItem?.externalProduct?.currentExternalProductSnapshot?.previewItems
-    ?? []
-
-  const title = newsItem?.product?.currentSnapshot?.title
-    ?? newsItem?.externalProduct?.currentExternalProductSnapshot?.title
-
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
 
-  // const imgSizesSrcSet = React.useMemo(
-  //   () => getImgSrcSetSizes(cardsPerRow, props.screenSize),
-  //   [ cardsPerRow, props.screenSize]
-  // )
+  const imgSizesSrcSet = React.useMemo(
+    () => getImgSrcSetSizes(cardsPerRow, props.screenSize),
+    [ cardsPerRow, props.screenSize]
+  )
 
   const [loaded, setLoaded] = React.useState(false)
   const ref = React.useRef<HTMLDivElement>(null)
@@ -61,126 +55,72 @@ const MainPreviewImage = (props: ReactProps) => {
   }, [])
 
 
-  let firstPreview = previewItems?.[0]
-
-  let youTubeVimeoPreview = React.useMemo(
-    () => getYouTubeVimeoImagePreview(firstPreview?.youTubeEmbedLink),
-    [firstPreview]
-  );
 
 
-  if (!firstPreview) {
-    return (
-      <AspectGridItemLink
-        newsItem={newsItem}
-        promotedSlotId={props.promotedSlotId}
-        disable={props.disableLink}
-      >
-        <PreviewImageEmpty
-          previewImageEmptyMessage={props.previewImageEmptyMessage}
-          onClick={props.onClick}
-        />
-      </AspectGridItemLink>
-    )
-  } else {
-    return(
-      <AspectGridItemLink
-        newsItem={newsItem}
-        promotedSlotId={props.promotedSlotId}
-        disable={props.disableLink}
-      >
-        {/* {
-          firstPreview?.image?.original?.url
-          ? <div className={classes.height100} ref={ref}>
-              <CardMedia
-                title={title}
-                component="img"
-                className={clsx(
-                  loaded ? "fadeIn" : "hide",
-                  fit ? classes.cardMediaFit : classes.cardMedia,
-                  // (previewLoaded > 0) ? "fadeIn" : 'hidden',
-                )}
-                onClick={props.onClick}
-                onLoad={() => setLoaded(true)}
-                src={firstPreview?.image?.original?.url}
-                srcSet={genSrcSet(firstPreview?.image)}
-                sizes={genImgBreakpoints(imgSizesSrcSet)}
-              />
-            </div>
-          : youTubeVimeoPreview
-            ? <div className={classes.height100} ref={ref}>
-                <CardMedia
-                  component="img"
-                  className={clsx(
-                    loaded ? "fadeIn" : "hide",
-                    fit ? classes.cardMediaFit : classes.cardMedia,
-                  )}
-                  onClick={props.onClick}
-                  onLoad={() => setLoaded(true)}
-                  src={youTubeVimeoPreview}
-                  title={
-                    youTubeVimeoPreview ? title : "Video thumbnail unavailable"
-                  }
-                />
-              </div>
-            : <PreviewImageEmpty/>
-        } */}
+  return(
+    <AspectGridItemLink
+      productId={props.productId}
+      promotedSlotId={props.promotedSlotId}
+      disable={props.disableLink}
+    >
+      {
+        props.featuredPreviewItem?.image?.original?.url
+        ? <div className={classes.height100} ref={ref}>
 
-        {
-          firstPreview?.image?.original?.url
-          ? <div className={classes.height100} ref={ref}>
-              <Image
-                className={clsx(
-                  loaded ? "fadeIn" : "hidden",
-                  fit ? classes.cardMediaFit : classes.cardMedia,
-                )}
-                alt={title}
-                layout={"fill"}
-                objectFit={"cover"}
-                onClick={props.onClick}
-                onLoad={() => setLoaded(true)}
-                src={firstPreview?.image?.original?.url}
-                // srcSet={genSrcSet(firstPreview?.image)}
-                // sizes={genImgBreakpoints(imgSizesSrcSet)}
-              />
-            </div>
-          : youTubeVimeoPreview
-            ? <div className={classes.height100} ref={ref}>
-                <Image
-                  className={clsx(
-                    loaded ? "fadeIn" : "hidden",
-                    fit ? classes.cardMediaFit : classes.cardMedia,
-                  )}
-                  alt={title}
-                  layout={"fill"}
-                  objectFit={"cover"}
-                  onClick={props.onClick}
-                  onLoad={() => setLoaded(true)}
-                  src={youTubeVimeoPreview}
-                  // srcSet={genSrcSet(firstPreview?.image)}
-                  title={
-                    youTubeVimeoPreview ? title : "Video thumbnail unavailable"
-                  }
-                />
-              </div>
-            : <PreviewImageEmpty/>
-        }
-      </AspectGridItemLink>
-    )
-  }
+            {/* Either use next.js Image or Card component.
+            <Image/> uses webp but <Card/> seems faster */}
+
+
+            {/* <Image
+              className={clsx(
+                loaded ? "fadeIn" : "hidden",
+                fit ? classes.cardMediaFit : classes.cardMedia,
+              )}
+              alt={props.title}
+              layout={"fill"}
+              objectFit={"cover"}
+              onClick={props.onClick}
+              onLoad={() => setLoaded(true)}
+              src={props.featuredPreview?.image?.original?.url}
+            /> */}
+            <CardMedia
+              title={props.title}
+              component="img"
+              className={clsx(
+                loaded ? "fadeIn" : "hide",
+                fit ? classes.cardMediaFit : classes.cardMedia,
+                // (previewLoaded > 0) ? "fadeIn" : 'hidden',
+              )}
+              onClick={props.onClick}
+              onLoad={() => setLoaded(true)}
+              src={props.featuredPreviewItem?.image?.original?.url}
+              srcSet={genSrcSet(props.featuredPreviewItem?.image)}
+              sizes={genImgBreakpoints(imgSizesSrcSet)}
+            />
+
+          </div>
+        : <PreviewImageEmpty
+            previewImageEmptyMessage={props.previewImageEmptyMessage}
+            onClick={props.onClick}
+          />
+      }
+    </AspectGridItemLink>
+  )
 }
 
 
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  newsItem: NewsItem;
+  featuredPreviewItem: Product_Preview_Items
+  productId?: string
+  promotedSlotId?: string
   screenSize: "xs" | "sm" | "md" | "lg" | "xl";
+  cardsPerRow: number
   fit?: boolean; // object-fit the image
-  cardsPerRow: number;
+  title?: string;
   previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
-  promotedSlotId?: string
   disableLink?: boolean;
 }
 

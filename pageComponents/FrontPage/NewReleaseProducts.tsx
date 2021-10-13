@@ -7,11 +7,12 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import ProductCardResponsive from "components/ProductCardResponsive";
+// import ProductCardResponsive from "components/ProductCardResponsive";
+import ProductPreviewResponsive from "components/ProductPreviewResponsive";
 import LoadingCards from "./LoadingCards";
 import Loading from "components/Loading";
 // Graphql Typings
-import { ProductsConnection, Order_By, ConnectionQuery } from "typings/gqlTypes";
+import { ProductPreviewsConnection, Order_By, ConnectionQuery } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -70,20 +71,6 @@ const NewReleaseProducts = (props: ReactProps) => {
   const sm = useMediaQuery(theme.breakpoints.only("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
-  // const aClient = useApolloClient();
-  // console.log("apollo CACHE::", aClient.cache)
-  // const newreleases = aClient?.cache?.readQuery<QueryDataNewReleases, any>({
-  //   query: GET_ALL_NEW_PRODUCTS,
-  //   variables: {
-  //     searchTerm: searchTerm,
-  //     query: {
-  //       limit: 12,
-  //       offset: 0,
-  //       orderBy: orderBy.value as any,
-  //     }
-  //   },
-  // });
-  // console.log("aClient.CACHE new releases: ", newreleases)
 
   const { loading, error, data } = useQuery<QueryDataNewReleases, QueryVar>(
     GET_ALL_NEW_PRODUCTS, {
@@ -112,27 +99,8 @@ const NewReleaseProducts = (props: ReactProps) => {
     xl: 4,
   }
 
-  let products = data?.productsNewReleasesConnection
+  let productPreviews = data?.productsNewReleasesConnection
 
-  // if (true) {
-  //   return (
-  //     <main className={classes.root}>
-  //       <div className={clsx(classes.flexRow, classes.maxWidth100vw)}>
-  //         <Typography variant="h3"
-  //           className={clsx(classes.title)}
-  //           gutterBottom
-  //         >
-  //           {title}
-  //         </Typography>
-  //         <div className={classes.marginLeft1}>
-  //           <LoadingCards
-  //             xsCardRow={false}
-  //           />
-  //         </div>
-  //       </div>
-  //     </main>
-  //   )
-  // }
 
   return (
     <main className={classes.root}>
@@ -161,10 +129,10 @@ const NewReleaseProducts = (props: ReactProps) => {
               cardsPerRow={cardsPerRow}
               // xsCardRow={true}
             />
-          : products.edges.map(({ node: product }, i) => {
+          : productPreviews.edges.map(({ node: productPreview }, i) => {
               // console.log("p: ",product)
               return (
-                <div key={product.id}
+                <div key={productPreview.id}
                   className={
                     xsDown
                     ? classes.productCardXs
@@ -177,8 +145,8 @@ const NewReleaseProducts = (props: ReactProps) => {
                     sm ? classes.flexItemMobile : classes.flexItem,
                     classes.flexItemHover,
                   )}>
-                    <ProductCardResponsive
-                      product={product}
+                    <ProductPreviewResponsive
+                      productPreview={productPreview}
                       xsCardRow={true}
                       refetch={undefined}
                     />
@@ -197,11 +165,11 @@ const NewReleaseProducts = (props: ReactProps) => {
 /////////// Typings //////////////
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialProducts?: ProductsConnection;
+  initialProducts?: ProductPreviewsConnection;
   title?: string;
 }
 export interface QueryDataNewReleases {
-  productsNewReleasesConnection: ProductsConnection;
+  productsNewReleasesConnection: ProductPreviewsConnection;
 }
 interface QueryVar {
   searchTerm?: string;
@@ -214,7 +182,6 @@ interface SelectOption {
 
 /////////// Styles //////////////
 
-export const cardCornerRadius = 4;
 const styles = (theme: Theme) => createStyles({
   root: {
     marginTop: '2rem',
@@ -282,13 +249,13 @@ const styles = (theme: Theme) => createStyles({
   flexItemMobile: {
     flexGrow: 1,
     marginBottom: '1rem',
-    borderRadius: `${cardCornerRadius}px ${cardCornerRadius}px 0px 0px`,
+    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
     position: 'relative',
   },
   flexItem: {
     width: '100%',
     // borderBottom: "1px solid #f7f7f7",
-    borderRadius: `${cardCornerRadius}px ${cardCornerRadius}px 0px 0px`,
+    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
     position: 'relative',
   },
   flexItemHover: {

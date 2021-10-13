@@ -9,11 +9,11 @@ import Typography from "@material-ui/core/Typography";
 // Typings
 import {
   Product,
-  ProductsConnection,
+  ProductPreviewsConnection,
 } from "typings/gqlTypes";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Watchlist
-import ProductCardResponsive from "components/ProductCardResponsive";
+import ProductPreviewResponsive from "components/ProductPreviewResponsive";
 import AirCarousel from "components/AirCarousel";
 import Link from "next/link";
 import ArrowRight from "@material-ui/icons/ArrowRight";
@@ -40,10 +40,10 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
   } = props;
 
 
-  const products = connection?.edges?.map(edge => edge.node)
-  let products1 = products?.slice(0,4) ?? []
-  let products2 = products?.slice(4,8) ?? []
-  let products3 = products?.slice(8) ?? []
+  const productPreviews = connection?.edges?.map(edge => edge.node)
+  let productPreviews1 = productPreviews?.slice(0,4) ?? []
+  let productPreviews2 = productPreviews?.slice(4,8) ?? []
+  let productPreviews3 = productPreviews?.slice(8) ?? []
 
   return (
     <main className={classes.root}>
@@ -59,7 +59,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          !(products1?.length > 0)
+          !(productPreviews1?.length > 0)
           ? [...Array(1).keys()].map(i =>
               <AirCarousel
                 key={`featured-products-carousel-main-1-${i}`}
@@ -76,12 +76,12 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
                 />
               </AirCarousel>
             )
-          : products1?.filter(p => !!p).map((product, i) =>
+          : productPreviews1?.filter(p => !!p).map((productPreview, i) =>
               <div key={i} style={{
                 marginLeft: '0.5rem',
               }}>
-                <ProductCardResponsive
-                  product={product}
+                <ProductPreviewResponsive
+                  productPreview={productPreview}
                   cardsPerRow={cardsPerRow}
                 />
               </div>
@@ -91,7 +91,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
 
 
       {
-        (products2?.length > 0) &&
+        (productPreviews2?.length > 0) &&
         <>
           <div style={{ marginTop: '1rem' }}></div>
           <AirCarousel
@@ -102,7 +102,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
             scrollSnapType={"x proximity"}
           >
             {
-              !(products2?.length > 0)
+              !(productPreviews2?.length > 0)
               ? [...Array(1).keys()].map(i =>
                   <AirCarousel
                     key={`featured-products-carousel-main-2-${i}`}
@@ -119,12 +119,12 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
                     />
                   </AirCarousel>
                 )
-              : products2?.filter(p => !!p).map((product, i) =>
+              : productPreviews2?.filter(p => !!p).map((productPreview, i) =>
                   <div key={i} style={{
                     marginLeft: '0.5rem',
                   }}>
-                    <ProductCardResponsive
-                      product={product}
+                    <ProductPreviewResponsive
+                      productPreview={productPreview}
                       cardsPerRow={cardsPerRow}
                     />
                   </div>
@@ -135,7 +135,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
       }
 
       {
-        (products3?.length > 0) &&
+        (productPreviews3?.length > 0) &&
         <>
           <div style={{ marginTop: '1rem' }}></div>
           <AirCarousel
@@ -146,7 +146,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
             scrollSnapType={"x proximity"}
           >
             {
-              !(products3?.length > 0)
+              !(productPreviews3?.length > 0)
               ? [...Array(1).keys()].map(i =>
                   <AirCarousel
                     key={`featured-products-carousel-main-3-${i}`}
@@ -163,12 +163,12 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
                     />
                   </AirCarousel>
                 )
-              : products3?.filter(p => !!p).map((product, i) =>
+              : productPreviews3?.filter(p => !!p).map((productPreview, i) =>
                   <div key={i} style={{
                     marginLeft: '0.5rem',
                   }}>
-                    <ProductCardResponsive
-                      product={product}
+                    <ProductPreviewResponsive
+                      productPreview={productPreview}
                       cardsPerRow={cardsPerRow}
                     />
                   </div>
@@ -200,7 +200,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  connection: ProductsConnection;
+  connection: ProductPreviewsConnection;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

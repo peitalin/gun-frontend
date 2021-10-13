@@ -9,9 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import CollectionsIcon from "components/Collections/CollectionsIcon";
 // Typings
-import { Categories, Product, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes";
-import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/links";
+import { ProductPreview } from "typings/gqlTypes";
 import PriceDisplayMain from "components/PriceDisplayMain";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
@@ -33,7 +31,7 @@ import DiscountBadge from "components/DiscountBadge";
 
 
 
-const ProductCardRC = (props: ReactProps) => {
+const ProductPreviewCardRC = (props: ReactProps) => {
   /// NOTE:
   /// There are 2 <Link> tags, one of the image, one for the description container
   /// This is to prevent the watchList button from being inside the <Link> tag
@@ -41,7 +39,7 @@ const ProductCardRC = (props: ReactProps) => {
 
   const {
     classes,
-    product,
+    productPreview,
     refetch,
     fit = false,
     cardsPerRow = 1,
@@ -57,12 +55,11 @@ const ProductCardRC = (props: ReactProps) => {
   // e.g. 4 cards = 1rem each +1 rem for padding-left,
   // with when divided over 4 cards = 1/4 rem
 
-  const productId = product?.id
-  const previewItems = product?.featuredVariant?.previewItems ?? []
+  const productId = productPreview?.id
 
-  const title = product?.currentSnapshot?.title?.slice(0,60)
-  const price = product?.featuredVariant?.price
-  const priceWas = product?.featuredVariant?.priceWas
+  const title = productPreview?.title?.slice(0,60)
+  const price = productPreview?.price
+  const priceWas = productPreview?.priceWas
   const squishLetters = title?.length > 30
 
 
@@ -80,13 +77,6 @@ const ProductCardRC = (props: ReactProps) => {
 
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  const imgSizesSrcSet = getImgSrcSetSizes(cardsPerRow, props.screenSize)
-
-  let firstPreview = previewItems?.[0]
-
-  // let youTubeVimeoPreview = getYouTubeVimeoImagePreview(
-  //   firstPreview?.youTubeEmbedLink
-  // );
 
   const showDiscountBadge = () => {
     if (price && priceWas) {
@@ -97,6 +87,8 @@ const ProductCardRC = (props: ReactProps) => {
   }
 
   const showDiscount = React.useMemo(() => showDiscountBadge(), [price, priceWas])
+
+  // console.log("PPPL", productPreview)
 
   return (
     <div className={classes.rootContainer}
@@ -119,7 +111,7 @@ const ProductCardRC = (props: ReactProps) => {
       }
 
       <MainPreviewImage
-        product={product}
+        productPreview={productPreview}
         screenSize={props.screenSize}
         fit={fit}
         cardsPerRow={cardsPerRow}
@@ -127,7 +119,6 @@ const ProductCardRC = (props: ReactProps) => {
         onClick={props.onClick}
         promotedSlotId={props.promotedSlotId}
         disableLink={
-          !props.product?.storeId ||
           typeof props.onClick === 'function'
           // disable link when onClick is defined
         }
@@ -152,10 +143,9 @@ const ProductCardRC = (props: ReactProps) => {
             props.promotedSlotId ? "/f/[promotedSlotId]" : "/p/[productId]"
           }
           as={
-            props.promotedSlotId ? `/f/${props.product?.id}` : `/p/${props.product?.id}`
+            props.promotedSlotId ? `/f/${productId}` : `/p/${productId}`
           }
           disable={
-            !props.product?.storeId ||
             typeof props.onClick === 'function'
             // disable link when onClick is defined
           }
@@ -171,7 +161,7 @@ const ProductCardRC = (props: ReactProps) => {
                 style={cardWidthStyle}
               >
                 {
-                  product?.currentSnapshot?.actionType &&
+                  productPreview?.actionType &&
                   !hideActionType &&
                   <div className={classes.actionTag}>
                     <Typography
@@ -179,7 +169,7 @@ const ProductCardRC = (props: ReactProps) => {
                       variant="body2"
                       component="div"
                     >
-                      {product?.currentSnapshot?.actionType}
+                      {productPreview?.actionType}
                     </Typography>
                   </div>
                 }
@@ -199,14 +189,14 @@ const ProductCardRC = (props: ReactProps) => {
                     variant="body2"
                     component="div"
                   >
-                    {`${product?.currentSnapshot?.make}`}
+                    {`${productPreview?.make}`}
                   </Typography>
                   <Typography
                     className={classes.makeModel}
                     variant="body2"
                     component="div"
                   >
-                    {`${product?.currentSnapshot?.model}`}
+                    {`${productPreview?.model}`}
                   </Typography>
                 </div>
                 <div className={classes.priceDetailsFlexItem}>
@@ -215,8 +205,8 @@ const ProductCardRC = (props: ReactProps) => {
                     <PriceDisplayMain
                       price={price}
                       priceWas={priceWas}
-                      isSuspended={product.isSuspended}
-                      soldOutStatus={product.soldOutStatus}
+                      isSuspended={productPreview.isSuspended}
+                      soldOutStatus={productPreview.soldOutStatus}
                     />
                   }
                 </div>
@@ -232,7 +222,7 @@ const ProductCardRC = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Product;
+  productPreview: ProductPreview;
   screenSize: "xs" | "sm" | "md" | "lg" | "xl";
   fit?: boolean; // object-fit the image
   cardsPerRow: number;
@@ -254,4 +244,4 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)( ProductCardRC );
+export default withStyles(styles)( ProductPreviewCardRC );

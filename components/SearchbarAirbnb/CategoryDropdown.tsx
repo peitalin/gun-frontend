@@ -42,9 +42,9 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Apollo Graphql
-  const categoryData = useQuery<{ getCategories: Categories[] }, null>(
-    GET_CATEGORIES,
-  )
+  // const categoryData = useQuery<{ getCategories: Categories[] }, null>(
+  //   GET_CATEGORIES,
+  // )
 
   // let categoriesDropdownItems = props.syncUrlToCategory
   //   ? [ ...(categoryData?.data?.getCategories ?? []) ]

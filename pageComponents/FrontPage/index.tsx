@@ -14,9 +14,9 @@ import BetaTestingBanner from "components/BetaTestingBanner";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
 
 // GraphQL
-import CategoryCarouselStart from "components/CategoryCarouselStart";
+// import CategoryCarouselStart from "components/CategoryCarouselStart";
 // import SaySomethingSubscriptionTest from "./SaySomethingSubscriptionTest";
-import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+// import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
 import { useScrollYPosition } from "utils/hooks";

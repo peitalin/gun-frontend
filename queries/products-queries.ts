@@ -2,6 +2,8 @@ import gql from "graphql-tag";
 import {
   ImageFragment,
   ProductFragment,
+  ProductPreviewFragment,
+  ProductLiteFragment,
   StorePublicFragment
 } from "./fragments";
 
@@ -14,12 +16,12 @@ export const GET_RECOMMENDED_PRODUCTS = gql`
       }
       edges {
         node {
-          ...ProductFragment
+          ...ProductLiteFragment
         }
       }
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 
@@ -38,12 +40,12 @@ export const GET_ALL_NEW_PRODUCTS = gql`
       }
       edges {
         node {
-          ...ProductFragment
+          ...ProductPreviewFragment
         }
       }
     }
   }
-  ${ProductFragment}
+  ${ProductPreviewFragment}
 `;
 
 
@@ -85,22 +87,22 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
       }
       edges {
         node {
-          ...ProductFragment
+          ...ProductLiteFragment
         }
       }
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 
 export const GET_RECENT_PRODUCTS = gql`
   query getRecentProducts($limit: Int!, $offset: Int!) {
     getRecentProducts(limit: $limit, offset: $offset) {
-      ...ProductFragment
+      ...ProductLiteFragment
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
 `;
 
 
