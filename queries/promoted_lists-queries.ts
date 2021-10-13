@@ -9,13 +9,11 @@ export const GET_PROMOTED_LIST = gql`
     $promotedListId: String!
     $limit: Int
     $offset: Int
-    $withFallbackProducts: Boolean
   ) {
     getPromotedList(
       promotedListId: $promotedListId
       limit: $limit
       offset: $offset
-      withFallbackProducts: $withFallbackProducts
     ) {
       id
       createdAt

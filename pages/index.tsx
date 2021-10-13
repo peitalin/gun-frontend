@@ -3,10 +3,16 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // GQL
 import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
+import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
 import { GET_CATEGORIES } from "queries/categories-queries";
 import { GET_CALIBERS } from "queries/calibers-queries";
 // Typings
-import { PageConfig, Categories, Calibers } from "typings/gqlTypes";
+import {
+  PageConfig,
+  Categories,
+  Calibers,
+  PromotedList,
+} from "typings/gqlTypes";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // GraphQL
@@ -35,6 +41,8 @@ const HomePage: NextPage<ReactProps> = (props) => {
 
     setShowSocialBanner(showSocialBanner)
   }, [])
+
+  // console.log("initialPromotedLists", JSON.stringify(props.initialPromotedLists))
 
   return (
     <>
@@ -73,6 +81,7 @@ const HomePage: NextPage<ReactProps> = (props) => {
       <FrontPage
         pageConfig={props?.getPageConfig}
         initialCategories={props.initialCategories}
+        initialPromotedLists={props.initialPromotedLists}
       />
       {
         showSocialBanner &&
@@ -100,12 +109,21 @@ const styles = (theme: Theme) => createStyles({
 interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
   getPageConfig: PageConfig;
+  initialPromotedLists: PromotedList[]
 }
 interface QData1 {
   getPageConfig: PageConfig;
 }
 interface QVar1 {
   urlPath: string;
+}
+interface QData3 {
+  getPromotedList: PromotedList;
+}
+interface QVar3 {
+  promotedListId: string
+  limit: number
+  offset: number
 }
 
 
@@ -123,12 +141,32 @@ export async function getStaticProps(ctx: Context) {
     }
   })
 
+  let promotedLists = {}
+
+  await Promise.all(data?.getPageConfig?.pageConfigSections?.map(async section => {
+    if (section.promotedListId) {
+      // console.log("\npromotedListId: ", section?.promotedListId)
+      const { data: data3 } = await serverApolloClient(ctx).query<QData3, QVar3>({
+        query: GET_PROMOTED_LIST,
+        variables: {
+          promotedListId: section.promotedListId,
+          limit: 4,
+          offset: 0,
+        },
+      })
+      // console.log("ppplist: ", data3?.getPromotedList)
+      promotedLists[section.promotedListId] = data3?.getPromotedList
+    }
+  }))
+
+
   // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
   //   query: GET_CATEGORIES,
   // })
 
   // console.log("getPageConfig: ", data?.getPageConfig)
   // console.log("getCategories ssr: ", data2?.getCategories)
+  // console.log("initialPromotedLists: ", promotedLists)
 
   // let initialCategories = data2?.getCategories ?? [];
   let initialCategories: Categories[] = categoryPreviewsBackup as any;
@@ -137,7 +175,8 @@ export async function getStaticProps(ctx: Context) {
     props: {
       initialCategories: initialCategories,
       getPageConfig: data?.getPageConfig,
-      revalidate: 120, // 2min
+      revalidate: 60, // 1min
+      initialPromotedLists: promotedLists,
     }, // will be passed to the page component as props
   }
 }

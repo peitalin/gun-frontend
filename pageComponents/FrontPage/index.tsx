@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
 // Typings
-import { ProductsConnection, Categories, PageConfig } from "typings/gqlTypes";
+import { PromotedList, Categories, PageConfig } from "typings/gqlTypes";
 
 // Components
 import NewProducts from "pageComponents/FrontPage/NewProducts";
@@ -45,7 +45,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   const {
     classes,
     pageConfig,
-    initialFeaturedProducts,
+    initialPromotedLists,
   } = props;
 
   // show client-side only
@@ -109,6 +109,10 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           featuredSection?.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
+              let initialPromotedList: PromotedList = props.initialPromotedLists[section.promotedListId]
+
+              // console.log("\n\n initialPromotedLists 1", initialPromotedList)
+              // console.log("\n\n slots 1", initialPromotedList?.promotedSlotsConnection?.edges)
               return (
                 <FeaturedProducts
                   key={section?.id}
@@ -119,6 +123,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
                   }
                   title={section?.title}
                   promotedListId={section.promotedListId}
+                  initialPromotedList={initialPromotedList}
                   cardsPerRow={
                     section.viewAllPath === "/featured"
                     ? featuredSectionParams.cardsPerRow // 3 products for featured list
@@ -166,6 +171,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           trendingSection?.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
+              let initialPromotedList: PromotedList = props.initialPromotedLists[section.promotedListId]
               return (
                 <FeaturedProducts
                   key={section?.id}
@@ -176,6 +182,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
                   }
                   title={section?.title}
                   promotedListId={section.promotedListId}
+                  initialPromotedList={initialPromotedList}
                   cardsPerRow={
                     section.viewAllPath === "/featured"
                     ? featuredSectionParams.cardsPerRow // 3 products for featured list
@@ -225,7 +232,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   pageConfig: PageConfig;
   initialCategories: Categories[];
-  initialFeaturedProducts?: ProductsConnection;
+  initialPromotedLists: PromotedList[]
 }
 
 

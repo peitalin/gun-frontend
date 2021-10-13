@@ -55,11 +55,11 @@ const FeaturedProducts = (props: ReactProps) => {
       promotedListId: props.promotedListId,
       limit: count,
       offset: 0,
-      withFallbackProducts: true,
     },
   })
 
-  let promotedList = data?.getPromotedList
+  let promotedList = props.initialPromotedList ?? data?.getPromotedList
+  // let promotedList = props.initialPromotedList
   let categorySlug = promotedList?.categoryFilterSlug
   let connection = promotedList?.promotedSlotsConnection
 
@@ -93,6 +93,7 @@ const FeaturedProducts = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   promotedListId: string;
+  initialPromotedList?: PromotedList
   count?: number;
   title?: string;
   cardsPerRow?: {
@@ -110,7 +111,6 @@ interface QueryVar {
   promotedListId: string,
   limit?: number,
   offset?: number,
-  withFallbackProducts?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({

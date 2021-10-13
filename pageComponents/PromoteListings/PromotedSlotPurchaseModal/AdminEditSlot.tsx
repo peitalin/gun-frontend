@@ -78,7 +78,6 @@ const AdminEditSlot = (props: ReactProps) => {
             promotedListId: promotedSlot?.promotedListId,
             limit: 4,
             offset: 0,
-            withFallbackProducts: false,
           },
         })
         console.log("CACHE DATA: ", cacheData)
@@ -262,7 +261,6 @@ interface QVar1 {
   promotedListId: string,
   limit: number,
   offset: number,
-  withFallbackProducts?: boolean
 }
 interface QData1 {
   getPromotedList: PromotedList;

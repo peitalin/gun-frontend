@@ -116,7 +116,6 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
       promotedListId: 'promoted_list_0002',
       limit: 4,
       offset: 0,
-      withFallbackProducts: false,
     },
     onCompleted: () => {
     },
@@ -238,7 +237,6 @@ interface QVar2 {
   promotedListId: string,
   limit: number,
   offset: number,
-  withFallbackProducts?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
