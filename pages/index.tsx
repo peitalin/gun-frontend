@@ -175,9 +175,12 @@ export async function getStaticProps(ctx: Context) {
     props: {
       initialCategories: initialCategories,
       getPageConfig: data?.getPageConfig,
-      revalidate: 60, // 1min
       initialPromotedLists: promotedLists,
     }, // will be passed to the page component as props
+    revalidate: 60, // 1min
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every 60 seconds
   }
 }
 
