@@ -874,6 +874,7 @@ export const StorePublicFragment = gql`
     userId
     user {
       id
+      isWhitelisted
       ...on UserPublic {
         defaultLicense {
           ...UserLicenseFragment
@@ -1073,6 +1074,7 @@ export const UserPrivateFragment = gql`
     #     }
     #   }
     # }
+    isWhitelisted
   }
   ${StorePrivateFragment}
   ${UserLicenseFragment}

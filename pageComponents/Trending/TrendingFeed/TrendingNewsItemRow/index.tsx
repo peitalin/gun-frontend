@@ -181,9 +181,12 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                   </div>
 
                   <div className={classes.chipContainer}>
-                    <SourceSiteChip
-                      sourceSite={sourceSite}
-                    />
+                    {
+                      user?.isWhitelisted &&
+                      <SourceSiteChip
+                        sourceSite={sourceSite}
+                      />
+                    }
                     <AdType
                       className={classes.maxWidthAdType}
                       adType={adType}

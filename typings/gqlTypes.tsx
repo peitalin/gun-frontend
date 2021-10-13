@@ -1316,6 +1316,7 @@ export type Mutation = {
   reindexProductOrNewsItem?: Maybe<BlankMutationResponse>;
   generateClaimProductRefId?: Maybe<ClaimProductLink>;
   swapImagesForExternalProduct?: Maybe<NewsItem>;
+  markProductSold?: Maybe<ProductMutationResponse>;
 };
 
 
@@ -3701,6 +3702,11 @@ export type MutationGenerateClaimProductRefIdArgs = {
 export type MutationSwapImagesForExternalProductArgs = {
   claimId: Scalars['String'];
   newPreviewItems: Array<ProductPreviewItemInput>;
+};
+
+
+export type MutationMarkProductSoldArgs = {
+  productId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -8447,6 +8453,7 @@ export type UserPrivate = BasicUser & {
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
   orderMetrics?: Maybe<UserOrderMetrics>;
+  isWhitelisted?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -10565,6 +10572,7 @@ export type Dealers = {
   id: Scalars['String'];
   licenseNumber: Scalars['String'];
   name: Scalars['String'];
+  operating?: Maybe<Scalars['Boolean']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   /** An object relationship */
@@ -10604,6 +10612,7 @@ export type Dealers_Bool_Exp = {
   id?: Maybe<String_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  operating?: Maybe<Boolean_Comparison_Exp>;
   postCode?: Maybe<String_Comparison_Exp>;
   state?: Maybe<String_Comparison_Exp>;
   user?: Maybe<Users_Bool_Exp>;
@@ -10625,6 +10634,7 @@ export type Dealers_Insert_Input = {
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  operating?: Maybe<Scalars['Boolean']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   user?: Maybe<Users_Obj_Rel_Insert_Input>;
@@ -10687,6 +10697,7 @@ export type Dealers_Order_By = {
   id?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  operating?: Maybe<Order_By>;
   postCode?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
   user?: Maybe<Users_Order_By>;
@@ -10712,6 +10723,8 @@ export enum Dealers_Select_Column {
   /** column name */
   NAME = 'name',
   /** column name */
+  OPERATING = 'operating',
+  /** column name */
   POSTCODE = 'postCode',
   /** column name */
   STATE = 'state'
@@ -10725,6 +10738,7 @@ export type Dealers_Set_Input = {
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  operating?: Maybe<Scalars['Boolean']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
 };
@@ -10743,6 +10757,8 @@ export enum Dealers_Update_Column {
   LICENSENUMBER = 'licenseNumber',
   /** column name */
   NAME = 'name',
+  /** column name */
+  OPERATING = 'operating',
   /** column name */
   POSTCODE = 'postCode',
   /** column name */
@@ -16687,7 +16703,7 @@ export type Product_Snapshots = {
   currentVariants_aggregate: Product_Variants_Aggregate;
   /** An object relationship */
   dealer?: Maybe<Dealers>;
-  dealerId: Scalars['String'];
+  dealerId?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   id: Scalars['String'];
   location: Scalars['String'];

@@ -5,31 +5,38 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import {
   NextPage, NextPageContext
 } from 'next';
-import { ApolloClient, useApolloClient, useLazyQuery } from "@apollo/client";
-import { serverApolloClient } from "utils/apollo";
-// Components
-import LoadingBarSSR from "components/LoadingBarSSR";
-import Trending from "pageComponents/Trending";
-import VerifyEmailBanner from "components/VerifyGunLicenseBanner";
+// gql
 import {
   GET_NEWS_ITEM_BY_CLAIM_ID,
 } from "queries/news-items-claims-mutations"
+import { useLazyQuery } from "@apollo/client";
+// typings
 import {
-  NewsItem
+  NewsItem,
+  UserPrivate,
+  Role,
 } from "typings/gqlTypes"
 
 // next
 import dynamic from "next/dynamic";
+// components
+import LoadingBarSSR from "components/LoadingBarSSR";
 import { UserProfileProps } from "layout/GetUser/UserProfileWrapper";
 const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapper"), {
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
+import ProductClaim from "pageComponents/ProductClaim";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+// router
 import { useRouter } from "next/router";
-import ProductClaim from "pageComponents/ProductClaim";
+// snackbar
 import { useSnackbar } from "notistack";
+// redux
+import { useSelector } from "react-redux"
+import { GrandReduxState } from "reduxStore/grand-reducer"
+import { Colors } from "layout/AppTheme";
 
 
 
@@ -41,6 +48,9 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
 
   const router = useRouter()
   const snackbar = useSnackbar()
+  const user = useSelector<GrandReduxState, UserPrivate>(s => {
+    return s.reduxLogin.user
+  })
 
   const [errMsg, setErrMsg] = React.useState(undefined)
 
@@ -83,20 +93,24 @@ const EditTrendingNewsItem: NextPage<ReactProps> = (props) => {
         robots="noindex"
       />
 
-      <div className={classes.fixedOuter}>
-        <div>
-          { `claimId: ${claimId}` }
-        </div>
-        <div>
-          {`newsItemId: ${newsItem?.id ?? "NA"}`}
-        </div>
-        {
-          errMsg &&
-          <div>
-            {errMsg}
+      {
+        (user?.userRole === Role.PLATFORM_ADMIN ||
+          user?.userRole === Role.PLATFORM_EDITOR) &&
+        <div className={classes.fixedOuter}>
+          <div className={classes.claimText}>
+            { `claimId: ${claimId}` }
           </div>
-        }
-      </div>
+          <div className={classes.claimText}>
+            {`newsItemId: ${newsItem?.id ?? "NA"}`}
+          </div>
+          {
+            errMsg &&
+            <div className={classes.errorText}>
+              {errMsg}
+            </div>
+          }
+        </div>
+      }
 
       {
         newsItem &&
@@ -139,6 +153,12 @@ const styles = (theme: Theme) => createStyles({
     right: '1rem',
     bottom: '1rem',
     position: "fixed",
+  },
+  claimText: {
+    color: Colors.uniswapMediumGrey,
+  },
+  errorText: {
+    color: Colors.lightRed,
   },
 })
 
