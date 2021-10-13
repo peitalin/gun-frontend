@@ -41,6 +41,7 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
   const [ position, setPosition ] = React.useState(0)
   const [ refetch, setRefetch ] = React.useState(undefined)
 
+  console.log("pageConfigs: ", pageConfig)
 
   return (
     <div className={classes.promoteListingsRoot}>

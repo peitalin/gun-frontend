@@ -954,7 +954,6 @@ export const StorePublicFragment = gql`
     userId
     user {
       id
-      isWhitelisted
       ...on UserPublic {
         defaultLicense {
           ...UserLicenseFragment
