@@ -54,7 +54,6 @@ const initialProductEditState: ReduxStateProductEdit = {
         price: 0,
         isDefault: true,
         previewItems: [],
-        quantityAvailable: null
       }
     ],
     isPublished: false,

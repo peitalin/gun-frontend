@@ -83,7 +83,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
     initialValues: {
       email: '',
     },
-    validationSchema: validationSchemas.SignupEmail,
+    validationSchema: validationSchemas.SignUpEmail,
     onSubmit: async (values) => {
       console.log(JSON.stringify(values))
       await signupToWaitlist({

@@ -56,7 +56,6 @@ export const initialProductCreateState: ReduxStateProductCreate = {
         priceWas: undefined,
         price: undefined,
         previewItems: [],
-        quantityAvailable: null,
       }
     ],
     sellerLicenseId: "",
