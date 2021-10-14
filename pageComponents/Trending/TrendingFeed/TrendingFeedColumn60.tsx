@@ -101,6 +101,7 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
   // }, [props.promotedSlotsConnection])
 
   let promotedSlots: NewsItemsEdge[] = (props.promotedSlotsConnection?.edges ?? [])
+      .filter(p => !!p.node?.productId)
       .map(p => wrapPromotedSlotAsNewsItem(p))
 
   let newsItemsWithPromotionsEdges = [

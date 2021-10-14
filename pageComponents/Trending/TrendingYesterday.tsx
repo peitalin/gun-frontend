@@ -110,24 +110,23 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
   let fetchMoreHot = hotItemsResponse?.fetchMore
   // let fetchMoreNew = newItemsResponse?.fetchMore
 
-  const [getPromotedList, getPromotedListResponse] = useLazyQuery<QData2, QVar2>(
-    GET_PROMOTED_LIST, {
-    variables: {
-      promotedListId: 'promoted_list_0002',
-      limit: 4,
-      offset: 0,
-    },
-    onCompleted: () => {
-    },
-  })
-
-
-  React.useEffect(() => {
-    getPromotedList()
-  }, [])
-
-  let promotedSlotsConnection = getPromotedListResponse?.data?.getPromotedList?.promotedSlotsConnection
+  // const [getPromotedList, getPromotedListResponse] = useLazyQuery<QData2, QVar2>(
+  //   GET_PROMOTED_LIST, {
+  //   variables: {
+  //     promotedListId: 'promoted_list_0002',
+  //     limit: 4,
+  //     offset: 0,
+  //   },
+  //   onCompleted: () => {
+  //   },
+  // })
+  // React.useEffect(() => {
+  //   getPromotedList()
+  // }, [])
+  // let promotedSlotsConnection = getPromotedListResponse?.data?.getPromotedList?.promotedSlotsConnection
   // console.log("promotedSlotsConnection: ", promotedSlotsConnection)
+  let promotedList = props.initialPromotedLists?.["promoted_list_0002"]
+  let promotedSlotsConnection = promotedList?.promotedSlotsConnection
 
   return (
     <TrendFeedLayout
@@ -221,6 +220,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   limit?: number
+  initialPromotedLists: PromotedList[]
 }
 
 interface QData {

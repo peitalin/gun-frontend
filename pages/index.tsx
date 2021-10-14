@@ -127,7 +127,7 @@ interface QVar3 {
 }
 
 
-// ////////// SSR ///////////
+//////////// SSR ///////////
 interface Context extends NextPageContext {
 }
 

@@ -49,17 +49,17 @@ const FeaturedProducts = (props: ReactProps) => {
   } = props;
 
 
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
-    GET_PROMOTED_LIST, {
-    variables: {
-      promotedListId: props.promotedListId,
-      limit: count,
-      offset: 0,
-    },
-  })
+  // const { loading, error, data } = useQuery<QueryData, QueryVar>(
+  //   GET_PROMOTED_LIST, {
+  //   variables: {
+  //     promotedListId: props.promotedListId,
+  //     limit: count,
+  //     offset: 0,
+  //   },
+  // })
 
-  let promotedList = props.initialPromotedList ?? data?.getPromotedList
-  // let promotedList = props.initialPromotedList
+  // let promotedList = props.initialPromotedList ?? data?.getPromotedList
+  let promotedList = props.initialPromotedList
   let categorySlug = promotedList?.categoryFilterSlug
   let connection = promotedList?.promotedSlotsConnection
 

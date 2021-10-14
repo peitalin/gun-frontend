@@ -2,6 +2,7 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { PromotedList } from "typings/gqlTypes"
 // Material UI
 import AlignCenterLayout from 'components/AlignCenterLayout';
 import BannerTrending from "./BannerTrending"
@@ -73,6 +74,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingToday
         limit={20}
+        initialPromotedLists={props.initialPromotedLists}
       />
 
 
@@ -95,6 +97,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
         showYesterday &&
         <TrendingYesterday
           limit={20}
+        initialPromotedLists={props.initialPromotedLists}
         />
       }
 
@@ -149,6 +152,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  initialPromotedLists: PromotedList[]
 }
 
 

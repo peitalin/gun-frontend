@@ -3738,6 +3738,7 @@ export type NewsItem = {
   externalProduct?: Maybe<External_Products>;
   productId?: Maybe<Scalars['String']>;
   product?: Maybe<Product>;
+  /** uses only data from searchIndex/cache, faster than getting data from DB */
   productPreview?: Maybe<ProductPreview>;
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
@@ -4265,6 +4266,7 @@ export type ProductMutationResponse = {
 export type ProductPreview = {
   __typename?: 'ProductPreview';
   id: Scalars['String'];
+  createdAt?: Maybe<Scalars['Date']>;
   featuredPreviewItemId?: Maybe<Scalars['String']>;
   /** only 1, even thouse typename is plural cuz of hasura naming convention */
   featuredPreview?: Maybe<Product_Preview_Items>;
