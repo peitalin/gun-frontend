@@ -79,9 +79,10 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
 
       <FeaturedProducts
-        count={4}
+        count={3}
         title={"Featured Products"}
         promotedListId={"promoted_list_0001"}
+        initialPromotedList={props.initialPromotedLists?.['promoted_list_0001']}
         cardsPerRow={
             {
               xs: 1.5,
@@ -128,6 +129,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
           count={4}
           title={"Trending Products"}
           promotedListId={"promoted_list_0002"}
+          initialPromotedList={props.initialPromotedLists?.['promoted_list_0002']}
           cardsPerRow={
             {
               xs: 1.5,

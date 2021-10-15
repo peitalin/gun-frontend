@@ -2,6 +2,7 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { PromotedList } from "typings/gqlTypes"
 // Material UI
 import AlignCenterLayout from 'components/AlignCenterLayout';
 import BannerTrending from "./BannerTrending"
@@ -43,9 +44,10 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
       />
 
       <FeaturedProducts
-        count={4}
+        count={3}
         title={"Featured Products"}
         promotedListId={"promoted_list_0001"}
+        initialPromotedList={props.initialPromotedLists?.['promoted_list_0001']}
         cardsPerRow={
             {
               xs: 1.5,
@@ -78,6 +80,7 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
         count={4}
         title={"Featured Products"}
         promotedListId={"promoted_list_0002"}
+        initialPromotedList={props.initialPromotedLists?.['promoted_list_0002']}
         cardsPerRow={
           {
             xs: 1.5,
@@ -95,6 +98,7 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  initialPromotedLists: PromotedList[]
 }
 
 

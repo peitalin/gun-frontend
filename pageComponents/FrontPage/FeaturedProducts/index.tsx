@@ -21,7 +21,7 @@ import Hidden from 'components/HiddenFix';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
-import { useQuery, useApolloClient } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
 
 // import {
@@ -49,17 +49,26 @@ const FeaturedProducts = (props: ReactProps) => {
   } = props;
 
 
-  // const { loading, error, data } = useQuery<QueryData, QueryVar>(
-  //   GET_PROMOTED_LIST, {
-  //   variables: {
-  //     promotedListId: props.promotedListId,
-  //     limit: count,
-  //     offset: 0,
-  //   },
-  // })
+  const [
+    getPromotedList,
+    { data, loading }
+  ] = useLazyQuery<QueryData, QueryVar>(
+    GET_PROMOTED_LIST, {
+    variables: {
+      promotedListId: props.promotedListId,
+      limit: count,
+      offset: 0,
+    },
+  })
 
-  // let promotedList = props.initialPromotedList ?? data?.getPromotedList
-  let promotedList = props.initialPromotedList
+  React.useEffect(() => {
+    if (!props.initialPromotedList?.id) {
+      getPromotedList()
+    }
+  }, [props.initialPromotedList])
+
+  let promotedList = props.initialPromotedList ?? data?.getPromotedList
+  // let promotedList = props.initialPromotedList
   let categorySlug = promotedList?.categoryFilterSlug
   let connection = promotedList?.promotedSlotsConnection
 
