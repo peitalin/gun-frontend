@@ -34,11 +34,18 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
   }, [props.previewItems])
 
 
-  if (props.loading || !props.featuredPreviewItem?.id) {
-    return <FeaturedImagePlaceholder
-              previewsMissing={!props.featuredPreviewItem?.id}
+  if (!props.featuredPreviewItem?.id) {
+    if (props.loading) {
+      return <FeaturedImagePlaceholder
+              previewsMissing={false}
+              previewsMissingMessage={''}
+           />
+    } else {
+      return <FeaturedImagePlaceholder
+              previewsMissing={true}
               previewsMissingMessage={props.previewsMissingMessage}
            />
+    }
   } else {
     if (constrainAspectRatio) {
       return (
