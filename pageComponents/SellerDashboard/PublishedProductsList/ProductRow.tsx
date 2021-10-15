@@ -264,7 +264,7 @@ const ProductRow = (props: ReactProps) => {
   let productName = product?.currentSnapshot?.title
   let viewCount = (product as ProductPrivate)?.uniqueProductViews?.aggregate?.count ?? 0
 
-  let dealerMissing = !product.currentSnapshot?.dealerId
+  let dealerMissing = !product.currentSnapshot?.dealer?.id
 
 
   if (!product?.featuredVariant) {
