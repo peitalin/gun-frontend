@@ -7,8 +7,8 @@ import { PaginatorVariables } from "./paginator-variables-actions";
 export const orderByOptions = [
   { label: "Newest", value: { createdAt: OrderBy.DESC }},
   { label: "Oldest", value: { createdAt: OrderBy.ASC }},
-  { label: "Highest Price", value: { price: OrderBy.DESC }},
-  { label: "Lowest Price", value: { price: OrderBy.ASC }},
+  // { label: "Highest Price", value: { price: OrderBy.DESC }},
+  // { label: "Lowest Price", value: { price: OrderBy.ASC }},
 ];
 
 

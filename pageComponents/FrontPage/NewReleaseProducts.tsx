@@ -31,8 +31,8 @@ import { useDebouncedCallback } from 'use-debounce';
 const orderByOptions = [
   { label: "Newest", value: { createdAt: Order_By.DESC }},
   { label: "Oldest", value: { createdAt: Order_By.ASC }},
-  { label: "Highest Price", value: { price: Order_By.DESC }},
-  { label: "Lowest Price", value: { price: Order_By.ASC }},
+  // { label: "Highest Price", value: { price: Order_By.DESC }},
+  // { label: "Lowest Price", value: { price: Order_By.ASC }},
 ];
 
 export const initialVariables = {
