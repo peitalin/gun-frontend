@@ -72,7 +72,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const showProductInfo = featuredVariant?.variantId && props?.product?.id
 
   const initialPurchasePrice = props.selectedBid?.offerPrice
-    || featuredVariant.price
+    || featuredVariant?.price
 
   const [internationalFeeDisplay, setInternationalFeeDisplay] = React.useState(0)
 
