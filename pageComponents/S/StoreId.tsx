@@ -41,7 +41,7 @@ import {
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 
 
 
@@ -241,8 +241,8 @@ const StoresId: React.FC<ReactProps> = (props) => {
                 }
                 return (
                   <div className={classes.marginRight1}>
-                    <ProductCardResponsive
-                      product={product}
+                    <NewsItemCardResponsive
+                      newsItem={{ product } as any}
                     />
                   </div>
                 )

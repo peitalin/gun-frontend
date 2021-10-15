@@ -1,6 +1,6 @@
 import React from "react";
 import ProductRowMobile from "./NewsItemRowMobile";
-import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 
 
 const NewsItemRowMobileLoading = (props: ReactProps) => {

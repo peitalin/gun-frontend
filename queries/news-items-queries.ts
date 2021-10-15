@@ -3,6 +3,7 @@ import {
   ExternalProductSnapshotsFragment,
   ExternalProductsFragment,
   NewsItemFragment,
+  NewsItemFullFragment,
 } from "./fragments";
 
 
@@ -10,10 +11,10 @@ import {
 export const GET_NEWS_ITEM_BY_ID = gql`
   query($newsItemId: String!) {
     getNewsItemById(newsItemId: $newsItemId) {
-      ...NewsItemFragment
+      ...NewsItemFullFragment
     }
   }
-  ${NewsItemFragment}
+  ${NewsItemFullFragment}
 `;
 
 

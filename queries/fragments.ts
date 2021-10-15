@@ -342,6 +342,15 @@ export const ProductPreviewFragment = gql`
     sellerLicenseVerified
     sellerLicenseId
     dealerState
+
+    sourceSiteUrl
+    storeId
+    listingType
+    sellerLicenseNumber
+    serialNumber
+    condition
+    adType
+    categoryId
   }
   ${ImageFragment}
 `;
@@ -1240,8 +1249,50 @@ export const ExternalProductsFragment = gql`
 `;
 
 
+
 export const NewsItemFragment = gql`
   fragment NewsItemFragment on NewsItem {
+    id
+    createdAt
+    updatedAt
+    # productId
+    # product {
+    #   ...ProductFragment
+    # }
+    # externalProductId
+    # externalProduct {
+    #   ...ExternalProductsFragment
+    # }
+    productPreview {
+      ...ProductPreviewFragment
+    }
+    sourceSite
+    isSuspended
+    isDeleted
+    score
+    rankScore # returns null for real-time subscriptions
+    # returns a Float value from searchIndex when ranking by "hot"
+    yourVote {
+      id
+      score
+      userId
+      newsItemId
+    }
+    # votes {
+    #   id
+    #   score
+    #   userId
+    #   newsItemId
+    # }
+  }
+  ${ProductPreviewFragment}
+`;
+  // ${ExternalProductsFragment}
+  // ${ProductFragment}
+
+
+export const NewsItemFullFragment = gql`
+  fragment NewsItemFullFragment on NewsItem {
     id
     createdAt
     updatedAt
@@ -1265,12 +1316,6 @@ export const NewsItemFragment = gql`
       userId
       newsItemId
     }
-    # votes {
-    #   id
-    #   score
-    #   userId
-    #   newsItemId
-    # }
   }
   ${ExternalProductsFragment}
   ${ProductFragment}

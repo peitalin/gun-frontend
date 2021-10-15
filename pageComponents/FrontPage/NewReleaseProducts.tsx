@@ -7,7 +7,6 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-// import ProductCardResponsive from "components/ProductCardResponsive";
 import ProductPreviewResponsive from "components/ProductPreviewResponsive";
 import LoadingCards from "./LoadingCards";
 import Loading from "components/Loading";

@@ -13,7 +13,7 @@ import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
-import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 // Modals
 import { goToModalConnect } from "utils/modals";
 // helpers

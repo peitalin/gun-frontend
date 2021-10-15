@@ -30,7 +30,6 @@ import ConfirmActionModal from "components/ConfirmActionModal";
 
 const NewsItemAdminSuspendIcon: React.FC<ReactProps> = (props) => {
 
-
   const {
     classes,
   } = props;

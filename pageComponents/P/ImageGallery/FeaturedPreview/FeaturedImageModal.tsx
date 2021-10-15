@@ -46,11 +46,12 @@ const FeaturedImageModal = (props: ReactProps) => {
 
   const isDarkMode = isThemeDark(theme)
 
-  const previewItems = (props?.previewItems ?? [])
-    .filter(p =>
-      p?.image?.original?.id !== undefined ||
-      p?.youTubeEmbedLink !== undefined
-    )
+  const previewItems = (props.previewItems?.length > 0)
+    ? props?.previewItems?.filter(p =>
+        p?.image?.original?.id !== undefined ||
+        p?.youTubeEmbedLink !== undefined
+      )
+    : [props.featuredPreviewItem]
 
   return (
     <div className={clsx(

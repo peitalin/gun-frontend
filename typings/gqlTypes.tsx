@@ -3733,7 +3733,7 @@ export type NewsItem = {
   __typename?: 'NewsItem';
   id: Scalars['String'];
   createdAt: Scalars['Date'];
-  updatedAt: Scalars['Date'];
+  updatedAt?: Maybe<Scalars['Date']>;
   externalProductId?: Maybe<Scalars['String']>;
   externalProduct?: Maybe<External_Products>;
   productId?: Maybe<Scalars['String']>;
@@ -4283,8 +4283,14 @@ export type ProductPreview = {
   sellerLicenseVerified?: Maybe<Scalars['Boolean']>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   dealerState?: Maybe<Scalars['String']>;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   listingType?: Maybe<ListingType>;
+  sellerLicenseNumber?: Maybe<Scalars['String']>;
+  serialNumber?: Maybe<Scalars['String']>;
+  condition?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  categoryId?: Maybe<Scalars['String']>;
 };
 
 /** An item that shows off the product (image, YouTube link, hosted videos to come) */

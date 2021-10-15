@@ -4,6 +4,7 @@ import {
 	External_Products,
 	Product_Preview_Items,
 	Product,
+	ProductPreview,
 	SoldOutStatus
 } from "typings/gqlTypes"
 
@@ -38,6 +39,7 @@ export interface NewsItemFields {
 	createdAtSnapshot: Date
 	isSold: boolean
 	dealerState: string
+	sellerLicenseVerified: boolean
 }
 
 export const transformNewsItemToFields = (
@@ -48,15 +50,20 @@ export const transformNewsItemToFields = (
 	// will display internalProduct data first
   const externalProduct = newsItem?.externalProduct
   const internalProduct = newsItem?.product
+	// ProductPreview is a lite version of newsItem product info
+	const productPreview = newsItem.productPreview
 
-
-	return transformExternalProductToFields({
-		internalProduct,
-		externalProduct,
-		// newsItem specific fields
-		newsItemSourceSite: newsItem.sourceSite,
-		newsItemIsSuspended: newsItem.isSuspended,
-	})
+	if (productPreview?.id) {
+		return transformNewsItemToFieldsProductPreview(newsItem)
+	} else {
+		return transformExternalProductToFields({
+			internalProduct,
+			externalProduct,
+			// newsItem specific fields
+			newsItemSourceSite: newsItem.sourceSite,
+			newsItemIsSuspended: newsItem.isSuspended,
+		})
+	}
 }
 
 export const transformExternalProductToFields = ({
@@ -77,6 +84,7 @@ export const transformExternalProductToFields = ({
 
   const featuredVariant = internalProduct?.featuredVariant
   const sellerLicense = internalProduct?.sellerLicense
+	const sellerLicenseVerified = internalProduct?.sellerLicense?.verified
 
 	const isInternalProduct = !!featuredVariant?.variantId
 
@@ -187,6 +195,7 @@ export const transformExternalProductToFields = ({
 	) ? true
 		: false
 
+
 	return {
 		productId,
 		externalProductId,
@@ -217,5 +226,48 @@ export const transformExternalProductToFields = ({
 		createdAt,
 		isSold,
 		dealerState,
+		sellerLicenseVerified,
+	}
+}
+
+
+export const transformNewsItemToFieldsProductPreview = (
+	newsItem: NewsItem
+): NewsItemFields => {
+
+	let productPreview = newsItem?.productPreview
+	let p = productPreview
+
+	return {
+		productId: p.id,
+		externalProductId: undefined,
+		make: p.make,
+		model: p.model,
+		caliber: p.caliber,
+		barrelLength: undefined,
+		action: p.actionType,
+		state: p.dealerState,
+		soldOutStatus: p.soldOutStatus,
+		description: undefined,
+		price: p.price,
+		priceWas: p.priceWas,
+		title: p.title,
+		serialNumber: p.serialNumber,
+		condition: p.condition,
+		adType: p.adType,
+		licenseNumber: p.sellerLicenseNumber,
+		phoneNumber: undefined,
+		sourceSite: newsItem.sourceSite,
+		sourceSiteUrl: p.sourceSiteUrl,
+		featuredPreviewItem: p.featuredPreview,
+		previewItems: [],
+		isInternalProduct: !!p.sourceSiteUrl?.match(/gunmarketplace/i),
+		isSuspended: p.isSuspended || newsItem.isSuspended,
+		categoryId: p.categoryId,
+		createdAtSnapshot: undefined,
+		createdAt: newsItem.createdAt,
+		isSold: p.isSoldElsewhere || p.soldOutStatus === SoldOutStatus.SOLD_OUT,
+		dealerState: p.dealerState,
+		sellerLicenseVerified: p.sellerLicenseVerified,
 	}
 }

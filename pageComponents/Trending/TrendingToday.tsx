@@ -76,27 +76,27 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
-  const [limitNew, setLimitNew] = React.useState(limit)
+  // const [limitNew, setLimitNew] = React.useState(limit)
 
   // image gallery index
   const [index, setIndex] = React.useState(0);
 
-  const { data, error } = useSubscription<SData, SVar>(
-    SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW, {
-      variables: {
-        limit: limitNew,
-        offset: 0,
-      },
-      shouldResubscribe: true,
-      onSubscriptionData: ({ client, subscriptionData: { data }}) => {
-        console.log('newsItems subscriptionData:', data)
-        setCacheHotItems(data?.newsItemsSortByNewConnection)
-      },
-      onSubscriptionComplete: () => {
-        console.log('newsItems subscriptions complete.')
-      },
-    },
-  )
+  // const { data, error } = useSubscription<SData, SVar>(
+  //   SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW, {
+  //     variables: {
+  //       limit: limitNew,
+  //       offset: 0,
+  //     },
+  //     shouldResubscribe: true,
+  //     onSubscriptionData: ({ client, subscriptionData: { data }}) => {
+  //       console.log('newsItems subscriptionData:', data)
+  //       setCacheHotItems(data?.newsItemsSortByNewConnection)
+  //     },
+  //     onSubscriptionComplete: () => {
+  //       console.log('newsItems subscriptions complete.')
+  //     },
+  //   },
+  // )
   // login-logOut updates userRedux which prompts resubscribes
 
   const [
@@ -140,7 +140,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsToday ?? cacheHotItems
     // ?? cacheHotItems
-  let newsItemsNew = data?.newsItemsSortByNewConnection ?? cacheNewItems
+  // let newsItemsNew = data?.newsItemsSortByNewConnection ?? cacheNewItems
 
   let fetchMoreHot = hotItemsResponse?.fetchMore
 
@@ -188,6 +188,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     <TrendFeedLayout
       tab={tab}
       setTab={setTab}
+      disableNewFeed={true}
       title={
         lgDown
         ? <div className={classes.trendTitleBoxMobile}>
@@ -210,7 +211,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     >
       <TrendingFeedColumn60
         newsItemsHot={newsItemsHot}
-        newsItemsNew={newsItemsNew}
+        // newsItemsNew={newsItemsNew}
         currentNewsItem={currentNewsItem}
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
@@ -250,10 +251,10 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
           setFetchMoreLoading(false)
           setOffsetHot(newOffset)
         }}
-        fetchMoreNew={async() => {
-          console.log('new limit: ', limitNew + 10)
-          setLimitNew(limitNew => limitNew + 10)
-        }}
+        // fetchMoreNew={async() => {
+        //   console.log('new limit: ', limitNew + 10)
+        //   setLimitNew(limitNew => limitNew + 10)
+        // }}
       />
       <NewsItemColumn40
         currentNewsItem={currentNewsItem}
@@ -310,7 +311,7 @@ const styles = (theme: Theme) => createStyles({
   },
   trendTitleBoxDesktop: {
     marginTop: '1rem',
-    marginBottom: '0.5rem',
+    // marginBottom: '0.5rem',
   },
   trendTitleBoxMobile: {
     display: "flex",

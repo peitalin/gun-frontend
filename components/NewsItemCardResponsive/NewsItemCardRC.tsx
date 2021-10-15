@@ -65,8 +65,9 @@ const NewsItemCardRC = (props: ReactProps) => {
   // with when divided over 4 cards = 1/4 rem
 
   const {
-		model,
+    productId,
 		make,
+		model,
 		caliber,
 		barrelLength,
 		action,
@@ -74,6 +75,7 @@ const NewsItemCardRC = (props: ReactProps) => {
 		soldOutStatus,
 		description,
 		price,
+    priceWas,
 		title,
 		serialNumber,
 		condition,
@@ -89,8 +91,6 @@ const NewsItemCardRC = (props: ReactProps) => {
   } = transformNewsItemToFields(newsItem)
 
   const newsItemId = newsItem?.id
-  const productId = newsItem?.product?.id ?? newsItem?.externalProductId
-  const priceWas = newsItem?.product?.featuredVariant?.priceWas
   const squishLetters = title?.length > 30
 
 

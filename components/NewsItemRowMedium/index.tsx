@@ -46,8 +46,9 @@ const NewsItemRowMedium = (props: ReactProps) => {
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   let {
-		model,
+    productId,
 		make,
+		model,
 		caliber,
 		barrelLength,
 		action,
@@ -68,6 +69,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
 		isInternalProduct,
     isSuspended,
     categoryId,
+    sellerLicenseVerified,
   } = transformNewsItemToFields(newsItem)
 
 
@@ -76,166 +78,165 @@ const NewsItemRowMedium = (props: ReactProps) => {
       classes.productRowRoot,
       classes.flexRow,
     )}>
-        <ShowOnMobileOrDesktopSSR desktop>
-          <div className={clsx(
-            classes.flexColOuter,
-            classes.flexColPadding,
-          )}>
-            {
-              featuredPreviewItem?.id
-              ? <Link
-                  href={
-                    isInternalProduct
-                      ? "/p/[productId]"
-                      : sourceSiteUrl
-                  }
-                  as={
-                    isInternalProduct
-                      ? `/p/${newsItem?.product?.id}`
-                      : sourceSiteUrl
-                  }
-                >
-                  <a>
-                    <ProductPreviewThumb
-                      previewItem={featuredPreviewItem}
-                      width={props.imageSize?.desktop?.width ?? 135}
-                      height={props.imageSize?.desktop?.height ?? 90}
-                    />
-                  </a>
-                </Link>
-              : <a href={sourceSiteUrl} target={"_blank"}>
-                  <ProductPreviewThumbCategory
-                    categoryId={categoryId}
+      <ShowOnMobileOrDesktopSSR desktop>
+        <div className={clsx(
+          classes.flexColOuter,
+          classes.flexColPadding,
+        )}>
+          {
+            featuredPreviewItem?.id
+            ? <Link
+                href={
+                  isInternalProduct
+                    ? "/p/[productId]"
+                    : sourceSiteUrl
+                }
+                as={
+                  isInternalProduct
+                    ? `/p/${newsItem?.product?.id}`
+                    : sourceSiteUrl
+                }
+              >
+                <a>
+                  <ProductPreviewThumb
+                    previewItem={featuredPreviewItem}
                     width={props.imageSize?.desktop?.width ?? 135}
                     height={props.imageSize?.desktop?.height ?? 90}
                   />
                 </a>
-            }
-          </div>
-        </ShowOnMobileOrDesktopSSR>
-        <ShowOnMobileOrDesktopSSR mobile>
-          <div className={clsx(
-            classes.flexColOuter,
-            classes.flexColPaddingSm,
-          )}>
-            {
-              featuredPreviewItem?.id
-              ? <Link
-                  href={
-                    isInternalProduct
-                      ? "/p/[productId]"
-                      : sourceSiteUrl
-                  }
-                  as={
-                    isInternalProduct
-                      ? `/p/${newsItem?.product?.id}`
-                      : sourceSiteUrl
-                  }
-                >
-                  <a>
-                    <ProductPreviewThumb
-                      previewItem={featuredPreviewItem}
-                      width={props.imageSize?.mobile?.width ?? 82.5}
-                      height={props.imageSize?.mobile?.height ?? 55}
-                    />
-                  </a>
-                </Link>
-              : <a href={sourceSiteUrl} target={"_blank"}>
-                  <ProductPreviewThumbCategory
-                    categoryId={categoryId}
-                    // previewItem={featuredPreviewItem}
+              </Link>
+            : <a href={sourceSiteUrl} target={"_blank"}>
+                <ProductPreviewThumbCategory
+                  categoryId={categoryId}
+                  width={props.imageSize?.desktop?.width ?? 135}
+                  height={props.imageSize?.desktop?.height ?? 90}
+                />
+              </a>
+          }
+        </div>
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile>
+        <div className={clsx(
+          classes.flexColOuter,
+          classes.flexColPaddingSm,
+        )}>
+          {
+            featuredPreviewItem?.id
+            ? <Link
+                href={
+                  isInternalProduct
+                    ? "/p/[productId]"
+                    : sourceSiteUrl
+                }
+                as={
+                  isInternalProduct
+                    ? `/p/${productId}`
+                    : sourceSiteUrl
+                }
+              >
+                <a>
+                  <ProductPreviewThumb
+                    previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}
                     height={props.imageSize?.mobile?.height ?? 55}
                   />
                 </a>
-            }
-          </div>
-        </ShowOnMobileOrDesktopSSR>
+              </Link>
+            : <a href={sourceSiteUrl} target={"_blank"}>
+                <ProductPreviewThumbCategory
+                  categoryId={categoryId}
+                  // previewItem={featuredPreviewItem}
+                  width={props.imageSize?.mobile?.width ?? 82.5}
+                  height={props.imageSize?.mobile?.height ?? 55}
+                />
+              </a>
+          }
+        </div>
+      </ShowOnMobileOrDesktopSSR>
 
-        <div className={clsx(
-          classes.flexRowWrapOuter,
-          classes.flexGrowItem
-        )}>
+      <div className={clsx(
+        classes.flexRowWrapOuter,
+        classes.flexGrowItem
+      )}>
 
-          {
-            !title
-            ? <div className={classes.flexColInner60}>
-                <DescriptionLoadingText/>
-              </div>
-            : <div className={classes.flexColInner60}>
-                <Typography className={classes.category} variant="body1">
-                  {caliber}
-                </Typography>
+        {
+          !title
+          ? <div className={classes.flexColInner60}>
+              <DescriptionLoadingText/>
+            </div>
+          : <div className={classes.flexColInner60}>
+              <Typography className={classes.category} variant="body1">
+                {caliber}
+              </Typography>
 
-                {
-                  isInternalProduct
-                  ? <Link
-                      href="/p/[productId]"
-                      as={`/p/${newsItem?.product?.id}`}
-                    >
-                      <a>
-                        <Typography className={classes.title} variant="body1">
-                          {title}
-                        </Typography>
-                      </a>
-                    </Link>
-                  : <a href={sourceSiteUrl} target={"_blank"}>
+              {
+                isInternalProduct
+                ? <Link
+                    href="/p/[productId]"
+                    as={`/p/${productId}`}
+                  >
+                    <a>
                       <Typography className={classes.title} variant="body1">
                         {title}
                       </Typography>
                     </a>
-                }
+                  </Link>
+                : <a href={sourceSiteUrl} target={"_blank"}>
+                    <Typography className={classes.title} variant="body1">
+                      {title}
+                    </Typography>
+                  </a>
+              }
 
-                <Typography className={classes.dealerState} variant="body1">
-                  {state}
-                </Typography>
+              <Typography className={classes.dealerState} variant="body1">
+                {state}
+              </Typography>
 
-                <div className={classes.priceContainer}>
-                  <PriceDisplayMainMobile
-                    price={price}
-                    soldOutStatus={soldOutStatus}
-                    isSuspended={isSuspended}
-                  />
-                </div>
-              </div>
-          }
-
-
-                {/* <SourceSiteChip
-                  sourceSite={externalProduct?.sourceSite}
-                  style={{
-                    position: 'absolute',
-                    bottom: '2.5rem',
-                    right: '0.5rem',
-                    marginRight: 0,
-                    height: 28,
-                  }}
-                /> */}
-                {
-                  newsItem?.product?.sellerLicense?.verified &&
-                  <VerifiedChip
-                    title={"Verified"}
-                    style={{
-                      position: 'absolute',
-                      bottom: '2.5rem',
-                      right: '0.5rem',
-                      marginRight: 0,
-                      height: 28,
-                    }}
-                  />
-                }
-
-                <AdType
-                  productId={newsItem?.product?.id}
-                  adType={adType}
-                  sourceSiteUrl={sourceSiteUrl}
-                  style={{
-                    position: 'absolute',
-                    bottom: '0.5rem',
-                    right: '0.5rem',
-                    height: 28,
-                  }}
+              <div className={classes.priceContainer}>
+                <PriceDisplayMainMobile
+                  price={price}
+                  soldOutStatus={soldOutStatus}
+                  isSuspended={isSuspended}
                 />
+              </div>
+            </div>
+        }
+
+
+        {/* <SourceSiteChip
+          sourceSite={externalProduct?.sourceSite}
+          style={{
+            position: 'absolute',
+            bottom: '2.5rem',
+            right: '0.5rem',
+            marginRight: 0,
+            height: 28,
+          }}
+        /> */}
+        {
+          sellerLicenseVerified &&
+          <VerifiedChip
+            title={"Verified"}
+            style={{
+              position: 'absolute',
+              bottom: '2.5rem',
+              right: '0.5rem',
+              height: 28,
+            }}
+          />
+        }
+
+        <AdType
+          productId={productId}
+          adType={adType}
+          sourceSiteUrl={sourceSiteUrl}
+          style={{
+            position: 'absolute',
+            bottom: '0.5rem',
+            right: '0.5rem',
+            height: 28,
+          }}
+        />
 
       </div>
     </ErrorBounds>
@@ -244,7 +245,6 @@ const NewsItemRowMedium = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem
-  isExternalProductSuspended?: boolean;
   loading?: boolean;
   refetch?(): void; // apollo refetch
   imageSize?: {

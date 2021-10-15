@@ -21,6 +21,9 @@ import DescriptionLoadingText from "components/NewsItemRowMedium/DescriptionLoad
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import TextInfoRow from "./TextInfoRow";
+/// gql
+import { useQuery } from "@apollo/client"
+import { GET_NEWS_ITEM_BY_ID } from "queries/news-items-queries"
 
 import {
   transformNewsItemToFields,
@@ -56,8 +59,18 @@ const NewsItemCardDetails = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"))
+  // const isMobile = useMediaQuery(theme.breakpoints.down("lg"))
   // const snackbar = useSnackbar();
+
+
+  const { data, loading } = useQuery<QData1, QVar1>(GET_NEWS_ITEM_BY_ID, {
+    variables: {
+      newsItemId: newsItem?.id,
+    }
+  })
+  const newsItemFull = data?.getNewsItemById
+
+
 
   const {
 		model,
@@ -80,7 +93,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
 		featuredPreviewItem: _featuredPreviewItem,
 		previewItems,
     isInternalProduct,
-  } = transformNewsItemToFields(newsItem)
+  } = transformNewsItemToFields(newsItemFull ?? newsItem)
 
 
   const [
@@ -93,6 +106,11 @@ const NewsItemCardDetails = (props: ReactProps) => {
   // image box doesnt jitter in size when browsing through the gallery
   let constrainAspect = previewItems?.length > 1
 
+  React.useEffect(() => {
+    setFeaturedPreviewItem(_featuredPreviewItem)
+  }, [newsItem?.id])
+
+  // console.log("currentNewsItem:", props.newsItem)
 
   return (
     <div className={classes.newsItemCardDetailsRoot}>
@@ -369,6 +387,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   setIndex(i: number): void
 }
 
+interface QData1 {
+  getNewsItemById: NewsItem
+}
+interface QVar1 {
+  newsItemId: string
+}
 
 
 const styles = (theme: Theme) => createStyles({

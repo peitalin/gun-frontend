@@ -27,23 +27,26 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
           <Typography variant="h2" className={classes.title}>
             { props.title ?? "Trending"}
           </Typography>
-          <div className={classes.tabContainer}>
-            <AntTabContainer
-              value={props.tab}
-              onChange={(event, newTab: number) => {
-                props.setTab(newTab)
-              }}
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <AntTab label="Hot" />
-              {/* // only show New tab if setTab is provided */}
-              {
-                !disableNewFeed &&
-                <AntTab label="New" />
-              }
-            </AntTabContainer>
-          </div>
+          {
+            !disableNewFeed &&
+            <div className={classes.tabContainer}>
+              <AntTabContainer
+                value={props.tab}
+                onChange={(event, newTab: number) => {
+                  props.setTab(newTab)
+                }}
+                indicatorColor="primary"
+                textColor="primary"
+              >
+                <AntTab label="Hot" />
+                {/* // only show New tab if setTab is provided */}
+                {
+                  !disableNewFeed &&
+                  <AntTab label="New" />
+                }
+              </AntTabContainer>
+            </div>
+          }
         </div>
         <div className={classes.trendFeed}>
           {props.children}
@@ -105,6 +108,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
   },
   title: {
+    marginBottom: '0.5rem',
   },
   titleContainerDesktop: {
     display: "flex",

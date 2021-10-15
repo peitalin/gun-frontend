@@ -13,7 +13,7 @@ import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory"
 
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
-import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 // next
 import {
   transformNewsItemToFields
@@ -37,7 +37,6 @@ import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
 import NewsItemAdminSetCategoryIcon from "components/NewsItems/NewsItemAdminSetCategoryIcon"
 import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
-import Portal from "@material-ui/core/Portal"
 
 
 
@@ -53,8 +52,11 @@ const NewsItemCardAsRow = (props: ReactProps) => {
   const theme = useTheme()
 
   const {
-		model,
+    productId,
+    createdAt,
+    createdAtSnapshot,
 		make,
+		model,
 		caliber,
 		barrelLength,
 		action,
@@ -62,6 +64,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 		soldOutStatus,
 		description,
 		price,
+    priceWas,
 		title,
 		serialNumber,
 		condition,
@@ -75,17 +78,12 @@ const NewsItemCardAsRow = (props: ReactProps) => {
     isInternalProduct,
     isSuspended,
     isSold,
+    categoryId,
   } = transformNewsItemToFields(newsItem)
 
 
-  let product = newsItem?.product ?? newsItem?.externalProduct
-  let categoryId = product?.category?.id ?? product?.categoryId
-
-  const priceWas = newsItem?.product?.featuredVariant?.priceWas;
   // console.log("NEWSITEM: ", newsItem)
-  let dateListed = newsItem?.createdAt
-  let dateSold = newsItem?.externalProduct?.currentExternalProductSnapshot?.createdAt
-  let hrsToSold = newsItem?.externalProduct?.currentExternalProductSnapshot?.hrsToSold
+  let dateSold = createdAt
   // console.log("dateSold: ", dateSold)
   // console.log("hrsToSold: ", hrsToSold)
 
@@ -99,10 +97,11 @@ const NewsItemCardAsRow = (props: ReactProps) => {
       onMouseLeave={() => setHover(false)}
     >
       {
-        !(product && product.id)
+        !productId
         ? <DescriptionLoading
             isMobile
-            height={'100%'}
+            height={'36px'}
+            plainPlaceholder={true}
           />
         : <div className={classes.flexRow}>
             <div className={classes.flexCol}>

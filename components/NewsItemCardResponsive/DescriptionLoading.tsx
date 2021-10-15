@@ -13,6 +13,7 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
     height = 136,
     mobilePicHeight = 75,
     mobilePicWidth = 120,
+    plainPlaceholder = false,
     style,
   } = props;
 
@@ -22,31 +23,37 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
         className={classes.descriptionContainerMobile}
         style={{
           height: height ?? '100%',
+          width: '100%',
           // height: '100%',
           // height: "112px", // ensure all cards descriptions are same height
           ...style
         }}
       >
-        <div className={clsx("pulse", classes.loadingDescriptionPic)}
-          style={{
-            height: mobilePicHeight,
-            minWidth: mobilePicWidth
-          }}
-        />
-        <div className={clsx(classes.loadingDescription)}>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine1Mobile
-          )}/>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine2Mobile
-          )}/>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine3Mobile
-          )}/>
-        </div>
+        {
+          !props.plainPlaceholder &&
+          <>
+            <div className={clsx("pulse", classes.loadingDescriptionPic)}
+              style={{
+                height: mobilePicHeight,
+                minWidth: mobilePicWidth
+              }}
+            />
+            <div className={clsx(classes.loadingDescription)}>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine1Mobile
+              )}/>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine2Mobile
+              )}/>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine3Mobile
+              )}/>
+            </div>
+          </>
+        }
       </div>
     )
   } else {
@@ -60,24 +67,29 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
           ...style
         }}
       >
-        <div className={clsx(classes.loadingDescription)}>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine1
-          )}/>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine2
-          )}/>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine3
-          )}/>
-          <div className={clsx(
-            !props.disableLoadingAnimation && "pulse",
-            classes.loadingDescriptionLine4
-          )}/>
-        </div>
+        {
+          !props.plainPlaceholder &&
+          <>
+            <div className={clsx(classes.loadingDescription)}>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine1
+              )}/>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine2
+              )}/>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine3
+              )}/>
+              <div className={clsx(
+                !props.disableLoadingAnimation && "pulse",
+                classes.loadingDescriptionLine4
+              )}/>
+            </div>
+          </>
+        }
       </div>
     )
   }
@@ -91,6 +103,7 @@ interface DescriptionLoadingProps extends WithStyles<typeof styles> {
   mobilePicWidth?: any;
   rowFormat?: boolean;
   disableLoadingAnimation?: boolean;
+  plainPlaceholder?: boolean
 }
 
 

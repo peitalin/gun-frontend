@@ -23,7 +23,7 @@ import OrderStatusDisplay from "./OrderStatusDisplay";
 // import { getStoreIdOrSlug } from "utils/links";
 import { OrderStatus } from "typings/gqlTypes";
 import { getFeaturedPreviewFromProduct } from "utils/images";
-import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 
 
 

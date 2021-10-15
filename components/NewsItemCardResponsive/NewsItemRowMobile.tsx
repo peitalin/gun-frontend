@@ -12,7 +12,7 @@ import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
-import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 // helpers
 import { trimTitle } from "utils/strings";
 // next

@@ -23,7 +23,8 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
         style={{
           height: height ?? '100%',
           // height: '100%',
-          // height: "112px", // ensure all cards descriptions are same height
+          width: '100%',
+          marginLeft: '1rem',
           ...style
         }}
       >

@@ -34,9 +34,9 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
   }, [props.previewItems])
 
 
-  if (props.loading || props.previewItems?.length === 0) {
+  if (props.loading || !props.featuredPreviewItem?.id) {
     return <FeaturedImagePlaceholder
-              previewsMissing={props.previewItems?.length === 0}
+              previewsMissing={!props.featuredPreviewItem?.id}
               previewsMissingMessage={props.previewsMissingMessage}
            />
   } else {
