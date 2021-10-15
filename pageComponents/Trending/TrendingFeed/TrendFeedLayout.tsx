@@ -39,11 +39,7 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
                 textColor="primary"
               >
                 <AntTab label="Hot" />
-                {/* // only show New tab if setTab is provided */}
-                {
-                  !disableNewFeed &&
-                  <AntTab label="New" />
-                }
+                <AntTab label="New" />
               </AntTabContainer>
             </div>
           }
@@ -61,17 +57,20 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
             { props.title ?? "Trending"}
           </Typography>
           <div className={classes.tabContainer}>
-            <AntTabContainer
-              value={props.tab}
-              onChange={(event, newTab: number) => {
-                props.setTab(newTab)
-              }}
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <AntTab label="Hot" />
-              <AntTab label="New" />
-            </AntTabContainer>
+            {
+              !disableNewFeed &&
+              <AntTabContainer
+                value={props.tab}
+                onChange={(event, newTab: number) => {
+                  props.setTab(newTab)
+                }}
+                indicatorColor="primary"
+                textColor="primary"
+              >
+                <AntTab label="Hot" />
+                <AntTab label="New" />
+              </AntTabContainer>
+            }
           </div>
         </div>
         <div className={classes.trendFeed}>

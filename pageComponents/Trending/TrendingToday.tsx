@@ -317,7 +317,7 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     marginTop: '1rem',
-    marginBottom: '0.5rem',
+    // marginBottom: '0.5rem',
   },
   last24hrsDesktop: {
     marginLeft: '0.5rem',
