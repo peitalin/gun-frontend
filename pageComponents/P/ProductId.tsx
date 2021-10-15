@@ -226,7 +226,6 @@ const Products: React.FC<ReactProps> = (props) => {
             !xsDown &&
             <ImageGalleryDesktop
               product={product}
-              selectedOption={selectedOption}
               // product={undefined}
               //// sometimes SSR preload looks off when product is undefined
               //// replicate by setting product = undefined
@@ -250,10 +249,6 @@ const Products: React.FC<ReactProps> = (props) => {
               <>
                 <PurchaseProductSummary
                   product={product}
-                  selectedOption={selectedOption}
-                  refetchProduct={refetch}
-                  variantOptions={variantOptions}
-                  handleChangeVariantOption={handleChangeVariantOption}
                   selectedBid={selectedBid}
                 />
                 {
@@ -286,11 +281,6 @@ const Products: React.FC<ReactProps> = (props) => {
             product &&
             <ProductDetails
               product={product}
-              selectedOption={selectedOption}
-              // showProductId={
-              //   user?.userRole === Role.PLATFORM_ADMIN ||
-              //   user?.userRole === Role.PLATFORM_EDITOR
-              // }
             />
           }
         </ProductColumnSection>
@@ -307,10 +297,6 @@ const Products: React.FC<ReactProps> = (props) => {
           <>
             <PurchaseProductSummary
               product={product}
-              selectedOption={selectedOption}
-              refetchProduct={refetch}
-              variantOptions={variantOptions}
-              handleChangeVariantOption={handleChangeVariantOption}
               selectedBid={selectedBid}
             />
             {
