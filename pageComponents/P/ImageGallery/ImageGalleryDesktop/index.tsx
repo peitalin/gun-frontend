@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -22,22 +21,6 @@ import BottomImageCarouselDesktop from "./BottomImageCarouselDesktop";
 
 const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
-  const previewItems = props?.product?.featuredVariant?.previewItems
-
-  const [
-    featuredPreviewItem,
-    setFeaturedPreviewItem
-  ] = useState(previewItems?.[0]);
-
-  const [openedModals, setOpenedModals] = useState([]);
-
-  useEffect(() => {
-    let pitem = props?.product?.featuredVariant?.previewItems?.[0]
-    if (pitem) {
-      setFeaturedPreviewItem(pitem)
-    }
-  }, [props?.product?.featuredVariant])
-
   const {
     classes,
     product,
@@ -48,8 +31,26 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
+  const previewItems = props?.product?.featuredVariant?.previewItems
+
+  const [
+    featuredPreviewItem,
+    setFeaturedPreviewItem
+  ] = React.useState(undefined);
+
+
+  React.useEffect(() => {
+    let pitem = previewItems?.[0]
+    if (pitem) {
+      setFeaturedPreviewItem(pitem)
+    }
+  }, [previewItems])
+
   // const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   // console.log("loading::::::::::::", props.loading)
+  // console.log("product::::::::::::", props.product)
+  // console.log("featuredPreview::::::::::::", featuredPreviewItem)
+  // console.log("index::::::::::::", index)
 
   return (
     <div className={classes.root}>
@@ -89,7 +90,6 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
-  selectedOption: SelectedVariantProps;
   loading: boolean;
   numberOfItemsTall?: number;
   numberOfItemsWide?: number;

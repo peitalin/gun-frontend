@@ -119,6 +119,13 @@ export const DASHBOARD_PRODUCTS_CONNECTION = gql`
       edges {
         node {
           ...ProductFragment
+          ... on ProductPrivate {
+            uniqueProductViews {
+              aggregate {
+                count
+              }
+            }
+          }
         }
       }
       totalCount

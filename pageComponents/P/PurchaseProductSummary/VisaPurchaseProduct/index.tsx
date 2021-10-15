@@ -291,9 +291,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         console.log("handleOrderPostPurchase()")
         props.handleOrderPostPurchase(data?.confirmOrder?.confirmedOrder)
       }
-      if (typeof props.refetchProduct === "function") {
-        props.refetchProduct()
-      }
     },
   })
 
@@ -724,7 +721,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonHeight?: any;
   handleOrderPostPurchase(order: any): void;
   product: Product;
-  refetchProduct?(): void;
   selectedBid?: Bids;
   initialPurchasePrice: number
   internationalFeeDisplay: number

@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import {
   ProductFragment,
   ProductLiteFragment,
+  StorePublicFragment,
 } from "./fragments";
 
 export const GET_PROMOTED_LIST = gql`
@@ -169,6 +170,9 @@ export const GET_PROMOTED_SLOT_BY_PRODUCT_ID = gql`
       productId
       product {
         ...ProductLiteFragment
+        # store {
+        #   ...StorePublicFragment
+        # }
       }
       ownerId
       reservePrice
@@ -179,3 +183,4 @@ export const GET_PROMOTED_SLOT_BY_PRODUCT_ID = gql`
   }
   ${ProductLiteFragment}
 `;
+  // ${StorePublicFragment}

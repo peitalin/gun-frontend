@@ -49,7 +49,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
   };
 
   const sellerLicense = product?.sellerLicense
-  console.log("productClassifieidAd, ", productClassifiedAd)
+  // console.log("productClassifieidAd ", productClassifiedAd)
   const phoneNumber = productClassifiedAd?.store?.user?.phoneNumber?.number
     ? `0${productClassifiedAd?.store?.user?.phoneNumber?.number}`
     : undefined

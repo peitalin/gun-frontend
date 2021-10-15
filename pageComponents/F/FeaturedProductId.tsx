@@ -73,8 +73,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     s.reduxLogin.user
   )
 
-  const isAdmin = user?.userRole === Role.PLATFORM_ADMIN
-
   ///////// DATA
 
   const [
@@ -100,42 +98,19 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     },
   })
 
-
   let userBids = (getUserBidsForProductResponse?.data?.getUserBidsForProduct?.messages ?? [])
     .map(m => m?.bid)
-  // console.log("userBids: ", userBids)
 
-  const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
-    GET_PRODUCT, {
-    variables: {
-      productId: productId
-    },
-  })
-  const product = data?.getProductById || props.initialProduct;
+  // const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
+  //   GET_PRODUCT, {
+  //   variables: {
+  //     productId: productId
+  //   },
+  // })
 
-  ////////// VARIANTS
-  const [
-    selectedOption,
-    setSelectedOption
-  ] = React.useState<SelectedVariantProps>({
-    label: "variant",
-    value: product?.featuredVariant || {
-      productId: undefined,
-      variantId: undefined,
-      snapshotId: undefined,
-      variantSnapshotId: undefined,
-      position: 0,
-      storeId: undefined,
-      createdAt: undefined,
-      price: undefined,
-      priceWas: undefined,
-      variantName: undefined,
-      variantDescription: undefined,
-      previewItems: [],
-      isDefault: false,
-      soldOutStatus: SoldOutStatus.AVAILABLE,
-    } as any,
-  });
+  // const product = props.initialProduct || data?.getProductById
+  let loading = props.loading
+  const product = props.initialProduct
 
 
   React.useEffect(() => {
@@ -143,16 +118,12 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
       getUserBidsForProduct()
     }
     if (!!product?.featuredVariant?.variantId) {
-      setSelectedOption({
-        label: "variant",
-        value: product?.featuredVariant
-      })
-      if (user?.id && product?.store?.user?.id) {
+      if (user?.id && product?.store?.userId) {
         insertUniqueProductView({
           variables: {
             productId: productId,
             userId: user.id,
-            sellerUserId: product.store.user.id
+            sellerUserId: product.store.userId
           }
         })
       }
@@ -163,24 +134,11 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   const variantOptions = (product?.currentSnapshot?.currentVariants ?? [])
     .map(v => ({ label: v.variantName, value: v }))
 
-  const handleChangeVariantOption = (
-    selectedOption: { label: string, value: Product_Variants }
-  ) => {
-    setSelectedOption(selectedOption)
-  };
-
-  React.useEffect(() => {
-    if (product?.featuredVariant?.productId) {
-      setSelectedOption({
-        label: product?.featuredVariant?.variantName,
-        value: product?.featuredVariant,
-      })
-    }
-  }, [loading])
 
   let storeUserVerified = product?.sellerLicense?.verified;
   let productIsYours = product?.store?.user?.id === user?.id
 
+  // console.log("PPPPPP:", product)
   // if (!loading && product?.soldOutStatus === SoldOutStatus.SOLD_OUT) {
   //   return <ErrorPage statusCode={400} message={"Product has been sold"}/>
   // }
@@ -205,10 +163,10 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     return <ErrorPage statusCode={400}
       message={`Store's owner "${storeOwnerId}" has yet to be verified`} className={classes.paddingTop1}/>
   }
-  if (error) {
-    return <ErrorPage statusCode={404}
-      message={"Product cannot be found"} className={classes.paddingTop1}/>
-  }
+  // if (error) {
+  //   return <ErrorPage statusCode={404}
+  //     message={"Product cannot be found"} className={classes.paddingTop1}/>
+  // }
 
 
   return (
@@ -219,7 +177,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
         {/* use this for both mobile and desktop */}
         <ImageGalleryDesktop
           product={product}
-          selectedOption={selectedOption}
           // product={undefined}
           //// sometimes SSR preload looks off when product is undefined
           //// replicate by setting product = undefined
@@ -265,10 +222,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
                 <>
                   <PurchaseProductSummary
                     product={product}
-                    selectedOption={selectedOption}
-                    refetchProduct={refetch}
-                    variantOptions={variantOptions}
-                    handleChangeVariantOption={handleChangeVariantOption}
                     selectedBid={selectedBid}
                   />
                   {
@@ -300,7 +253,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
               product &&
               <ProductDetails
                 product={product}
-                selectedOption={selectedOption}
                 // showProductId={
                 //   user?.userRole === Role.PLATFORM_ADMIN ||
                 //   user?.userRole === Role.PLATFORM_EDITOR
@@ -321,10 +273,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
             <>
               <PurchaseProductSummary
                 product={product}
-                selectedOption={selectedOption}
-                refetchProduct={refetch}
-                variantOptions={variantOptions}
-                handleChangeVariantOption={handleChangeVariantOption}
                 selectedBid={selectedBid}
               />
               {
@@ -364,6 +312,7 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialProduct: Product;
+  loading: boolean
 }
 interface QueryData {
   getProductById: Product;

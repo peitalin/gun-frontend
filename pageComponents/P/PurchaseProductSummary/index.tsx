@@ -53,10 +53,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    selectedOption,
-    // ProductLicense
-    variantOptions,
-    handleChangeVariantOption,
   } = props;
 
   const user = useSelector<GrandReduxState, UserPrivate>(
@@ -72,7 +68,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const snackbar = useSnackbar();
   const router = useRouter();
 
-  const featuredVariant = selectedOption?.value;
+  const featuredVariant = props.product?.featuredVariant
   const showProductInfo = featuredVariant?.variantId && props?.product?.id
 
   const initialPurchasePrice = props.selectedBid?.offerPrice
@@ -152,7 +148,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                       user={user}
                       // className={"fadeIn"}
                       product={props.product}
-                      refetchProduct={props.refetchProduct}
                       display={true}
                       buttonHeight={xsDown ? '40px' : '40px'}
                       selectedBid={props.selectedBid}
@@ -186,15 +181,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
-  selectedOption: SelectedVariantProps;
-  refetchProduct?(): void;
-  variantOptions: {
-    label: string;
-    value: Product_Variants;
-  }[];
-  handleChangeVariantOption(
-    selectedOption: { label: string, value: Product_Variants }
-  ): void;
   selectedBid?: Bids
 }
 

@@ -28,14 +28,7 @@ const ProductDetails = (props: ReactProps) => {
 
   const {
     classes,
-    selectedOption,
   } = props;
-
-  // const productVariant = selectedOption.value
-  // const dispatch = useDispatch();
-  // const user = useSelector<GrandReduxState, UserPrivate>(s =>
-  //   s.reduxLogin.user
-  // )
 
   return (
     <div className={classes.productDetailsContainer}>
@@ -55,7 +48,6 @@ const ProductDetails = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  selectedOption: SelectedVariantProps;
   product: Product;
 }
 interface QueryData {
