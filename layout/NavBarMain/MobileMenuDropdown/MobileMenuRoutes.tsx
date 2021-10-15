@@ -158,7 +158,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               onClick={() => props.closeMobileMenu()}
             >
               <Typography className={classes.mobileMenuItemText}>
-                View New Products
+                Browse New Products
               </Typography>
             </MenuItem>
           </a>
