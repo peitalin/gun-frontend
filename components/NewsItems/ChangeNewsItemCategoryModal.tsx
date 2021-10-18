@@ -66,11 +66,13 @@ const ChangeNewsItemCategoryModal: React.FC<ReactProps> = (props) => {
   // console.log("itemId: ", itemCategoryId)
   // console.log("chhange newsItem: ", props.newsItem)
 
-  let newsItemCategory = props.newsItem?.externalProduct?.category
-    || props.newsItem?.product?.category
+  let newsItemCategoryId = props.newsItem?.productPreview?.categoryId
+    ?? props.newsItem?.externalProduct?.categoryId
+    ?? props.newsItem?.product?.category?.id
 
-  let newsItemCategoryId = props.newsItem?.externalProduct?.categoryId
-    || props.newsItem?.product?.category?.id
+  let newsItemCategoryName = categoryPreviewsBackup.find(
+    c => c.id === newsItemCategoryId
+  )?.name
 
   return (
     <Dialog
@@ -95,7 +97,7 @@ const ChangeNewsItemCategoryModal: React.FC<ReactProps> = (props) => {
         </Typography>
         <div className={classes.currentCategory}>
           {
-            `Current Category: ${newsItemCategory?.name}`
+            `Current Category: ${newsItemCategoryName}`
           }
         </div>
         {props.children}
