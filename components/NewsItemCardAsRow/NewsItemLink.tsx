@@ -21,6 +21,11 @@ const NewsItemLink: React.FC<ReactProps> = (props) => {
 
   let internalProduct = newsItem?.product
   let externalProduct = newsItem?.externalProduct
+  let productPreview = newsItem?.productPreview
+
+  // externalProducts only
+  let sourceSiteUrl = externalProduct?.sourceSiteUrl
+    ?? productPreview?.sourceSiteUrl
 
   if (disableLink) {
     return (
@@ -31,11 +36,11 @@ const NewsItemLink: React.FC<ReactProps> = (props) => {
     )
   }
 
-  if (externalProduct?.id && externalProduct?.sourceSiteUrl) {
+  if (sourceSiteUrl) {
     return (
       <a className={classes.flexRowLink}
         target={"_blank"}
-        href={externalProduct?.sourceSiteUrl}
+        href={sourceSiteUrl}
       >
         {props.children}
       </a>
