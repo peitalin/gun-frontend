@@ -11100,6 +11100,7 @@ export type External_Product_Snapshots = {
   advertised?: Maybe<Scalars['timestamptz']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
@@ -11221,6 +11222,7 @@ export type External_Product_Snapshots_Bool_Exp = {
   advertised?: Maybe<Timestamptz_Comparison_Exp>;
   barrelLength?: Maybe<String_Comparison_Exp>;
   caliber?: Maybe<String_Comparison_Exp>;
+  caliberId?: Maybe<String_Comparison_Exp>;
   condition?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
@@ -11262,6 +11264,7 @@ export type External_Product_Snapshots_Insert_Input = {
   advertised?: Maybe<Scalars['timestamptz']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
@@ -11291,6 +11294,7 @@ export type External_Product_Snapshots_Max_Fields = {
   advertised?: Maybe<Scalars['timestamptz']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
@@ -11317,6 +11321,7 @@ export type External_Product_Snapshots_Max_Order_By = {
   advertised?: Maybe<Order_By>;
   barrelLength?: Maybe<Order_By>;
   caliber?: Maybe<Order_By>;
+  caliberId?: Maybe<Order_By>;
   condition?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
@@ -11344,6 +11349,7 @@ export type External_Product_Snapshots_Min_Fields = {
   advertised?: Maybe<Scalars['timestamptz']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
@@ -11370,6 +11376,7 @@ export type External_Product_Snapshots_Min_Order_By = {
   advertised?: Maybe<Order_By>;
   barrelLength?: Maybe<Order_By>;
   caliber?: Maybe<Order_By>;
+  caliberId?: Maybe<Order_By>;
   condition?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
@@ -11419,6 +11426,7 @@ export type External_Product_Snapshots_Order_By = {
   advertised?: Maybe<Order_By>;
   barrelLength?: Maybe<Order_By>;
   caliber?: Maybe<Order_By>;
+  caliberId?: Maybe<Order_By>;
   condition?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
@@ -11457,6 +11465,8 @@ export enum External_Product_Snapshots_Select_Column {
   BARRELLENGTH = 'barrelLength',
   /** column name */
   CALIBER = 'caliber',
+  /** column name */
+  CALIBERID = 'caliberId',
   /** column name */
   CONDITION = 'condition',
   /** column name */
@@ -11502,6 +11512,7 @@ export type External_Product_Snapshots_Set_Input = {
   advertised?: Maybe<Scalars['timestamptz']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
@@ -11594,6 +11605,8 @@ export enum External_Product_Snapshots_Update_Column {
   BARRELLENGTH = 'barrelLength',
   /** column name */
   CALIBER = 'caliber',
+  /** column name */
+  CALIBERID = 'caliberId',
   /** column name */
   CONDITION = 'condition',
   /** column name */
@@ -13185,6 +13198,7 @@ export type News_Items = {
   id: Scalars['String'];
   isDeleted?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  number: Scalars['Int'];
   /** An object relationship */
   product?: Maybe<Products>;
   productId?: Maybe<Scalars['String']>;
@@ -13250,6 +13264,7 @@ export type News_Items_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type News_Items_Avg_Fields = {
   __typename?: 'news_items_avg_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
@@ -13264,6 +13279,7 @@ export type News_Items_Bool_Exp = {
   id?: Maybe<String_Comparison_Exp>;
   isDeleted?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
+  number?: Maybe<Int_Comparison_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   score?: Maybe<Int_Comparison_Exp>;
@@ -13280,6 +13296,7 @@ export enum News_Items_Constraint {
 
 /** input type for incrementing numeric columns in table "news_items" */
 export type News_Items_Inc_Input = {
+  number?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
 };
 
@@ -13291,6 +13308,7 @@ export type News_Items_Insert_Input = {
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  number?: Maybe<Scalars['Int']>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
   score?: Maybe<Scalars['Int']>;
@@ -13305,6 +13323,7 @@ export type News_Items_Max_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   score?: Maybe<Scalars['Int']>;
   sourceSite?: Maybe<Scalars['String']>;
@@ -13317,6 +13336,7 @@ export type News_Items_Min_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   score?: Maybe<Scalars['Int']>;
   sourceSite?: Maybe<Scalars['String']>;
@@ -13354,6 +13374,7 @@ export type News_Items_Order_By = {
   id?: Maybe<Order_By>;
   isDeleted?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
+  number?: Maybe<Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
   score?: Maybe<Order_By>;
@@ -13380,6 +13401,8 @@ export enum News_Items_Select_Column {
   /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
+  NUMBER = 'number',
+  /** column name */
   PRODUCTID = 'productId',
   /** column name */
   SCORE = 'score',
@@ -13396,6 +13419,7 @@ export type News_Items_Set_Input = {
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  number?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   score?: Maybe<Scalars['Int']>;
   sourceSite?: Maybe<Scalars['String']>;
@@ -13405,24 +13429,28 @@ export type News_Items_Set_Input = {
 /** aggregate stddev on columns */
 export type News_Items_Stddev_Fields = {
   __typename?: 'news_items_stddev_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type News_Items_Stddev_Pop_Fields = {
   __typename?: 'news_items_stddev_pop_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type News_Items_Stddev_Samp_Fields = {
   __typename?: 'news_items_stddev_samp_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate sum on columns */
 export type News_Items_Sum_Fields = {
   __typename?: 'news_items_sum_fields';
+  number?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
 };
 
@@ -13439,6 +13467,8 @@ export enum News_Items_Update_Column {
   /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
+  NUMBER = 'number',
+  /** column name */
   PRODUCTID = 'productId',
   /** column name */
   SCORE = 'score',
@@ -13451,18 +13481,21 @@ export enum News_Items_Update_Column {
 /** aggregate var_pop on columns */
 export type News_Items_Var_Pop_Fields = {
   __typename?: 'news_items_var_pop_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type News_Items_Var_Samp_Fields = {
   __typename?: 'news_items_var_samp_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type News_Items_Variance_Fields = {
   __typename?: 'news_items_variance_fields';
+  number?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
 };
 
@@ -16741,6 +16774,7 @@ export type Product_Snapshots = {
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition: Scalars['String'];
   createdAt: Scalars['timestamptz'];
   /** An array relationship */
@@ -16836,6 +16870,7 @@ export type Product_Snapshots_Bool_Exp = {
   ammoType?: Maybe<String_Comparison_Exp>;
   barrelLength?: Maybe<String_Comparison_Exp>;
   caliber?: Maybe<String_Comparison_Exp>;
+  caliberId?: Maybe<String_Comparison_Exp>;
   condition?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   currentVariants?: Maybe<Product_Variants_Bool_Exp>;
@@ -16865,6 +16900,7 @@ export type Product_Snapshots_Insert_Input = {
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
@@ -16889,6 +16925,7 @@ export type Product_Snapshots_Max_Fields = {
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerId?: Maybe<Scalars['String']>;
@@ -16910,6 +16947,7 @@ export type Product_Snapshots_Min_Fields = {
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerId?: Maybe<Scalars['String']>;
@@ -16953,6 +16991,7 @@ export type Product_Snapshots_Order_By = {
   ammoType?: Maybe<Order_By>;
   barrelLength?: Maybe<Order_By>;
   caliber?: Maybe<Order_By>;
+  caliberId?: Maybe<Order_By>;
   condition?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currentVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
@@ -16986,6 +17025,8 @@ export enum Product_Snapshots_Select_Column {
   /** column name */
   CALIBER = 'caliber',
   /** column name */
+  CALIBERID = 'caliberId',
+  /** column name */
   CONDITION = 'condition',
   /** column name */
   CREATEDAT = 'createdAt',
@@ -17017,6 +17058,7 @@ export type Product_Snapshots_Set_Input = {
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   caliber?: Maybe<Scalars['String']>;
+  caliberId?: Maybe<Scalars['String']>;
   condition?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerId?: Maybe<Scalars['String']>;
@@ -17041,6 +17083,8 @@ export enum Product_Snapshots_Update_Column {
   BARRELLENGTH = 'barrelLength',
   /** column name */
   CALIBER = 'caliber',
+  /** column name */
+  CALIBERID = 'caliberId',
   /** column name */
   CONDITION = 'condition',
   /** column name */

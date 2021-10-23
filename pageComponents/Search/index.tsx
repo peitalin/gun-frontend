@@ -25,7 +25,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-const Categories: React.FC<ReactProps> = (props) => {
+const Search: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const theme = useTheme();
@@ -144,7 +144,7 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( Categories );
+export default withStyles(styles)( Search );
 
 
 

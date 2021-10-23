@@ -23,8 +23,8 @@ const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   loading: () => <div style={{
     height: 40,
     width: 250,
-    border: `1px solid ${Colors.lightGrey}`,
-    background: Colors.white,
+    border: `1px solid ${Colors.uniswapMediumGrey}`,
+    // background: Colors.white,
     borderRadius: '4px',
   }}/>,
   ssr: false,

@@ -246,13 +246,13 @@ export const ProductFragment = gql`
       slug
       categoryGroup
     }
-    # ... on ProductPrivate {
-    #   uniqueProductViews {
-    #     aggregate {
-    #       count
-    #     }
-    #   }
-    # }
+    ... on ProductPrivate {
+      uniqueProductViews {
+        aggregate {
+          count
+        }
+      }
+    }
     sellerLicenseId
     sellerLicense {
       ...UserLicenseFragment
