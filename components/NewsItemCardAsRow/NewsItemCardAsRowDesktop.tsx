@@ -368,6 +368,7 @@ const styles = (theme: Theme) => createStyles({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    maxWidth: 300,
   },
   priceAbsoluteBottom: {
     position: "relative",
