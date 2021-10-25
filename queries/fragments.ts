@@ -1287,8 +1287,6 @@ export const NewsItemFragment = gql`
   }
   ${ProductPreviewFragment}
 `;
-  // ${ExternalProductsFragment}
-  // ${ProductFragment}
 
 
 export const NewsItemFullFragment = gql`

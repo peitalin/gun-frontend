@@ -73,6 +73,7 @@ export const validationSchemas = {
         .nullable(),
       // dealerId: Yup.string()
       //   .required('Must choose a dealer'),
+      // dealerRequired: Yup.boolean(),
       dealerId: Yup.string()
         .test("dealerId", "Pick a dealer for escrow listings", function(value) {
           // this.path: the string path of the current validation

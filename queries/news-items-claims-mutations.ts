@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import {
   NewsItemFragment,
+  NewsItemFullFragment,
   UserPrivateFragment,
   ImageFragment,
 } from "./fragments";
@@ -32,10 +33,10 @@ export const SWAP_IMAGES_FOR_EXTERNAL_PRODUCT = gql`
       claimId: $claimId
       newPreviewItems: $newPreviewItems
     ) {
-      ...NewsItemFragment
+      ...NewsItemFullFragment
     }
   }
-  ${NewsItemFragment}
+  ${NewsItemFullFragment}
 `;
 
 
@@ -43,10 +44,10 @@ export const SWAP_IMAGES_FOR_EXTERNAL_PRODUCT = gql`
 export const GET_NEWS_ITEM_BY_CLAIM_ID = gql`
   query($claimId: String!) {
     getNewsItemByClaimId(claimId: $claimId) {
-      ...NewsItemFragment
+      ...NewsItemFullFragment
     }
   }
-  ${NewsItemFragment}
+  ${NewsItemFullFragment}
 `;
 
 
@@ -90,12 +91,12 @@ export const SIGN_UP_AND_CLAIM_ITEM = gql`
         ...UserPrivateFragment
       }
       newsItem {
-        ...NewsItemFragment
+        ...NewsItemFullFragment
       }
     }
   }
   ${UserPrivateFragment}
-  ${NewsItemFragment}
+  ${NewsItemFullFragment}
 `;
 
 export const LOG_IN_AND_CLAIM_ITEM = gql`
@@ -118,11 +119,11 @@ export const LOG_IN_AND_CLAIM_ITEM = gql`
         ...UserPrivateFragment
       }
       newsItem {
-        ...NewsItemFragment
+        ...NewsItemFullFragment
       }
     }
   }
   ${UserPrivateFragment}
-  ${NewsItemFragment}
+  ${NewsItemFullFragment}
 `;
 
