@@ -73,6 +73,8 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     s.reduxLogin.user
   )
 
+  const isAdmin = user?.userRole === Role.PLATFORM_ADMIN
+
   ///////// DATA
 
   const [
@@ -131,10 +133,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   }, [user, product])
 
 
-  const variantOptions = (product?.currentSnapshot?.currentVariants ?? [])
-    .map(v => ({ label: v.variantName, value: v }))
-
-
   let storeUserVerified = product?.sellerLicense?.verified;
   let productIsYours = product?.store?.user?.id === user?.id
 
@@ -161,7 +159,22 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   if (!loading && !productIsYours && storeUserVerified !== true) {
     let storeOwnerId = product?.store?.userId ?? product?.store?.user?.id
     return <ErrorPage statusCode={400}
-      message={`Store's owner "${storeOwnerId}" has yet to be verified`} className={classes.paddingTop1}/>
+      message={
+        <div className={classes.errorMsg}>
+          Store's owner
+          {
+            isAdmin
+            ? <a className={classes.link} target="_blank"
+                href={`/gov/users?userId=${storeOwnerId}`}
+              >
+                {storeOwnerId}
+              </a>
+            : <span>{storeOwnerId}</span>
+          }
+          has yet to be verified
+        </div>
+      }
+    />
   }
   // if (error) {
   //   return <ErrorPage statusCode={404}
@@ -392,6 +405,17 @@ const styles = (theme: Theme) => createStyles({
   },
   paddingTop1: {
     paddingTop: '4rem',
+  },
+  errorMsg: {
+    color: Colors.lightRed,
+  },
+  link: {
+    marginLeft: "0.25rem",
+    marginRight: "0.25rem",
+    color: Colors.magenta,
+    "&:hover": {
+      color: Colors.blue,
+    },
   },
 });
 

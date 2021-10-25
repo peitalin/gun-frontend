@@ -75,7 +75,10 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
     });
 
     console.log("user approve/unapprove response:", data);
-    alert(JSON.stringify({ VERIFIED: data?.adminApproveUserLicense }));
+    alert(JSON.stringify({
+      VERIFIED: data?.adminApproveUserLicense?.user?.emailVerified,
+      USER: data?.adminApproveUserLicense?.user,
+    }));
     // data.refundOrder.order
     if (errors) {
       snackbar.enqueueSnackbar(
@@ -83,6 +86,10 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
         { variant: "error" }
       )
     }
+
+    // unselect selected license
+    setSelectedLicense(undefined)
+
     return data;
   }
 
@@ -94,7 +101,6 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
       }}
       validationSchema={validationSchemas.ApproveUnapproveUserLicense}
       onSubmit={(values, { setSubmitting }) => {
-        console.log("not implemented")
         console.log('formik values: ', values);
         toggleApproveUserLicense({
           userId: user?.id,

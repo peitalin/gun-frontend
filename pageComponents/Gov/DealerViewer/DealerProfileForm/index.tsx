@@ -128,7 +128,6 @@ const DealerProfileForm: React.FC<ReactProps> = (props) => {
         }}
         validationSchema={validationSchemas.DeleteDealer}
         onSubmit={(values, { setSubmitting }) => {
-          console.log("not implemented")
           console.log('formik values: ', values);
           deleteDealerMutation({
             variables: {

@@ -56,7 +56,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
     emailVerified: boolean,
   }) => {
 
-    console.log("verify/unverifying email for userId:", userId);
+    // console.log("verify/unverifying email for userId:", userId);
     setLoading(true)
 
     const { errors, data } = await aClient.mutate<MutData4, MutVar4>({
@@ -67,15 +67,13 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
       },
     });
 
-    console.log("user email verify response:", data);
-    // alert(JSON.stringify({ VERIFIED_EMAIL: data?.verifyEmail }));
-    // data.refundOrder.order
     if (errors) {
       snackbar.enqueueSnackbar(
         `User email verify failed with msg: ${errors}`,
         { variant: "error" }
       )
     }
+
     await props.searchUser(props.user?.id)
 
     return data;
@@ -88,7 +86,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
 
   let hasVerifiedLicense = user.licenses?.some(l => l.verified)
 
-  console.log("emailVerified: ", user.emailVerified)
+  // console.log("emailVerified: ", user.emailVerified)
 
   return (
     <ErrorBounds className={clsx(
@@ -291,8 +289,13 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                     <div
                       className={classes.licenseSelector}
                       onClick={() => {
-                        console.log("setting license: ", license?.id)
-                        props.setSelectedLicense(license)
+                        if (props.selectedLicense) {
+                          console.log("unsetting license")
+                          props.setSelectedLicense(undefined)
+                        } else {
+                          console.log("setting license: ", license?.id)
+                          props.setSelectedLicense(license)
+                        }
                       }}
                     >
                       <UserLicenseRowCard

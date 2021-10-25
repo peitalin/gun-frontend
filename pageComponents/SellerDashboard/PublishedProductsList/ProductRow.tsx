@@ -266,6 +266,8 @@ const ProductRow = (props: ReactProps) => {
 
   let dealerMissing = !product.currentSnapshot?.dealer?.id
 
+  let featuredPreview = product.featuredVariant?.previewItems?.[0]
+
 
   if (!product?.featuredVariant) {
     return <Loading />
@@ -280,14 +282,14 @@ const ProductRow = (props: ReactProps) => {
         }>
           <div className={mdDown ? classes.rowCell1Mobile : classes.rowCell1}>
             {
-              product.featuredVariant.previewItems[0] &&
+              featuredPreview &&
               <Link href="/p/[productId]"
                 as={`/p/${product.id}`} // as
               >
                 <Tooltip title="View Product" placement="top-start">
                   <a className={classes.hoverOpacity}>
                     <ProductPreviewThumb
-                      previewItem={product.featuredVariant.previewItems[0]}
+                      previewItem={featuredPreview}
                       height={
                         mdDown
                           ? 35

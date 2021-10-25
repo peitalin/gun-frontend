@@ -86,7 +86,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
       {
         user?.userRole === Role.PLATFORM_ADMIN &&
-        <div className={classes.copyProductId}
+        <a className={classes.copyProductId}
+          target={"_blank"}
+          href={`/gov/products?productId=${props.product?.id}`}
           onClick={() => {
             snackbar.enqueueSnackbar(
               `Copied ${props.product?.id}`,
@@ -96,7 +98,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
           }}
         >
           {props.product?.id}
-        </div>
+        </a>
       }
 
       <div className={clsx(classes.flexRow, classes.width100, classes.paddingBottom)}>
@@ -330,7 +332,7 @@ const styles = (theme: Theme) => createStyles({
     zIndex: 10,
     bottom: '1rem',
     left: 'calc(75%)',
-    color: Colors.slateGreyBlack,
+    color: Colors.slateGrey,
     cursor: "pointer",
     opacity: 0.2,
     "&:hover": {

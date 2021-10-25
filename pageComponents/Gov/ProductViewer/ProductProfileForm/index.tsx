@@ -141,7 +141,6 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
         }}
         validationSchema={validationSchemas.SuspendUnsuspendProduct}
         onSubmit={(values, { setSubmitting }) => {
-          console.log("not implemented")
           console.log('formik values: ', values);
           toggleSuspendProduct({
             productId: product?.id,

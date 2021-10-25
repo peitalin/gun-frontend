@@ -34,9 +34,9 @@ const ErrorPage = (props: ReactProps) => {
           </Typography>
           {
             message &&
-            <Typography className={classes.message}>
+            <div className={classes.message}>
               {message}
-            </Typography>
+            </div>
           }
           {
             statusCode &&
@@ -67,7 +67,7 @@ const ErrorPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   statusCode?: string | number;
-  message?: string;
+  message?: React.ReactNode;
   className?: any;
 }
 
@@ -152,13 +152,3 @@ const styles = (theme: Theme) => createStyles({
 
 export default withStyles(styles)( ErrorPage );
 
-
-
-/// Error pages cannot have getServerSideProps
-// export async function getServerSideProps(ctx: NextPageContext) {
-// ErrorPage.getInitialProps = (ctx: NextPageContext) => {
-//   let res = ctx?.res;
-//   let err = ctx?.err
-//   const statusCode = res ? res?.statusCode : err ? err?.statusCode : 404
-//   return { statusCode }
-// }

@@ -160,14 +160,6 @@ const Products: React.FC<ReactProps> = (props) => {
     }
   }, [user, product])
 
-  const variantOptions = (product?.currentSnapshot?.currentVariants ?? [])
-    .map(v => ({ label: v.variantName, value: v }))
-
-  const handleChangeVariantOption = (
-    selectedOption: { label: string, value: Product_Variants }
-  ) => {
-    setSelectedOption(selectedOption)
-  };
 
   React.useEffect(() => {
     if (product?.featuredVariant?.productId) {
@@ -195,7 +187,23 @@ const Products: React.FC<ReactProps> = (props) => {
   }
   if (!loading && !productIsYours && storeUserVerified !== true) {
     let storeOwnerId = product?.store?.userId ?? product?.store?.user?.id
-    return <ErrorPage statusCode={400} message={`Store's owner "${storeOwnerId}" has yet to be verified`}/>
+    return <ErrorPage statusCode={400}
+      message={
+        <div className={classes.errorMsg}>
+          Store's owner
+          {
+            isAdmin
+            ? <a className={classes.link} target="_blank"
+                href={`/gov/users?userId=${storeOwnerId}`}
+              >
+                {storeOwnerId}
+              </a>
+            : <span>{storeOwnerId}</span>
+          }
+          has yet to be verified
+        </div>
+      }
+    />
   }
   if (error) {
     return <ErrorPage statusCode={404} message={"Product cannot be found"}/>
@@ -398,6 +406,17 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  errorMsg: {
+    color: Colors.lightRed,
+  },
+  link: {
+    marginLeft: "0.25rem",
+    marginRight: "0.25rem",
+    color: Colors.magenta,
+    "&:hover": {
+      color: Colors.blue,
+    },
   },
 });
 

@@ -212,7 +212,6 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
         }}
         validationSchema={validationSchemas.PaymentCancel}
         onSubmit={(values, { setSubmitting }) => {
-          console.log("not implemented")
           console.log('formik values: ', values);
           console.log("cancelling order", order)
           makeCancelledPayment({
