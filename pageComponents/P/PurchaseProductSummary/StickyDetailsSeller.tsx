@@ -129,8 +129,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
               </>
             }
             {
-              // seller?.license?.verified &&
-              true &&
+              sellerLicense?.verified &&
               <div className={classes.verifiedBadge}>
                 Verified License
                 <Tick className={classes.tick}
