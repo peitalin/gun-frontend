@@ -231,9 +231,37 @@ const cacheOptions = {
     },
 
     NewsItem: {
-      keyFields: ["id", "rankScore"],
+      // keyFields: false,
+      keyFields: [
+        "id",
+        "rankScore",
+        // differentiate between
+        // NewsItemLite fragment and NewsItemFull fragments
+        // NewsItemLite has newsItem.productPreview, but no externalProductId
+        // and no productId, so will be cached as separate objects
+        // "externalProductId",
+        // "productId",
+      ],
       // rankScore to prevent "hot" and "new" newItems from overridding each other
+      fields: {
+        externalProduct: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+        product: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+        productPreview: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+      },
     },
+
 
     // merging cache objects:
     // https://github.com/apollographql/apollo-client/issues/6370

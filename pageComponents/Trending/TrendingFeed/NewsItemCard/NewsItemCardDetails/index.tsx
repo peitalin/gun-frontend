@@ -55,7 +55,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
   const {
     classes,
     user,
-    newsItem,
   } = props;
 
   const theme = useTheme();
@@ -65,11 +64,14 @@ const NewsItemCardDetails = (props: ReactProps) => {
 
   const { data, loading } = useQuery<QData1, QVar1>(GET_NEWS_ITEM_BY_ID, {
     variables: {
-      newsItemId: newsItem?.id,
+      newsItemId: props.newsItem?.id,
     }
   })
   const newsItemFull = data?.getNewsItemById
 
+  let newsItem = newsItemFull?.id
+    ? { ...newsItemFull, ...props.newsItem }
+    : props.newsItem
 
 
   const {
@@ -93,14 +95,14 @@ const NewsItemCardDetails = (props: ReactProps) => {
 		featuredPreviewItem: _featuredPreviewItem,
 		previewItems,
     isInternalProduct,
-  } = transformNewsItemToFields(newsItemFull ?? newsItem)
+  } = transformNewsItemToFields(newsItem)
 
 
   const [
     featuredPreviewItem,
     setFeaturedPreviewItem
   ] = React.useState(_featuredPreviewItem);
-  // console.log("newsITEM:", newsItem)
+  // console.log("newsITEMFull:", newsItemFull)
 
   // if there is a gallery, constrain aspect ratio so the
   // image box doesnt jitter in size when browsing through the gallery

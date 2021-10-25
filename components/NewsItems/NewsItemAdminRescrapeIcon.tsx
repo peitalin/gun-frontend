@@ -41,6 +41,8 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
     return s.reduxLogin.user
   })
 
+  // console.log("NNNNNEWSITEM: ", props.newsItem)
+
   const [
     rescrapeExternalProduct,
     response
