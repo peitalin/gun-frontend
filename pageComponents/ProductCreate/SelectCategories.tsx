@@ -60,8 +60,9 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
   //   data
   // } = useQuery<QueryData, null>(GET_CATEGORIES)
 
-
+  // remove items for now
   const categories = categoryPreviewsBackup
+  .filter(c => c.slug !== 'items')
   // (data?.getCategories ?? []).filter(c => !!c && !!c.name)
 
   const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)

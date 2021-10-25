@@ -176,7 +176,7 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
                                     : null,
                                 ),
                                 label: clsx(
-                                  classes.flexCol,
+                                  classes.flexRow,
                                 )
                               }}
                               variant="outlined"
@@ -189,11 +189,21 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
                                 setOpenExpander(s => !s)
                               }}
                             >
-                              <div className={classes.licenseButtonNumber}>
-                                {`License: ${license.licenseNumber}`}
+                              <div className={classes.flexEnd}>
+                                <div className={classes.licenseButtonNumber}>
+                                  {`License`}
+                                </div>
+                                <div className={classes.licenseButtonCategory}>
+                                  {`Category`}
+                                </div>
                               </div>
-                              <div className={classes.licenseButtonCategory}>
-                                {`Category: ${categories}`}
+                              <div className={classes.flexStart}>
+                                <div className={classes.licenseButtonNumber}>
+                                  {`${license.licenseNumber}`}
+                                </div>
+                                <div className={classes.licenseButtonCategory}>
+                                  {`${categories}`}
+                                </div>
                               </div>
                             </Button>
                           )

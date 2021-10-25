@@ -56,6 +56,24 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'column',
   },
+  flexRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  flexEnd: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    flexDirection: 'column',
+    marginRight: '0.75rem',
+  },
+  flexStart: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+  },
   positionRelative: {
     position: 'relative',
   },
@@ -267,15 +285,20 @@ export const styles = (theme: Theme) => createStyles({
   },
   licenseButtonNumber: {
     fontWeight: 600,
+    lineHeight: '1.125rem',
+    marginTop: '0.25rem',
   },
   licenseButtonCategory: {
-    fontWeight: 500,
+    fontWeight: 400,
+    fontSize: '0.8rem',
+    lineHeight: '1.125rem',
+    marginBottom: '0.25rem',
   },
   stepperSectionText: {
     marginBottom: '1rem',
     color: isThemeDark(theme)
-    ? Colors.uniswapMediumGrey
-    : Colors.slateGreyLightBlack,
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyLightBlack,
   },
   headingContainer: {
     display: 'flex',

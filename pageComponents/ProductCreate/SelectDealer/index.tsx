@@ -48,7 +48,7 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
         <Typography color={"primary"} variant="subtitle1">
           {
             chooseDealer
-            ? "Dealer"
+            ? "Transferring Dealer"
             : "New Dealer"
           }
         </Typography>
