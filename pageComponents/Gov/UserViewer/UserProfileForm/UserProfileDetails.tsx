@@ -111,14 +111,6 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             </div>
             <div className={classes.flexRow}>
               <Typography className={classes.fieldKey} variant="subtitle1">
-                Name:
-              </Typography>
-              <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.firstName + " " + user?.lastName}
-              </Typography>
-            </div>
-            <div className={classes.flexRow}>
-              <Typography className={classes.fieldKey} variant="subtitle1">
                 User Email:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
@@ -237,6 +229,18 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
                 {user?.defaultLicense?.licenseNumber}
+              </Typography>
+            </div>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
+                License Name:
+              </Typography>
+              <Typography className={classes.fieldInfo} variant="subtitle1">
+                {
+                  user?.defaultLicense?.firstName
+                  + " "
+                  + user?.defaultLicense?.lastName
+                }
               </Typography>
             </div>
             <div className={classes.flexRow}>

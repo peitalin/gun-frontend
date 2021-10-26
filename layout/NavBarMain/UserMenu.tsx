@@ -78,7 +78,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           <span className={classes.iconText}
             style={{ color: color }}
           >
-            {user?.firstName ?? "Menu"}
+            {user?.defaultLicense?.firstName ?? "Menu"}
           </span>
           <MenuIcon style={{ fill: color }}/>
         </Button>

@@ -47,6 +47,12 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
       ? `${c(props.total)} + ${c(props.internationalFee)} international fee`
       : `${c(props.total)}`
 
+  let buyerFirstName = buyerLicense?.firstName
+  let buyerLastName = buyerLicense?.lastName
+
+  let sellerFirstName = sellerLicense?.firstName
+  let sellerLastName = sellerLicense?.lastName
+
   return (
     <>
       <div className={classes.userDetailsBox}>
@@ -58,7 +64,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             Name:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {`${sellerStore?.user?.firstName} ${sellerStore?.user?.lastName}`}
+            {`${sellerFirstName} ${sellerLastName}`}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -104,7 +110,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             Name:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {`${buyer?.firstName} ${buyer?.lastName}`}
+            {`${buyerFirstName} ${buyerLastName}`}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>

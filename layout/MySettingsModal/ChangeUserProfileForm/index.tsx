@@ -40,8 +40,6 @@ const ChangeUserProfileForm = (props: ReactProps) => {
   useMutation<MutationData, MutationEditUserProfileArgs>(
     UPDATE_USER, {
     variables: {
-      firstName: reduxUser?.firstName,
-      lastName: reduxUser?.lastName,
       email: reduxUser?.email,
       editUserPhoneNumberInput: {
         phoneNumber: reduxUser?.phoneNumber?.number,
@@ -75,8 +73,6 @@ const ChangeUserProfileForm = (props: ReactProps) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        firstName: reduxUser?.firstName,
-        lastName: reduxUser?.lastName,
         email: reduxUser?.email,
         phoneNumber: reduxUser?.phoneNumber?.number,
         countryCode: reduxUser?.phoneNumber?.countryCode,
@@ -88,8 +84,6 @@ const ChangeUserProfileForm = (props: ReactProps) => {
         console.log('values::::::', values)
         editUserProfile({
           variables: {
-            firstName: values.firstName,
-            lastName: values.lastName,
             email: values.email,
             editUserPhoneNumberInput: {
               phoneNumber: values.phoneNumber,

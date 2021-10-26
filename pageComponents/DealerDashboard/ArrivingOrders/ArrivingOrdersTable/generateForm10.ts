@@ -52,15 +52,16 @@ export const generatePDF = async ({
   let product = order?.product;
 
   let sellerPhoneNumber = !!sellerStore?.user?.phoneNumber?.number
-    ? `${sellerStore?.user?.phoneNumber?.countryCode} ${sellerStore?.user?.phoneNumber?.number}`
+    ? `${sellerStore.user.phoneNumber.countryCode} ${sellerStore.user.phoneNumber.number}`
     : "-"
 
   let dealerAddress2 = `${dealer?.postCode} ${dealer?.city} ${dealer?.state}`
   let dealerPhoneNumber = !!dealer?.user?.phoneNumber?.number
-    ? `${dealer?.user?.phoneNumber?.countryCode} ${dealer?.user?.phoneNumber?.number}`
+    ? `${dealer.user.phoneNumber.countryCode} ${dealer.user.phoneNumber.number}`
     : "-"
-  let dealerSignatoryName = (dealer?.user?.firstName && dealer?.user?.lastName)
-    ? `${dealer?.user?.firstName} ${dealer?.user?.lastName}`
+
+  let dealerSignatoryName = (dealer?.user?.defaultLicense?.firstName && dealer?.user?.defaultLicense?.lastName)
+    ? `${dealer.user.defaultLicense.firstName} ${dealer.user.defaultLicense.lastName}`
     : ""
 
 
@@ -208,7 +209,7 @@ export const generatePDF = async ({
           styles: { cellWidth: 40 },
         },
         {
-          content: `${sellerStore?.user?.firstName} ${sellerStore?.user?.lastName}`,
+          content: `${sellerLicense.firstName} ${sellerLicense.lastName}`,
           colSpan: 1,
           rowSpan: 1,
         },

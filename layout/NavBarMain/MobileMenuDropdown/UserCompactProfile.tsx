@@ -29,14 +29,16 @@ const UserCompactProfile: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
 
+  let userLicense = user?.defaultLicense
+
   return (
     <ErrorBounds className={clsx(classes.container)}>
       <div className={clsx(classes.flexRow, classes.userMargin)}>
         <div className={classes.flexCol}>
           <Typography variant="body1" className={classes.profileTitle}>
             {
-              (user?.firstName && user?.lastName)
-                ? `${user.firstName} ${user.lastName}`
+              (userLicense?.firstName && userLicense?.lastName)
+                ? `${userLicense.firstName} ${userLicense.lastName}`
                 : user?.email ?? "Your Profile"
             }
           </Typography>

@@ -20,7 +20,10 @@ import { formatDateTime } from "utils/dates";
 const OrderSummary = (props: ReactProps) => {
 
   const { classes, order } = props;
-  const buyer = order.buyer;
+
+  let buyer = order.buyer;
+  let buyerLicense = order?.buyerLicense
+
 
   if (!order) {
     return <Loading inline loading={!order} />;
@@ -35,7 +38,7 @@ const OrderSummary = (props: ReactProps) => {
         <Row
           fieldName={"User:"}
           fieldValue={
-            `${buyer?.firstName} ${buyer?.lastName} – ${buyer?.email}`
+            `${buyerLicense?.firstName} ${buyerLicense?.lastName} – ${buyer?.email}`
           }
         />
         <Row fieldName={"Created At:"} fieldValue={formatDateTime(order?.createdAt)} />

@@ -42,15 +42,15 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
   } = fprops;
 
 
-  const handleSetFirstName = (e: HtmlEvent) => {
-    let s = e.target.value;
-    fprops.setFieldValue("firstName", s)
-  };
-
-  const handleSetLastName = (e: HtmlEvent) => {
-    let s = e.target.value;
-    fprops.setFieldValue("lastName", s)
-  };
+  //// Deprecated for firstName and lastName on licenses
+  // const handleSetFirstName = (e: HtmlEvent) => {
+  //   let s = e.target.value;
+  //   fprops.setFieldValue("firstName", s)
+  // };
+  // const handleSetLastName = (e: HtmlEvent) => {
+  //   let s = e.target.value;
+  //   fprops.setFieldValue("lastName", s)
+  // };
 
   const handleSetEmail = (e: HtmlEvent) => {
     let s = e.target.value;
@@ -68,7 +68,7 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
       <div className={classes.innerRoot}>
         <div className={clsx(classes.formContainer, "fadeInFast")}>
 
-          <Typography variant="body1" className={classes.fieldHeading}>
+          {/* <Typography variant="body1" className={classes.fieldHeading}>
             First Name
           </Typography>
           <TextInputUnderline
@@ -82,7 +82,6 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
             errorMessage={errors.firstName}
             touched={touched.firstName}
           />
-
           <Typography variant="body1" className={classes.fieldHeading}>
             Last Name
           </Typography>
@@ -96,7 +95,7 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
             inputProps={{ style: { width: '100%' }}}
             errorMessage={errors.lastName}
             touched={touched.lastName}
-          />
+          /> */}
 
           <Typography variant="body1" className={classes.fieldHeading}>
             Email
@@ -138,8 +137,8 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
 }
 
 interface FormikFields {
-  firstName: string;
-  lastName: string;
+  // firstName: string;
+  // lastName: string;
   email: string;
   phoneNumber?: string;
   countryCode?: string;

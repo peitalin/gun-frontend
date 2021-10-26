@@ -136,7 +136,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       card: elements.getElement(CardElement),
       billing_details: {
         email: buyer?.email,
-        // name: `${buyer?.firstName} ${buyer.lastName}`,
         // phone: `${buyer?.phoneNumber?.countryCode} ${buyer?.phoneNumber?.number}`,
       }
     })
