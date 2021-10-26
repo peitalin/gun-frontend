@@ -21,13 +21,13 @@ import {
   UserPrivate,
 } from "typings/gqlTypes";
 // components
-import Typography from '@material-ui/core/Typography';
 import ButtonLoading from "components/ButtonLoading";
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import Tooltip from "@material-ui/core/Tooltip"
 import ConfirmActionModal from "components/ConfirmActionModal";
+import LicenseField from "./LicenseField";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -64,6 +64,8 @@ const UserLicenseRowCard = (props: ReactProps) => {
     license,
   } = props
 
+  let firstName = license?.firstName
+  let lastName = license?.lastName
   let licenseId = license?.id
   let licenseNumber = license?.licenseNumber
   let licenseExpiry = license?.licenseExpiry
@@ -130,6 +132,7 @@ const UserLicenseRowCard = (props: ReactProps) => {
 
   let now = new Date()
   let expired = licenseExpiry > now
+
   let isDefaultLicense = licenseId === props.user.defaultLicenseId
   let licenseCategoriesDisplay = licenseCategory.replaceAll("Category", "")
 
@@ -142,10 +145,28 @@ const UserLicenseRowCard = (props: ReactProps) => {
         ? classes.licenseBorderHighlight
         : classes.licenseBorder,
     )}>
+
       {
-        isDefaultLicense &&
-        <div className={classes.defaultLicense}>Default License</div>
+        isDefaultLicense
+        ? <div className={classes.licenseBox}>
+            <span className={clsx(
+              classes.verifiedText,
+              verified ? classes.blueText : classes.redText,
+            )}>
+              { verified ? "Verified" : "Unverified" }
+            </span>
+            <span className={classes.defaultLicense}>Default License</span>
+          </div>
+        : <div className={classes.licenseBox}>
+            <span className={clsx(
+              classes.verifiedText,
+              verified ? classes.blueText : classes.redText,
+            )}>
+              { verified ? "Verified" : "Unverified" }
+            </span>
+          </div>
       }
+
 
       {
         !isDefaultLicense &&
@@ -171,17 +192,20 @@ const UserLicenseRowCard = (props: ReactProps) => {
         </div>
       }
 
-      <div className={
-        mdDown ? classes.licenseItemMobile : classes.licenseItemDesktop
-      }>
-        <span className={classes.boldText}>License</span>
-        <span className={classes.italicText}>{licenseNumber}</span>
-      </div>
-      <div className={
-        mdDown ? classes.licenseItemMobile : classes.licenseItemDesktop
-      }>
-        <span className={classes.boldText}>Expiry</span>
-        {
+
+      <LicenseField
+        heading={"Name"}
+        value={`${firstName} ${lastName}`}
+      />
+
+      <LicenseField
+        heading={"License"}
+        value={licenseNumber}
+      />
+
+      <LicenseField
+        heading={"Expiry"}
+        value={
           licenseExpiry &&
           <span className={clsx(
             classes.italicText,
@@ -190,41 +214,41 @@ const UserLicenseRowCard = (props: ReactProps) => {
             {formatJustDate(licenseExpiry)}
           </span>
         }
-      </div>
-      <div className={
-        mdDown ? classes.licenseItemMobile : classes.licenseItemDesktop
-      }>
-        <span className={classes.boldText}>Category</span>
-        {
+      />
+
+      <LicenseField
+        heading={'Category'}
+        value={
           licenseCategory &&
           <span className={classes.italicText}>
             {licenseCategoriesDisplay}
           </span>
         }
-      </div>
-      <div className={
-        mdDown ? classes.licenseItemMobile : classes.licenseItemDesktop
-      }>
-        <span className={classes.boldText}>State</span>
-        {
+      />
+
+      <LicenseField
+        heading={"License State"}
+        value={
           licenseState &&
           <span className={classes.italicText}>{licenseState}</span>
         }
-      </div>
-      {
+      />
+
+      {/* {
         verified !== undefined &&
-        <div className={
-          mdDown ? classes.licenseItemMobile : classes.licenseItemDesktop
-        }>
-          <span className={classes.boldText}>Verified</span>
-          <span className={clsx(
-            classes.italicText,
-            verified ? classes.blueText : null,
-          )}>
-            {`${verified}`}
-          </span>
-        </div>
-      }
+        <LicenseField
+          heading={"Verified"}
+          value={
+            <span className={clsx(
+              classes.italicText,
+              verified ? classes.blueText : null,
+            )}>
+              {`${verified}`}
+            </span>
+          }
+        />
+      } */}
+
       {
         !isDefaultLicense &&
         <div className={classes.licenseItem5}>
@@ -415,10 +439,23 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
   },
-  defaultLicense: {
+  licenseBox: {
     position: "absolute",
     bottom: '0rem',
-    right: '1rem',
+    right: '1.5rem',
+    fontSize: "0.8rem",
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "row",
+  },
+  verifiedText: {
+    fontStyle: 'italic',
+    marginRight: "0.25rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+  },
+  defaultLicense: {
     fontSize: "0.8rem",
     color: isThemeDark(theme)
       ? `${Colors.purple}`
