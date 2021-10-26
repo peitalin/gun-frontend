@@ -32,6 +32,7 @@ import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 // Snackbar
 import { useSnackbar } from "notistack";
 import { printRelativeTime } from "utils/dates";
+import { categoryPreviewsBackup } from "utils/categories";
 
 
 const TrendingNewsItemRow = (props: ReactProps) => {
@@ -69,6 +70,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
     isInternalProduct,
     createdAtSnapshot,
     createdAt,
+    categoryId,
   } = transformNewsItemToFields(newsItem)
 
 
@@ -81,6 +83,8 @@ const TrendingNewsItemRow = (props: ReactProps) => {
   // console.log("newsItem::::::", newsItem)
   // console.log("previewItems::::::", newsItem.externalProduct?.currentExternalProductSnapshot?.previewItems)
   // console.log("featuredpreviewItems::::::", featuredPreviewItem)
+
+  let categorySlug = categoryPreviewsBackup.find(c => c.id === categoryId)
 
   return (
 
@@ -218,19 +222,19 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                       {
                         newsItem?.externalProduct?.category?.slug &&
                         <Typography className={classes.rankScore} variant="body1">
-                          {`category: ${newsItem?.externalProduct?.category?.slug}`}
+                          {`category: ${categorySlug}`}
                         </Typography>
                       }
                       <Typography className={classes.rankScoreId} variant="body1">
                         {`id: ${newsItem?.id}`}
                       </Typography>
-                      <Typography className={classes.rankScoreId} variant="body1">
+                      {/* <Typography className={classes.rankScoreId} variant="body1">
                         {
                           newsItem?.externalProduct
                           ? `snapshotId: ${newsItem?.externalProduct?.currentExternalProductSnapshotId}`
                           : `snapshotId: ${newsItem?.product?.currentSnapshotId}`
                         }
-                      </Typography>
+                      </Typography> */}
                       <Typography className={classes.rankScoreId} variant="body1">
                         {`date: ${newsItem?.createdAt}`}
                       </Typography>
