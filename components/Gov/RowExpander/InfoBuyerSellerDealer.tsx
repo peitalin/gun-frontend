@@ -31,7 +31,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
     : "-"
 
   let buyerPhoneNumber = !!buyer?.phoneNumber?.number
-    ? `${buyer?.phoneNumber?.countryCode} ${sellerStore?.user?.phoneNumber?.number}`
+    ? `${buyer?.phoneNumber?.countryCode} ${buyer?.phoneNumber?.number}`
     : "-"
 
   let dealerUser = dealer.user;

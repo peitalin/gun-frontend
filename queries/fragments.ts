@@ -196,6 +196,8 @@ export const ProductVariantsFragment = gql`
 export const UserLicenseFragment = gql`
   fragment UserLicenseFragment on user_licenses {
     id
+    firstName
+    lastName
     licenseNumber
     licenseCategory
     licenseExpiry
