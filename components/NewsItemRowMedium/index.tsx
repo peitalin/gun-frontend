@@ -6,11 +6,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import Link from "next/link";
 // Typings
 import { NewsItem } from "typings/gqlTypes";
-// Utils
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
 // Material UI
-import Button from "@material-ui/core/Button";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 import Typography from "@material-ui/core/Typography";
@@ -18,9 +14,6 @@ import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";
 // import WatchlistButton from "components/WatchlistButton";
 import DescriptionLoadingText from "./DescriptionLoadingText";
-// helpers
-import { useRouter } from "next/router";
-import { asCurrency as c } from "utils/prices";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -33,6 +26,11 @@ import AdType from "components/NewsItemChips/AdType";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 
+import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
+import NewsItemAdminSetCategoryIcon from "components/NewsItems/NewsItemAdminSetCategoryIcon"
+import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
+import NewsItemAdminGenerateClaimIdIcon from "components/NewsItems/NewsItemAdminGenerateClaimIdIcon"
+
 
 const NewsItemRowMedium = (props: ReactProps) => {
 
@@ -41,6 +39,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
     newsItem,
   } = props;
 
+  const [hover, setHover] = React.useState(false)
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
@@ -74,10 +73,13 @@ const NewsItemRowMedium = (props: ReactProps) => {
 
 
   return (
-    <ErrorBounds className={clsx(
+    <div className={clsx(
       classes.productRowRoot,
       classes.flexRow,
-    )}>
+    )}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       <ShowOnMobileOrDesktopSSR desktop>
         <div className={clsx(
           classes.flexColOuter,
@@ -156,7 +158,8 @@ const NewsItemRowMedium = (props: ReactProps) => {
 
       <div className={clsx(
         classes.flexRowWrapOuter,
-        classes.flexGrowItem
+        classes.flexGrowItem,
+        classes.positionRelative,
       )}>
 
         {
@@ -203,6 +206,57 @@ const NewsItemRowMedium = (props: ReactProps) => {
         }
 
 
+        {
+          hover &&
+          <>
+            <NewsItemAdminSuspendIcon
+              newsItem={newsItem}
+              style={{
+                top: "unset",
+                bottom: '-0.5rem',
+                left: 'calc(25% - 5rem)',
+                width: '28px',
+                height: '28px',
+              }}
+            />
+
+
+            <NewsItemAdminRescrapeIcon
+              newsItem={newsItem}
+              style={{
+                top: "unset",
+                bottom: '-0.5rem',
+                left: 'calc(25% - 2.5rem)',
+                width: '28px',
+                height: '28px',
+              }}
+            />
+
+            <NewsItemAdminSetCategoryIcon
+              newsItem={newsItem}
+              style={{
+                top: "unset",
+                bottom: '-0.5rem',
+                left: 'calc(25%)',
+                width: '28px',
+                height: '28px',
+              }}
+            />
+
+            <NewsItemAdminGenerateClaimIdIcon
+              newsItem={newsItem}
+              style={{
+                top: 'unset',
+                bottom: '-0.5rem',
+                left: 'calc(25% + 2.5rem)',
+                marginTop: '0.5rem',
+                width: '28px',
+                height: '28px',
+              }}
+            />
+          </>
+        }
+
         {/* <SourceSiteChip
           sourceSite={externalProduct?.sourceSite}
           style={{
@@ -239,7 +293,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
         />
 
       </div>
-    </ErrorBounds>
+    </div>
   );
 }
 
@@ -389,6 +443,9 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 300,
     flexGrow: 0.5,
     width: '100%',
+  },
+  positionRelative: {
+    position: "relative",
   },
 });
 

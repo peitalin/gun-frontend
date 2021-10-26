@@ -37,6 +37,7 @@ import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
 import NewsItemAdminSetCategoryIcon from "components/NewsItems/NewsItemAdminSetCategoryIcon"
 import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
+import NewsItemAdminGenerateClaimIdIcon from "components/NewsItems/NewsItemAdminGenerateClaimIdIcon"
 
 
 
@@ -217,6 +218,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                       }}
                     />
 
+
                     <NewsItemAdminRescrapeIcon
                       newsItem={newsItem}
                       style={{
@@ -234,6 +236,17 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                         top: "unset",
                         bottom: '-1rem',
                         right: '-7rem',
+                        width: '28px',
+                        height: '28px',
+                      }}
+                    />
+
+                    <NewsItemAdminGenerateClaimIdIcon
+                      newsItem={newsItem}
+                      style={{
+                        top: "unset",
+                        bottom: '-1rem',
+                        right: '-9.5rem',
                         width: '28px',
                         height: '28px',
                       }}
