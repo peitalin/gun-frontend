@@ -20,6 +20,8 @@ const Error404Page = (props: ReactProps) => {
   const { classes, statusCode, message } = props;
   const router = useRouter();
 
+  /// when trying to access a feautre product page, when the product is not feautred...
+  /// redirect to /p/ page instead with productId
   let productId = (
     router.asPath?.startsWith("/f/")
     && router?.asPath.split('/')?.slice(-1)?.[0]?.startsWith('p')
@@ -29,7 +31,7 @@ const Error404Page = (props: ReactProps) => {
   React.useEffect(() => {
     // only for promoted products
     // check if this product is actually listed as on the promotedSlot
-    console.log("router.asPath::::", router.asPath)
+    // console.log("router.asPath::::", router.asPath)
     if (productId) {
       router.replace(
         "/p/[productId]",
