@@ -20,7 +20,8 @@ const Error404Page = (props: ReactProps) => {
   const { classes, statusCode, message } = props;
   const router = useRouter();
 
-  /// when trying to access a feautre product page, when the product is not feautred...
+  /// when trying to access a featured /f/ product page,
+  /// when the product is not actually a promotedSlot...
   /// redirect to /p/ page instead with productId
   let productId = (
     router.asPath?.startsWith("/f/")
