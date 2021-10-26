@@ -453,8 +453,8 @@ const ProductCreatePage = (props: ReactProps) => {
                 switch(index) {
                   case 0: {
                     return [
-                      errors?.categoryId && touched.categoryId,
                       errors?.sellerLicenseId && touched.sellerLicenseId,
+                      errors?.categoryId && touched.categoryId,
                     ].some(s => s)
                   }
                   case 1: {
@@ -481,15 +481,17 @@ const ProductCreatePage = (props: ReactProps) => {
               (activeStep === 0) &&
               <>
                 <div className={classes.stepperSectionText}>
-                  Choose a category and firearm license for this product listing.
-                  Please check that the license category matches the type of firearm you are selling.
                 </div>
-                <SelectCategories
-                  {...formik}
-                />
                 <SelectSellerLicense
                   user={user}
                   sellerLicenseId={undefined} // only for product edit
+                  {...formik}
+                />
+                <div className={classes.stepperSectionText}>
+                  Choose a category and your license for this product listing.
+                  Please check that the license category matches the type of firearm you are selling.
+                </div>
+                <SelectCategories
                   {...formik}
                 />
               </>
