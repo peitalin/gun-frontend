@@ -21,7 +21,10 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import {
   transformNewsItemToFields
 } from "pageComponents/Trending/transformNewsItemFields";
-
+import {
+  displayHrsToSold,
+  printRelativeTime,
+} from "utils/dates"
 import AdType from "components/NewsItemChips/AdType";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
@@ -49,6 +52,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
 		make,
 		model,
 		caliber,
+    createdAt,
 		barrelLength,
 		action,
 		state,
@@ -69,8 +73,10 @@ const NewsItemRowMedium = (props: ReactProps) => {
     isSuspended,
     categoryId,
     sellerLicenseVerified,
+    isSold,
   } = transformNewsItemToFields(newsItem)
 
+  let dateSold = createdAt
 
   return (
     <div className={clsx(
@@ -205,6 +211,16 @@ const NewsItemRowMedium = (props: ReactProps) => {
             </div>
         }
 
+        {
+          isSold
+          ? <div className={classes.soldInHrsText} >
+              {`Sold ${printRelativeTime(dateSold)}`}
+            </div>
+          : <div className={classes.soldInHrsText} >
+              {`${printRelativeTime(dateSold)}`}
+            </div>
+        }
+
 
         {
           hover &&
@@ -287,7 +303,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
           style={{
             position: 'absolute',
             bottom: '0.5rem',
-            right: '0.5rem',
+            right: '0rem',
             height: 28,
           }}
         />
@@ -446,6 +462,18 @@ const styles = (theme: Theme) => createStyles({
   },
   positionRelative: {
     position: "relative",
+  },
+  soldInHrsText: {
+    fontWeight: 500,
+    fontSize: '0.75rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapGrey
+      : Colors.slateGreyDarkest,
+    minWidth: 100,
+    lineHeight: '1rem',
+    position: 'absolute',
+    top: '0.25rem',
+    right: '-1.5rem',
   },
 });
 
