@@ -144,13 +144,13 @@ const DropdownInput = (props: ReactProps) => {
                   }),
                   multiValue: styles => ({
                     ...styles,
-                    color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                    color: isDarkMode ? Colors.charcoal : Colors.cream,
                     backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
                   }),
                   multiValueLabel: styles => ({
                     ...styles,
                     fontWeight: 500,
-                    color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                    color: isDarkMode ? Colors.charcoal : Colors.cream,
                   }),
                   menu: styles => ({
                     ...styles,
@@ -254,13 +254,13 @@ const DropdownInput = (props: ReactProps) => {
               }),
               multiValue: styles => ({
                 ...styles,
-                color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                color: isDarkMode ? Colors.cream : Colors.cream,
                 backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
               }),
               multiValueLabel: styles => ({
                 ...styles,
                 fontWeight: 500,
-                color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                color: isDarkMode ? Colors.cream : Colors.cream,
               }),
               indicatorSeparator: styles => ({
                 ...styles,
