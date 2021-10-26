@@ -142,6 +142,16 @@ const DropdownInput = (props: ReactProps) => {
                       ? Colors.uniswapLightGrey
                       : Colors.slateGreyLightBlack,
                   }),
+                  multiValue: styles => ({
+                    ...styles,
+                    color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                    backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
+                  }),
+                  multiValueLabel: styles => ({
+                    ...styles,
+                    fontWeight: 500,
+                    color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                  }),
                   menu: styles => ({
                     ...styles,
                     zIndex: 10,
@@ -154,7 +164,7 @@ const DropdownInput = (props: ReactProps) => {
                     background: isDarkMode
                       ? Colors.uniswapMediumNavy
                       : Colors.slateGrey,
-                  })
+                  }),
                 }
             }
             inputRef={ref}
@@ -235,11 +245,22 @@ const DropdownInput = (props: ReactProps) => {
                 color: Colors.grey,
               }),
               singleValue: styles => ({
+                ...styles,
                 color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
                 maxWidth: '250px',
+              }),
+              multiValue: styles => ({
+                ...styles,
+                color: isDarkMode ? Colors.charcoal : Colors.charcoal,
+                backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
+              }),
+              multiValueLabel: styles => ({
+                ...styles,
+                fontWeight: 500,
+                color: isDarkMode ? Colors.charcoal : Colors.charcoal,
               }),
               indicatorSeparator: styles => ({
                 ...styles,
