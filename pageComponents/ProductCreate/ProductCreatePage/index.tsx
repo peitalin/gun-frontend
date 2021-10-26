@@ -215,6 +215,7 @@ const ProductCreatePage = (props: ReactProps) => {
           { variant: "error", autoHideDuration: 6000 }
         )
       }
+      setState(s => ({ ...s, loading: false }))
     },
     onCompleted: async(data: MutationData) => {
       // transition to product creation success page
@@ -223,6 +224,7 @@ const ProductCreatePage = (props: ReactProps) => {
         `Successfully created listing: ${createProductTitle}`,
         { variant: "success", autoHideDuration: 3000 }
       )
+      setState(s => ({ ...s, loading: false }))
       // reset redux form
       setTimeout(() => {
         let pid = data?.createProduct?.product?.id
