@@ -84,7 +84,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
   // console.log("previewItems::::::", newsItem.externalProduct?.currentExternalProductSnapshot?.previewItems)
   // console.log("featuredpreviewItems::::::", featuredPreviewItem)
 
-  let categorySlug = categoryPreviewsBackup.find(c => c.id === categoryId)
+  let categoryName = categoryPreviewsBackup.find(c => c.id === categoryId)?.name
 
   return (
 
@@ -220,9 +220,9 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                         {`rank: ${newsItem?.rankScore}`}
                       </Typography>
                       {
-                        newsItem?.externalProduct?.category?.slug &&
+                        categoryName &&
                         <Typography className={classes.rankScore} variant="body1">
-                          {`category: ${categorySlug}`}
+                          {`category: ${categoryName}`}
                         </Typography>
                       }
                       <Typography className={classes.rankScoreId} variant="body1">
