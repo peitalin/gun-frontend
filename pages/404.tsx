@@ -20,21 +20,58 @@ const Error404Page = (props: ReactProps) => {
   const { classes, statusCode, message } = props;
   const router = useRouter();
 
+  let productId = (
+    router.asPath?.startsWith("/f/")
+    && router?.asPath.split('/')?.slice(-1)?.[0]?.startsWith('p')
+  ) ? router?.asPath.split('/')?.slice(-1)?.[0]
+    : undefined
+
+  React.useEffect(() => {
+    // only for promoted products
+    // check if this product is actually listed as on the promotedSlot
+    console.log("router.asPath::::", router.asPath)
+    if (productId) {
+      router.replace(
+        "/p/[productId]",
+        `/p/${productId}`
+      )
+    }
+    // can make it so only non-expired products get featured page
+    // OR allow expired ones to continue having this page until it is replaced
+    // by the admins (promotedSlot.productId is overridden by admins)
+  }, [productId])
+
   return (
     <AlignCenterLayout
       maxWidth={900}
       className={classes.root}
+      // dont show when redirecting /f/ pages to /p/ pages
+      // when a productId is found
+      withRecommendations={!productId}
     >
       <div className={clsx(classes.noResultsContainer, classes.padding2)}>
-        <Typography variant="h4" className={classes.title}>
-          This page does not exist.
-        </Typography>
-        <Typography>
-          The link you used may be broken,
-        </Typography>
-        <Typography>
-          or product listing may not be available.
-        </Typography>
+        {
+          productId
+          ? <>
+              <Typography variant="h4" className={classes.title}>
+                This product is not featured...
+              </Typography>
+              <Typography>
+                Redirecting...
+              </Typography>
+            </>
+          : <>
+              <Typography variant="h4" className={classes.title}>
+                This page does not exist.
+              </Typography>
+              <Typography>
+                The link you used may be broken,
+              </Typography>
+              <Typography>
+                or product listing may not be available.
+              </Typography>
+            </>
+        }
         {
           message &&
           <Typography>
@@ -48,15 +85,19 @@ const Error404Page = (props: ReactProps) => {
           </Typography>
         }
         <br/>
-        <Button
-          variant="outlined"
-          classes={{
-            root: classes.callToActionButton
-          }}
-          onClick={() => router.push("/")}
-        >
-          Browse Marketplace
-        </Button>
+        {
+          !productId &&
+          <Button
+            variant="outlined"
+            classes={{
+              root: classes.callToActionButton
+            }}
+            onClick={() => router.push("/")}
+          >
+            Browse Marketplace
+          </Button>
+        }
+
       </div>
     </AlignCenterLayout>
   );

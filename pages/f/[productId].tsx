@@ -46,62 +46,49 @@ import { GET_PRODUCT } from "queries/products-queries";
 
 const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
 
-  const router = useRouter()
-  const productId: string = router.query.productId as any;
-  const promotedListId: string = router.query.promotedListId as any; // optional
+  // const router = useRouter()
+  const promotedSlot = props.initialPromotedSlot
 
-  const { data, loading, error } = useQuery<QData, QVar>(
-    GET_PROMOTED_SLOT_BY_PRODUCT_ID, {
-    variables: {
-      productId: productId,
-      promotedListId: promotedListId, // optional
-    },
-  })
-  console.log("dataaaa:", data)
-
-  const promotedSlot = props.initialPromotedSlot ?? data?.getPromotedSlotByProductId
   const p = promotedSlot?.product
   const previewItem = p?.featuredVariant?.previewItems?.slice(-1)?.[0]
   const img = previewItem?.image
   const imgVariant = img?.variants?.find(v => v.widthInPixels === 400)
-
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  );
-
-
-  let {
-    isExpired,
-    userOwnsSlotNow,
-    anotherUserOwnsSlotNow,
-  } = React.useMemo(
-    () => isSlotExpiredYet(promotedSlot, user),
-    [promotedSlot, user]
-  )
+  // const user = useSelector<GrandReduxState, UserPrivate>(
+  //   s => s.reduxLogin.user
+  // );
 
 
-  React.useEffect(() => {
-    // only for promoted products
-    // check if this product is actually listed as on the promotedSlot
-    if (!promotedSlot?.productId || productId) {
-      if (p?.id) {
-        router.replace(
-          "/p/[productId]",
-          `/p/${p?.id}`
-        )
-      } else if (productId) {
-        router.replace(
-          "/p/[productId]",
-          `/p/${productId}`
-        )
-      }
-    }
-    // can make it so only non-expired products get featured page
-    // OR allow expired ones to continue having this page until it is replaced
-    // by the admins (promotedSlot.productId is overridden by admins)
-  }, [promotedSlot, isExpired])
+  // let {
+  //   isExpired,
+  //   userOwnsSlotNow,
+  //   anotherUserOwnsSlotNow,
+  // } = React.useMemo(
+  //   () => isSlotExpiredYet(promotedSlot, user),
+  //   [promotedSlot, user]
+  // )
 
-  // console.log("promotedSlot", promotedSlot)
+
+  //// NOTE!!!!!! when in SSG mode, this page
+  //// redirects to 404 page automatically if product is not found....
+  //// ...i.e. when not one of the precompiled promotedSlotIds are found....
+  //// so make the redirect from /f/ to /p/ in the /404.tsx page
+
+  // React.useEffect(() => {
+  //   // only for promoted products
+  //   // check if this product is actually listed as on the promotedSlot
+  //   if (!promotedSlot?.productId || productId) {
+  //     if (p?.id) {
+  //       router.replace(
+  //         "/p/[productId]",
+  //         `/p/${p?.id}`
+  //       )
+  //     }
+  //   }
+  //   // can make it so only non-expired products get featured page
+  //   // OR allow expired ones to continue having this page until it is replaced
+  //   // by the admins (promotedSlot.productId is overridden by admins)
+  // }, [promotedSlot, isExpired])
+
 
   return (
     <>
@@ -131,8 +118,7 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
       <PageWithStripe>
         <FeaturedProductId
           initialProduct={p}
-          loading={loading}
-          error={error}
+          loading={false}
         />
       </PageWithStripe>
     </>

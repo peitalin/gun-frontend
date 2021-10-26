@@ -86,8 +86,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
 
   ///////// DATA
 
-  const promotedListId: string = router.query.promotedListId as any; // optional
-
   const [
     getUserBidsForProduct,
     getUserBidsForProductResponse
@@ -114,14 +112,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   let userBids = (getUserBidsForProductResponse?.data?.getUserBidsForProduct?.messages ?? [])
     .map(m => m?.bid)
 
-  // const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
-  //   GET_PRODUCT, {
-  //   variables: {
-  //     productId: productId
-  //   },
-  // })
-
-  // const product = props.initialProduct || data?.getProductById
   let loading = props.loading
   const product = props.initialProduct
 
@@ -187,10 +177,10 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
       }
     />
   }
-  if (props.error) {
-    return <ErrorPage statusCode={404}
-      message={"Product cannot be found"} className={classes.paddingTop1}/>
-  }
+  // if (props.error) {
+  //   return <ErrorPage statusCode={404}
+  //     message={"Product cannot be found"} className={classes.paddingTop1}/>
+  // }
 
 
   return (
@@ -337,21 +327,12 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   initialProduct: Product;
   loading: boolean
-  error?: ApolloError
 }
 interface QueryData {
   getProductById: Product;
 }
 interface QueryVar {
   productId: string;
-}
-
-interface QData {
-  getPromotedSlotByProductId: PromotedSlot;
-}
-interface QVar {
-  productId: string;
-  promotedListId?: string;
 }
 
 interface QueryData2 {
