@@ -182,7 +182,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   callback(user: UserPrivate): void
 }
 
-const emailInputMaxWidth = 360;
+const emailInputMaxWidth = 340;
 
 
 const styles = (theme: Theme) => createStyles({
