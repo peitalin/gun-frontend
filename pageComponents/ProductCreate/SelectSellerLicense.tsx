@@ -68,7 +68,7 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
       // )
       // setSellerLicenseId(defaultLicense)
     }
-  }, [props.user?.defaultLicenseId])
+  }, [props.user?.defaultLicenseId, props.sellerLicenseId])
 
 
   // console.log("fprops.values: ", fprops.values)

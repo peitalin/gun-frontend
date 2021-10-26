@@ -69,6 +69,7 @@ import { initialVariables } from "pageComponents/MyOrders";
 // license components
 import DropdownInput from "components/Fields/DropdownInput";
 import OptionLicense from "./OptionLicense";
+import AddLicenseModal from "layout/AddLicenseModal"
 import {
   SelectOption,
 } from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
@@ -502,6 +503,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   }
 
   let licenseOptions = createLicenseOptions(props.user?.licenses)
+  let hasLicenses = licenseOptions?.length > 0
   let loadingGql = loading1 || loading2 || loading3
 
   // React.useEffect(() => {
@@ -529,30 +531,40 @@ const VisaPurchaseProduct = (props: ReactProps) => {
           <div className={clsx(classes.flexCol)}>
 
             {
-              props.user?.id &&
-              <div className={classes.dropdownContainer}>
-                <DropdownInput
-                  initialState={chosenLicense}
-                  onChange={({ label, value }: SelectOption) => {
-                    setChosenLicense({ label, value })
+              hasLicenses
+              ? <div className={classes.dropdownContainer}>
+                  <DropdownInput
+                    initialState={chosenLicense}
+                    onChange={({ label, value }: SelectOption) => {
+                      setChosenLicense({ label, value })
+                    }}
+                    value={chosenLicense}
+                    isSearchable={false} // disable typing
+                    // disableAutocomplete={true}
+                    // menuPortalTarget={document?.body} // solves z-index problems
+                    // menuIsOpen={true}
+                    disable={!props.user?.id}
+                    components={{
+                      Option: OptionLicense
+                    }}
+                    options={licenseOptions}
+                    placeholder={"Select a License"}
+                    label="" // remove moving label
+                    inputProps={{ style: { width: '100%' }}}
+                    // errorMessage={formik.errors.licenseState}
+                    // touched={formik.touched.licenseState}
+                  />
+                </div>
+              : <AddLicenseModal
+                  callback={(user: UserPrivate) => {
+                    let license = user?.defaultLicense
+                    console.log("setting buyer license: ", license)
+                    setChosenLicense({
+                      label: license.licenseNumber,
+                      value: license,
+                    })
                   }}
-                  value={chosenLicense}
-                  isSearchable={false} // disable typing
-                  // disableAutocomplete={true}
-                  // menuPortalTarget={document?.body} // solves z-index problems
-                  // menuIsOpen={true}
-                  disable={!props.user?.id}
-                  components={{
-                    Option: OptionLicense
-                  }}
-                  options={licenseOptions}
-                  placeholder={"Select a License"}
-                  label="" // remove moving label
-                  inputProps={{ style: { width: '100%' }}}
-                  // errorMessage={formik.errors.licenseState}
-                  // touched={formik.touched.licenseState}
                 />
-              </div>
             }
 
             <div className={clsx(classes.creditCardContainer)}>
@@ -643,6 +655,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                 loading
                 || disableButton
                 || !props.user?.id
+                || !chosenLicense?.value?.id
               }
               variant="contained"
               color="secondary"

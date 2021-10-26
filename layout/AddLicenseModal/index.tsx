@@ -182,7 +182,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   callback(user: UserPrivate): void
 }
 
-const emailInputMaxWidth = 300;
+const emailInputMaxWidth = 360;
 
 
 const styles = (theme: Theme) => createStyles({
@@ -271,6 +271,7 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
+    borderRadius: BorderRadius,
   },
   emailPrefillFlexCol: {
     display: "flex",
