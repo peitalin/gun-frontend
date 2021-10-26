@@ -5,9 +5,17 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors } from "layout/AppTheme";
 import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useQuery, useLazyQuery, useMutation, ApolloError } from "@apollo/client";
 // Typings
-import { Product, UserPrivate, Product_Variants, BidStatus, Role, Unique_Product_Views } from "typings/gqlTypes";
+import {
+  PromotedSlot,
+  Product,
+  UserPrivate,
+  Product_Variants,
+  BidStatus,
+  Role,
+  Unique_Product_Views
+} from "typings/gqlTypes";
 import {
   GET_PRODUCT,
   INSERT_UNIQUE_PRODUCT_VIEW,
@@ -53,6 +61,7 @@ import ProductDetails from "pageComponents/P/ProductDetails";
 
 
 
+
 const FeaturedProductId: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
@@ -76,6 +85,8 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   const isAdmin = user?.userRole === Role.PLATFORM_ADMIN
 
   ///////// DATA
+
+  const promotedListId: string = router.query.promotedListId as any; // optional
 
   const [
     getUserBidsForProduct,
@@ -176,10 +187,10 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
       }
     />
   }
-  // if (error) {
-  //   return <ErrorPage statusCode={404}
-  //     message={"Product cannot be found"} className={classes.paddingTop1}/>
-  // }
+  if (props.error) {
+    return <ErrorPage statusCode={404}
+      message={"Product cannot be found"} className={classes.paddingTop1}/>
+  }
 
 
   return (
@@ -326,6 +337,7 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   initialProduct: Product;
   loading: boolean
+  error?: ApolloError
 }
 interface QueryData {
   getProductById: Product;
@@ -333,6 +345,15 @@ interface QueryData {
 interface QueryVar {
   productId: string;
 }
+
+interface QData {
+  getPromotedSlotByProductId: PromotedSlot;
+}
+interface QVar {
+  productId: string;
+  promotedListId?: string;
+}
+
 interface QueryData2 {
   getUserBidsForProduct: Chat_Rooms;
 }

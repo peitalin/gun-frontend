@@ -28,8 +28,12 @@ const AdType = (props: ReactProps) => {
 
   return productId
     ? <Link
-        href={`/f/[productId]`}
-        as={`/f/${productId}`}
+        href={
+          props.promotedSlotId ? "/f/[productId]" : "/p/[productId]"
+        }
+        as={
+          props.promotedSlotId ? `/f/${productId}` : `/p/${productId}`
+        }
       >
         <a className={clsx(classes.sourceSiteLink, props.className)}
           target={"_blank"}
@@ -69,6 +73,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   productId: string
   adType: string
   sourceSiteUrl: string
+  promotedSlotId?: string
   className?: any;
   style?: any;
 }

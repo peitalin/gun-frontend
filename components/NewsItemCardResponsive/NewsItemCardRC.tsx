@@ -167,10 +167,10 @@ const NewsItemCardRC = (props: ReactProps) => {
         }
         <LinkLoading
           href={
-            props.promotedSlotId ? "/f/[promotedSlotId]" : "/p/[newsItemId]"
+            props.promotedSlotId ? "/f/[productId]" : "/p/[productId]"
           }
           as={
-            props.promotedSlotId ? `/f/${props.newsItem?.id}` : `/p/${props.newsItem?.id}`
+            props.promotedSlotId ? `/f/${productId}` : `/p/${productId}`
           }
           disable={
             !props.newsItem?.product?.storeId ||
@@ -260,6 +260,7 @@ const NewsItemCardRC = (props: ReactProps) => {
                 <AdType
                   productId={newsItem?.productId}
                   adType={adType}
+                  promotedSlotId={props.promotedSlotId}
                   sourceSiteUrl={sourceSiteUrl}
                   style={{
                     position: 'absolute',

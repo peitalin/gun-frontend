@@ -21,7 +21,7 @@ import {
   GetStaticPropsContext,
 } from 'next';
 import { serverApolloClient } from "utils/apollo";
-import { ApolloClient, useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 // Router
 import { useRouter } from "next/router";
 // Meta headers
@@ -47,26 +47,19 @@ import { GET_PRODUCT } from "queries/products-queries";
 const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
 
   const router = useRouter()
-  // const productId: string = router.query.productId as any;
-  // const promotedListId: string = router.query.promotedListId as any; // optional
+  const productId: string = router.query.productId as any;
+  const promotedListId: string = router.query.promotedListId as any; // optional
 
-  let noNavbarPadding = router.pathname === "/"
-    || router.pathname === "/start"
-    || router.pathname === "/sell"
-    || router.pathname.startsWith("/f/")
+  const { data, loading, error } = useQuery<QData, QVar>(
+    GET_PROMOTED_SLOT_BY_PRODUCT_ID, {
+    variables: {
+      productId: productId,
+      promotedListId: promotedListId, // optional
+    },
+  })
+  console.log("dataaaa:", data)
 
-  // MetaHeaders in FeaturedProductId as it needs product name
-  // const { initialPromotedSlot: promotedSlot } = props
-
-  // const { data, loading, error } = useQuery<QueryData, QueryVar>(
-  //   GET_PROMOTED_SLOT_BY_PRODUCT_ID, {
-  //   variables: {
-  //     productId: productId,
-  //     promotedListId: promotedListId, // optional
-  //   },
-  // })
-
-  const promotedSlot = props.initialPromotedSlot
+  const promotedSlot = props.initialPromotedSlot ?? data?.getPromotedSlotByProductId
   const p = promotedSlot?.product
   const previewItem = p?.featuredVariant?.previewItems?.slice(-1)?.[0]
   const img = previewItem?.image
@@ -86,30 +79,20 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
     [promotedSlot, user]
   )
 
-  // const snackbar = useSnackbar()
-
 
   React.useEffect(() => {
-    // snackbar.enqueueSnackbar(
-    //   'success test',
-    //   { variant: "success", persist: true }
-    // )
-    // snackbar.enqueueSnackbar(
-    //   'error test',
-    //   { variant: "error", persist: true }
-    // )
-    // snackbar.enqueueSnackbar(
-    //   'info test',
-    //   { variant: "info", persist: true }
-    // )
-
     // only for promoted products
     // check if this product is actually listed as on the promotedSlot
-    if (!promotedSlot?.productId) {
+    if (!promotedSlot?.productId || productId) {
       if (p?.id) {
         router.replace(
           "/p/[productId]",
           `/p/${p?.id}`
+        )
+      } else if (productId) {
+        router.replace(
+          "/p/[productId]",
+          `/p/${productId}`
         )
       }
     }
@@ -148,7 +131,8 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
       <PageWithStripe>
         <FeaturedProductId
           initialProduct={p}
-          loading={false}
+          loading={loading}
+          error={error}
         />
       </PageWithStripe>
     </>
