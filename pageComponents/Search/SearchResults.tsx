@@ -152,7 +152,9 @@ const SearchResults: React.FC<ReactProps> = (props) => {
         offset: offset,
         filter: props.filter,
       },
-      sortBy: orderBy?.value as SortByNewsItems,
+      // sort by newest by default
+      sortBy: orderBy?.value as SortByNewsItems
+        ?? SortByNewsItems.CREATED_AT_DESC,
       // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
       categorySlugs: categorySlugsForGql,
       // require button click to change search
