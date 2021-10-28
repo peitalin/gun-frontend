@@ -22,7 +22,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
   query(
     $query: ConnectionQuery
     $searchTerm: String
-    $sortByDate: Boolean
+    $sortBy: SortByNewsItems
     $productType: ProductType
     $categorySlugs: [String]
     $dealerStates: [String]
@@ -32,7 +32,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     getNewsItemsSearchConnection(
       query: $query
       searchTerm: $searchTerm
-      sortByDate: $sortByDate
+      sortBy: $sortBy
       productType: $productType
       categorySlugs: $categorySlugs
       dealerStates: $dealerStates
@@ -58,9 +58,11 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
 export const GET_HOT_NEWS_ITEMS_TODAY = gql`
   query(
     $query: ConnectionQuery,
+    $sortBy: SortByNewsItems
   ) {
     getHotNewsItemsToday(
       query: $query
+      sortBy: $sortBy
     ) {
       edges {
         node {
@@ -83,11 +85,11 @@ export const GET_HOT_NEWS_ITEMS_TODAY = gql`
 export const GET_HOT_NEWS_ITEMS_YESTERDAY = gql`
   query(
     $query: ConnectionQuery
-    $sortByDate: Boolean
+    $sortBy: SortByNewsItems
   ) {
     getHotNewsItemsYesterday(
       query: $query
-      sortByDate: $sortByDate
+      sortBy: $sortBy
     ) {
       edges {
         node {
@@ -108,11 +110,11 @@ export const GET_HOT_NEWS_ITEMS_YESTERDAY = gql`
 export const GET_HOT_NEWS_ITEMS_THIS_WEEK = gql`
   query(
     $query: ConnectionQuery
-    $sortByDate: Boolean
+    $sortBy: SortByNewsItems
   ) {
     getHotNewsItemsThisWeek(
       query: $query
-      sortByDate: $sortByDate
+      sortBy: $sortBy
     ) {
       edges {
         node {
@@ -134,11 +136,11 @@ export const GET_HOT_NEWS_ITEMS_THIS_WEEK = gql`
 export const GET_HOT_NEWS_ITEMS_LAST_WEEK = gql`
   query(
     $query: ConnectionQuery
-    $sortByDate: Boolean
+    $sortBy: SortByNewsItems
   ) {
     getHotNewsItemsLastWeek(
       query: $query
-      sortByDate: $sortByDate
+      sortBy: $sortBy
     ) {
       edges {
         node {
@@ -168,11 +170,11 @@ export const GET_HOT_NEWS_ITEMS_LAST_WEEK = gql`
 export const GET_HOT_MISC_ITEMS_THIS_WEEK = gql`
   query(
     $query: ConnectionQuery
-    $sortByDate: Boolean
+    $sortBy: SortByNewsItems
   ) {
     getHotMiscItemsThisWeek(
       query: $query
-      sortByDate: $sortByDate
+      sortBy: $sortBy
     ) {
       edges {
         node {
@@ -193,11 +195,11 @@ export const GET_HOT_MISC_ITEMS_THIS_WEEK = gql`
 export const GET_HOT_MISC_ITEMS_LAST_WEEK = gql`
   query(
     $query: ConnectionQuery
-    $sortByDate: Boolean
+    $sortBy: SortByNewsItems
   ) {
     getHotMiscItemsLastWeek(
       query: $query
-      sortByDate: $sortByDate
+      sortBy: $sortBy
     ) {
       edges {
         node {

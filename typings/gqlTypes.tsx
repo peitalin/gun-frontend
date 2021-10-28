@@ -6575,7 +6575,7 @@ export type QueryGetNewsItemByIdArgs = {
 export type QueryGetNewsItemsSearchConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
   searchTerm?: Maybe<Scalars['String']>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
   productType?: Maybe<ProductType>;
   categorySlugs?: Maybe<Array<Maybe<Scalars['String']>>>;
   dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -6586,37 +6586,37 @@ export type QueryGetNewsItemsSearchConnectionArgs = {
 
 export type QueryGetHotNewsItemsTodayArgs = {
   query?: Maybe<ConnectionQuery>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
 };
 
 
 export type QueryGetHotNewsItemsYesterdayArgs = {
   query?: Maybe<ConnectionQuery>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
 };
 
 
 export type QueryGetHotNewsItemsThisWeekArgs = {
   query?: Maybe<ConnectionQuery>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
 };
 
 
 export type QueryGetHotNewsItemsLastWeekArgs = {
   query?: Maybe<ConnectionQuery>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
 };
 
 
 export type QueryGetHotMiscItemsThisWeekArgs = {
   query?: Maybe<ConnectionQuery>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
 };
 
 
 export type QueryGetHotMiscItemsLastWeekArgs = {
   query?: Maybe<ConnectionQuery>;
-  sortByDate?: Maybe<Scalars['Boolean']>;
+  sortBy?: Maybe<SortByNewsItems>;
 };
 
 
@@ -6720,6 +6720,15 @@ export enum SoldOutStatus {
   RESERVED = 'RESERVED',
   AVAILABLE = 'AVAILABLE',
   ABANDONED = 'ABANDONED'
+}
+
+export enum SortByNewsItems {
+  PRICE_ASC = 'PRICE_ASC',
+  PRICE_DESC = 'PRICE_DESC',
+  CREATED_AT_ASC = 'CREATED_AT_ASC',
+  CREATED_AT_DESC = 'CREATED_AT_DESC',
+  RANK_ASC = 'RANK_ASC',
+  RANK_DESC = 'RANK_DESC'
 }
 
 /** Information about a store */

@@ -45,7 +45,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
   const [hover, setHover] = React.useState(false)
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   let {
     productId,
@@ -213,10 +213,14 @@ const NewsItemRowMedium = (props: ReactProps) => {
 
         {
           isSold
-          ? <div className={classes.soldInHrsText} >
+          ? <div className={clsx(
+              classes.soldInHrsText,
+            )}>
               {`Sold ${printRelativeTime(dateSold)}`}
             </div>
-          : <div className={classes.soldInHrsText} >
+          : <div className={clsx(
+              classes.soldInHrsText,
+            )}>
               {`${printRelativeTime(dateSold)}`}
             </div>
         }
@@ -473,7 +477,8 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1rem',
     position: 'absolute',
     top: '0.25rem',
-    right: '-1.5rem',
+    right: '0.5rem',
+    textAlign: "end",
   },
 });
 

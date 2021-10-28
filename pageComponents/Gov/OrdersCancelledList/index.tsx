@@ -207,6 +207,7 @@ const OrdersCancelledList = (props: ReactProps) => {
           disablePriceFilter
           disableSearchFilter
           disableSortby
+          sortByOptions={[]}
           topSectionStyles={{
             justifyContent: 'flex-end',
             alignItems: 'flex-end',

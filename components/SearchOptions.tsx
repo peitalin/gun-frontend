@@ -1,13 +1,16 @@
 import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, BoxShadows, fontFam } from "layout/AppTheme";
+import {
+  Colors,
+  BorderRadius,
+  BorderRadius2x,
+  BorderRadius3x,
+  BorderRadius4x,
+  BoxShadows,
+  fontFam,
+} from "layout/AppTheme";
 import clsx from "clsx";
-// Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import ClearIcon from '@material-ui/icons/Clear';
-import Pagination from '@material-ui/lab/Pagination';
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { useSelector } from "react-redux";
@@ -22,7 +25,7 @@ import dynamic from "next/dynamic";
 const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   loading: () => <div style={{
     height: 40,
-    width: 250,
+    width: 150,
     border: `1px solid ${Colors.uniswapMediumGrey}`,
     // background: Colors.white,
     borderRadius: '4px',
@@ -75,17 +78,6 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
     limit
   } = paginationParams;
 
-  const totalPages = (totalCount * overfetchBy > 0)
-    ? Math.ceil(totalCount * overfetchBy / limit)
-    : 0;
-
-  const orderByOptions = [
-    { label: "Newest", value: { createdAt: Order_By.DESC }},
-    { label: "Oldest", value: { createdAt: Order_By.ASC }},
-    // { label: "Highest Price", value: { price: Order_By.DESC }},
-    // { label: "Lowest Price", value: { price: Order_By.ASC }},
-  ];
-
   ///////////////////////////////////
   ///////////// State /////////////
   ///////////////////////////////////
@@ -100,27 +92,7 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
 
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
-  // for actual gql dispatch for pagination page
-  const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
-    (page: number) => {
-      if (paginationParams?.setPageParam) {
-        paginationParams.setPageParam(page)
-      }
-    },
-    updateSetPageDelay
-  ) // debounce by 540ms
 
-  const [debounceSetIndex] = useDebouncedCallback((index: number) => {
-      setIndex(index)
-    },
-    updateSetPageDelay
-  ) // debounce by 540ms
-
-  const sortAlphabetically = (c1: Categories, c2: Categories): number => {
-    let c1name = c1?.name ? c1.name.toLowerCase() : ""
-    let c2name = c2?.name ? c2.name.toLowerCase() : ""
-    return (c1name > c2name) ? 1 : -1
-  }
 
   ///////////////////////////////////
   ///////////// Effects /////////////
@@ -128,7 +100,7 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
 
   React.useEffect(() => {
     if (setOrderBy) {
-      setOrderBy(orderByOptions[0])
+      setOrderBy(props.sortByOptions?.[0])
     }
   }, [])
 
@@ -204,7 +176,7 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
               >
                 <DropdownInput
                   initialState={
-                    orderByOptions[0]
+                    props.sortByOptions?.[0]
                     // initial initialState
                     // { label: "Design Templates", value: "category_123123"}
                   }
@@ -216,10 +188,13 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
                     }, 0)
                     // let UI update first for menu to close
                   }
-                  options={orderByOptions}
+                  options={props.sortByOptions}
                   placeholder={"Select a category"}
                   className={classes.width100}
-                  styles={selectStyles({ width: 200 })}
+                  styles={selectStyles({
+                    width: 200,
+                    isDarkMode: isDarkMode,
+                  })}
                   theme={theme => ({
                     ...theme,
                     maxWidth: '200px',
@@ -338,13 +313,20 @@ export const setCategoryFacets = (
 
 
 
-export const selectStyles = ({ width }: { width?: any }) => ({
+export const selectStyles = ({
+  width,
+  isDarkMode
+}: {
+  width?: any,
+  isDarkMode?: boolean,
+}) => ({
   container: base => ({
     ...base,
     flex: 1,
     border: 'none',
     width: width || '175px',
     cursor: "pointer",
+    borderRadius: BorderRadius3x,
     "&:hover": {
       cursor: "pointer",
     },
@@ -352,27 +334,47 @@ export const selectStyles = ({ width }: { width?: any }) => ({
   control: styles => ({
     ...styles,
     // border: '1px solid #eaeaea',
-    border: 'none',
+    // border: 'none',
+    padding: "0.2rem",
+    border: isDarkMode
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    background: isDarkMode
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     boxShadow: 'none',
     // background: buttonBackgroundColor,
-    backgroundColor: Colors.dropDownGrey,
+    // backgroundColor: Colors.dropDownGrey,
+    borderRadius: BorderRadius3x,
     '&:hover': {
-      border: 'none',
+      // border: 'none',
       cursor: "pointer",
       backgroundColor: Colors.dropDownGreyHover,
+      // backgroundColor: isDarkMode
+      //   ? `${Colors.uniswapMediumGrey}`
+      //   : `${Colors.slateGreyDarkest}`,
     },
     "&:focus": {
-      border: 'none',
+      // border: 'none',
     },
-    borderRadius: '4px',
+    // borderRadius: '4px',
     fontFamily: fontFam,
     fontSize: '0.9rem',
     color: Colors.darkGrey,
     // fontSize: '1rem',
     width: '100%',
+    // // match with the menu
+    cursor: "text",
+    height: '100%',
   }),
   singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
-    color: Colors.darkGrey,
+    // color: Colors.darkGrey,
+    ...styles,
+    color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    maxWidth: '250px',
   }),
   indicatorSeparator: styles => ({
     display:'none'
@@ -380,11 +382,15 @@ export const selectStyles = ({ width }: { width?: any }) => ({
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     return {
       ...styles,
+      borderRadius: BorderRadius2x,
       backgroundColor: isSelected
-        ? Colors.charcoal
+        ? Colors.lightYellow
         : isFocused
-          ? Colors.lightGrey
-          : Colors.dropDownGrey,
+          ? Colors.dropDownGrey
+          : "transparent",
+      color: isSelected
+        ? Colors.black
+        : Colors.uniswapLightGrey,
       fontFamily: fontFam,
       fontSize: '1rem',
       cursor: isDisabled ? 'not-allowed' : 'pointer',
@@ -401,7 +407,34 @@ export const selectStyles = ({ width }: { width?: any }) => ({
     "&:hover": {
       cursor: "pointer",
     },
-  })
+    color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
+    borderRadius: BorderRadius2x,
+    background: isDarkMode
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+  }),
+  input: styles => ({
+    color: isDarkMode
+        ? Colors.uniswapLightGrey
+        : Colors.slateGreyBlack
+  }),
+  placeholder: styles => ({
+    ...styles,
+    fontWeight: 400,
+    fontFamily: fontFam,
+    whiteSpace: 'nowrap',
+    color: Colors.grey,
+  }),
+  multiValue: styles => ({
+    ...styles,
+    color: isDarkMode ? Colors.cream : Colors.cream,
+    backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
+  }),
+  multiValueLabel: styles => ({
+    ...styles,
+    fontWeight: 500,
+    color: isDarkMode ? Colors.cream : Colors.cream,
+  }),
 });
 
 
@@ -450,13 +483,15 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
+  sortByOptions: Array<{ label: string; value: any }>
 }
 export interface SelectOption {
   label: string;
-  value: {
-    createdAt?: Order_By
-    price?: Order_By
-  }
+  value: any
+  // value: {
+  //   createdAt?: Order_By
+  //   price?: Order_By
+  // }
 }
 
 /////////// Styles //////////////

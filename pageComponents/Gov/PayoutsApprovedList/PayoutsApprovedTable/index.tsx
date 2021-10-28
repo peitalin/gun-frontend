@@ -170,6 +170,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
           updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
+          sortByOptions={[]}
           disablePriceFilter
           disableCategories
           maxCategoryInputWidth={250}

@@ -199,6 +199,8 @@ const StoresId: React.FC<ReactProps> = (props) => {
             setSearchTerm={setSearchTerm}
             setOrderBy={setOrderBy}
             setPriceRange={setPriceRange}
+            disableSortby={true}
+            sortByOptions={[]}
             paginationParams={{
               totalCount: totalItemsInFacet,
               overfetchBy: overfetchBy,

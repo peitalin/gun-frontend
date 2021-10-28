@@ -229,82 +229,86 @@ const DropdownInput = (props: ReactProps) => {
                   },
                 })
             }
-            styles={{
-              input: styles => ({
-                color: props.hideCursor
-                  ? 'transparent'
-                  : isThemeDark(theme)
-                    ? Colors.uniswapLightGrey
-                    : Colors.slateGreyBlack
-              }),
-              placeholder: styles => ({
-                ...styles,
-                fontWeight: 400,
-                fontFamily: fontFam,
-                whiteSpace: 'nowrap',
-                color: Colors.grey,
-              }),
-              singleValue: styles => ({
-                ...styles,
-                color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                maxWidth: '250px',
-              }),
-              multiValue: styles => ({
-                ...styles,
-                color: isDarkMode ? Colors.cream : Colors.cream,
-                backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
-              }),
-              multiValueLabel: styles => ({
-                ...styles,
-                fontWeight: 500,
-                color: isDarkMode ? Colors.cream : Colors.cream,
-              }),
-              indicatorSeparator: styles => ({
-                ...styles,
-                backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
-                display: props.hideButton ? "none" : "inherit",
-              }),
-              indicatorsContainer: styles => ({
-                ...styles,
-                color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
-                cursor: "pointer",
-                display: props.hideButton ? "none" : "inherit",
-              }),
-              container: styles => ({
-                ...styles,
-                height: height,
-                borderRadius: BorderRadius,
-              }),
-              menu: styles => ({
-                ...styles,
-                zIndex: 10,
-                marginTop: '2px',
-                cursor: "pointer",
-                "&:hover": {
-                  cursor: "pointer",
-                },
-                color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
-                background: isDarkMode
-                  ? Colors.uniswapMediumNavy
-                  : Colors.slateGrey,
-              }),
-              control: (base, state) => ({
-                ...base,
-                background: isDarkMode
-                  ? Colors.uniswapMediumNavy
-                  : Colors.slateGrey,
-                // // match with the menu
-                cursor: "text",
-                borderRadius: BorderRadius,
-                height: '100%',
-                border: isDarkMode
-                  ? `1px solid ${Colors.uniswapMediumGrey}`
-                  : `1px solid ${Colors.slateGreyDarker}`,
-              }),
-            }}
+            styles={
+              props.styles
+              ? props.styles
+              : {
+                  input: styles => ({
+                    color: props.hideCursor
+                      ? 'transparent'
+                      : isThemeDark(theme)
+                        ? Colors.uniswapLightGrey
+                        : Colors.slateGreyBlack
+                  }),
+                  placeholder: styles => ({
+                    ...styles,
+                    fontWeight: 400,
+                    fontFamily: fontFam,
+                    whiteSpace: 'nowrap',
+                    color: Colors.grey,
+                  }),
+                  singleValue: styles => ({
+                    ...styles,
+                    color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '250px',
+                  }),
+                  multiValue: styles => ({
+                    ...styles,
+                    color: isDarkMode ? Colors.cream : Colors.cream,
+                    backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
+                  }),
+                  multiValueLabel: styles => ({
+                    ...styles,
+                    fontWeight: 500,
+                    color: isDarkMode ? Colors.cream : Colors.cream,
+                  }),
+                  indicatorSeparator: styles => ({
+                    ...styles,
+                    backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
+                    display: props.hideButton ? "none" : "inherit",
+                  }),
+                  indicatorsContainer: styles => ({
+                    ...styles,
+                    color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+                    cursor: "pointer",
+                    display: props.hideButton ? "none" : "inherit",
+                  }),
+                  container: styles => ({
+                    ...styles,
+                    height: height,
+                    borderRadius: BorderRadius,
+                  }),
+                  menu: styles => ({
+                    ...styles,
+                    zIndex: 10,
+                    marginTop: '2px',
+                    cursor: "pointer",
+                    "&:hover": {
+                      cursor: "pointer",
+                    },
+                    color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
+                    background: isDarkMode
+                      ? Colors.uniswapMediumNavy
+                      : Colors.slateGrey,
+                  }),
+                  control: (base, state) => ({
+                    ...base,
+                    background: isDarkMode
+                      ? Colors.uniswapMediumNavy
+                      : Colors.slateGrey,
+                    // // match with the menu
+                    cursor: "text",
+                    borderRadius: BorderRadius,
+                    height: '100%',
+                    border: isDarkMode
+                      ? `1px solid ${Colors.uniswapMediumGrey}`
+                      : `1px solid ${Colors.slateGreyDarker}`,
+                  }),
+              }
+            }
             inputRef={ref}
           />
       }

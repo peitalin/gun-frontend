@@ -234,6 +234,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
+          sortByOptions={[]}
           disablePriceFilter
           disableCategories
           maxCategoryInputWidth={250}
@@ -306,6 +307,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
+          sortByOptions={[]}
           disablePriceFilter
           disableCategories
           maxCategoryInputWidth={250}
@@ -381,6 +383,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
+          sortByOptions={[]}
           disablePriceFilter
           disableCategories
           maxCategoryInputWidth={250}

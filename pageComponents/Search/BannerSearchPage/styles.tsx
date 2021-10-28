@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   rootMobile: {
     position: 'relative',
-    marginBottom: '4rem',
+    marginBottom: '3rem',
   },
   rootMobileExpanded: {
     position: 'relative',
@@ -276,5 +276,19 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: 300,
     transform: "translateY(-30%)",
+  },
+  sortByContainer: {
+    position: 'absolute',
+    bottom: '0rem',
+    width: '100%',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  sortByDropDown: {
+    maxWidth: 150,
+    marginBottom: '-1.5rem',
+    marginRight: '1rem',
+    flexBasis: '50%',
   },
 })

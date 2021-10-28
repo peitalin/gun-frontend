@@ -19,14 +19,11 @@ import {
   SoldOutStatus,
   Order_By,
 } from "typings/gqlTypes";
-// Utils Components
-import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Components
 import ProductRow from "pageComponents/SellerDashboard/PublishedProductsList/ProductRow";
-import ProductList from "pageComponents/SellerDashboard/PublishedProductsList/ProductList";
 import ProductEdit from "pageComponents/ProductEdit"
 import BackTo from "components/BackTo";
 import LoadingBar from "components/LoadingBar";
@@ -230,6 +227,15 @@ const PublishedProductsList = (props: ReactProps) => {
           }}
           disablePriceFilter
           disableCategories
+          disableSortby={false}
+          sortByOptions={
+            [
+              { label: "Newest", value: { createdAt: Order_By.DESC }},
+              { label: "Oldest", value: { createdAt: Order_By.ASC }},
+              // { label: "Highest Price", value: { price: Order_By.DESC }},
+              // { label: "Lowest Price", value: { price: Order_By.ASC }},
+            ]
+          }
           dropdownContainerStyle={{ marginRight: 0 }}
           topSectionStyles={{
             padding: '1rem',

@@ -1,16 +1,39 @@
 import React from "react";
 // styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { withStyles, WithStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import {
+  Colors,
+  BorderRadius,
+  BorderRadius2x,
+  BorderRadius3x,
+  isThemeDark,
+} from "layout/AppTheme";
 import { styles } from "./styles";
 // typings
-import { Categories } from "typings/gqlTypes";
+import {
+  Categories,
+  Order_By,
+} from "typings/gqlTypes";
 import Hidden from 'components/HiddenFix';
 import BannerSearchDesktop from "./BannerSearchDesktop";
 import BannerSearchMobile from "./BannerSearchMobile";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
 import CategorySearchbar from "./CategorySearchbar";
 import RowOrCardsButtons from "./RowOrCardsButtons";
+// Search Component
+import dynamic from "next/dynamic";
+const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
+  loading: () =>
+    <div style={{
+      height: 44,
+      width: 150,
+      // border: `1px solid ${Colors.uniswapMediumGrey}`,
+      // background: isDarkMode ? Colors.uniswapDarkNavy : Colors.slateGrey,
+      borderRadius: BorderRadius3x,
+    }}/>,
+  ssr: false,
+})
+import { SelectOption, selectStyles } from "components/SearchOptions";
 
 
 
@@ -60,44 +83,13 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
     },
   } = facetSearchParams;
 
+  const theme = useTheme()
+  const isDarkMode = isThemeDark(theme)
 
   // callback to expand banenr height when search input is focused in:
   // -> CategorySearchbar -> SearchbarAirbnb
   const [focusedOuter, setFocusedOuter] = React.useState(false)
 
-
-  // const getBannerImageUrl = () => {
-  //   // let slug = selectedCategorySlug
-  //   let pathname = router.pathname
-  //   if (pathname.includes("/new")) {
-  //     return "/img/banner5.jpg"
-  //   }
-  //   if (pathname.includes("/category")) {
-  //     return "/img/banner4.jpg"
-  //   }
-  //   if (pathname.includes("/sold")) {
-  //     return "/img/banner10.jpg"
-  //   }
-
-  //   return "/img/banner5.jpg"
-  //   // switch (path) {
-  //   //   case "handguns": {
-  //   //     return "/img/banner5.jpg"
-  //   //   }
-  //   //   case "rifles": {
-  //   //     return "/img/banner10.jpg"
-  //   //   }
-  //   //   case "shotguns": {
-  //   //     return "/img/banner10.jpg"
-  //   //   }
-  //   //   case "combination": {
-  //   //     return "/img/banner4.jpg"
-  //   //   }
-  //   //   default: {
-  //   //     return "/img/banner5.jpg"
-  //   //   }
-  //   // }
-  // }
 
   let selectedCategorySlug = props.categorySlugsForGql?.[0];
   let selectedCategory = (currentCategories ?? []).find(c => c.slug === selectedCategorySlug)
@@ -230,6 +222,48 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setRowMode={setRowMode}
             isMobile={false}
           />
+          <div className={classes.sortByContainer}>
+            <div className={classes.sortByDropDown}>
+              <DropdownInput
+                initialState={
+                  props.sortByOptions?.[0]
+                  // initial initialState
+                  // { label: "Design Templates", value: "category_123123"}
+                }
+                isSearchable={false}
+                hideCursor={true}
+                onChange={({ label, value }: SelectOption) =>
+                  setTimeout(() => {
+                    setOrderBy({ label, value })
+                  }, 0)
+                  // let UI update first for menu to close
+                }
+                options={props.sortByOptions}
+                placeholder={"Select a category"}
+                className={classes.width100}
+                styles={selectStyles({
+                  width: 200,
+                  isDarkMode: isDarkMode,
+                })}
+                theme={theme => ({
+                  ...theme,
+                  maxWidth: '200px',
+                  borderRadius: BorderRadius2x,
+                  colors: {
+                    ...theme.colors,
+                    color: isDarkMode
+                      ? Colors.uniswapLightestGrey
+                      : Colors.black,
+                    primary25: isDarkMode
+                      ? Colors.uniswapLightNavy
+                      : Colors.slateGreyDarker,
+                    primary: Colors.uniswapLighterGrey,
+                  },
+                })}
+                sortByOptions={props.sortByOptions}
+              />
+            </div>
+          </div>
         </BannerSearchDesktop>
       </Hidden>
     </>
@@ -253,6 +287,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // row or cards toggle
   rowMode: boolean
   setRowMode(a: boolean): void
+  sortByOptions: Array<{ label: string, value: any }>
   bannerTitle?: string;
   bannerBlurb?: string;
 }

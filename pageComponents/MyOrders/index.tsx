@@ -300,9 +300,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                 }}
                 updateSetPageDelay={0}
                 disableSearchFilter
-                disableSortby
                 disablePriceFilter
                 disableCategories
+                disableSortby
+                sortByOptions={[]}
                 maxCategoryInputWidth={250}
                 topSectionStyles={{
                   justifyContent: 'flex-end',
@@ -377,9 +378,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             }}
             updateSetPageDelay={0}
             disableSearchFilter
-            disableSortby
             disablePriceFilter
             disableCategories
+            disableSortby
+            sortByOptions={[]}
             maxCategoryInputWidth={250}
             topSectionStyles={{
               justifyContent: 'flex-end',
@@ -446,9 +448,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             }}
             updateSetPageDelay={0}
             disableSearchFilter
-            disableSortby
             disablePriceFilter
             disableCategories
+            disableSortby
+            sortByOptions={[]}
             maxCategoryInputWidth={250}
             topSectionStyles={{
               justifyContent: 'flex-end',

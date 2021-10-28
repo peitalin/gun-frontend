@@ -74,8 +74,11 @@ export const styles = (theme: Theme) => createStyles({
   rowToggleContainerDesktop: {
     width: '100%',
     padding: '0rem 1rem',
-    marginBottom: '0.5rem',
-    marginTop: '-1.4rem',
+    // marginBottom: '0.5rem',
+    // marginTop: '-1.4rem',
+    position: 'absolute',
+    top: '0.5rem',
+    right: '0.5rem',
   },
   listOrGridContainer: {
     display: "flex",

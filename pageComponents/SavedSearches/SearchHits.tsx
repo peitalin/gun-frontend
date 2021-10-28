@@ -111,9 +111,10 @@ const SearchHits: React.FC<ReactProps> = (props) => {
         }}
         updateSetPageDelay={0}
         disableSearchFilter
-        disableSortby
         disablePriceFilter
         disableCategories
+        disableSortby
+        sortByOptions={[]}
         maxCategoryInputWidth={250}
         topSectionStyles={{
         }}

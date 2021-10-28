@@ -579,7 +579,7 @@ const styles = (theme: Theme) => createStyles({
     width: '262px', // width of the SearchInput plus 2px border
     transition:  theme.transitions.create(['height', 'width'], {
       easing: theme.transitions.easing.easeIn,
-      delay: 300,
+      delay: 200,
       duration: 300,
     }),
     border: theme.palette.type === 'dark'

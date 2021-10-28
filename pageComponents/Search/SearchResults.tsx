@@ -15,6 +15,7 @@ import {
   ConnectionQuery,
   DealerState,
   UserPrivate,
+  SortByNewsItems,
 } from "typings/gqlTypes";
 // Router
 import { useRouter } from "next/router";
@@ -151,7 +152,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
         offset: offset,
         filter: props.filter,
       },
-      sortByDate: true,
+      sortBy: orderBy?.value as SortByNewsItems,
       // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
       categorySlugs: categorySlugsForGql,
       // require button click to change search
@@ -199,6 +200,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   // console.log("pageParam: ", pageParam)
   // console.log("index: ", index)
   // console.log("offset: ", offset)
+  console.log(">>>>>orderBy: ", orderBy)
 
   return (
     <AlignCenterLayout
@@ -269,6 +271,12 @@ const SearchResults: React.FC<ReactProps> = (props) => {
           initialDropdownCategories={props.initialDropdownCategories}
           rowMode={rowMode}
           setRowMode={setRowMode}
+          sortByOptions={[
+            { label: "Newest", value: SortByNewsItems.CREATED_AT_DESC },
+            { label: "Oldest", value: SortByNewsItems.CREATED_AT_ASC },
+            { label: "Price (Highest)", value: SortByNewsItems.PRICE_DESC },
+            { label: "Price (Lowest)", value: SortByNewsItems.PRICE_ASC },
+          ]}
         />
 
 
@@ -368,7 +376,7 @@ interface QueryData1 {
 }
 interface QueryVar1 {
   query: ConnectionQuery;
-  sortByDate?: boolean;
+  sortBy?: SortByNewsItems;
   categorySlugs?: string[];
   dealerStates?: string[];
   calibers?: string[];
@@ -425,6 +433,7 @@ export const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     width: '100%',
     minHeight: 600,
+    marginTop: "0.5rem",
   },
   sectionPaddingLeftDesktop: {
     paddingLeft: '1rem',
