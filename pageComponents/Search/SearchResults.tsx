@@ -101,6 +101,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
+    initialOrderBy: SortByNewsItems.CREATED_AT_DESC,
     router: router,
     syncUrlParams: true,
   })
@@ -153,8 +154,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
         filter: props.filter,
       },
       // sort by newest by default
-      sortBy: orderBy?.value as SortByNewsItems
-        ?? SortByNewsItems.CREATED_AT_DESC,
+      sortBy: orderBy?.value as SortByNewsItems,
       // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
       categorySlugs: categorySlugsForGql,
       // require button click to change search

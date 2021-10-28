@@ -32,6 +32,7 @@ export const useFacetSearchOptions = ({
   router,
   syncUrlParams,
   scrollToTopOnPagination = false,
+  initialOrderBy = { createdAt: Order_By.DESC },
 }: {
   limit: number,
   overfetchBy?: number;
@@ -39,6 +40,7 @@ export const useFacetSearchOptions = ({
   router?: NextRouter,
   syncUrlParams?: boolean;
   scrollToTopOnPagination?: boolean;
+  initialOrderBy?: any,
 }): FacetSearchParams => {
 
   const calcOffset = (page: number, limit: number): number => {
@@ -65,10 +67,7 @@ export const useFacetSearchOptions = ({
   // search filters
   const [priceRange, setPriceRange] = React.useState([0, maxPriceCents || 20000]);
   const [facets, setFacets] = React.useState<string[]>([]);
-  const [orderBy, setOrderBy] = React.useState<SelectOption>({
-    label: "Newest",
-    value: { createdAt: Order_By.DESC }
-  });
+  const [orderBy, setOrderBy] = React.useState<SelectOption>(initialOrderBy);
 
   const initialSearchTerm = !!router?.query?.q
     ? decodeURIComponent(router?.query?.q as string)

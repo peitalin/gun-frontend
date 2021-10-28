@@ -133,7 +133,8 @@ const PublishedProductsList = (props: ReactProps) => {
       query: {
         limit: limit,
         offset: offset,
-        orderBy: orderBy.value as any,
+        orderBy: orderBy.value
+          ?? { createdAt: Order_By.DESC },
         // filter: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
       }
     },
