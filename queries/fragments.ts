@@ -1330,14 +1330,14 @@ export const CollectionItemsFragment = gql`
     userId
     productId
     product {
-      ...ProductFragment
+      ...ProductLiteFragment
     }
     externalProductId
     externalProduct {
       ...ExternalProductsFragment
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
   ${ExternalProductsFragment}
 `;
 
