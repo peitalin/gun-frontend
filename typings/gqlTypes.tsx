@@ -604,6 +604,10 @@ export type Mutation = {
   delete_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
   /** delete single row from the table: "user_licenses" */
   delete_user_licenses_by_pk?: Maybe<User_Licenses>;
+  /** delete data from the table: "user_whitelist" */
+  delete_user_whitelist?: Maybe<User_Whitelist_Mutation_Response>;
+  /** delete single row from the table: "user_whitelist" */
+  delete_user_whitelist_by_pk?: Maybe<User_Whitelist>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
@@ -792,6 +796,10 @@ export type Mutation = {
   insert_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
   /** insert a single row into the table: "user_licenses" */
   insert_user_licenses_one?: Maybe<User_Licenses>;
+  /** insert data into the table: "user_whitelist" */
+  insert_user_whitelist?: Maybe<User_Whitelist_Mutation_Response>;
+  /** insert a single row into the table: "user_whitelist" */
+  insert_user_whitelist_one?: Maybe<User_Whitelist>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
@@ -980,6 +988,10 @@ export type Mutation = {
   update_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
   /** update single row of the table: "user_licenses" */
   update_user_licenses_by_pk?: Maybe<User_Licenses>;
+  /** update data of the table: "user_whitelist" */
+  update_user_whitelist?: Maybe<User_Whitelist_Mutation_Response>;
+  /** update single row of the table: "user_whitelist" */
+  update_user_whitelist_by_pk?: Maybe<User_Whitelist>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
@@ -1194,6 +1206,7 @@ export type Mutation = {
   initiatePageConfig?: Maybe<PageConfig>;
   initiateCategories: Array<Categories>;
   initiateCalibers: Array<Calibers>;
+  initiateDealers: Array<Dealers>;
   /** Create a new promoted list, or replace existing one if promoted_list_id clashes */
   insertOrReplacePromotedList: PromotedListMutationResponse;
   /**
@@ -1784,6 +1797,16 @@ export type MutationDelete_User_Licenses_By_PkArgs = {
 };
 
 
+export type MutationDelete_User_WhitelistArgs = {
+  where: User_Whitelist_Bool_Exp;
+};
+
+
+export type MutationDelete_User_Whitelist_By_PkArgs = {
+  userId: Scalars['String'];
+};
+
+
 export type MutationDelete_UsersArgs = {
   where: Users_Bool_Exp;
 };
@@ -2343,6 +2366,18 @@ export type MutationInsert_User_LicensesArgs = {
 export type MutationInsert_User_Licenses_OneArgs = {
   object: User_Licenses_Insert_Input;
   on_conflict?: Maybe<User_Licenses_On_Conflict>;
+};
+
+
+export type MutationInsert_User_WhitelistArgs = {
+  objects: Array<User_Whitelist_Insert_Input>;
+  on_conflict?: Maybe<User_Whitelist_On_Conflict>;
+};
+
+
+export type MutationInsert_User_Whitelist_OneArgs = {
+  object: User_Whitelist_Insert_Input;
+  on_conflict?: Maybe<User_Whitelist_On_Conflict>;
 };
 
 
@@ -2953,6 +2988,18 @@ export type MutationUpdate_User_LicensesArgs = {
 export type MutationUpdate_User_Licenses_By_PkArgs = {
   _set?: Maybe<User_Licenses_Set_Input>;
   pk_columns: User_Licenses_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_User_WhitelistArgs = {
+  _set?: Maybe<User_Whitelist_Set_Input>;
+  where: User_Whitelist_Bool_Exp;
+};
+
+
+export type MutationUpdate_User_Whitelist_By_PkArgs = {
+  _set?: Maybe<User_Whitelist_Set_Input>;
+  pk_columns: User_Whitelist_Pk_Columns_Input;
 };
 
 
@@ -4806,6 +4853,12 @@ export type Query = {
   user_licenses_aggregate: User_Licenses_Aggregate;
   /** fetch data from the table: "user_licenses" using primary key columns */
   user_licenses_by_pk?: Maybe<User_Licenses>;
+  /** fetch data from the table: "user_whitelist" */
+  user_whitelist: Array<User_Whitelist>;
+  /** fetch aggregated fields from the table: "user_whitelist" */
+  user_whitelist_aggregate: User_Whitelist_Aggregate;
+  /** fetch data from the table: "user_whitelist" using primary key columns */
+  user_whitelist_by_pk?: Maybe<User_Whitelist>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -6214,6 +6267,29 @@ export type QueryUser_Licenses_By_PkArgs = {
 };
 
 
+export type QueryUser_WhitelistArgs = {
+  distinct_on?: Maybe<Array<User_Whitelist_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Whitelist_Order_By>>;
+  where?: Maybe<User_Whitelist_Bool_Exp>;
+};
+
+
+export type QueryUser_Whitelist_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Whitelist_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Whitelist_Order_By>>;
+  where?: Maybe<User_Whitelist_Bool_Exp>;
+};
+
+
+export type QueryUser_Whitelist_By_PkArgs = {
+  userId: Scalars['String'];
+};
+
+
 export type QueryUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -7196,6 +7272,12 @@ export type Subscription = {
   user_licenses_aggregate: User_Licenses_Aggregate;
   /** fetch data from the table: "user_licenses" using primary key columns */
   user_licenses_by_pk?: Maybe<User_Licenses>;
+  /** fetch data from the table: "user_whitelist" */
+  user_whitelist: Array<User_Whitelist>;
+  /** fetch aggregated fields from the table: "user_whitelist" */
+  user_whitelist_aggregate: User_Whitelist_Aggregate;
+  /** fetch data from the table: "user_whitelist" using primary key columns */
+  user_whitelist_by_pk?: Maybe<User_Whitelist>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -8337,6 +8419,29 @@ export type SubscriptionUser_Licenses_AggregateArgs = {
 
 export type SubscriptionUser_Licenses_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type SubscriptionUser_WhitelistArgs = {
+  distinct_on?: Maybe<Array<User_Whitelist_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Whitelist_Order_By>>;
+  where?: Maybe<User_Whitelist_Bool_Exp>;
+};
+
+
+export type SubscriptionUser_Whitelist_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Whitelist_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Whitelist_Order_By>>;
+  where?: Maybe<User_Whitelist_Bool_Exp>;
+};
+
+
+export type SubscriptionUser_Whitelist_By_PkArgs = {
+  userId: Scalars['String'];
 };
 
 
@@ -10624,14 +10729,17 @@ export type Dealers = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
+  email?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   licenseNumber: Scalars['String'];
   name: Scalars['String'];
   operating?: Maybe<Scalars['Boolean']>;
+  phoneNumber?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   /** An object relationship */
   user?: Maybe<Users>;
+  website?: Maybe<Scalars['String']>;
 };
 
 /** aggregated selection of "dealers" */
@@ -10664,13 +10772,16 @@ export type Dealers_Bool_Exp = {
   address?: Maybe<String_Comparison_Exp>;
   city?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  email?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   operating?: Maybe<Boolean_Comparison_Exp>;
+  phoneNumber?: Maybe<String_Comparison_Exp>;
   postCode?: Maybe<String_Comparison_Exp>;
   state?: Maybe<String_Comparison_Exp>;
   user?: Maybe<Users_Bool_Exp>;
+  website?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "dealers" */
@@ -10686,13 +10797,16 @@ export type Dealers_Insert_Input = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   operating?: Maybe<Scalars['Boolean']>;
+  phoneNumber?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  website?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
@@ -10701,11 +10815,14 @@ export type Dealers_Max_Fields = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
 };
 
 /** aggregate min on columns */
@@ -10714,11 +10831,14 @@ export type Dealers_Min_Fields = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "dealers" */
@@ -10749,13 +10869,16 @@ export type Dealers_Order_By = {
   address?: Maybe<Order_By>;
   city?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   operating?: Maybe<Order_By>;
+  phoneNumber?: Maybe<Order_By>;
   postCode?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
   user?: Maybe<Users_Order_By>;
+  website?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: dealers */
@@ -10772,6 +10895,8 @@ export enum Dealers_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  EMAIL = 'email',
+  /** column name */
   ID = 'id',
   /** column name */
   LICENSENUMBER = 'licenseNumber',
@@ -10780,9 +10905,13 @@ export enum Dealers_Select_Column {
   /** column name */
   OPERATING = 'operating',
   /** column name */
+  PHONENUMBER = 'phoneNumber',
+  /** column name */
   POSTCODE = 'postCode',
   /** column name */
-  STATE = 'state'
+  STATE = 'state',
+  /** column name */
+  WEBSITE = 'website'
 }
 
 /** input type for updating data in table "dealers" */
@@ -10790,12 +10919,15 @@ export type Dealers_Set_Input = {
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   operating?: Maybe<Scalars['Boolean']>;
+  phoneNumber?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "dealers" */
@@ -10807,6 +10939,8 @@ export enum Dealers_Update_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  EMAIL = 'email',
+  /** column name */
   ID = 'id',
   /** column name */
   LICENSENUMBER = 'licenseNumber',
@@ -10815,9 +10949,13 @@ export enum Dealers_Update_Column {
   /** column name */
   OPERATING = 'operating',
   /** column name */
+  PHONENUMBER = 'phoneNumber',
+  /** column name */
   POSTCODE = 'postCode',
   /** column name */
-  STATE = 'state'
+  STATE = 'state',
+  /** column name */
+  WEBSITE = 'website'
 }
 
 /** columns and relationships of "email_subscriptions" */
@@ -20887,6 +21025,119 @@ export enum User_Licenses_Update_Column {
   USERID = 'userId',
   /** column name */
   VERIFIED = 'verified'
+}
+
+/** columns and relationships of "user_whitelist" */
+export type User_Whitelist = {
+  __typename?: 'user_whitelist';
+  email: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** aggregated selection of "user_whitelist" */
+export type User_Whitelist_Aggregate = {
+  __typename?: 'user_whitelist_aggregate';
+  aggregate?: Maybe<User_Whitelist_Aggregate_Fields>;
+  nodes: Array<User_Whitelist>;
+};
+
+/** aggregate fields of "user_whitelist" */
+export type User_Whitelist_Aggregate_Fields = {
+  __typename?: 'user_whitelist_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Whitelist_Max_Fields>;
+  min?: Maybe<User_Whitelist_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_whitelist" */
+export type User_Whitelist_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<User_Whitelist_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_whitelist". All fields are combined with a logical 'AND'. */
+export type User_Whitelist_Bool_Exp = {
+  _and?: Maybe<Array<User_Whitelist_Bool_Exp>>;
+  _not?: Maybe<User_Whitelist_Bool_Exp>;
+  _or?: Maybe<Array<User_Whitelist_Bool_Exp>>;
+  email?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_whitelist" */
+export enum User_Whitelist_Constraint {
+  /** unique or primary key constraint */
+  USER_WHITELIST_PKEY = 'user_whitelist_pkey'
+}
+
+/** input type for inserting data into table "user_whitelist" */
+export type User_Whitelist_Insert_Input = {
+  email?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type User_Whitelist_Max_Fields = {
+  __typename?: 'user_whitelist_max_fields';
+  email?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type User_Whitelist_Min_Fields = {
+  __typename?: 'user_whitelist_min_fields';
+  email?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "user_whitelist" */
+export type User_Whitelist_Mutation_Response = {
+  __typename?: 'user_whitelist_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Whitelist>;
+};
+
+/** on conflict condition type for table "user_whitelist" */
+export type User_Whitelist_On_Conflict = {
+  constraint: User_Whitelist_Constraint;
+  update_columns?: Array<User_Whitelist_Update_Column>;
+  where?: Maybe<User_Whitelist_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_whitelist". */
+export type User_Whitelist_Order_By = {
+  email?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: user_whitelist */
+export type User_Whitelist_Pk_Columns_Input = {
+  userId: Scalars['String'];
+};
+
+/** select columns of table "user_whitelist" */
+export enum User_Whitelist_Select_Column {
+  /** column name */
+  EMAIL = 'email',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "user_whitelist" */
+export type User_Whitelist_Set_Input = {
+  email?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "user_whitelist" */
+export enum User_Whitelist_Update_Column {
+  /** column name */
+  EMAIL = 'email',
+  /** column name */
+  USERID = 'userId'
 }
 
 /** columns and relationships of "users" */

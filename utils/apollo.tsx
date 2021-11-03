@@ -263,6 +263,24 @@ const cacheOptions = {
     },
 
 
+    CollectionItem: {
+      // keyFields: false,
+      keyFields: [ "id" ],
+      fields: {
+        externalProduct: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+        product: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+      },
+    },
+
+
     // merging cache objects:
     // https://github.com/apollographql/apollo-client/issues/6370
     User: {
