@@ -88,7 +88,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
         <Tooltip title={"Twitter"} placement={"top"}>
           <div className={classes.iconBox}>
             <a className={classes.link} target={"_blank"}
-              href={"https://twitter.com/gunmarketplace_"}
+              href={"https://twitter.com/gunmarketplace"}
             >
               <Twitter color={color} />
             </a>
