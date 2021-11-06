@@ -15,6 +15,7 @@ import {
   Categories,
   DealerState,
 } from "typings/gqlTypes";
+import { categoryPreviewsBackup } from "utils/categories"
 import {
   splitArrayIntoGrid,
   GridMap,
@@ -80,6 +81,13 @@ export const useFacetSearchOptions = ({
   // console.log('ROUTER.QUERY.PAGE:', router?.query?.page)
   // console.log('initialPageParam:', initialPageParam)
 
+  const initialCategory = !!router?.query?.category
+    ? categoryPreviewsBackup.find(c => {
+          let categorySlug = decodeURIComponent(router?.query?.category as string)
+          return c.slug === categorySlug
+      }) as Categories
+    : undefined
+
   const initialCaliber = !!router?.query?.caliber
     ? decodeURIComponent(router?.query?.caliber as string)
     : ""
@@ -100,7 +108,9 @@ export const useFacetSearchOptions = ({
   const [
     currentCategories,
     setCurrentCategories
-  ] = React.useState<Categories[]>(undefined)
+  ] = React.useState<Categories[]>(
+    initialCategory ? [initialCategory] : []
+  )
   // initial category is /categories/[categorySlug]
 
   const [
@@ -205,7 +215,7 @@ export const useFacetSearchOptions = ({
 
       if (syncUrlParams) {
         if (currentCategories?.[0]?.slug) {
-          // console.log("currentCategories: : :: ", currentCategories)
+          console.log("currentCategories: : :: ", currentCategories)
           if (urlPath.startsWith('/categories')) {
             urlPath = `/categories/${currentCategories?.[0]?.slug}`
           }
@@ -224,8 +234,6 @@ export const useFacetSearchOptions = ({
           // when on /categories/[categorySlug] pages
           if (
             urlPath.startsWith('/categories') && key === 'categorySlug'
-            || urlPath.startsWith('/new') && key === 'categorySlug'
-            || urlPath.startsWith('/sold') && key === 'categorySlug'
           ) {
             return null
           } else {
@@ -256,9 +264,7 @@ export const useFacetSearchOptions = ({
         }
       } else {
         // remove q= query param for empty search terms
-        let params2 = params.filter(param => !param.includes("q="))
-        // console.log("q2 params>>>>>>>>>>>>", params2)
-        params = params2
+        params = params.filter(param => !param.includes("q="))
       }
 
       // Sync page params if larger than page 1
@@ -281,10 +287,31 @@ export const useFacetSearchOptions = ({
         params = params.filter(param => !param.includes("page="))
       }
 
+      // Sync category
+      let categorySlug = currentCategories?.[0]?.slug
+      if (categorySlug) {
+        if (!params.some(p => p.startsWith('category='))) {
+          // page query doesnt yet exist, add page param
+          params = [`category=${categorySlug}`, ...params]
+        } else {
+          // page query exists, modify it
+          params = params.map(param => {
+            if (param.startsWith("category=")) {
+              return `category=${categorySlug}`
+            } else {
+              return param
+            }
+          })
+        }
+      } else {
+        // remove page query if page 1
+        params = params.filter(param => !param.includes("category="))
+      }
 
-      // console.log("params before join: ", params)
+
+      console.log("params before join: ", params)
       let params_str: string = params.join('&')
-      // console.log("params_str after join: ", params_str)
+      console.log("params_str after join: ", params_str)
       if (params_str) {
         params_str = `?${params_str}`
       } else {

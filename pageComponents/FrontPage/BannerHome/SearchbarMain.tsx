@@ -86,20 +86,20 @@ const SearchbarMain = (props: SearchbarProps) => {
 
     let url
 
-    if ((currentCategories ?? []).length > 0) {
-      url = `/categories/${currentCategories?.[0]?.slug}`
-    } else {
-      url = `/categories/all`
-    }
+    url = `/new?q=${encodeURIComponent(searchTerm)}`
 
-    url += `?q=${encodeURIComponent(searchTerm)}`
+    if ((currentCategories ?? []).length > 0) {
+      url += `&category=${currentCategories?.[0]?.slug}`
+    }
 
     if (calibers?.length > 0) {
       url += `&caliber=${encodeURIComponent(calibers.map(c => c.label).join(','))}`
     }
+
     if (dealerStates?.length > 0) {
       url += `&state=${encodeURIComponent(dealerStates?.[0])}`
     }
+
     router.push(url)
   }
 

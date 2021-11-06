@@ -5,7 +5,7 @@ import { GET_CATEGORIES } from "queries/categories-queries";
 import {
   Categories,
 } from "typings/gqlTypes";
-import SearchResults from "pageComponents/Search/SearchResults";
+import SearchResults from "pageComponents/Search";
 // SSR
 import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { serverApolloClient } from "utils/apollo";

@@ -10,7 +10,7 @@ import {
   // ProductCategoryOrGroup,
   // PublicProductsConnection
 } from "typings/gqlTypes";
-import SearchResults from "pageComponents/Search/SearchResults";
+import SearchResults from "pageComponents/Search";
 // SSR
 import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { ApolloClient } from "@apollo/client";

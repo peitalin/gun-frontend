@@ -114,7 +114,8 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           disableCategoriesFilter={props.disableCategoriesFilter}
           setCurrentCategories={setCurrentCategories}
           currentCategories={currentCategories}
-          syncUrlToCategory={false} // this turns on category-page specific searchbar syncing
+          syncUrlToCategory={true}
+          // this turns on category-page specific searchbar syncing
           dealerStates={dealerStates}
           setDealerStates={setDealerStates}
           calibers={calibers}
