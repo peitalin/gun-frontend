@@ -76,7 +76,9 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
       onCompleted: (data) => {
         setTimeout(() => {
           // refresh this every 30 seconds
-          savedSearchHitsResponse?.refetch()
+          if (typeof savedSearchHitsResponse?.refetch === 'function') {
+            savedSearchHitsResponse?.refetch()
+          }
         }, 30000)
       },
       onError: (e) => { },
