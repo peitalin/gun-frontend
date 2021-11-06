@@ -18,6 +18,7 @@ import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { categoryPreviewsBackup } from "utils/categories";
+import AlignCenterLayout from "components/AlignCenterLayout";
 
 
 
@@ -38,11 +39,11 @@ const CategoriesPage: NextPage<ReactProps> = (props) => {
         //   "https://image-content.gunmarketplace.com.au/og-img-category.png"
         // }
       />
-      <SearchComponent>
-        <CategoriesWall
-          categories={props.initialCategories}
-        />
-      </SearchComponent>
+        <AlignCenterLayout maxWidth={900}>
+          <CategoriesWall
+            categories={props.initialCategories}
+          />
+        </AlignCenterLayout>
     </ErrorBounds>
   )
 }
@@ -57,12 +58,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
 }
 
-interface QueryData1 {
-  getCategories: Categories[];
-}
-interface QueryVar1 {
-  slug?: string;
-}
 
 export const getStaticProps = async (context) => {
 
