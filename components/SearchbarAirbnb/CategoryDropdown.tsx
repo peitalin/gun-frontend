@@ -108,8 +108,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                     // if we enable syncUrlToCategory
                     return (
                       <Link key={category.name + `${i}`}
-                        href="/categories/[categorySlug]"
-                        as={`/categories/${category?.slug}`}
+                        href={`/new?category=${category?.slug}`}
                       >
                         <a>
                           <Button

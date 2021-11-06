@@ -215,7 +215,7 @@ export const useFacetSearchOptions = ({
 
       if (syncUrlParams) {
         if (currentCategories?.[0]?.slug) {
-          console.log("currentCategories: : :: ", currentCategories)
+          // console.log("currentCategories: : :: ", currentCategories)
           if (urlPath.startsWith('/categories')) {
             urlPath = `/categories/${currentCategories?.[0]?.slug}`
           }
@@ -309,9 +309,9 @@ export const useFacetSearchOptions = ({
       }
 
 
-      console.log("params before join: ", params)
+      // console.log("params before join: ", params)
       let params_str: string = params.join('&')
-      console.log("params_str after join: ", params_str)
+      // console.log("params_str after join: ", params_str)
       if (params_str) {
         params_str = `?${params_str}`
       } else {

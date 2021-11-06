@@ -26,6 +26,11 @@ import {
 import { SearchHitsQData, SearchHitsQVar } from "./SearchHits";
 import { useSnackbar } from "notistack"
 
+import {
+  NOTIFICATIONS_OFFSET,
+  NOTIFICATIONS_LIMIT,
+} from "layout/NavBarMain/NotificationsMenu"
+
 
 
 
@@ -49,9 +54,9 @@ const MarketHitAsSeenButton = (props: MarketHitAsSeenButtonProps) => {
       },
       update: (cache, { data: { markSavedSearchHitsAsSeen } }) => {
 
-        let newHits = markSavedSearchHitsAsSeen;
 
-        const cacheData = cache.readQuery<SearchHitsQData, SearchHitsQVar>({
+        // for /saved-search page
+        const cacheData1 = cache.readQuery<SearchHitsQData, SearchHitsQVar>({
           query: GET_SAVED_SEARCH_HITS_BY_USER,
           variables: props.unseenOnly === undefined
             ? {
@@ -64,21 +69,23 @@ const MarketHitAsSeenButton = (props: MarketHitAsSeenButtonProps) => {
                 unseenOnly: props.unseenOnly
               },
         });
-        console.log("cacheData:", cacheData)
-        console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
 
-        let newSearchHits = cacheData?.getSavedSearchHitsByUser?.edges?.map(e => {
+        // for notifications menu
+        const cacheDataNotifications = cache.readQuery<SearchHitsQData, SearchHitsQVar>({
+          query: GET_SAVED_SEARCH_HITS_BY_USER,
+          variables: {
+            limit: NOTIFICATIONS_LIMIT,
+            offset: NOTIFICATIONS_OFFSET,
+            unseenOnly: true,
+          },
+        });
 
-          if (e?.node?.id === newHits?.[0]?.id) {
-            // remove the item you just marked as seen from connection
-            return null
-          } else {
-            return e
-          }
-        }).filter(edge => !edge?.node?.seen)
-        // filter out all seen items
+        // console.log("cacheData1:", cacheData1)
+        // console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
 
-        if (newSearchHits) {
+        let newSearchHits1 = cacheData1?.getSavedSearchHitsByUser?.edges
+        if (newSearchHits1) {
+          // for /saved-search page
           cache.writeQuery({
             query: GET_SAVED_SEARCH_HITS_BY_USER,
             variables: props.unseenOnly === undefined
@@ -90,11 +97,44 @@ const MarketHitAsSeenButton = (props: MarketHitAsSeenButtonProps) => {
                   limit: props.limit,
                   offset: props.offset,
                   unseenOnly: props.unseenOnly
-                },
+              },
             data: {
               getSavedSearchHitsByUser: {
-                ...cacheData.getSavedSearchHitsByUser,
-                edges: newSearchHits.filter(edge => edge?.node?.id),
+                ...cacheData1.getSavedSearchHitsByUser,
+                edges: newSearchHits1,
+              }
+            },
+          });
+        }
+
+        let newSearchHitsNotifications = cacheDataNotifications?.getSavedSearchHitsByUser?.edges?.filter(
+          edge => {
+            // remove seenSavedSearch from notifications menu
+            return !markSavedSearchHitsAsSeen.find(seenHit => {
+              let existingSavedSearchHit = edge?.node
+              return existingSavedSearchHit?.id === seenHit.id
+            })
+          }
+        )
+
+        console.log("cacheDataNotifications:", cacheDataNotifications)
+        console.log("newsSearchHitsNotifications:", newSearchHitsNotifications)
+        // filter out seen items for /notifications menu
+
+        if (newSearchHitsNotifications) {
+          // for /notifications menu: unseenOnly = true
+          cache.writeQuery({
+            query: GET_SAVED_SEARCH_HITS_BY_USER,
+            variables: {
+              limit: NOTIFICATIONS_LIMIT,
+              offset: NOTIFICATIONS_OFFSET,
+              unseenOnly: true,
+            },
+            data: {
+              getSavedSearchHitsByUser: {
+                ...cacheDataNotifications.getSavedSearchHitsByUser,
+                edges: newSearchHitsNotifications,
+                // filter out seen items
               }
             },
           });

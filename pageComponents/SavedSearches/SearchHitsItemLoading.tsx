@@ -15,18 +15,8 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 // typings
 import {
-  SavedSearchHit,
-} from "typings/gqlTypes"
-// graphql
-import { useMutation, useQuery } from '@apollo/client';
-import {
-  MARK_SAVED_SEARCH_HITS_AS_SEEN
-} from "queries/saved-search-mutations";
-import {
-  GET_SAVED_SEARCH_HITS_BY_USER
-} from "queries/saved-search-queries";
-import { SearchHitsQData, SearchHitsQVar } from "./SearchHits";
-import MarkHitAsSeenButton from "./MarkHitAsSeenButton"
+  SEARCH_HIT_ITEM_HEIGHT
+} from "./SearchHitsItem"
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -104,7 +94,7 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
     padding: '0.5rem 1rem 0.5rem 0.5rem',
     marginBottom: '0.5rem',
-    height: 106,
+    height: SEARCH_HIT_ITEM_HEIGHT,
     // backgroundColor: isThemeDark(theme)
     //   ? Colors.uniswapMediumNavy
     //   : Colors.slateGrey,

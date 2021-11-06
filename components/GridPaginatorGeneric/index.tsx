@@ -51,9 +51,6 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
   React.useEffect(() => {
     let newHashmap = {}
     connection?.edges?.forEach(({ node }: { node: any }) => {
-      // let uid = `${node.__typename}:{"id":"${node?.id}"}`
-      // let object = (aClient.cache as any)?.data?.data[uid]
-      // newHashmap[node?.id] = object
       newHashmap[node?.id] = node
     })
     setHashmap(s => ({ ...hashmap, ...newHashmap }))

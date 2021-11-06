@@ -37,6 +37,11 @@ import { useLazyQuery } from "@apollo/client"
 import LoadingBar from "components/LoadingBar";
 import MarkHitAsSeenButton from "pageComponents/SavedSearches/MarkHitAsSeenButton"
 
+// needed for /saved-search page to update notifcations menu
+// when marking items as seen
+export const NOTIFICATIONS_LIMIT = 8
+export const NOTIFICATIONS_OFFSET = 0
+
 
 
 export const NotificationsMenu: React.FC<ReactProps> = (props) => {
@@ -56,8 +61,6 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
 
   const client = useApolloClient()
 
-  const limit = 8
-  const offset = 0
   const unseenOnly = true
 
   const [
@@ -66,8 +69,8 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
   ] = useLazyQuery<SearchHitsQData, SearchHitsQVar>(
     GET_SAVED_SEARCH_HITS_BY_USER, {
       variables: {
-        limit: limit,
-        offset: offset,
+        limit: NOTIFICATIONS_LIMIT,
+        offset: NOTIFICATIONS_OFFSET,
         unseenOnly: unseenOnly,
       },
       onCompleted: (data) => { },
@@ -83,8 +86,8 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
   let cacheData = client.cache.readQuery<SearchHitsQData, SearchHitsQVar>({
     query: GET_SAVED_SEARCH_HITS_BY_USER,
     variables: {
-      limit: limit,
-      offset: offset,
+      limit: NOTIFICATIONS_LIMIT,
+      offset: NOTIFICATIONS_OFFSET,
       unseenOnly: unseenOnly
     },
   })
@@ -276,8 +279,8 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                     isSeen={hit.seen}
                     toolTip={false}
                     // needed to update query cache connections
-                    limit={limit}
-                    offset={offset}
+                    limit={NOTIFICATIONS_LIMIT}
+                    offset={NOTIFICATIONS_OFFSET}
                     unseenOnly={unseenOnly}
                   />
                 </div>

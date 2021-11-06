@@ -48,64 +48,6 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
     categorySlug,
   } = props
 
-  const snackbar = useSnackbar()
-
-  const [
-    markSavedSearchAsSeen,
-    { data, loading, error }
-  ] = useMutation<MData, MVar>(
-    MARK_SAVED_SEARCH_HITS_AS_SEEN, {
-      variables: {
-        savedSearchHitsIds: []
-      },
-      update: (cache, { data: { markSavedSearchHitsAsSeen } }) => {
-
-        let newHits = markSavedSearchHitsAsSeen;
-
-        const cacheData = cache.readQuery<SearchHitsQData, SearchHitsQVar>({
-          query: GET_SAVED_SEARCH_HITS_BY_USER,
-          variables: {
-            limit: props.limit,
-            offset: props.offset,
-          },
-        });
-        // console.log("cacheData:", cacheData)
-        // console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
-
-        let newSearchHits = cacheData.getSavedSearchHitsByUser.edges.map(e => {
-          let matchHit = newHits.find(h => h.id === e.node.id)
-
-          if (matchHit) {
-            return { node: matchHit }
-          } else {
-            return e
-          }
-        })
-
-        cache.writeQuery({
-          query: GET_SAVED_SEARCH_HITS_BY_USER,
-          variables: {
-            limit: props.limit,
-            offset: props.offset,
-          },
-          data: {
-            getSavedSearchHitsByUser: {
-              ...cacheData.getSavedSearchHitsByUser,
-              edges: newSearchHits,
-            }
-          },
-        });
-      },
-      onCompleted: (data) => {
-      },
-      onError: (e) => {
-        snackbar.enqueueSnackbar(
-          `Error marking saved search hits as seen: ${e}`,
-          { variant: "error" }
-        )
-      },
-  })
-
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -260,7 +202,7 @@ interface MVar {
 }
 
 
-
+export const SEARCH_HIT_ITEM_HEIGHT = 110
 
 const styles = (theme: Theme) => createStyles({
   searchHitsContainerDesktop: {
@@ -276,6 +218,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
       : Colors.cream,
+    height: SEARCH_HIT_ITEM_HEIGHT,
   },
   searchHitsContainerMobile: {
     position: "relative",

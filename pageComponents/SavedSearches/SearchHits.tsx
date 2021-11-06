@@ -72,6 +72,8 @@ const SearchHits: React.FC<ReactProps> = (props) => {
     overfetchBy: overfetchBy,
   })
 
+  const [loading2, setLoading2] = React.useState(false)
+
   const { data, loading, error } = useQuery<SearchHitsQData, SearchHitsQVar>(
     GET_SAVED_SEARCH_HITS_BY_USER, {
       variables: {
@@ -79,6 +81,7 @@ const SearchHits: React.FC<ReactProps> = (props) => {
         offset: offset,
       },
       onCompleted: (data) => {
+        setLoading2(false)
       },
       onError: (e) => {
         snackbar.enqueueSnackbar(
@@ -88,6 +91,11 @@ const SearchHits: React.FC<ReactProps> = (props) => {
       },
   })
 
+  // prevent flash of empty items due to GridPaginator rerender
+  React.useEffect(() => {
+    setLoading2(true)
+  }, [offset])
+
   const connection = data?.getSavedSearchHitsByUser
 
   return (
@@ -96,7 +104,7 @@ const SearchHits: React.FC<ReactProps> = (props) => {
         Product Search Matches
       </Typography>
       <Typography variant="h4" className={classes.subtitle}>
-        These products matched your saved searches
+        These products matched your saved searches in the last 2 months
       </Typography>
 
       <SearchOptions
@@ -134,13 +142,13 @@ const SearchHits: React.FC<ReactProps> = (props) => {
           totalCount={connection?.totalCount ?? 0}
           setTotalCount={setTotalCount}
           numItemsPerPage={numItemsPerPage}
-          loading={loading}
+          loading={loading || loading2}
           loadingComponent={
             <SearchHitsItemLoading />
           }
           emptyComponent={
             <div className={classes.emptyBox}>
-              No Saved Search Hits Yet
+              No Saved Search Hits
             </div>
           }
           // className={classes.rowContainer}
