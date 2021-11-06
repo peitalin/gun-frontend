@@ -73,7 +73,12 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
         offset: NOTIFICATIONS_OFFSET,
         unseenOnly: unseenOnly,
       },
-      onCompleted: (data) => { },
+      onCompleted: (data) => {
+        setTimeout(() => {
+          // refresh this every 30 seconds
+          getSavedSearchHits()
+        }, 30000)
+      },
       onError: (e) => { },
   })
 
