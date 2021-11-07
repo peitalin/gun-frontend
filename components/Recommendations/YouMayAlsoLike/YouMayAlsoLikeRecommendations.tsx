@@ -10,12 +10,12 @@ import {
   GET_RECOMMENDED_PRODUCTS,
 } from "queries/products-queries";
 // Components
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Typings
 import {
   ConnectionQuery,
-  Product,
+  NewsItem,
   ProductsConnection,
 } from "typings/gqlTypes";
 // Router
@@ -102,8 +102,8 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
                   smDown ? classes.flexItemMobile : classes.flexItem,
                   classes.flexItemHover,
                 )}>
-                  <ProductCardResponsive
-                    product={product}
+                  <NewsItemCardResponsive
+                    newsItem={{ product } as NewsItem}
                     // refetch={watchListConnectionResponse.refetch}
                     style={{
                       marginBottom: '1rem',

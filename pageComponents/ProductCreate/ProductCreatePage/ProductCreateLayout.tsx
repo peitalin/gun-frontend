@@ -14,11 +14,12 @@ import {
 } from "layout/AppTheme";
 
 // Product Preview Card
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import PreventDragDropContainer from "./PreventDragDropContainer";
 import Tooltip from '@material-ui/core/Tooltip';
 import {
   Product,
+  NewsItem,
   ListingType,
 } from "typings/gqlTypes";
 import RenderInstructions from "./RenderInstructions";
@@ -71,8 +72,8 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
             ) &&
             <Tooltip title="Preview" placement="bottom-start">
               <div className={clsx(classes.stickyProductPreviewContainer, 'fadeIn')}>
-                <ProductCardResponsive
-                  product={props.productPreviewSticky}
+                <NewsItemCardResponsive
+                  newsItem={{ product: props.productPreviewSticky } as NewsItem}
                   previewImageEmptyMessage={
                     props.activeStep === 6
                     ? `Step ${props.activeStep + 1}: Upload Images`

@@ -4,15 +4,14 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Typings
 import {
   Product,
-  ProductPrivate,
+  NewsItem,
 } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Loading from "components/Loading";
 import Link from "next/link";
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 // helpers
 import { formatDateTime } from "utils/dates";
 import { Colors } from "layout/AppTheme";
@@ -47,6 +46,8 @@ const ProductDetails = (props: ReactProps & FormikProps<FormikFields>) => {
     fprops.setFieldValue("productId", product?.id)
     fprops.setFieldValue("isSuspended", product?.isSuspended)
   }, [product])
+
+  console.log("ppppppp:", product)
 
   return (
     <ErrorBounds className={clsx(
@@ -194,8 +195,8 @@ const ProductDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             <Typography className={classes.fieldTitle} variant="subtitle1">
               Product Link
             </Typography>
-            <ProductCardResponsive
-              product={product}
+            <NewsItemCardResponsive
+              newsItem={{ product } as NewsItem}
               cardsPerRow={cardsPerRow}
             />
 

@@ -2,10 +2,12 @@ import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
+import {
+  NewsItem,
+} from "typings/gqlTypes"
 import clsx from "clsx";
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import Hidden from 'components/HiddenFix';
-import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
 
 
 
@@ -48,8 +50,9 @@ const LoadingCards = (props: ReactProps) => {
                 classes.flexItem,
                 classes.flexItemHover,
               )}>
-                <ProductCardResponsive
-                  product={productLoading as any}
+                <NewsItemCardResponsive
+                  loading={true}
+                  newsItem={{ product: productLoading } as any}
                   cardsPerRow={cardsPerRow}
                 />
               </div>
@@ -62,8 +65,9 @@ const LoadingCards = (props: ReactProps) => {
                 ? classes.descriptionLoadingNoFlexWrap
                 : classes.descriptionLoading
             }>
-              <ProductCardResponsive
-                product={productLoading as any}
+              <NewsItemCardResponsive
+                loading={true}
+                newsItem={{ product: productLoading } as any}
                 cardsPerRow={cardsPerRow}
                 xsCardRow={props.xsCardRow}
               />

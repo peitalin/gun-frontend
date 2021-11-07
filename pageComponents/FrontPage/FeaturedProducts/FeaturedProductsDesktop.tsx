@@ -8,11 +8,11 @@ import { styles } from "./stylesDesktop";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 // Components
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // GraphQL Typings
 import {
-  Product,
+  NewsItem,
   Order_By,
   PromotedSlotsConnection,
 } from "typings/gqlTypes";
@@ -70,8 +70,8 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
                   classes.flexItem,
                   classes.flexItemHover,
                 )}>
-                  <ProductCardResponsive
-                    product={promotedSlot?.product}
+                  <NewsItemCardResponsive
+                    newsItem={{ product: promotedSlot?.product } as NewsItem}
                     cardsPerRow={cardsPerRow}
                     promotedSlotId={
                       promotedSlot.isRandomFiller

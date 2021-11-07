@@ -6736,17 +6736,17 @@ export type SavedSearchHit = {
   __typename?: 'SavedSearchHit';
   id: Scalars['ID'];
   savedSearchId: Scalars['ID'];
+  savedSearch?: Maybe<Saved_Searches>;
   userId: Scalars['ID'];
+  user?: Maybe<UserPrivate>;
   productTitle: Scalars['String'];
-  productId?: Maybe<Scalars['ID']>;
-  externalProductId?: Maybe<Scalars['ID']>;
   createdAt: Scalars['Date'];
   seen?: Maybe<Scalars['Boolean']>;
-  user?: Maybe<UserPrivate>;
   /** either product or external_products */
+  productId?: Maybe<Scalars['ID']>;
+  externalProductId?: Maybe<Scalars['ID']>;
   product?: Maybe<Product>;
   externalProduct?: Maybe<External_Products>;
-  savedSearch?: Maybe<Saved_Searches>;
 };
 
 export type SavedSearchHitsConnection = {

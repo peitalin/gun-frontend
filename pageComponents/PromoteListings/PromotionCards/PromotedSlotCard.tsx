@@ -4,12 +4,12 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import PromotedSlotMessage from "./PromotedSlotMessage";
 import PromotedSlotMessageAdmin from "./PromotedSlotMessageAdmin";
 // GraphQL Typings
 import {
-  Product,
+  NewsItem,
   UserPrivate,
   PromotedSlotsConnection,
   PromotedSlot,
@@ -66,16 +66,16 @@ const PromotedSlotCard = (props: ReactProps) => {
           </div>
         </div>
       }
-      <ProductCardResponsive
-        product={
+      <NewsItemCardResponsive
+        newsItem={{
           // random generated products won't have productId
           // and will have isRandomFiller === true
-          (promotedSlot?.isRandomFiller || (isExpired && !isAdmin))
+          product: (promotedSlot?.isRandomFiller || (isExpired && !isAdmin))
             ? undefined
             : promotedSlot?.product
           // When product is expired admin sees the products he picks for the slot
           // but other buyers will only see a blank buyable slot
-        }
+        } as NewsItem}
         cardsPerRow={cardsPerRow}
         disableLoadingAnimation={true}
         onClick={async(e) => {

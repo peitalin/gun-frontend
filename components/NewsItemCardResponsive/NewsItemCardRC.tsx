@@ -66,6 +66,7 @@ const NewsItemCardRC = (props: ReactProps) => {
 
   const {
     productId,
+    externalProductId,
 		make,
 		model,
 		caliber,
@@ -180,7 +181,7 @@ const NewsItemCardRC = (props: ReactProps) => {
           onClick={props.onClick}
         >
           {
-            !newsItemId
+            (!productId && !externalProductId)
             ? <DescriptionLoading
                 style={cardWidthStyle}
                 disableLoadingAnimation={disableLoadingAnimation}

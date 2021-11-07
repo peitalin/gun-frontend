@@ -168,7 +168,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   });
 
 
-  console.log("categorySlugsForGql", categorySlugsForGql)
+  // console.log("categorySlugsForGql", categorySlugsForGql)
 
   React.useEffect(() => {
     if (!loading && !!newsItemsConnection?.totalCount) {
@@ -196,7 +196,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   // console.log("pageParam: ", pageParam)
   // console.log("index: ", index)
   // console.log("offset: ", offset)
-  console.log(">>>>>orderBy: ", orderBy)
+  // console.log(">>>>>orderBy: ", orderBy)
 
   return (
     <AlignCenterLayout

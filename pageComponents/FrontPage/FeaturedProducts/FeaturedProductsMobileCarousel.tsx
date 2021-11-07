@@ -9,12 +9,12 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 // Typings
 import {
-  Product,
+  NewsItem,
   PromotedSlotsConnection,
 } from "typings/gqlTypes";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Watchlist
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import AirCarousel from "components/AirCarousel";
 import ArrowRight from "@material-ui/icons/ArrowRight";
 
@@ -80,8 +80,8 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
               <div key={i} style={{
                 marginLeft: '0.5rem',
               }}>
-                <ProductCardResponsive
-                  product={promotedSlot.product}
+                <NewsItemCardResponsive
+                  newsItem={{ product: promotedSlot.product } as NewsItem }
                   cardsPerRow={cardsPerRow}
                   promotedSlotId={
                     promotedSlot.isRandomFiller
