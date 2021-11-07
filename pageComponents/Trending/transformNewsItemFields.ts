@@ -238,9 +238,17 @@ export const transformNewsItemToFieldsProductPreview = (
 	let productPreview = newsItem?.productPreview
 	let p = productPreview
 
+	let productId = p?.id?.match(/external/)
+		? undefined
+		: p?.id
+
+	let externalProductId = p?.id?.match(/external/)
+		? p?.id
+		: undefined
+
 	return {
-		productId: p.id,
-		externalProductId: undefined,
+		productId: productId,
+		externalProductId: externalProductId,
 		make: p.make,
 		model: p.model,
 		caliber: p.caliber,

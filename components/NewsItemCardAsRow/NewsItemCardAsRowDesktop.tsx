@@ -54,6 +54,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   const {
     productId,
+    externalProductId,
     createdAt,
     createdAtSnapshot,
 		make,
@@ -80,6 +81,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
     isSuspended,
     isSold,
     categoryId,
+    sellerLicenseVerified,
   } = transformNewsItemToFields(newsItem)
 
 
@@ -98,7 +100,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
       onMouseLeave={() => setHover(false)}
     >
       {
-        !productId
+        (!productId && !externalProductId)
         ? <DescriptionLoading
             isMobile
             height={'36px'}
@@ -263,7 +265,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
               )}>
 
                 {
-                  newsItem?.product?.sellerLicense?.verified
+                  sellerLicenseVerified
                   ? <VerifiedChip
                       title={"Verified Seller"}
                       style={{ margin: 0, marginRight: '0.5rem' }}
@@ -280,7 +282,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                 />
 
                 <AdType
-                  productId={newsItem?.productId}
+                  productId={productId}
                   adType={adType}
                   sourceSiteUrl={sourceSiteUrl}
                   style={{ margin: 0, marginRight: '0.5rem' }}
@@ -294,19 +296,19 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
 
 
-        <CollectionsIcon
-          productId={newsItem?.productId}
-          externalProductId={newsItem?.externalProductId}
-          // refetch={refetch}
-          style={{
-            top: 'unset',
-            // bottom: '-1rem',
-            right: '-0.75rem',
-            // marginTop: '0.5rem',
-            width: '28px',
-            height: '28px',
-          }}
-        />
+      <CollectionsIcon
+        productId={productId}
+        externalProductId={externalProductId}
+        // refetch={refetch}
+        style={{
+          top: 'unset',
+          // bottom: '-1rem',
+          right: '-0.75rem',
+          // marginTop: '0.5rem',
+          width: '28px',
+          height: '28px',
+        }}
+      />
 
     </div>
   );
