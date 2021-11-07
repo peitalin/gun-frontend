@@ -155,7 +155,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
       },
       // sort by newest by default
       sortBy: orderBy?.value as SortByNewsItems,
-      // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
+      // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
       categorySlugs: categorySlugsForGql,
       // require button click to change search
       dealerStates: dealerStatesForGql,
@@ -270,8 +270,8 @@ const SearchResults: React.FC<ReactProps> = (props) => {
           sortByOptions={[
             { label: "Newest", value: SortByNewsItems.CREATED_AT_DESC },
             { label: "Oldest", value: SortByNewsItems.CREATED_AT_ASC },
-            { label: "Price (Highest)", value: SortByNewsItems.PRICE_DESC },
-            { label: "Price (Lowest)", value: SortByNewsItems.PRICE_ASC },
+            { label: "Price (High)", value: SortByNewsItems.PRICE_DESC },
+            { label: "Price (Low)", value: SortByNewsItems.PRICE_ASC },
           ]}
         />
 

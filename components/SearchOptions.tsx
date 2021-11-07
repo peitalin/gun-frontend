@@ -343,38 +343,35 @@ export const selectStyles = ({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     boxShadow: 'none',
-    // background: buttonBackgroundColor,
-    // backgroundColor: Colors.dropDownGrey,
     borderRadius: BorderRadius3x,
+    fontFamily: fontFam,
+    fontSize: '0.9rem',
+    color: Colors.darkGrey,
+    width: '100%',
+    height: '100%',
+    cursor: "text",
     '&:hover': {
       // border: 'none',
       cursor: "pointer",
       backgroundColor: Colors.dropDownGreyHover,
-      // backgroundColor: isDarkMode
-      //   ? `${Colors.uniswapMediumGrey}`
-      //   : `${Colors.slateGreyDarkest}`,
     },
     "&:focus": {
       // border: 'none',
     },
-    // borderRadius: '4px',
-    fontFamily: fontFam,
-    fontSize: '0.9rem',
-    color: Colors.darkGrey,
-    // fontSize: '1rem',
-    width: '100%',
-    // // match with the menu
-    cursor: "text",
-    height: '100%',
   }),
   singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
     // color: Colors.darkGrey,
     ...styles,
-    color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+    // color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+    color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     maxWidth: '250px',
+  }),
+  dropdownIndicator: styles => ({
+    ...styles,
+    color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
   }),
   indicatorSeparator: styles => ({
     display:'none'

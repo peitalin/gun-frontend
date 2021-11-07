@@ -137,8 +137,8 @@ export const Colors = {
   mediumLightGrey: "#dadbdd", // Description Input grey, Fiverr grey lines
   mediumGrey: "#ccc",
   ghostGrey: "#bbb",
-  dropDownGrey: "rgba(152,152,152,0.1)",
-  dropDownGreyHover: "rgba(152,152,152,0.15)",
+  dropDownGrey: "#2D2F35",
+  dropDownGreyHover: "#3B3F49",
   grey: "#aaa",
   darkerGrey: "#888",
   darkGrey: "#767676",

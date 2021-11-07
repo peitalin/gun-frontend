@@ -20,20 +20,8 @@ import BannerSearchMobile from "./BannerSearchMobile";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
 import CategorySearchbar from "./CategorySearchbar";
 import RowOrCardsButtons from "./RowOrCardsButtons";
-// Search Component
-import dynamic from "next/dynamic";
-const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
-  loading: () =>
-    <div style={{
-      height: 44,
-      width: 150,
-      // border: `1px solid ${Colors.uniswapMediumGrey}`,
-      // background: isDarkMode ? Colors.uniswapDarkNavy : Colors.slateGrey,
-      borderRadius: BorderRadius3x,
-    }}/>,
-  ssr: false,
-})
 import { SelectOption, selectStyles } from "components/SearchOptions";
+import SortByDropdown from "./SortByDropdown";
 
 
 
@@ -161,10 +149,16 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setFocusedOuter={setFocusedOuter}
             focusedOuter={focusedOuter}
           />
-          <RowOrCardsButtons
+          {/* <RowOrCardsButtons
             rowMode={rowMode}
             setRowMode={setRowMode}
             isMobile={true}
+          /> */}
+          <SortByDropdown
+            isMobile={true}
+            isDarkMode={isDarkMode}
+            setOrderBy={setOrderBy}
+            sortByOptions={props.sortByOptions}
           />
         </BannerSearchMobile>
       </Hidden>
@@ -222,48 +216,12 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setRowMode={setRowMode}
             isMobile={false}
           />
-          <div className={classes.sortByContainer}>
-            <div className={classes.sortByDropDown}>
-              <DropdownInput
-                initialState={
-                  props.sortByOptions?.[0]
-                  // initial initialState
-                  // { label: "Design Templates", value: "category_123123"}
-                }
-                isSearchable={false}
-                hideCursor={true}
-                onChange={({ label, value }: SelectOption) =>
-                  setTimeout(() => {
-                    setOrderBy({ label, value })
-                  }, 0)
-                  // let UI update first for menu to close
-                }
-                options={props.sortByOptions}
-                placeholder={"Select a category"}
-                className={classes.width100}
-                styles={selectStyles({
-                  width: 200,
-                  isDarkMode: isDarkMode,
-                })}
-                theme={theme => ({
-                  ...theme,
-                  maxWidth: '200px',
-                  borderRadius: BorderRadius2x,
-                  colors: {
-                    ...theme.colors,
-                    color: isDarkMode
-                      ? Colors.uniswapLightestGrey
-                      : Colors.black,
-                    primary25: isDarkMode
-                      ? Colors.uniswapLightNavy
-                      : Colors.slateGreyDarker,
-                    primary: Colors.uniswapLighterGrey,
-                  },
-                })}
-                sortByOptions={props.sortByOptions}
-              />
-            </div>
-          </div>
+          <SortByDropdown
+            isMobile={false}
+            isDarkMode={isDarkMode}
+            setOrderBy={setOrderBy}
+            sortByOptions={props.sortByOptions}
+          />
         </BannerSearchDesktop>
       </Hidden>
     </>

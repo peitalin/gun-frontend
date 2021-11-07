@@ -150,7 +150,10 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   // console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
   // console.log('searchTerm: ', searchTerm)
-  const floatPaginator = y > 300
+
+  const floatPaginator = isMobile
+    ? y > 300
+    : y > 440
 
   return (
     <div className={clsx(
@@ -331,8 +334,8 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
           classes.arrowContainer,
           classes.height50,
           // focused ? classes.height65 : classes.height50,
-          (isMobile && floatPaginator) && classes.arrowContainerMobile,
-          (isMobile && floatPaginator) ? 'fadeInFast' : undefined,
+          (floatPaginator) && classes.arrowContainerMobile,
+          (floatPaginator) ? 'fadeInFast' : undefined,
           isMobile && classes.marginTop,
           (isMobile && focused) && classes.displayNoneDelayed,
           // hide on mobile when menu is focused/expanded

@@ -104,7 +104,7 @@ const SearchHits: React.FC<ReactProps> = (props) => {
         Product Search Matches
       </Typography>
       <Typography variant="h4" className={classes.subtitle}>
-        These products matched your saved searches in the last 2 months
+        These products matched your saved searches (last 2 weeks)
       </Typography>
 
       <SearchOptions

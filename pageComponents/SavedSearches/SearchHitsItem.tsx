@@ -81,7 +81,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
 
       {
         props.externalLink
-        ? <a className={classes.link} href={props.externalLink}>
+        ? <a className={classes.link} href={props.externalLink} target={"_blank"}>
             {
               featuredPreviewItem
               ? <ProductPreviewThumb
@@ -101,7 +101,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
             }
           </a>
         : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
-            <a className={classes.link}>
+            <a className={classes.link} target={"_blank"}>
               <ProductPreviewThumb
                 previewItem={props.previewItem}
                 width={90}
@@ -122,11 +122,11 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
           <span className={classes.boldText}>Product</span>
           {
             props.externalLink
-            ? <a className={classes.link} href={props.externalLink}>
+            ? <a className={classes.link} href={props.externalLink} target={"_blank"}>
                 <span className={classes.italicText}>{productTitle}</span>
               </a>
             : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
-                <a className={classes.link}>
+                <a className={classes.link} target={"_blank"}>
                   <span className={classes.italicText}>{productTitle}</span>
                 </a>
               </Link>
