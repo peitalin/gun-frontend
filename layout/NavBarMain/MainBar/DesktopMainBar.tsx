@@ -163,6 +163,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
             </div>
         } */}
 
+
         {
           !user &&
           <Link href="/signup">

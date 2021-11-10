@@ -94,6 +94,8 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
             props.className,
           )}
           onClick={props.handleToggleModal}
+          onMouseEnter={props.onMouseEnter}
+          onMouseLeave={props.onMouseLeave}
           {...props.buttonProps}
         >
           {
@@ -119,6 +121,8 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
             classes.mobileMenuItemRoot,
             props.className,
           )}
+          onMouseEnter={props.onMouseEnter}
+          onMouseLeave={props.onMouseLeave}
           onClick={() => {
             props.handleToggleModal()
           }}
@@ -160,6 +164,8 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
             variant="text"
             color="secondary"
             onClick={props.handleToggleModal}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
             className={clsx(
               classes.loginButton,
               classes.maxWidthEmailPrefillButton,
@@ -243,6 +249,8 @@ interface ReactProps extends WithStyles<typeof styles> {
     lastName?: string
   }): void;
   dispatchResetPassword(payload: { email: string }): void;
+  onMouseEnter?(): void
+  onMouseLeave?(): void
 }
 
 export default withStyles(styles)( LoginPageModal );

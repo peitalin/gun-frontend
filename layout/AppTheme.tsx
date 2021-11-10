@@ -151,6 +151,7 @@ export const Colors = {
   // purples
   magenta: "#EB466D",
   purple: "#A981EB",
+  lighterPurple: "#ba9aef",
   lightPurple: "#B8B3E9",
   // red
   fadedRed: "rgba(224, 88, 76, 0.8)", // for errors

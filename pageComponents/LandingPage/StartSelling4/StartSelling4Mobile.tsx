@@ -33,7 +33,7 @@ const StartSelling4 = (props: ReactProps) => {
       <div className={clsx(classes.section4, classes.flexCol)}>
 
         <Typography className={classes.title}>
-          All you need to manage and track your orders
+          Manage and edit your listings easily
         </Typography>
 
         <div className={classes.flexRowWrap}>

@@ -19,7 +19,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import lottie from "lottie-web";
 
 
-const StartSelling3 = (props: ReactProps) => {
+const StartSelling3Escrow = (props: ReactProps) => {
 
   const { classes } = props;
   const theme = useTheme();
@@ -275,4 +275,4 @@ export const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)(StartSelling3);
+export default withStyles(styles)(StartSelling3Escrow);

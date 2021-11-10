@@ -12,7 +12,6 @@ import BannerStartDesktop from "./BannerStartDesktop";
 import BannerStartMobile from "./BannerStartMobile";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
@@ -30,68 +29,35 @@ const BannerStart: NextPage<ReactProps> = (props) => {
   // const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   const ditherStyle = {
-    // background: isDarkMode
-    //   ? Gradients.gradientUniswapDark.background
-    //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
       ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 50%, rgba(255, 255, 255, 0) 50%)`
       : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 50%, rgba(255, 255, 255, 0) 50%)`,
   }
 
   const ditherStyleMobile = {
-    // top row: solid background
-    // bottom row: navbar dither
-
     background: props.isDarkMode
       ? `linear-gradient(0deg , ${Colors.black1A} 25%, rgba(25, 25, 25, 0.1) 70%)`
       : `linear-gradient(0deg , ${Colors.black1A} 25%, rgba(25, 25, 25, 0.1) 70%)`,
   }
 
-  ///// https://codepen.io/danichk/pen/YyVeXa
-  // const bannerContainerStyle = {
-  //   // polkadot
-  //   background: `${Colors.uniswapDarkNavy}`,
-  //   backgroundImage:`radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`,
-  //   backgroundSize: "40px 40px",
-  //   backgroundPosition: "0 0, 20px 20px",
-  // }
-
   const bannerContainerStyle = {
     backgroundImage:`url(/img/start/hero4.jpg)`,
-    // backgroundImage:`url(/img/start/hero1.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: "cover",
     backgroundPosition: "right",
-    // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
-  // // collage
-  // const bannerContainerStyle = {
-  //   backgroundImage:`url(/img/start/gun-collage-5.png)`,
-  //   backgroundPositionY: "2rem",
-  //   backgroundRepeat: 'repeat',
-  //   backgroundSize: "contain",
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundSize: "cover",
-  //   backgroundPosition: "left",
-  //   // backgroundSize: 'auto', //stretch to fit for hero3.png
-  // }
-
   const bannerContainerStyleMobile = {
-    // backgroundImage:`url(/img/start/hero2.jpg)`,
     backgroundColor: isThemeDark(theme)
       ? Colors.black1A
       : Colors.black1A,
     backgroundImage: isThemeDark(theme)
       ? `url(/img/start/gun-collage-light.png)`
       : `url(/img/start/gun-collage-light.png)`,
-    // backgroundImage:`url(/img/start/hero4.jpg)`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: "left",
     backgroundSize: "cover",
     justifyContent: "flex-end",
-    // backgroundSize: "100%",
-    // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
   return (
@@ -106,6 +72,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
           bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
           bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
           isDarkMode={props.isDarkMode}
+          title={props.title}
+          subtitle={props.subtitle}
         />
       </Hidden>
       {/* Mobile */}
@@ -118,6 +86,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
           bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
           bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
           isDarkMode={props.isDarkMode}
+          title={props.title}
+          subtitle={props.subtitle}
         />
       </Hidden>
     </div>
@@ -127,6 +97,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   isDarkMode: boolean
+  title: React.ReactNode
+  subtitle: React.ReactNode
 }
 
 export const styles = (theme: Theme) => createStyles({

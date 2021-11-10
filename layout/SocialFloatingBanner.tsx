@@ -33,11 +33,9 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
     <div className={classes.rootSocialFloatingBanner}>
       <div className={classes.socialInnerBar}>
 
-        <Tooltip title={"Beta Testing Version"} placement={"top"}>
-          <div className={classes.beta}>
-            Beta 1.5
-          </div>
-        </Tooltip>
+        <div className={classes.beta}>
+          v1.7
+        </div>
 
         <Tooltip title={"Join our Discord chat"} placement={"top"}>
           <div className={classes.iconBox}>

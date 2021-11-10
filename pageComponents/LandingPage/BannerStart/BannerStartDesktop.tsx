@@ -2,34 +2,30 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius, Colors, Gradients, BorderRadius2x, BoxShadows, fontFam } from "layout/AppTheme";
+import {
+  BorderRadius,
+  Colors,
+  Gradients,
+  BorderRadius2x,
+  BorderRadius3x,
+  BoxShadows,
+  fontFam,
+  isThemeDark
+} from "layout/AppTheme";
 import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-import TextInput from "components/Fields/TextInput";
 // SSR
 import { NextPage } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// typings
-import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 // import Link from "next/link";
 // import CardMedia from "@material-ui/core/CardMedia";
 // import Image from 'next/image';
+import Login from "layout/Login"
+import ArrowStripeIcon from "components/ArrowStripeIcon"
 
-
-import { useFormik } from 'formik';
-import { validationSchemas } from "utils/validation";
-import { useSnackbar } from "notistack";
-import { useMutation } from "@apollo/client";
-
-import {
-  GET_SIGNUP_WAITLIST,
-  SIGNUP_TO_WAITLIST,
-} from "queries/signup-waitlist";
 
 
 
@@ -42,60 +38,10 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
     bannerContainerStyle,
   } = props;
 
-  const snackbar = useSnackbar();
-
+  // const snackbar = useSnackbar();
   const theme = useTheme();
-  // const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const isDark = isThemeDark(theme)
   // const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  // const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
-
-  const [
-    signupToWaitlist,
-    signupToWaitlistResponse
-  ] = useMutation<{ signupToWaitlist: Signup_Emails }, { email: string }>(
-    SIGNUP_TO_WAITLIST, {
-      variables: {
-        email: "",  // use formik values later
-      },
-      onCompleted: ({ signupToWaitlist }) => {
-        console.log("data::::", signupToWaitlist)
-        snackbar.enqueueSnackbar(
-          `You're on the waitlist ${signupToWaitlist?.email}`,
-          { variant: "success" }
-        )
-      },
-      onError: (err) => {
-        let errMsg = err?.graphQLErrors?.[0]?.message;
-        if (errMsg?.includes("duplicate")) {
-          snackbar.enqueueSnackbar(
-            `You've already signed up`,
-            { variant: "info" }
-          )
-        } else {
-          snackbar.enqueueSnackbar(
-            `${errMsg ?? "There was a connection error"}`,
-            { variant: "error" }
-          )
-        }
-      },
-    }
-  )
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-    },
-    validationSchema: validationSchemas.SignUpEmail,
-    onSubmit: async (values) => {
-      console.log(JSON.stringify(values))
-      await signupToWaitlist({
-        variables: {
-          email: values?.email,
-        }
-      })
-      formik.resetForm();
-    },
-  });
 
   return (
     <Banner
@@ -128,53 +74,29 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
         <div className={classes.mainTitleContainer}>
 
           <Typography className={classes.mainTitle}>
-            Buy and sell firearms simply and safely
+            {props.title}
           </Typography>
           <Typography variant={"subtitle2"}
             className={classes.subline1}
           >
-            Featuring a secure payment system
-            that protects you
-            every step of the transfer process
+            {props.subtitle}
           </Typography>
 
-          <form onSubmit={formik.handleSubmit}>
-            <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
-              <TextInput
-                variant="outlined"
-                name="email"
-                type="email"
-                placeholder="Enter email for launch updates"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                className={classes.linkInput}
-                classes={{
-                  root: classes.textInputSmallRoot
-                }}
-                inputProps={{
-                  className: classes.textInputSmall
-                }}
-              />
-              <StyledButton
-                variant="contained"
-                type="submit"
+          <Login
+            className={classes.navbarButton}
+            buttonText={
+              <ArrowStripeIcon
                 className={clsx(
-                  classes.buttonSignupEmail,
-                  classes.buttonSignupDesktop,
+                  classes.categoryLinkTextMain,
                 )}
-                onClick={() => {
-                  if (!formik.values?.email) {
-                    snackbar.enqueueSnackbar(
-                      `Please enter an email`,
-                      { variant: "info" }
-                    )
-                  }
-                }}
-              >
-                Sign up
-              </StyledButton>
-            </div>
-          </form>
+                title={"Sign up"}
+                color={ Colors.cream }
+              />
+            }
+            titleLogin={"Sign up to Browse"}
+            initialTabIndex={1} // sign up tab
+          />
+
         </div>
       </div>
 
@@ -203,26 +125,6 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
 }
 
 
-const StyledButton = withStyles({
-  root: {
-    height: '44px',
-    width: '100%',
-    maxWidth: 330,
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    cursor: "pointer",
-    color: Colors.cream,
-    borderRadius: BorderRadius,
-    padding: 0,
-  },
-  label: {
-    textTransform: "uppercase",
-    color: "#fff",
-    // '&:focused': {
-    //   border: `1px solid ${Colors.ultramarineBlue}`,
-    // },
-  },
-})(Button);
 
 
 
@@ -235,6 +137,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerForegroundImageUrlLight: string
   isDarkMode: boolean;
   portraitMode?: boolean;
+  title: React.ReactNode
+  subtitle: React.ReactNode
 }
 
 
@@ -368,6 +272,58 @@ export const styles = (theme: Theme) => createStyles({
     // backgroundImage:`url(/img/start/blur.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
+  },
+  navbarButton: {
+    color: Colors.cream,
+    borderRadius: BorderRadius3x,
+    padding: 0,
+    background: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlue,
+    "&:hover": {
+      background: isThemeDark(theme)
+        ? Colors.lighterPurple
+        : Colors.ultramarineBlueLight,
+    },
+    // marginRight: "0.5rem",
+    marginTop: "1rem",
+    minWidth: 150,
+    height: 40,
+    maxWidth: 180,
+    width: '100%',
+    "& span": {
+      height: '100%',
+      width: '100%',
+    },
+    "& span > span": {
+      height: '100%',
+      width: '100%',
+    },
+  },
+  categoryLinkTextMain: {
+    height: '100%',
+    width: '100%',
+    paddingRight: '0.80rem',
+    paddingLeft: '0.70rem',
+    minWidth: '50px',
+    whiteSpace: 'nowrap',
+    fontSize: '0.9rem',
+    fontWeight: 600,
+    // bottom border
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottom: '2px solid rgba(0,0,0,0)',
+    transition: theme.transitions.create(['border', 'color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: '100ms',
+    }),
+    "&:hover": {
+      transition: theme.transitions.create(['border', 'color'], {
+        easing: theme.transitions.easing.easeIn,
+        duration: '100ms',
+      })
+    },
   },
 })
 

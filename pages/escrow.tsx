@@ -3,6 +3,10 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // SSR
 import { NextPage, GetServerSideProps } from 'next';
+// GraphQL
+import { serverApolloClient } from "utils/apollo";
+import LandingPageEscrow from "pageComponents/LandingPage/escrow";
+import { useApolloClient, ApolloClient } from "@apollo/client";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { useRouter } from "next/router";
@@ -12,17 +16,14 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
-const QR1SSR: NextPage<ReactProps> = (props) => {
+const EscrowLandingPageSSR: NextPage<ReactProps> = (props) => {
 
-  // let showSocialBanner = true
-  let REDIRECT_URL = 'https://www.gunmarketplace.com.au'
-
-  React.useEffect(() => {
-    // redirect
-    if (window) {
-      window?.location?.replace(REDIRECT_URL)
-    }
-  }, [])
+  let router = useRouter()
+  let showSocialBanner = true
+  let noNavbarPadding = router.pathname === "/"
+    || router.pathname === "/start"
+    || router.pathname === "/sell"
+    || router.pathname.startsWith("/f/")
 
   return (
     <>
@@ -30,22 +31,24 @@ const QR1SSR: NextPage<ReactProps> = (props) => {
         title="Gun Marketplace - Buy guns smarter. Sell guns faster."
         ogTitle="Gun Marketplace - Buy guns smarter. Sell guns faster."
         description={`
-          Sell used guns online with free listings.
+          Sell used guns with escrow and classified ads.
           Upload and edit unlimited product listings for free.
-          Create a free account and start selling your collection today.
+          Create a free account and start selling today.
         `}
         ogDescription={`
-          Sell used guns online with free listings.
+          Sell used guns with escrow and classified ads.
           Upload and edit unlimited product listings for free.
-          Create a free account and start selling your collection today.
+          Create a free account and start selling today.
         `}
       />
-      {/* {
+
+      <LandingPageEscrow />
+      {
         showSocialBanner &&
         <ShowOnMobileOrDesktopSSR desktop>
           <SocialFloatingBanner/>
         </ShowOnMobileOrDesktopSSR>
-      } */}
+      }
     </>
   )
 }
@@ -79,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 };
 
-export default withStyles(styles)( QR1SSR );
+export default withStyles(styles)( EscrowLandingPageSSR );
 
 
 

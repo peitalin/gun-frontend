@@ -405,6 +405,8 @@ const Login: React.FC<ReactProps> = (props) => {
               numUnclaimedOrders={props.numUnclaimedOrders}
               buttonType={props.buttonType}
               menuItemTextClassName={props.menuItemTextClassName}
+              onMouseEnter={props.onMouseEnter}
+              onMouseLeave={props.onMouseLeave}
             />
       }
     </>
@@ -429,6 +431,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   // menu Item version
   buttonType?: "menuItem" | "textField" | "default";
   menuItemTextClassName?: any;
+  onMouseEnter?(): void
+  onMouseLeave?(): void
 }
 interface MVar1 {
   email: string,

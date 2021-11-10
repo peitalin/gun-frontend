@@ -4,13 +4,9 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 import Login from "layout/Login";
 import Hidden from 'components/HiddenFix';
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
-import { UserPrivate } from "typings/gqlTypes";
 // components
 import BannerEndDesktop from "./BannerEndDesktop";
 import BannerEndMobile from "./BannerEndMobile";
@@ -28,21 +24,12 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
   const bannerForegroundImageUrlLight = `/img/start/screen1-light.jpg`
 
   const ditherStyle = {
-    // background: isDarkMode
-    //   ? Gradients.gradientUniswapDark.background
-    //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
     ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 49%, rgba(25, 25, 25, 0.1) 49.1%, rgba(25, 25, 25, 0.05) 100%)`
     : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 49%, rgba(25, 25, 25, 0.02) 49.1%, rgba(25, 25, 25, 0.02) 100%)`,
   }
 
   const ditherStyleMobile = {
-    // background: props.isDarkMode
-    //   ? Colors.uniswapDarkNavy
-    //   : Gradients.gradientGrey3.background,
-    // background: props.isDarkMode
-    // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
-    // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
     background: props.isDarkMode
     ? `linear-gradient(180deg , ${Colors.uniswapDarkNavy} 30%, ${Colors.uniswapNavy} 90%)`
     : `linear-gradient(0deg , ${Colors.slateGrey} 30%, rgba(255, 255, 255, 0) 60%, rgba(5, 5, 5, 0) 90%)`
@@ -82,6 +69,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
           bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
           bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
           isDarkMode={props.isDarkMode}
+          title={props.title}
+          subtitle={props.subtitle}
         />
       </Hidden>
       {/* Mobile */}
@@ -94,6 +83,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
           bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
           bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
           isDarkMode={props.isDarkMode}
+          title={props.title}
+          subtitle={props.subtitle}
         />
       </Hidden>
     </>
@@ -103,6 +94,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   isDarkMode: boolean
+  title: React.ReactNode
+  subtitle: React.ReactNode
 }
 
 export const styles = (theme: Theme) => createStyles({

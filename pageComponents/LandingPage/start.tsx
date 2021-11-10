@@ -4,30 +4,17 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius2x, BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
 import { commonStyles } from "./commonStyles";
-// Typings
-import { Categories, PageConfig } from "typings/gqlTypes";
-// redux
-import { useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
 // styles
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// GraphQL
-import { useQuery, useApolloClient } from "@apollo/client";
-import { useRouter } from "next/router";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
 // show exactly 4 product cards in carousel + 1rem padding on left
 // 270px each card (including margin of 16px) = 290
 
-import CategoryCarouselStart2 from "./StartSelling2/CategoryCarouselStart2";
-// import CategoryCarouselStart from "components/CategoryCarouselStart";
 // Components
-import BetaTestingBanner from "components/BetaTestingBanner";
 import BannerStart from "./BannerStart";
 import StartSelling2 from "./StartSelling2"
-import StartSelling3 from "./StartSelling3"
 import StartSelling4 from "./StartSelling4"
 // import StartSellingTestimonials from "./StartSellingTestimonials"
 import StartSellingPricing from "./StartSellingPricing"
@@ -35,18 +22,13 @@ import BannerEnd from "./BannerEnd"
 
 
 
-const LandingPage: React.FC<ReactProps> = (props) => {
+const LandingPageStart: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
   } = props;
 
-  const aClient = useApolloClient();
-  const router = useRouter();
-
   const theme = useTheme();
-  const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   let isDarkMode = theme.palette.type === 'dark'
 
@@ -54,7 +36,21 @@ const LandingPage: React.FC<ReactProps> = (props) => {
     <div className={classes.landingPageRoot}>
 
       {/* <BannerHome /> */}
-      <BannerStart isDarkMode={isDarkMode}/>
+      <BannerStart
+        isDarkMode={isDarkMode}
+        title={
+          <span>
+            Browse used guns
+            <br/>
+            across the market
+          </span>
+        }
+        subtitle={
+          <span>
+            Start listing your items today
+          </span>
+        }
+      />
 
       {/* <div className={classes.betaTestingBannerBox}>
         <BetaTestingBanner />
@@ -66,10 +62,27 @@ const LandingPage: React.FC<ReactProps> = (props) => {
       >
 
         <StartSelling2 isDarkMode={isDarkMode}/>
-        <StartSelling3 isDarkMode={isDarkMode}/>
+
+
         <StartSelling4 isDarkMode={isDarkMode}/>
-        <StartSellingPricing isDarkMode={isDarkMode}/>
-        <BannerEnd isDarkMode={isDarkMode}/>
+
+        {/* <StartSellingPricing isDarkMode={isDarkMode}/> */}
+
+        <BannerEnd
+          isDarkMode={isDarkMode}
+          title={
+            <span>
+              Get Started Now
+            </span>
+          }
+          subtitle={
+            <span>
+              Currently in private launch
+              <br/>
+              Please sign up and get access
+            </span>
+          }
+        />
 
       </AlignCenterLayout>
     </div>
@@ -121,4 +134,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( LandingPage );
+export default withStyles(styles)( LandingPageStart );

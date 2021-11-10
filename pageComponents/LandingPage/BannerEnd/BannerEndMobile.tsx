@@ -2,7 +2,16 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius2x, BorderRadius, Colors, fontFam } from "layout/AppTheme";
+import {
+  BorderRadius,
+  Colors,
+  Gradients,
+  BorderRadius2x,
+  BorderRadius3x,
+  BoxShadows,
+  fontFam,
+  isThemeDark
+} from "layout/AppTheme";
 import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
@@ -16,8 +25,6 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // typings
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
-import CardMedia from "@material-ui/core/CardMedia";
-import Link from "next/link";
 import Image from 'next/image';
 
 import { useFormik } from 'formik';
@@ -25,11 +32,8 @@ import { validationSchemas } from "utils/validation";
 import { useSnackbar } from "notistack";
 import { useMutation } from "@apollo/client";
 
-import {
-  GET_SIGNUP_WAITLIST,
-  SIGNUP_TO_WAITLIST,
-} from "queries/signup-waitlist";
-
+import Login from "layout/Login"
+import ArrowStripeIcon from "components/ArrowStripeIcon"
 
 
 
@@ -44,57 +48,8 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
   } = props;
 
   const snackbar = useSnackbar();
-
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
-  const [
-    signupToWaitlist,
-    signupToWaitlistResponse
-  ] = useMutation<{ signupToWaitlist: Signup_Emails }, { email: string }>(
-    SIGNUP_TO_WAITLIST, {
-      variables: {
-        email: "",  // use formik values later
-      },
-      onCompleted: ({ signupToWaitlist }) => {
-        console.log("data::::", signupToWaitlist)
-        snackbar.enqueueSnackbar(
-          `You're on the waitlist ${signupToWaitlist?.email}`,
-          { variant: "success" }
-        )
-      },
-      onError: (err) => {
-        let errMsg = err?.graphQLErrors?.[0]?.message;
-        if (errMsg?.includes("duplicate")) {
-          snackbar.enqueueSnackbar(
-            `You've already signed up`,
-            { variant: "info" }
-          )
-        } else {
-          snackbar.enqueueSnackbar(
-            `${errMsg ?? "There was a connection error"}`,
-            { variant: "error" }
-          )
-        }
-      },
-    }
-  )
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-    },
-    validationSchema: validationSchemas.SignUpEmail,
-    onSubmit: async (values) => {
-      console.log(JSON.stringify(values))
-      await signupToWaitlist({
-        variables: {
-          email: values?.email,
-        }
-      })
-      formik.resetForm();
-    },
-  });
 
   return (
     <Banner
@@ -119,55 +74,34 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
 
       <div className={classes.flexCol}>
 
-
         <div className={classes.mainTitleContainerMobile}>
+
           <Typography className={classes.mainTitleSm}>
-            Get Launch Updates
+            {props.title}
           </Typography>
           <Typography variant={"subtitle2"}
             className={classes.subline1Sm}
           >
-            We are currently in beta testing and
-            launching soon. Please sign up for details
+            {props.subtitle}
           </Typography>
 
-          <form onSubmit={formik.handleSubmit}>
-            <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
-              <TextInput
-                variant="outlined"
-                name="email"
-                type="email"
-                placeholder="Enter email for updates"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                className={classes.linkInput}
-                classes={{
-                  root: classes.textInputSmallRoot
-                }}
-                inputProps={{
-                  className: classes.textInputSmall
-                }}
-              />
-              <StyledButton
-                variant="contained"
-                type="submit"
+          <Login
+            className={classes.navbarButton}
+            buttonText={
+              <ArrowStripeIcon
                 className={clsx(
-                  classes.buttonSignupEmail,
-                  classes.buttonSignupMobile,
+                  classes.categoryLinkTextMain,
                 )}
-                onClick={() => {
-                  if (!formik.values?.email) {
-                    snackbar.enqueueSnackbar(
-                      `Please enter an email`,
-                      { variant: "info" }
-                    )
-                  }
-                }}
-              >
-                Sign up
-              </StyledButton>
-            </div>
-          </form>
+                title={"Sign up"}
+                color={
+                  Colors.cream
+                }
+              />
+            }
+            titleLogin={"Sign up to Browse"}
+            initialTabIndex={1} // sign up tab
+          />
+
         </div>
 
 
@@ -181,18 +115,6 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
                 height={"400px"}
                 alt="Banner Image"
               />
-              {/* <Link href={"/"}>
-                <a className={classes.linkToApp}>
-                  <Button
-                    className={classes.linkToAppButton}
-                    classes={{
-                      label: classes.linkToAppButtonText
-                    }}
-                  >
-                    Explore the beta
-                  </Button>
-                </a>
-              </Link> */}
             </div>
           : <div className={classes.clickableCard}>
               <Image src={props.bannerForegroundImageUrlLight}
@@ -254,6 +176,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerForegroundImageUrlDark: string
   bannerForegroundImageUrlLight: string
   isDarkMode: boolean;
+  title: React.ReactNode
+  subtitle: React.ReactNode
 }
 
 
@@ -402,6 +326,57 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.cream,
       backgroundColor: Colors.lightBlue,
       transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
+        easing: theme.transitions.easing.easeIn,
+        duration: '100ms',
+      })
+    },
+  },
+  navbarButton: {
+    color: Colors.cream,
+    borderRadius: BorderRadius3x,
+    padding: 0,
+    background: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlue,
+    "&:hover": {
+      background: isThemeDark(theme)
+        ? Colors.lighterPurple
+        : Colors.ultramarineBlueLight,
+    },
+    // marginRight: "0.5rem",
+    marginTop: "1rem",
+    minWidth: 150,
+    height: 40,
+    width: '100%',
+    "& span": {
+      height: '100%',
+      width: '100%',
+    },
+    "& span > span": {
+      height: '100%',
+      width: '100%',
+    },
+  },
+  categoryLinkTextMain: {
+    height: '100%',
+    width: '100%',
+    paddingRight: '0.80rem',
+    paddingLeft: '0.70rem',
+    minWidth: '50px',
+    whiteSpace: 'nowrap',
+    fontSize: '0.9rem',
+    fontWeight: 600,
+    // bottom border
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottom: '2px solid rgba(0,0,0,0)',
+    transition: theme.transitions.create(['border', 'color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: '100ms',
+    }),
+    "&:hover": {
+      transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
         duration: '100ms',
       })
