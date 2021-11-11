@@ -98,6 +98,7 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
                 }
               />
             }
+            redirectOnComplete={'/'}
             titleLogin={"Sign up to Browse"}
             initialTabIndex={1} // sign up tab
           />

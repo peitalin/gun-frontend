@@ -94,6 +94,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
                 color={ Colors.cream }
               />
             }
+            redirectOnComplete={'/'}
             titleLogin={"Sign up to Browse"}
             initialTabIndex={1} // sign up tab
           />

@@ -78,8 +78,8 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
           </Typography>
           <Login
             className={classes.navbarButton}
-            onMouseEnter={() => setHoverStripeArrow(true)}
-            onMouseLeave={() => setHoverStripeArrow(false)}
+            // onMouseEnter={() => setHoverStripeArrow(true)}
+            // onMouseLeave={() => setHoverStripeArrow(false)}
             buttonText={
               <ArrowStripeIcon
                 className={clsx(
@@ -89,6 +89,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                 color={ Colors.cream }
               />
             }
+            redirectOnComplete={'/'}
             titleLogin={"Sign up to Browse"}
             initialTabIndex={1} // sign up tab
           />
