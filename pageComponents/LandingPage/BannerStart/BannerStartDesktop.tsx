@@ -25,6 +25,7 @@ import { useTheme } from "@material-ui/core/styles";
 // import Image from 'next/image';
 import Login from "layout/Login"
 import ArrowStripeIcon from "components/ArrowStripeIcon"
+import CardMedia from "@material-ui/core/CardMedia";
 
 
 
@@ -104,7 +105,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
         classes.bannerInnerBoxRight,
         classes.minWidth220,
       )}>
-        {/* {
+        {
           props.isDarkMode
           ? <CardMedia
               component="img"
@@ -118,7 +119,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
               classes={{ media: classes.bannerImage }}
               src={props.bannerForegroundImageUrlLight}
             />
-        } */}
+        }
       </div>
     </Banner>
   )
