@@ -64,7 +64,10 @@ const LandingPageStart: React.FC<ReactProps> = (props) => {
         <StartSelling2 isDarkMode={isDarkMode}/>
 
 
-        <StartSelling4 isDarkMode={isDarkMode}/>
+        <StartSelling4
+          isDarkMode={isDarkMode}
+          sectionType={"notifications"}
+        />
 
         {/* <StartSellingPricing isDarkMode={isDarkMode}/> */}
 

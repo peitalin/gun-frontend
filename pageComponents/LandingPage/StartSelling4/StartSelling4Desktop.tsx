@@ -79,47 +79,89 @@ const StartSelling4 = (props: ReactProps) => {
           </div>
         </div>
 
-        <div className={clsx(classes.flexRowWrap, classes.marginTop)}>
-          <div className={clsx(
-            classes.flexColFlexStart,
-            classes.width400,
-            classes.marginRight2,
-          )}>
-            {
-              [
-                "View and track order's progress",
-                "Manage disposal receipts in one place",
-                "Real-time notifications for order progress",
-                "Direct payment to your bank account. No questions asked.",
-              ].map(( text, i ) => {
-                return (
-                  <div key={i} className={classes.flexItemTickRow}>
-                    <TickPoint key={i}
-                      isDarkMode={props.isDarkMode}
-                      text={text}
-                    />
-                  </div>
-                )
-              })
-            }
-          </div>
-          <div className={clsx(
-            classes.imageContainer,
-            classes.width400,
-          )}>
-            <CardMedia
-              component="img"
-              // className={classes.sxImage1}
-              classes={{ media: classes.imgShadow }}
-              src={
-                props.isDarkMode
-                  ? "/img/start/screen4-dark.jpg"
-                  : "/img/start/screen4-light.jpg"
-              }
-            />
-          </div>
-
-        </div>
+        {
+          props.sectionType === "notifications"
+          ? <div className={clsx(classes.flexRowWrap, classes.marginTop)}>
+              <div className={clsx(
+                classes.flexColFlexStart,
+                classes.width400,
+                classes.marginRight2,
+              )}>
+                {
+                  [
+                    "Save search terms for notifications",
+                    "Get emails when matching items appear",
+                    "Match on make, model, caliber keyword combinations",
+                    "Manage your saved searches in our dashboard",
+                  ].map(( text, i ) => {
+                    return (
+                      <div key={i} className={classes.flexItemTickRow}>
+                        <TickPoint key={i}
+                          isDarkMode={props.isDarkMode}
+                          text={text}
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className={clsx(
+                classes.imageContainer,
+                classes.width400,
+              )}>
+                <CardMedia
+                  component="img"
+                  // className={classes.sxImage1}
+                  classes={{ media: classes.imgShadow }}
+                  src={
+                    props.isDarkMode
+                      ? "/img/start/screen6-dark.jpg"
+                      : "/img/start/screen6-light.jpg"
+                  }
+                />
+              </div>
+            </div>
+          : <div className={clsx(classes.flexRowWrap, classes.marginTop)}>
+              <div className={clsx(
+                classes.flexColFlexStart,
+                classes.width400,
+                classes.marginRight2,
+              )}>
+                {
+                  [
+                    "View and track order's progress",
+                    "Manage disposal receipts in one place",
+                    "Real-time notifications for order progress",
+                    "Direct payment to your bank account. No questions asked.",
+                  ].map(( text, i ) => {
+                    return (
+                      <div key={i} className={classes.flexItemTickRow}>
+                        <TickPoint key={i}
+                          isDarkMode={props.isDarkMode}
+                          text={text}
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className={clsx(
+                classes.imageContainer,
+                classes.width400,
+              )}>
+                <CardMedia
+                  component="img"
+                  // className={classes.sxImage1}
+                  classes={{ media: classes.imgShadow }}
+                  src={
+                    props.isDarkMode
+                      ? "/img/start/screen4-dark.jpg"
+                      : "/img/start/screen4-light.jpg"
+                  }
+                />
+              </div>
+            </div>
+        }
 
       </div>
     </div>
@@ -129,6 +171,7 @@ const StartSelling4 = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   isDarkMode: boolean
+  sectionType: "notifications" | "orders"
 }
 
 export const styles = (theme: Theme) => createStyles({

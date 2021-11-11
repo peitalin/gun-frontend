@@ -145,7 +145,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
             previewImageClassName={classes.previewImageClass}
             constrainAspectRatio={constrainAspect}
             animateTransitions={true}
-            previewsMissingMessage={"Add an image"}
+            previewsMissingMessage={"Image Needs Claiming"}
           />
         </div>
 

@@ -37,12 +37,11 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
 
   const bannerContainerStyle = {
     backgroundImage:`url(/img/start/gun-collage-5.png)`,
-    backgroundPositionY: "3rem",
     backgroundRepeat: 'repeat',
     backgroundSize: "contain",
     // backgroundRepeat: 'no-repeat',
     // backgroundSize: "cover",
-    backgroundPosition: "left",
+    backgroundPosition: "left -15px",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 

@@ -67,7 +67,12 @@ const LandingPageEscrow: React.FC<ReactProps> = (props) => {
 
         <StartSelling2 isDarkMode={isDarkMode}/>
         <StartSelling3Escrow isDarkMode={isDarkMode}/>
-        <StartSelling4 isDarkMode={isDarkMode}/>
+
+        <StartSelling4
+          isDarkMode={isDarkMode}
+          sectionType={"orders"}
+        />
+
         <StartSellingPricing isDarkMode={isDarkMode}/>
 
         <BannerEnd

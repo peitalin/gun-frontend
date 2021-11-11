@@ -6,7 +6,14 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows, Gradients, BorderRadius2x, isThemeDark } from "layout/AppTheme";
+import {
+  Colors,
+  BoxShadows,
+  Gradients,
+  BorderRadius,
+  BorderRadius2x,
+  isThemeDark
+} from "layout/AppTheme";
 // components
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -14,6 +21,8 @@ import CategoryCarouselStart2 from "./CategoryCarouselStart2";
 import CardMedia from "@material-ui/core/CardMedia";
 import { commonStyles } from "../commonStyles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AlignCenterLayout from "components/AlignCenterLayout";
+
 
 
 const StartSelling2 = (props: ReactProps) => {
@@ -26,6 +35,7 @@ const StartSelling2 = (props: ReactProps) => {
 
   return (
     <div className={mdDown ? classes.section2RootMobile : classes.section2Root}>
+
       <div className={classes.heresHowItWorksText}
         onClick={() => window.scrollTo({ top: 600, behavior: "smooth" })}
       >
@@ -35,106 +45,128 @@ const StartSelling2 = (props: ReactProps) => {
         <ExpandMoreIcon/>
       </div>
 
-      <div className={classes.screenShotTitle}>
-        Browse and filter firearms
-      </div>
-      <div className={clsx(classes.screenShotBox)}>
-        {
-          props.isDarkMode
-          ? <CardMedia
-              component="img"
-              className={"fadeIn"}
-              classes={{ media: classes.screenShotImage }}
-              src={`/img/start/screen1-dark.jpg`}
-            />
-          : <CardMedia
-              component="img"
-              className={"fadeIn"}
-              classes={{ media: classes.screenShotImage }}
-              src={`/img/start/screen1-light.jpg`}
-            />
-        }
-      </div>
+      <AlignCenterLayout maxWidth={640} withRecommendations={false}>
 
-      <div className={classes.categoryTitleText}>
-        From a selection of brands
-      </div>
-      <div className={clsx(classes.categoryTitleBox)}>
-        <div className={classes.polkadotBackground} ></div>
-        <div className={classes.categoryBrands}>
-          <div className={classes.imageBox}>
-            <CardMedia
-              component="img"
-              // className={classes.sxImage1}
-              classes={{ media: classes.imgCard }}
-              src={
-                props.isDarkMode
-                  ? "/img/start/brand-1-dark.png"
-                  : "/img/start/brand-1-light.png"
-              }
-            />
-          </div>
-          <div className={classes.imageBox}>
-            <CardMedia
-              component="img"
-              // className={classes.sxImage1}
-              classes={{ media: classes.imgCard }}
-              src={
-                props.isDarkMode
-                  ? "/img/start/brand-2-dark.png"
-                  : "/img/start/brand-2-light.png"
-              }
-            />
-          </div>
-          <div className={classes.imageBox}>
-            <CardMedia
-              component="img"
-              // className={classes.sxImage1}
-              classes={{ media: classes.imgCard }}
-              src={
-                props.isDarkMode
-                  ? "/img/start/brand-3-dark.png"
-                  : "/img/start/brand-3-light.png"
-              }
-            />
-          </div>
-          <div className={classes.imageBox}>
-            <CardMedia
-              component="img"
-              // className={classes.sxImage1}
-              classes={{ media: classes.imgCard }}
-              src={
-                props.isDarkMode
-                  ? "/img/start/brand-4-dark.png"
-                  : "/img/start/brand-4-light.png"
-              }
-            />
+
+        <div className={classes.screenShotTitle}>
+          Browse and filter guns across marketplaces
+        </div>
+        <div className={clsx(
+          classes.screenShotBox,
+          mdDown ? classes.screenShotBoxMobile : classes.screenShotBoxDesktop
+        )}>
+          <CardMedia
+            component="img"
+            classes={{
+              media: clsx(
+                mdDown ? classes.websiteMobile : classes.websiteDesktop,
+                classes.website1,
+                classes.imgShadow
+              )
+            }}
+            src={"/img/start/screen7a.jpg"}
+          />
+          <CardMedia
+            component="img"
+            // className={classes.sxImage1}
+            classes={{
+              media: clsx(
+                mdDown ? classes.websiteMobile : classes.websiteDesktop,
+                classes.website2,
+                classes.imgShadow
+              )
+            }}
+            src={"/img/start/screen7b.jpg"}
+          />
+          <CardMedia
+            component="img"
+            // className={classes.sxImage1}
+            classes={{
+              media: clsx(
+                mdDown ? classes.websiteMobile : classes.websiteDesktop,
+                classes.website3,
+                classes.imgShadow
+              )
+            }}
+            src={"/img/start/screen7c.jpg"}
+          />
+          {
+            props.isDarkMode
+            ? <CardMedia
+                component="img"
+                className={"fadeIn"}
+                classes={{ media: classes.screenShotImage }}
+                // src={`/img/start/screen1-dark.jpg`}
+                src={`/img/start/screen7-dark.jpg`}
+              />
+            : <CardMedia
+                component="img"
+                className={"fadeIn"}
+                classes={{ media: classes.screenShotImage }}
+                // src={`/img/start/screen1-light.jpg`}
+                src={`/img/start/screen7-light.jpg`}
+              />
+          }
+        </div>
+
+        <div className={classes.categoryTitleText}>
+          From a selection of brands
+        </div>
+        <div className={clsx(classes.categoryTitleBox)}>
+          <div className={classes.polkadotBackground} ></div>
+          <div className={classes.categoryBrands}>
+            <div className={classes.imageBox}>
+              <CardMedia
+                component="img"
+                // className={classes.sxImage1}
+                classes={{ media: classes.imgCard }}
+                src={
+                  props.isDarkMode
+                    ? "/img/start/brand-1-dark.png"
+                    : "/img/start/brand-1-light.png"
+                }
+              />
+            </div>
+            <div className={classes.imageBox}>
+              <CardMedia
+                component="img"
+                // className={classes.sxImage1}
+                classes={{ media: classes.imgCard }}
+                src={
+                  props.isDarkMode
+                    ? "/img/start/brand-2-dark.png"
+                    : "/img/start/brand-2-light.png"
+                }
+              />
+            </div>
+            <div className={classes.imageBox}>
+              <CardMedia
+                component="img"
+                // className={classes.sxImage1}
+                classes={{ media: classes.imgCard }}
+                src={
+                  props.isDarkMode
+                    ? "/img/start/brand-3-dark.png"
+                    : "/img/start/brand-3-light.png"
+                }
+              />
+            </div>
+            <div className={classes.imageBox}>
+              <CardMedia
+                component="img"
+                // className={classes.sxImage1}
+                classes={{ media: classes.imgCard }}
+                src={
+                  props.isDarkMode
+                    ? "/img/start/brand-4-dark.png"
+                    : "/img/start/brand-4-light.png"
+                }
+              />
+            </div>
           </div>
         </div>
-      </div>
-      {/* <div className={classes.categoryTitleText}>
-        Across multiple categories
-      </div>
-      <CategoryCarouselStart2
-        style={{
-          marginTop: '2rem',
-          marginBottom: '2rem',
-        }}
-        categoriesPreviewCard={
-          mdDown
-          ? [
-              ...categoryPreviewCards.slice(2),
-              ...categoryPreviewCards.slice(0,2),
-              // reorder so that Video Luts is in the middle on small screens
-            ]
-          : [
-              ...categoryPreviewCards,
-              ...categoryPreviewCards,
-              ...categoryPreviewCards,
-              // duplicate a few times over for large screens
-            ]
-        }
-      /> */}
+
+      </AlignCenterLayout>
     </div>
   );
 };
@@ -241,6 +273,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     fontWeight: 700,
     fontSize: '1rem',
+    marginBottom: '1rem',
     color: theme.palette.type === 'dark'
       ? Colors.cream
       : Colors.black1A,
@@ -284,11 +317,19 @@ export const styles = (theme: Theme) => createStyles({
     objectFit: "contain",
   },
   screenShotBox: {
+    position: 'relative',
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     width: '100%',
+    marginTop: "6.5rem",
+  },
+  screenShotBoxMobile: {
+    marginTop: "4.5rem",
+  },
+  screenShotBoxDesktop: {
+    marginTop: "6.5rem",
   },
   screenShotTitle: {
     display: 'flex',
@@ -312,13 +353,45 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     textAlign: 'center',
     borderRadius: BorderRadius2x,
-    width: '90%',
+    width: '100%',
     height: '100%',
     maxWidth: 600,
     minWidth: 320,
     marginTop: '0rem',
     marginBottom: '1rem',
+    // boxShadow: BoxShadows.shadowStart.boxShadow,
+  },
+  website1: {
+    position: "absolute",
+    top: '-6rem',
+    left: '5%',
+    transform: "rotate(-10deg)",
+  },
+  website2: {
+    position: "absolute",
+    top: '-6rem',
+    left: '35%',
+    transform: "rotate(-10deg)",
+  },
+  website3: {
+    position: "absolute",
+    top: '-6rem',
+    left: '65%',
+    transform: "rotate(-10deg)",
+  },
+  websiteMobile: {
+    width: '100%',
+    maxWidth: '30vw',
+    marginTop: '2rem',
+  },
+  websiteDesktop: {
+    width: '100%',
+    maxWidth: 200,
+  },
+  imgShadow: {
     boxShadow: BoxShadows.shadowStart.boxShadow,
+    zIndex: 4,
+    borderRadius: BorderRadius,
   },
 })
 

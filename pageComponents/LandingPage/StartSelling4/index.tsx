@@ -32,11 +32,13 @@ const StartSelling4 = (props: ReactProps) => {
       <ShowOnMobileOrDesktopSSR desktop>
         <StartSelling4Desktop
           isDarkMode={props.isDarkMode}
+          sectionType={props.sectionType}
         />
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
         <StartSelling4Mobile
           isDarkMode={props.isDarkMode}
+          sectionType={props.sectionType}
         />
       </ShowOnMobileOrDesktopSSR>
     </>
@@ -46,6 +48,7 @@ const StartSelling4 = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   isDarkMode: boolean
+  sectionType: "notifications" | "orders"
 }
 
 export const styles = (theme: Theme) => createStyles({
