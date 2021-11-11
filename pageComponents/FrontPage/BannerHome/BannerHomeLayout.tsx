@@ -127,7 +127,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         <Typography variant={"subtitle2"}
           className={mdDown ? classes.subline1Sm : classes.subline1}
         >
-          Buy guns smarter Sell guns faster
+          Buy guns smarter. Sell guns faster.
         </Typography>
 
         <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}
