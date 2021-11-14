@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors, Gradients, BoxShadows } from "layout/AppTheme";
+import { Colors, Gradients, BoxShadows, isThemeDark } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import ErrorBounds from "components/ErrorBounds";
 // MUI
@@ -194,9 +194,14 @@ let styles = (theme: Theme) => createStyles({
     maxWidth: MAX_INPUT_WIDTH,
   },
   searchbarExpanded: {
-    backgroundColor: Colors.dropDownGrey,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.dropDownGrey
+      : Colors.slateGrey,
     '&:hover': {
-      backgroundColor: Colors.dropDownGreyHover,
+      // backgroundColor: Colors.dropDownGreyHover,
+      backgroundColor: isThemeDark(theme)
+        ? Colors.dropDownGreyHover
+        : Colors.slateGreyDark,
     },
     width: '100vw', // grow the input, constrain with maxWidth
     transition: theme.transitions.create('width', {
@@ -204,7 +209,7 @@ let styles = (theme: Theme) => createStyles({
       duration: '300ms',
     }),
   },
-    // maxwidth sync with searchbarExpanded
+  // maxwidth sync with searchbarExpanded
   inputRootExpanded: {
     color: 'inherit',
     width: '100%',

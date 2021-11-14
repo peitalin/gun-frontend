@@ -20,8 +20,7 @@ import BannerSearchMobile from "./BannerSearchMobile";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
 import CategorySearchbar from "./CategorySearchbar";
 import RowOrCardsButtons from "./RowOrCardsButtons";
-import { SelectOption, selectStyles } from "components/SearchOptions";
-import SortByDropdown from "./SortByDropdown";
+import SortByDropdown from "components/SortByDropdown";
 
 
 

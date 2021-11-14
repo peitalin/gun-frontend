@@ -9,6 +9,7 @@ import {
   BorderRadius4x,
   BoxShadows,
   fontFam,
+  isThemeDark,
 } from "layout/AppTheme";
 import clsx from "clsx";
 // Redux
@@ -37,6 +38,7 @@ import SearchOptionsSearchFilter from "components/SearchOptionsSearchFilter";
 import SearchOptionsPriceFilter from "components/SearchOptionsPriceFilter";
 import SearchOptionsCategoryFilter from "components/SearchOptionsCategoryFilter";
 import SearchOptionsPaginator from "components/SearchOptionsPaginator";
+import SortByDropdown from "components/SortByDropdown";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -174,42 +176,12 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
                 )}
                 style={{ ...props.dropdownContainerStyle }}
               >
-                <DropdownInput
-                  initialState={
-                    props.sortByOptions?.[0]
-                    // initial initialState
-                    // { label: "Design Templates", value: "category_123123"}
-                  }
-                  isSearchable={false}
-                  hideCursor={true}
-                  onChange={({ label, value }: SelectOption) =>
-                    setTimeout(() => {
-                      setOrderBy({ label, value })
-                    }, 0)
-                    // let UI update first for menu to close
-                  }
-                  options={props.sortByOptions}
-                  placeholder={"Select a category"}
-                  className={classes.width100}
-                  styles={selectStyles({
-                    width: 200,
-                    isDarkMode: isDarkMode,
-                  })}
-                  theme={theme => ({
-                    ...theme,
-                    maxWidth: '200px',
-                    borderRadius: BorderRadius,
-                    colors: {
-                      ...theme.colors,
-                      color: isDarkMode
-                        ? Colors.uniswapLightestGrey
-                        : Colors.black,
-                      primary25: isDarkMode
-                        ? Colors.uniswapLightNavy
-                        : Colors.slateGreyDarker,
-                      primary: Colors.uniswapLighterGrey,
-                    },
-                  })}
+                <SortByDropdown
+                  isMobile={false}
+                  isDarkMode={isDarkMode}
+                  setOrderBy={setOrderBy}
+                  sortByOptions={props.sortByOptions}
+                  style={{ marginRight: 0 }}
                 />
               </div>
             </>
@@ -353,7 +325,9 @@ export const selectStyles = ({
     '&:hover': {
       // border: 'none',
       cursor: "pointer",
-      backgroundColor: Colors.dropDownGreyHover,
+      // backgroundColor: isDarkMode
+      //   ? Colors.uniswapMediumNavy
+      //   : Colors.slateGrey,
     },
     "&:focus": {
       // border: 'none',
@@ -381,18 +355,19 @@ export const selectStyles = ({
       ...styles,
       borderRadius: BorderRadius2x,
       backgroundColor: isSelected
-        ? Colors.lightYellow
-        : isFocused
-          ? Colors.dropDownGrey
-          : "transparent",
+        ? `${Colors.lightYellow} !important`
+        : isDarkMode ? Colors.dropDownGrey : Colors.slateGrey,
       color: isSelected
         ? Colors.black
-        : Colors.uniswapLightGrey,
+        : isDarkMode ? Colors.uniswapLightGrey : Colors.slateGreyBlack,
       fontFamily: fontFam,
       fontSize: '1rem',
       cursor: isDisabled ? 'not-allowed' : 'pointer',
       "&:hover": {
         cursor: isDisabled ? 'not-allowed' : 'pointer',
+        backgroundColor: isDarkMode
+          ? Colors.dropDownGreyHover
+          : Colors.slateGreyDark,
       },
     };
   },
@@ -546,6 +521,7 @@ const styles = (theme: Theme) => createStyles({
   dropdownContainer: {
     // flexBasis: '30%',
     // width: '100%',
+    position: 'relative',
     minWidth: 130,
     marginRight: '0rem',
     marginBottom: '0.5rem',

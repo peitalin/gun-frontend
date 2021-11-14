@@ -35,18 +35,21 @@ const SortByDropdown: React.FC<ReactProps> = (props) => {
     isDarkMode,
   } = props;
 
+
+  // console.log("sortByOptions: ", props.sortByOptions)
+
   return (
     <div className={
       isMobile ? classes.sortByContainerMobile : classes.sortByContainerDesktop
     }>
       <div className={
         isMobile ? classes.sortByDropDownMobile : classes.sortByDropDownDesktop
-      }>
+      } style={props.style}>
         <DropdownInput
           initialState={
             props.sortByOptions?.[0]
             // initial initialState
-            // { label: "Design Templates", value: "category_123123"}
+            // { label: "Rifles", value: "category_0001"}
           }
           isSearchable={false}
           hideCursor={true}
@@ -90,6 +93,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   isDarkMode: boolean
   setOrderBy(a: any): void
   sortByOptions: Array<{ label: string, value: any }>
+  style?: any;
 }
 
 

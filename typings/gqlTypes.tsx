@@ -6640,6 +6640,7 @@ export type QueryGetImagesArgs = {
 
 export type QueryGetExternalProductsBySourceSiteIdArgs = {
   externalProductIds: Array<Scalars['String']>;
+  howManyDaysBack?: Maybe<Scalars['Int']>;
 };
 
 
