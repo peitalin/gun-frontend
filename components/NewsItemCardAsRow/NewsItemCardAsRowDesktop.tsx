@@ -89,6 +89,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
   let dateSold = createdAt
   // console.log("dateSold: ", dateSold)
   // console.log("hrsToSold: ", hrsToSold)
+  // console.log("externalProductId: ", externalProductId)
 
   return (
     <div

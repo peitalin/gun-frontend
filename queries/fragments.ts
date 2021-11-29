@@ -1329,17 +1329,21 @@ export const CollectionItemsFragment = gql`
     createdAt
     userId
     productId
+    externalProductId
     product {
       ...ProductLiteFragment
     }
-    externalProductId
     externalProduct {
       ...ExternalProductsFragment
     }
+    # productPreview {
+    #   ...ProductPreviewFragment
+    # }
   }
   ${ProductLiteFragment}
   ${ExternalProductsFragment}
 `;
+  // ${ProductPreviewFragment}
 
 export const CollectionFragment = gql`
   fragment CollectionFragment on Collection {

@@ -53,6 +53,7 @@ export const transformNewsItemToFields = (
 	// ProductPreview is a lite version of newsItem product info
 	const productPreview = newsItem.productPreview
 
+
 	if (productPreview?.id) {
 		return transformNewsItemToFieldsProductPreview(newsItem)
 	} else {
@@ -237,13 +238,15 @@ export const transformNewsItemToFieldsProductPreview = (
 
 	let productPreview = newsItem?.productPreview
 	let p = productPreview
+	// remove product preview prefix from backend
+	let pid = p?.id.replace('product_lite_', '')
 
 	let productId = p?.id?.match(/external/)
 		? undefined
-		: p?.id
+		: pid
 
 	let externalProductId = p?.id?.match(/external/)
-		? p?.id
+		? pid
 		: undefined
 
 	return {

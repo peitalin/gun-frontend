@@ -10,10 +10,6 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
-import {
-  ADD_PRODUCT_TO_COLLECTION,
-  REMOVE_PRODUCT_FROM_COLLECTION
-} from "queries/collections-mutations";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { CollectionItemId } from "reduxStore/collections-reducer";
@@ -65,6 +61,8 @@ const CollectionIcon: React.FC<ReactProps> = (props) => {
 
   const openModal = () => {
     console.log("opening modal:", props.externalProductId)
+    console.log("opening modal:", props.productId)
+
     if (props.externalProductId) {
       dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID(props.externalProductId))
     }
