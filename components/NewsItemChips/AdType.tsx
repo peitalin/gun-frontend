@@ -18,12 +18,32 @@ const AdType = (props: ReactProps) => {
     productId,
 		adType,
 		sourceSiteUrl,
+    disableLink = false,
   } = props;
 
   const theme = useTheme();
 
   if (!adType || !sourceSiteUrl) {
     return <div className={classes.sourceSiteLink}></div>
+  }
+
+  if (disableLink) {
+    // cannot nest <a> tag within a product card that already has an <a> tag
+    return (
+      <div className={clsx(classes.sourceSiteLink, props.className)}
+        style={props.style}
+      >
+        <div className={clsx(
+          classes.adType,
+          adType.match(/[pP]rivate/g)
+            ? classes.adTypePrivate
+            : classes.adTypeDealer
+        )}>
+          {adType ?? ""}
+          <LaunchIcon className={classes.sourceSiteUrlIcon}/>
+        </div>
+      </div>
+    )
   }
 
   return productId
@@ -74,6 +94,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   adType: string
   sourceSiteUrl: string
   promotedSlotId?: string
+  disableLink?: boolean
   className?: any;
   style?: any;
 }
@@ -82,7 +103,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   sourceSiteLink: {
     marginTop: '0.5rem',
-    marginRight: '0.5rem',
+    // marginRight: '0.5rem',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',

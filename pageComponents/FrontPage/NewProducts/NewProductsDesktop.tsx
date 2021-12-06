@@ -7,7 +7,7 @@ import { styles } from "../FeaturedProducts/stylesDesktop";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import ProductPreviewResponsive from "components/ProductPreviewResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // GraphQL Typings
 import {
@@ -21,7 +21,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Link from "next/link";
 import ArrowRight from "@material-ui/icons/ArrowRight";
-
+import { createNewsItemForProduct } from "typings/transformers";
 
 
 
@@ -45,9 +45,7 @@ const NewProductsDesktop = (props: ReactProps) => {
   // jumboXL preview card on sm screen size only, remove right margin
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  const productPreviews = connection?.edges?.map(
-    edge => edge.node
-  )
+  const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProduct(edge.node))
 
   return (
     <main className={classes.root}>
@@ -63,17 +61,17 @@ const NewProductsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          productPreviews?.length > 0
-          ? productPreviews?.filter(p => !!p).map((productPreview, i) =>
-              <div key={productPreview?.id + `_${i}`}
+          newsItemPreviews?.length > 0
+          ? newsItemPreviews?.filter(p => !!p).map((newsItem, i) =>
+              <div key={newsItem?.id + `_${i}`}
                 className={classes.productCardWrapper}
               >
                 <div className={clsx(
                   smDown ? classes.flexItemMobile : classes.flexItem,
                   classes.flexItemHover,
                 )}>
-                  <ProductPreviewResponsive
-                    productPreview={productPreview}
+                  <NewsItemCardResponsive
+                    newsItem={newsItem}
                     cardsPerRow={cardsPerRow}
                   />
                 </div>

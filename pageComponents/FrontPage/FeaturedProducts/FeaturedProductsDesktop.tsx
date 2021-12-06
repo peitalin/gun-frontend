@@ -13,7 +13,6 @@ import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // GraphQL Typings
 import {
   NewsItem,
-  Order_By,
   PromotedSlotsConnection,
 } from "typings/gqlTypes";
 // useMediaQuery
@@ -40,8 +39,6 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
     categorySlug,
     showSeeMore = true,
   } = props;
-
-  const theme = useTheme();
 
   const promotedSlots = connection?.edges?.map(
     promotedItem => promotedItem.node

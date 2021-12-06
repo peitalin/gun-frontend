@@ -189,7 +189,7 @@ const NewsItemCardRC = (props: ReactProps) => {
             : <div className={classes.descriptionContainer}
                 style={cardWidthStyle}
               >
-                {
+                {/* {
                   action &&
                   !hideActionType &&
                   <div className={classes.actionTag}>
@@ -201,7 +201,7 @@ const NewsItemCardRC = (props: ReactProps) => {
                       {action}
                     </Typography>
                   </div>
-                }
+                } */}
                 <div className={classes.descriptionDetailsFlexItem}>
                   <Typography
                     className={clsx(
@@ -234,16 +234,6 @@ const NewsItemCardRC = (props: ReactProps) => {
                   }
                 </div>
 
-                {/* <SourceSiteChip
-                  sourceSite={sourceSite}
-                  style={{
-                    position: 'absolute',
-                    bottom: '2rem',
-                    right: '0rem',
-                    marginRight: 0,
-                    height: 28,
-                  }}
-                /> */}
                 {
                   newsItem?.product?.sellerLicense?.verified &&
                   <VerifiedChip
@@ -263,6 +253,8 @@ const NewsItemCardRC = (props: ReactProps) => {
                   adType={adType}
                   promotedSlotId={props.promotedSlotId}
                   sourceSiteUrl={sourceSiteUrl}
+                  disableLink={true} // disable for productCards
+                  // cannot nest <a> tags
                   style={{
                     position: 'absolute',
                     bottom: '0rem',

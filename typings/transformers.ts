@@ -17,6 +17,8 @@ import {
   Image_Parents,
   Image_Variants,
   Stores,
+  ProductPreview,
+  NewsItem,
   Users,
 } from "./gqlTypes";
 
@@ -273,3 +275,13 @@ export const formConnectionOrders = (
   }
 }
 
+export const createNewsItemForProduct = (p: ProductPreview): NewsItem => {
+  let n: NewsItem = {
+    id: `temp_news_item_${p.id}`,
+    createdAt: p.createdAt,
+    isSuspended: false,
+    isDeleted: false,
+    productPreview: p,
+  }
+  return n
+}

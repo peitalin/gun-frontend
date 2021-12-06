@@ -5,9 +5,6 @@ import {
 } from "./product_create-actions";
 import {
   ID,
-  ProductPreviewItem,
-  ProductCreateInput,
-  ProductVariantInput,
   ListingType,
   ProductType,
 } from "typings/gqlTypes";

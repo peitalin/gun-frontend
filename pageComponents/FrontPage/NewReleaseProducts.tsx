@@ -7,7 +7,7 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import ProductPreviewResponsive from "components/ProductPreviewResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import LoadingCards from "./LoadingCards";
 import Loading from "components/Loading";
 // Graphql Typings
@@ -25,6 +25,7 @@ import dynamic from "next/dynamic";
 //   loading: (props) => <Loading/>,
 //   ssr: false,
 // });
+import { createNewsItemForProduct } from "typings/transformers";
 import { useDebouncedCallback } from 'use-debounce';
 
 
@@ -98,7 +99,9 @@ const NewReleaseProducts = (props: ReactProps) => {
     xl: 4,
   }
 
-  let productPreviews = data?.productsNewReleasesConnection
+  const newsItemPreviews = data?.productsNewReleasesConnection?.edges?.map(
+    edge => createNewsItemForProduct(edge.node)
+  )
 
 
   return (
@@ -128,10 +131,10 @@ const NewReleaseProducts = (props: ReactProps) => {
               cardsPerRow={cardsPerRow}
               // xsCardRow={true}
             />
-          : productPreviews.edges.map(({ node: productPreview }, i) => {
+          : newsItemPreviews.map((newsItem, i) => {
               // console.log("p: ",product)
               return (
-                <div key={productPreview.id}
+                <div key={newsItem?.id ?? i}
                   className={
                     xsDown
                     ? classes.productCardXs
@@ -144,8 +147,8 @@ const NewReleaseProducts = (props: ReactProps) => {
                     sm ? classes.flexItemMobile : classes.flexItem,
                     classes.flexItemHover,
                   )}>
-                    <ProductPreviewResponsive
-                      productPreview={productPreview}
+                    <NewsItemCardResponsive
+                      newsItem={newsItem}
                       xsCardRow={true}
                       refetch={undefined}
                     />
