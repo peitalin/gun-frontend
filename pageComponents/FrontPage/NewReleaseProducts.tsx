@@ -25,7 +25,7 @@ import dynamic from "next/dynamic";
 //   loading: (props) => <Loading/>,
 //   ssr: false,
 // });
-import { createNewsItemForProduct } from "typings/transformers";
+import { createNewsItemForProductPreview } from "typings/transformers";
 import { useDebouncedCallback } from 'use-debounce';
 
 
@@ -100,7 +100,7 @@ const NewReleaseProducts = (props: ReactProps) => {
   }
 
   const newsItemPreviews = data?.productsNewReleasesConnection?.edges?.map(
-    edge => createNewsItemForProduct(edge.node)
+    edge => createNewsItemForProductPreview(edge.node)
   )
 
 

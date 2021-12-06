@@ -275,13 +275,26 @@ export const formConnectionOrders = (
   }
 }
 
-export const createNewsItemForProduct = (p: ProductPreview): NewsItem => {
+export const createNewsItemForProductPreview = (p: ProductPreview): NewsItem => {
   let n: NewsItem = {
     id: `temp_news_item_${p.id}`,
     createdAt: p.createdAt,
     isSuspended: false,
     isDeleted: false,
+    productId: p.id,
     productPreview: p,
+  }
+  return n
+}
+
+export const createNewsItemForProduct = (p: Product): NewsItem => {
+  let n: NewsItem = {
+    id: `temp_news_item_${p.id}`,
+    createdAt: p.createdAt,
+    isSuspended: false,
+    isDeleted: false,
+    productId: p.id,
+    product: p,
   }
   return n
 }

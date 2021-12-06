@@ -21,7 +21,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Link from "next/link";
 import ArrowRight from "@material-ui/icons/ArrowRight";
-import { createNewsItemForProduct } from "typings/transformers";
+import { createNewsItemForProductPreview } from "typings/transformers";
 
 
 
@@ -45,7 +45,8 @@ const NewProductsDesktop = (props: ReactProps) => {
   // jumboXL preview card on sm screen size only, remove right margin
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProduct(edge.node))
+  const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProductPreview(edge.node))
+  console.log('nnnn', newsItemPreviews)
 
   return (
     <main className={classes.root}>

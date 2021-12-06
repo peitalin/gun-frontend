@@ -93,6 +93,7 @@ const NewsItemCardRC = (props: ReactProps) => {
 
   const newsItemId = newsItem?.id
   const squishLetters = title?.length > 30
+  console.log("ppppPPP id", productId)
 
 
   const getCardMaxWidth = (cardsPerRow: number) => {
@@ -116,6 +117,12 @@ const NewsItemCardRC = (props: ReactProps) => {
     [price, priceWas]
   )
 
+  // for <LinkLoading/>
+  let href = props.promotedSlotId ? "/f/[productId]" : "/p/[productId]"
+  let as = props.promotedSlotId ? `/f/${productId}` : `/p/${productId}`
+  let disableLink = typeof props.onClick === 'function'
+  // disable link when onClick is defined
+
   return (
     <div className={classes.rootContainer}
       style={{
@@ -136,21 +143,28 @@ const NewsItemCardRC = (props: ReactProps) => {
         />
       }
 
-      <MainPreviewImage
-        featuredPreviewItem={featuredPreviewItem}
-        productId={productId}
-        promotedSlotId={props.promotedSlotId}
-        screenSize={props.screenSize}
-        fit={fit}
-        cardsPerRow={cardsPerRow}
-        previewImageEmptyMessage={props.previewImageEmptyMessage}
+      <LinkLoading
+        href={href}
+        as={as}
+        disable={disableLink}
         onClick={props.onClick}
-        disableLink={
-          !props.newsItem?.product?.storeId ||
-          typeof props.onClick === 'function'
-          // disable link when onClick is defined
-        }
-      />
+      >
+        <MainPreviewImage
+          featuredPreviewItem={featuredPreviewItem}
+          productId={productId}
+          promotedSlotId={props.promotedSlotId}
+          screenSize={props.screenSize}
+          fit={fit}
+          cardsPerRow={cardsPerRow}
+          previewImageEmptyMessage={props.previewImageEmptyMessage}
+          onClick={props.onClick}
+          disableLink={
+            !props.newsItem?.product?.storeId ||
+            typeof props.onClick === 'function'
+            // disable link when onClick is defined
+          }
+        />
+      </LinkLoading>
 
       <div className={classes.descriptionContainerOuter}
         style={props.styleInner}
@@ -167,17 +181,9 @@ const NewsItemCardRC = (props: ReactProps) => {
           />
         }
         <LinkLoading
-          href={
-            props.promotedSlotId ? "/f/[productId]" : "/p/[productId]"
-          }
-          as={
-            props.promotedSlotId ? `/f/${productId}` : `/p/${productId}`
-          }
-          disable={
-            !props.newsItem?.product?.storeId ||
-            typeof props.onClick === 'function'
-            // disable link when onClick is defined
-          }
+          href={href}
+          as={as}
+          disable={disableLink}
           onClick={props.onClick}
         >
           {

@@ -34,6 +34,7 @@ export const styles = (theme: Theme) => createStyles({
   aspectRatioOuter: {
     paddingTop: '62.5%', // 2:3 aspect ratio
     position: 'relative',
+    width: '100%',
   },
   aspectRatioInner: {
     position: 'absolute',

@@ -17,7 +17,7 @@ import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import AirCarousel from "components/AirCarousel";
 import Link from "next/link";
 import ArrowRight from "@material-ui/icons/ArrowRight";
-import { createNewsItemForProduct } from "typings/transformers";
+import { createNewsItemForProductPreview } from "typings/transformers";
 
 
 
@@ -41,7 +41,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
   } = props;
 
 
-  const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProduct(edge.node))
+  const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProductPreview(edge.node))
   let newsItemPreviews1 = newsItemPreviews?.slice(0,4) ?? []
   let newsItemPreviews2 = newsItemPreviews?.slice(4,8) ?? []
   let newsItemPreviews3 = newsItemPreviews?.slice(8) ?? []
