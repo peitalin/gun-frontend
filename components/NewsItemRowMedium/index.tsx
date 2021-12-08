@@ -32,6 +32,7 @@ import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
 import NewsItemAdminSetCategoryIcon from "components/NewsItems/NewsItemAdminSetCategoryIcon"
 import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
+import NewsItemAdminMarkSoldIcon from "components/NewsItems/NewsItemAdminMarkSoldIcon"
 import NewsItemAdminGenerateClaimIdIcon from "components/NewsItems/NewsItemAdminGenerateClaimIdIcon"
 
 
@@ -240,7 +241,6 @@ const NewsItemRowMedium = (props: ReactProps) => {
               }}
             />
 
-
             <NewsItemAdminRescrapeIcon
               newsItem={newsItem}
               style={{
@@ -274,6 +274,19 @@ const NewsItemRowMedium = (props: ReactProps) => {
                 height: '28px',
               }}
             />
+
+            <NewsItemAdminMarkSoldIcon
+              newsItem={newsItem}
+              style={{
+                top: "unset",
+                bottom: '-0.5rem',
+                left: 'calc(25% + 5rem)',
+                marginTop: '0.5rem',
+                width: '28px',
+                height: '28px',
+              }}
+            />
+
           </>
         }
 

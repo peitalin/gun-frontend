@@ -125,3 +125,18 @@ export const SET_NEWS_ITEM_CATEGORY = gql`
   }
   ${NewsItemFragment}
 `;
+
+
+// Admin
+export const MARK_NEWS_ITEM_AS_SOLD_ADMIN = gql`
+  mutation(
+    $newsItemId: String!
+  ) {
+    markNewsItemAsSoldAdmin(
+      newsItemId: $newsItemId
+    ) {
+      ...NewsItemFragment
+    }
+  }
+  ${NewsItemFragment}
+`;
