@@ -52,6 +52,12 @@ const NewsItemAdminMarkSoldIcon: React.FC<ReactProps> = (props) => {
         { variant: "info" }
       )
     },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        err.message,
+        { variant: "error" }
+      )
+    },
   })
 
   const [openMarkSoldModal, setopenMarkSoldModal] = React.useState(false)

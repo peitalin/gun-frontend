@@ -54,6 +54,12 @@ const NewsItemAdminSuspendIcon: React.FC<ReactProps> = (props) => {
         { variant: "info" }
       )
     },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        err.message,
+        { variant: "error" }
+      )
+    },
   })
 
   const [openSuspendModal, setOpenSuspendModal] = React.useState(false)
