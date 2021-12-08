@@ -152,6 +152,10 @@ const DropdownInput = (props: ReactProps) => {
                     fontWeight: 500,
                     color: isDarkMode ? Colors.charcoal : Colors.cream,
                   }),
+                  multiValueRemove: styles => ({
+                    ...styles,
+                    cursor: "pointer",
+                  }),
                   menu: styles => ({
                     ...styles,
                     zIndex: 10,
@@ -264,6 +268,10 @@ const DropdownInput = (props: ReactProps) => {
                     ...styles,
                     fontWeight: 500,
                     color: isDarkMode ? Colors.cream : Colors.cream,
+                  }),
+                  multiValueRemove: styles => ({
+                    ...styles,
+                    cursor: "pointer",
                   }),
                   indicatorSeparator: styles => ({
                     ...styles,
