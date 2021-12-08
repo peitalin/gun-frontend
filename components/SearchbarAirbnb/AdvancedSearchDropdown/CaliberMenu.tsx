@@ -17,6 +17,7 @@ import { GET_CALIBERS } from "queries/calibers-queries";
 import { useQuery } from "@apollo/client";
 import { SelectOptionCaliber } from "typings"
 import { defaultCalibersInsertInput } from "utils/calibers";
+import { sortAlphabetical, compareAlphabetical } from "utils/strings"
 
 
 
@@ -34,7 +35,10 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
   // let caliberData = data?.getCalibers
   let caliberData = defaultCalibersInsertInput
 
-  const caliberOptionGroups = createCaliberOptionGroups(caliberData)
+  const caliberOptionGroups = React.useMemo(() => {
+    return createCaliberOptionGroups(caliberData)
+  }, [caliberData])
+
   const initialCalibers = (calibers ?? []).map(c => {
     return {
       label: c.label,
@@ -90,6 +94,7 @@ export const createCaliberOption = (
   }
 }
 
+
 export const createCaliberOptionGroups = (
   calibers: Calibers[],
   allCalibersOption: boolean = true
@@ -98,42 +103,55 @@ export const createCaliberOptionGroups = (
     return []
   }
 
-  let rimfire = calibers.filter(c => {
-    return c.group === CaliberGroup.RIMFIRE_CENTERFIRE
-  }).map(c => createCaliberOption(c))
+  let allCalibers = calibers
+    .map(c => createCaliberOption(c))
+    .sort((a, b) => compareAlphabetical(a.value, b.value))
 
-  let projectile = calibers.filter(c => {
-    return c.group === CaliberGroup.PROJECTILE
-  }).map(c => createCaliberOption(c))
+  // let rimfire = calibers.filter(c => {
+  //   return c.group === CaliberGroup.RIMFIRE_CENTERFIRE
+  // }).map(c => createCaliberOption(c))
+  //   .sort((a, b) => compareAlphabetical(a.value, b.value))
 
-  let shotshell = calibers.filter(c => {
-    return c.group === CaliberGroup.SHOTSHELL
-  }).map(c => createCaliberOption(c))
+  // let projectile = calibers.filter(c => {
+  //   return c.group === CaliberGroup.PROJECTILE
+  // }).map(c => createCaliberOption(c))
+  //   .sort((a, b) => compareAlphabetical(a.value, b.value))
+
+  // let shotshell = calibers.filter(c => {
+  //   return c.group === CaliberGroup.SHOTSHELL
+  // }).map(c => createCaliberOption(c))
+  //   .sort((a, b) => compareAlphabetical(a.value, b.value))
 
   return [
     {
-      label: "Rimfire / Centerfire",
-      options: rimfire,
-      // options: allCalibersOption
-      //   ? [
-      //       { label: "All Calibers", value: undefined },
-      //       ...rimfire,
-      //     ]
-      //   : [ ...rimfire ]
-        // All calibers only for filtering search, not for creating products
+      label: "Calibers",
+      options: allCalibers,
     },
-    {
-      label: "Projectile",
-      options: [
-        ...projectile,
-      ],
-    },
-    {
-      label: "Shotshell",
-      options: [
-        ...shotshell,
-      ],
-    },
+
+    /// ONLY if you want caliber groups
+    // {
+    //   label: "Rimfire / Centerfire",
+    //   options: rimfire,
+    //   // options: allCalibersOption
+    //   //   ? [
+    //   //       { label: "All Calibers", value: undefined },
+    //   //       ...rimfire,
+    //   //     ]
+    //   //   : [ ...rimfire ]
+    //     // All calibers only for filtering search, not for creating products
+    // },
+    // {
+    //   label: "Projectile",
+    //   options: [
+    //     ...projectile,
+    //   ],
+    // },
+    // {
+    //   label: "Shotshell",
+    //   options: [
+    //     ...shotshell,
+    //   ],
+    // },
   ]
 }
 

@@ -1,6 +1,15 @@
 import { SoldOutStatus } from "typings/gqlTypes";
 
 
+export const sortAlphabetical = (list: any[]) => {
+  return list.sort((a, b) => compareAlphabetical(a, b))
+}
+
+export const compareAlphabetical = (a: string, b: string) => {
+  return a.localeCompare(b)
+}
+
+
 export const setEquals = <T>(set1: Set<T>, set2: Set<T>): boolean => {
   if (set1.size !== set2.size) {
     return false

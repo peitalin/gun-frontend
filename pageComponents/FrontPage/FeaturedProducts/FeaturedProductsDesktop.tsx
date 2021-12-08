@@ -44,6 +44,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
     promotedItem => promotedItem.node
   );
 
+
   return (
     <main className={classes.root}>
 

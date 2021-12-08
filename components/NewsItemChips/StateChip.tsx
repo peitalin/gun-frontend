@@ -71,7 +71,7 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.easeInOut,
       duration: 200,
     }),
-    cursor: "pointer",
+    // cursor: "pointer",
     fontSize: "0.8rem",
     borderRadius: BorderRadius,
     display: 'flex',
