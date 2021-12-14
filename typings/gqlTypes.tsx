@@ -1319,6 +1319,7 @@ export type Mutation = {
   markSavedSearchHitsAsSeen: Array<SavedSearchHit>;
   createNewsItemWithExternalProduct: NewsItem;
   markExternalProductAsSold: NewsItem;
+  markNewsItemAsSoldAdmin: NewsItem;
   editExternalProduct: NewsItem;
   suspendUnsuspendNewsItem: NewsItem;
   upvoteNewsItem: NewsItem;
@@ -3692,6 +3693,11 @@ export type MutationMarkExternalProductAsSoldArgs = {
   isSold: Scalars['Boolean'];
   price?: Maybe<Scalars['Int']>;
   skipHrsToSold?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationMarkNewsItemAsSoldAdminArgs = {
+  newsItemId: Scalars['String'];
 };
 
 

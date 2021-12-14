@@ -10,7 +10,6 @@ import { makeStore, GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Redux SSR Next
 import withRedux from "next-redux-wrapper";
-import App from "next/app";
 // Layout
 import Layout from "layout";
 // MUI
