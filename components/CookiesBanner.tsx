@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 
 // redux
@@ -12,13 +15,13 @@ import { useSelector, useDispatch } from "react-redux";
 // Utils Components
 import Tick from "components/Icons/Tick";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Subcomponents
 import { UserPrivate } from "typings/gqlTypes";
 import IconButtonCancel from "components/IconButtonCancel";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import Link from "next/link";
 
@@ -37,7 +40,7 @@ const CookiesBanner = (props) => {
   };
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
   const colorBg = Colors.black
 
 

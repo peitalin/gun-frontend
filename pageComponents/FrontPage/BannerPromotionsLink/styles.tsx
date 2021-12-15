@@ -1,5 +1,6 @@
 // styles
-import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
+import { Theme, alpha, lighten } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, fontFam, BorderRadius, isThemeDark } from "layout/AppTheme";
 
 

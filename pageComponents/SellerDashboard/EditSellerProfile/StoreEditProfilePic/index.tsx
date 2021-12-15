@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients } from "layout/AppTheme";
 // Utils
 import { ID, StorePrivate, UploadType, Image_Parents } from "typings/gqlTypes";
@@ -17,8 +20,8 @@ import {
 } from "queries/requests";
 
 // Material UI
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 // Components
 import { useApolloClient } from "@apollo/client";
 // DZU components

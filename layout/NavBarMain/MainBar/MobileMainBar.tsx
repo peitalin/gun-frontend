@@ -1,18 +1,19 @@
 import React from "react";
 // Styles
 import clsx from 'clsx';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
 // Components
 import Logo from "components/Icons/Logo";
 // MUI
 import MobileMenuDropdown from "layout/NavBarMain/MobileMenuDropdown";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
 import Login from "layout/Login";
-import SearchIcon from '@material-ui/icons/Search';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SearchIcon from '@mui/icons-material/Search';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { UserPrivate } from "typings/gqlTypes"
 // Modals
 import { useDispatch, useSelector } from "react-redux";

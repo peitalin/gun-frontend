@@ -20,7 +20,10 @@ import {
   DzuPreviewItem
 } from "typings/dropzone";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Errors
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
@@ -48,8 +51,8 @@ import {
 import { useRouter } from "next/router";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   reduxPreviewsToProductPreviewItemInput,
 } from "pageComponents/ProductCreate/ProductCreatePage/utils";

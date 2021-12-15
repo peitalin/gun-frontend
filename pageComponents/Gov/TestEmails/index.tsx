@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 import { ID, OrderAdmin, UserPrivate, Transactions } from "typings/gqlTypes";
 import {
@@ -18,7 +21,7 @@ import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
 import { useSnackbar } from "notistack";
 // Components
 import TextInput from "components/Fields/TextInput";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import ButtonLoading from "components/ButtonLoading";
 import DisplayRecentOrderIds from "pageComponents/Gov/OrderViewer/DisplayRecentOrderIds";
 //
@@ -244,13 +247,13 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,

@@ -1,12 +1,15 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { fade, withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { alpha, Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 import { useMutation, useApolloClient } from "@apollo/client";
 import { Message, Product, BidStatus } from "typings/gqlTypes";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import {
   SEND_BID_MESSAGE,
 } from "queries/chat-mutations";
@@ -166,10 +169,10 @@ export const SendBidInput: React.FC<ReactProps> = (props) => {
 
             </div>
           </form>
-        )
+        );
       }}
     </Formik>
-  )
+  );
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
@@ -196,13 +199,13 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     borderRadius: BorderRadius,
     color: Colors.cream,
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.purple
       : Colors.secondary,
     "&:hover": {
-      background: theme.palette.type === "dark"
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.secondary, 0.9),
+      background: theme.palette.mode === "dark"
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.secondary, 0.9),
     },
   },
   bidInputWrapper: {

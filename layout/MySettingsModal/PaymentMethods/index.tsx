@@ -12,11 +12,14 @@ import { useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "./styles";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // Components
 import Loading from "components/Loading";
 import ErrorDisplay, { GraphQLErrors } from "components/ErrorDisplay";

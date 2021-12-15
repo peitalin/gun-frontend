@@ -4,7 +4,8 @@ import CreatableSelect from "react-select/creatable";
 import clsx from "clsx";
 import { styles } from "components/Fields/styles";
 import { Colors, fontFam, BorderRadius, Gradients } from "layout/AppTheme";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 // focus
 import { useFocus } from "utils/hooks";
 import ValidationErrorMsg from "./ValidationErrorMsg";

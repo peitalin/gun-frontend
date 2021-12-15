@@ -1,8 +1,11 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 
 

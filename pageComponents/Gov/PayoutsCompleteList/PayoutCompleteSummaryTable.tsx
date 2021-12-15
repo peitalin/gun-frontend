@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
@@ -16,10 +19,10 @@ import {
 import { useQuery, useLazyQuery } from "@apollo/client";
 // Material UI
 import LoadingBar from "components/LoadingBar";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 // Copy and tooltip for ids when on mobile
@@ -36,7 +39,7 @@ const PayoutCompleteSummaryTable = (props: ReactProps) => {
 
   const snackbar = useSnackbar();
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
 
   const { data, loading } = useQuery<QData2, QVar2>(
@@ -208,10 +211,10 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: "1rem",
   },
   payoutSummaryContainer: {
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.cream}`,
     padding: '1.5rem',
@@ -289,7 +292,7 @@ const styles = (theme: Theme) => createStyles({
   topLine: {
     marginTop: "0.10rem",
     paddingTop: "0.10rem",
-    borderTop: theme.palette.type === 'dark'
+    borderTop: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightGrey}`
       : `1px solid ${Colors.slateGreyBlack}`,
   },

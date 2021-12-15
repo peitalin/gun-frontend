@@ -1,9 +1,10 @@
 
 import React from "react";
 import clsx from "clsx";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import { Theme, alpha } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius,
@@ -60,13 +61,13 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: '600px',
     padding: '2rem',
     // border: `1px solid ${Colors.lightGrey}`,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     // overrides .MuiAccordion-rounded:first-child
     // border radius
     borderRadius: `${BorderRadius}px !important`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
   },

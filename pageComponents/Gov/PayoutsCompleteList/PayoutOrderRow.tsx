@@ -1,23 +1,26 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Typings
 import {
   OrderAdmin
 } from "typings/gqlTypes";
 // Utils Components
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from "@mui/material/MenuItem";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 // Copy and tooltip for ids when on mobile
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import copy from "clipboard-copy";
 import currency from 'currency.js';
 import { useRouter } from "next/router"
@@ -34,8 +37,8 @@ const PayoutOrderRow = (props: ReactProps) => {
 
   const snackbar = useSnackbar();
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
   const router = useRouter();
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
@@ -157,7 +160,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   customerItem: {
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     paddingTop: '0.5rem',

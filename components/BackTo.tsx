@@ -2,12 +2,15 @@ import React from "react";
 // Router
 import { useRouter } from "next/router";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import Button from "@mui/material/Button";
 import Router from "next/router";
 
 

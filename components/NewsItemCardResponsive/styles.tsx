@@ -1,5 +1,8 @@
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Gradient } from "@material-ui/icons";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Gradient } from "@mui/icons-material";
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 
 export const DESCRIPTION_HEIGHT = 112;
@@ -13,17 +16,17 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow3.boxShadow
       : 'unset',
     borderRadius: BorderRadius,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? 'unset'
       : `1px solid ${theme.colors.slateGrey}`,
   },
   card: {
     borderRadius: `${BorderRadius}px ${BorderRadius}px 2px 2px `,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.slateGrey,
     transition: theme.transitions.create('border', {
@@ -53,7 +56,7 @@ export const styles = (theme: Theme) => createStyles({
     cursor: "pointer",
     width: '100%',
     borderRadius: `2px 2px ${BorderRadius}px ${BorderRadius}px`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.cream,
   },
@@ -85,7 +88,7 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontWeight: 500,
     fontSize: '0.9rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
     lineHeight: '1rem',
@@ -94,7 +97,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     bottom: '0.25rem',
     right: '0rem',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -104,7 +107,7 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontWeight: 500,
     fontSize: '0.825rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
   },
@@ -118,7 +121,7 @@ export const styles = (theme: Theme) => createStyles({
   // loading
   loadingPrice: {
     backgroundColor: Colors.grey,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? theme.colors.uniswapGrey
       : theme.colors.uniswapDarkNavy,
     borderRadius: '1rem',

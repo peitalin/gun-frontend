@@ -3,8 +3,8 @@ import clsx from "clsx";
 // Typings
 import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Hidden from "components/HiddenFix";
 // components
 import NewsItemCardRC from "./NewsItemCardRC";

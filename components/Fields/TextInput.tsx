@@ -1,8 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import InputBase from "@material-ui/core/InputBase";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
+import InputBase from "@mui/material/InputBase";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import Button from '@mui/material/Button';
 import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";

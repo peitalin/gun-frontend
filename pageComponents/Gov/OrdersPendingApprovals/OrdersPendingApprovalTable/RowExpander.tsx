@@ -1,10 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows, BorderRadius } from 'layout/AppTheme';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 
 import { createDataForPendingApprovalTable } from "./createData";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 import RowExpanderTitle from "components/Gov/RowExpander/RowExpanderTitle";
@@ -21,7 +25,7 @@ import {
 } from "queries/orders-admin-queries";
 // router
 import Link from "next/link";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Snackbar
 import { useSnackbar } from "notistack";
 

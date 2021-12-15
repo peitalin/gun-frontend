@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { buttonHoverDark, buttonHoverLight } from "./styles";
 
 // MUI
 import ErrorBounds from "components/ErrorBounds";
-import SearchIcon from '@material-ui/icons/Search';
-import ClearIcon from '@material-ui/icons/Clear';
-import InputBase from '@material-ui/core/InputBase';
-import Button from "@material-ui/core/Button";
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+import InputBase from '@mui/material/InputBase';
+import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import { Colors, BorderRadius3x } from "layout/AppTheme";
 
@@ -147,7 +150,7 @@ let styles = (theme: Theme) => createStyles({
   },
   searchButton: {
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? buttonHoverDark
         : buttonHoverLight,
     },
@@ -168,12 +171,12 @@ let styles = (theme: Theme) => createStyles({
     },
   },
   searchbarExpanded: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,
   },
   searchIconOuter: {
-    fill: theme.palette.type === "dark"
+    fill: theme.palette.mode === "dark"
       ? Colors.uniswapLightGrey
       : Colors.black,
   },
@@ -187,14 +190,14 @@ let styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   inputRootMobile: {
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightGrey
       : Colors.black,
     width: '0',
     fontSize: '0.9rem',
   },
   inputRootMobileExpand: {
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightGrey
       : Colors.black,
     width: 'calc(100% - 3rem)',

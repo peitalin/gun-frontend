@@ -1,21 +1,24 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import CardMedia from "@material-ui/core/CardMedia";
+import CardMedia from "@mui/material/CardMedia";
 
 
 
@@ -31,7 +34,7 @@ const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
 
   const theme = useTheme();
   const isDarkMode = isThemeDark(theme)
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
 
   return (

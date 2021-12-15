@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Typings
 import { ProductPreviewItem, Product } from "typings/gqlTypes";
@@ -8,8 +11,8 @@ import { ProductPreviewItem, Product } from "typings/gqlTypes";
 import CollectionsIcon from "components/Collections/CollectionsIcon";
 // import AdminEditProductIcon from "components/AdminEditProductIcon";
 // Media Query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 

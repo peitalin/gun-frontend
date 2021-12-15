@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-ui/core/styles";
+import { Theme, lighten } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // Redux

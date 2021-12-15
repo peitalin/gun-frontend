@@ -1,9 +1,12 @@
 import React from 'react';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // components
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import AlignCenterLayout from "components/AlignCenterLayout";
 import SocialFloatingBanner from "layout/SocialFloatingBanner";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";

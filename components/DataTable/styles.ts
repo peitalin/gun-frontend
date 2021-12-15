@@ -1,10 +1,10 @@
 
-import {
-  lighten,
-  createStyles,
-  withStyles, WithStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { lighten, Theme } from '@mui/material/styles';
+
+
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 
 
 export const styles = (theme: Theme) => createStyles({

@@ -5,11 +5,14 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // components
-import IconButton from '@material-ui/core/IconButton';
-import CheckIcon from "@material-ui/icons/Check";
-import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from '@mui/material/IconButton';
+import CheckIcon from "@mui/icons-material/Check";
+import Tooltip from "@mui/material/Tooltip";
 import Loading from "components/Loading";
 // typings
 import {
@@ -249,11 +252,11 @@ const styles = (theme: Theme) => createStyles({
   closeIcon: {
     width: 32,
     height: 32,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarker,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapMediumGrey
         : Colors.slateGreyDarkest,
     },

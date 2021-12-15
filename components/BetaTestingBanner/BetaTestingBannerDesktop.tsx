@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 import { DISCORD_LINK } from 'utils/links'
 
@@ -12,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 // Utils Components
 import Tick from "components/Icons/Tick";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Subcomponents
 import { UserPrivate } from "typings/gqlTypes";
 import IconButtonCancel from "components/IconButtonCancel";
@@ -133,7 +136,7 @@ const styles = (theme: Theme) => createStyles({
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
   },

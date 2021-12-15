@@ -1,6 +1,9 @@
 import React from 'react';
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Components
 import { NavBarHeight } from "layout/NavBarMain/styles";
 // Typings
@@ -27,8 +30,8 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -40,7 +43,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
 
   const router = useRouter();
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'));
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user

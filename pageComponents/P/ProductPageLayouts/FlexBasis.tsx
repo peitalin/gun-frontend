@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import Hidden, { HiddenProps } from "components/HiddenFix";
 
 
@@ -80,13 +83,13 @@ export const FlexBasis66 = withStyles(flexBasisStyles)(
           )}
           only={props.only}
           implementation={props.implementation}
-          xsDown={props.xsDown}
-          xsUp={props.xsUp}
           smDown={props.xsDown}
-          smUp={props.xsUp}
+          xsUp={props.xsUp}
           mdDown={props.xsDown}
-          mdUp={props.xsUp}
+          smUp={props.xsUp}
           lgDown={props.xsDown}
+          mdUp={props.xsUp}
+          xlDown={props.xsDown}
           lgUp={props.xsUp}
           xlDown={props.xsDown}
           xlUp={props.xsUp}
@@ -94,7 +97,7 @@ export const FlexBasis66 = withStyles(flexBasisStyles)(
         >
           {props.children}
         </Hidden>
-      )
+      );
     } else {
       return (
         <div className={clsx(
@@ -128,13 +131,13 @@ export const FlexBasis33 = withStyles(flexBasisStyles)(
           )}
           only={props.only}
           implementation={props.implementation}
-          xsDown={props.xsDown}
-          xsUp={props.xsUp}
           smDown={props.xsDown}
-          smUp={props.xsUp}
+          xsUp={props.xsUp}
           mdDown={props.xsDown}
-          mdUp={props.xsUp}
+          smUp={props.xsUp}
           lgDown={props.xsDown}
+          mdUp={props.xsUp}
+          xlDown={props.xsDown}
           lgUp={props.xsUp}
           xlDown={props.xsDown}
           xlUp={props.xsUp}
@@ -142,7 +145,7 @@ export const FlexBasis33 = withStyles(flexBasisStyles)(
         >
           {props.children}
         </Hidden>
-      )
+      );
     } else {
       return (
         <div className={clsx(

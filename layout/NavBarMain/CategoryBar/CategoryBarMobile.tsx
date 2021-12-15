@@ -1,20 +1,21 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./styles";
 import {
   Colors, isThemeDark,
 } from "layout/AppTheme";
 import { Categories, UserPrivate } from "typings/gqlTypes";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // hooks
 import Link from "next/link";
 import { useRouter } from "next/router";
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@mui/icons-material/Search';
 import ArrowStripeIcon from "components/ArrowStripeIcon"
-import { useTheme } from "@material-ui/core"
+import { useTheme } from "@mui/material"
 
 
 

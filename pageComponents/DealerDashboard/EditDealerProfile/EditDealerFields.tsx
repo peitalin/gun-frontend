@@ -5,13 +5,16 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "./styles";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInput from "components/Fields/TextInput";
 import Divider from "components/Divider";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // router
 import { useRouter } from "next/router";
 // Typings

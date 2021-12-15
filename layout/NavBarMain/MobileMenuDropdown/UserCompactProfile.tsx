@@ -2,15 +2,18 @@ import React from "react";
 // Graphql
 import { UserPrivate, StorePrivate, ID } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
+import Typography from "@mui/material/Typography";
+import Avatar from '@mui/material/Avatar';
 import { logout } from "queries/requests";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -95,14 +98,14 @@ const styles = (theme: Theme) => createStyles({
   profileTitle: {
     fontWeight: 600,
     marginBottom: '0.25rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
   profileEmail: {
     fontWeight: 400,
     fontSize: '0.7rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,
   },
@@ -111,7 +114,7 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '1rem',
     fontWeight: 500,
     // color: Colors.uniswapLightNavy,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.charcoal,
     cursor: 'pointer',

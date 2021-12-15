@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 // helpers
 import { genSrcSetSmall } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/links";

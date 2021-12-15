@@ -1,4 +1,6 @@
-import { withStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius4x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 
 const emailInputMaxWidth = 350;
@@ -32,7 +34,7 @@ const styles = (theme: Theme) => createStyles({
   title: {
     marginTop: '2rem',
     margin: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.uniswapGrey}`,
   },
@@ -64,7 +66,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     padding: "2rem",
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.darkWhite,
   },
@@ -130,7 +132,7 @@ const styles = (theme: Theme) => createStyles({
     top: '1.5rem',
   },
   dontHaveAccount: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.uniswapGrey}`,
     marginTop: '0.5rem',
@@ -194,26 +196,26 @@ const styles = (theme: Theme) => createStyles({
   datePickButton: {
     width: "100%",
     borderRadius: BorderRadius,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.ultramarineBlue}`
       : `1px solid ${Colors.ultramarineBlue}`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.slateGrey
       : Colors.cream,
     "&:hover": {
-      // backgroundColor: theme.palette.type === 'dark'
+      // backgroundColor: theme.palette.mode === 'dark'
       //   ? Colors.uniswapMediumNavy
       //   : Colors.slateGreyDark,
-      // border: theme.palette.type === 'dark'
+      // border: theme.palette.mode === 'dark'
       //   ? `1px solid ${Colors.uniswapLighterGrey}`
       //   : `1px solid ${Colors.slateGreyDarkest}`,
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.ultramarineBlue}`
         : `1px solid ${Colors.ultramarineBlue}`,
-      backgroundColor: theme.palette.type === 'dark'
+      backgroundColor: theme.palette.mode === 'dark'
         ? Colors.ultramarineBlue
         : Colors.ultramarineBlue,
     },
@@ -221,7 +223,7 @@ const styles = (theme: Theme) => createStyles({
   miniTitle: {
     fontSize: '1rem',
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     marginTop: '2rem',

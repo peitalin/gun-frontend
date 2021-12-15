@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
@@ -11,7 +14,7 @@ import {
 } from "typings/gqlTypes";
 // Utils Components
 import LoadingBarSSR from "components/LoadingBarSSR";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 import IconButtonCancel from "components/IconButtonCancel";
@@ -20,14 +23,14 @@ import IconButtonCancel from "components/IconButtonCancel";
 // import PublishedProducts from "pageComponents/SellerProfileDashboard/PublishedProductsList";
 import ChangePayoutMethod from "pageComponents/SellerDashboard/ChangePayoutMethod";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 // apollo
 import { useQuery, useLazyQuery, useApolloClient } from "@apollo/client";
 // import { GET_DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 // Meta headers
-import CardMedia from "@material-ui/core/CardMedia";
+import CardMedia from "@mui/material/CardMedia";
 import HomeSection2 from "./HomeSection2";
 
 
@@ -40,7 +43,7 @@ const SellerDashboardHome = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <div className={

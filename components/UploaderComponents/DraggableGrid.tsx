@@ -9,7 +9,13 @@ import {
 } from 'react-sortable-hoc';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+
+
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 
 

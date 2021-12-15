@@ -3,10 +3,13 @@ import { useState } from "react";
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 // Utils
 import { Image_Owners, Store } from "typings/gqlTypes";
 // Following stores

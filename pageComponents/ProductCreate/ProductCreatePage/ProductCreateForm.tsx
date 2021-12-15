@@ -1,11 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, BorderRadius2x } from "layout/AppTheme";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 // NOTES:
@@ -22,7 +25,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = (props) => {
   // with a callback to Formik.onSubmit prop
   // CSS media queries
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <form

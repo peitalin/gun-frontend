@@ -2,16 +2,19 @@ import React from "react";
 import clsx from "clsx";
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInputUnderline from "components/Fields/TextInputUnderline";
 // Typings
 import { HtmlEvent, CreateStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
 // Dates
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import Loading from 'components/Loading';
 import dynamic from "next/dynamic";
 

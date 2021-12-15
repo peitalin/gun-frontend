@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
@@ -44,8 +47,8 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 // Router
 import { useRouter } from "next/router";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { below1024Query, col2MinWidth } from "pageComponents/P/common";
 // SSR
 import ProductDetails from "pageComponents/P/ProductDetails";
@@ -67,9 +70,9 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
   const below1024 = useMediaQuery(below1024Query);
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'));
 
   // index for the featuredPreview Carousel
   const [index, setIndex] = React.useState(0);

@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "pageComponents/S/styles";
 import { Colors, Gradients } from "layout/AppTheme";
 // Typings
@@ -31,8 +34,8 @@ import {
   GET_STORE_PRODUCTS_FOR_SALE_CONNECTION,
 } from "queries/store-queries";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
@@ -53,8 +56,8 @@ const StoresId: React.FC<ReactProps> = (props) => {
   const storeId: string = router?.query?.storeId as any || storeIdOrSlug;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 10;

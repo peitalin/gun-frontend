@@ -6,7 +6,10 @@ import {
   PromotedSlot,
 } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 
 import {

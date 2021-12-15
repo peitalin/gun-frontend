@@ -1,11 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  withStyles,
-  createStyles,
-  WithStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BoxShadows,
@@ -15,12 +13,12 @@ import {
   isThemeDark
 } from "layout/AppTheme";
 // components
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import CategoryCarouselStart2 from "./CategoryCarouselStart2";
-import CardMedia from "@material-ui/core/CardMedia";
+import CardMedia from "@mui/material/CardMedia";
 import { commonStyles } from "../commonStyles";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AlignCenterLayout from "components/AlignCenterLayout";
 
 
@@ -30,7 +28,7 @@ const StartSelling2 = (props: ReactProps) => {
   const { classes, } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
   const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
 
   return (
@@ -253,7 +251,7 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontSize: '0.8rem',
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black1A,
     marginTop: '1.5rem',
@@ -274,7 +272,7 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 700,
     fontSize: '1rem',
     marginBottom: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.cream
       : Colors.black1A,
   },
@@ -292,10 +290,10 @@ export const styles = (theme: Theme) => createStyles({
     height: '100%',
     position: 'absolute',
     // polkadot
-    // background: theme.palette.type === 'dark'
+    // background: theme.palette.mode === 'dark'
     //   ? `${Colors.uniswapDarkNavy}`
     //   : `${Colors.cream}`,
-    // backgroundImage: theme.palette.type === 'dark'
+    // backgroundImage: theme.palette.mode === 'dark'
     // ? `radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`
     // : `radial-gradient(${Colors.slateGrey} 10%, transparent 0), radial-gradient(${Colors.slateGrey} 10%, transparent 0)`,
     backgroundSize: "30px 30px",
@@ -340,7 +338,7 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontSize: '0.8rem',
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black1A,
     marginTop: '1.5rem',

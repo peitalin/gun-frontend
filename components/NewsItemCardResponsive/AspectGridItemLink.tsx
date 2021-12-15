@@ -1,13 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import { NewsItem } from "typings/gqlTypes";
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 // Carousel
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import LinkLoading from "components/LinkLoading";
@@ -68,7 +71,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   card: {
     borderRadius: `${BorderRadius}px ${BorderRadius}px 2px 2px `,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.slateGrey,
     transition: theme.transitions.create('border', {

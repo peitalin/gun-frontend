@@ -1,23 +1,26 @@
 import React from 'react';
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius4x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 import clsx from "clsx";
 
-import Button from '@material-ui/core/Button';
-import TextField from "@material-ui/core/TextField";
-import Dialog from '@material-ui/core/Dialog';
+import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
+import Dialog from '@mui/material/Dialog';
 
 import CreateLicense from './CreateLicense';
 import ErrorBounds from "components/ErrorBounds";
-import MenuItem from '@material-ui/core/MenuItem';
-import Typography from "@material-ui/core/Typography";
+import MenuItem from '@mui/material/MenuItem';
+import Typography from "@mui/material/Typography";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   UserMutationResponse,
   UserPrivate,
 } from "typings/gqlTypes";
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
 import { ADD_USER_LICENSE } from "queries/user-mutations";
 import { useMutation, ApolloError } from "@apollo/client";
 import { connect, useSelector, useDispatch } from "react-redux"
@@ -38,7 +41,7 @@ const AddLicenseModal: React.FC<ReactProps> = (props) => {
   const snackbar = useSnackbar();
   const dispatch = useDispatch();
 
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const [openModal, setOpenModal] = React.useState(false)
 
@@ -210,7 +213,7 @@ const styles = (theme: Theme) => createStyles({
   title: {
     marginTop: '2rem',
     margin: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.uniswapGrey}`,
   },
@@ -228,7 +231,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     padding: "2rem",
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.darkWhite,
   },

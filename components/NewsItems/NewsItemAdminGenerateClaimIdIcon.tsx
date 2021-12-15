@@ -1,11 +1,14 @@
 import React from "react";
 // styles
 import clsx from 'clsx';
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 // MUI
-import LinkIcon from '@material-ui/icons/Link';
-import IconButton from "@material-ui/core/IconButton";
+import LinkIcon from '@mui/icons-material/Link';
+import IconButton from "@mui/material/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
 import {
@@ -24,7 +27,7 @@ import {
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 import ConfirmActionModal from "components/ConfirmActionModal";
 import copy from "clipboard-copy";
 
@@ -78,55 +81,53 @@ const NewsItemAdminGenerateClaimidIcon: React.FC<ReactProps> = (props) => {
     return null
   }
 
-  return (
-    <>
-      <Tooltip title={"Generate Claim Link"}>
-        <IconButton
-          onClick={(e) => {
-            // prevent click-through to underlying product card
-            // e.stopPropagation();
-            // let user know they are not logged in and item won't be saved
-            if (
-              user?.userRole === Role.PLATFORM_ADMIN
-              || user?.userRole === Role.PLATFORM_EDITOR
-            ) {
-              generateClaimLink()
-            } else {
-              snackbar.enqueueSnackbar(
-                "Must be admin to generate claim link",
-                { variant: "info"}
-              )
-            }
-          }}
-          // onMouseEnter={() => setHover(true)}
-          // onMouseLeave={() => setHover(false)}
-          className={classes.rescrapeNewsItemRoot}
-          style={{
-            top: 'calc(50% - 16px)',
-            padding: '.25rem', // determines button radius size
-            ...props.style
-          }}
-          // size="small"
-        >
-          <LinkIcon classes={{
-            root: classes.rescrapeRootIcon,
-          }}/>
-        </IconButton>
-      </Tooltip>
-      {/* <ConfirmActionModal
-        title={"Do you wish to rescrape this NewsItem?"}
-        showModal={openRescrapeModal}
-        setShowModal={() => setOpenRescrapeModal(false)}
-        onConfirmFunction={async() => {
-
-          snackbar.enqueueSnackbar(
-            `Rescraping NewsItem ${props.newsItem?.id}`,
-            { variant: "info" }
-          )
+  return <>
+    <Tooltip title={"Generate Claim Link"}>
+      <IconButton
+        onClick={(e) => {
+          // prevent click-through to underlying product card
+          // e.stopPropagation();
+          // let user know they are not logged in and item won't be saved
+          if (
+            user?.userRole === Role.PLATFORM_ADMIN
+            || user?.userRole === Role.PLATFORM_EDITOR
+          ) {
+            generateClaimLink()
+          } else {
+            snackbar.enqueueSnackbar(
+              "Must be admin to generate claim link",
+              { variant: "info"}
+            )
+          }
         }}
-      /> */}
-    </>
-  )
+        // onMouseEnter={() => setHover(true)}
+        // onMouseLeave={() => setHover(false)}
+        className={classes.rescrapeNewsItemRoot}
+        // size="small"
+        style={{
+          top: 'calc(50% - 16px)',
+          padding: '.25rem', // determines button radius size
+          ...props.style
+        }}
+        size="large">
+        <LinkIcon classes={{
+          root: classes.rescrapeRootIcon,
+        }}/>
+      </IconButton>
+    </Tooltip>
+    {/* <ConfirmActionModal
+      title={"Do you wish to rescrape this NewsItem?"}
+      showModal={openRescrapeModal}
+      setShowModal={() => setOpenRescrapeModal(false)}
+      onConfirmFunction={async() => {
+
+        snackbar.enqueueSnackbar(
+          `Rescraping NewsItem ${props.newsItem?.id}`,
+          { variant: "info" }
+        )
+      }}
+    /> */}
+  </>;
 }
 
 

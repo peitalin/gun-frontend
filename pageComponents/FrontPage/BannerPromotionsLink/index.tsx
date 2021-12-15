@@ -1,6 +1,9 @@
 import React from "react";
 // styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // typings
@@ -8,8 +11,8 @@ import Hidden from 'components/HiddenFix';
 import BannerPromotionsLinkDesktop from "./BannerPromotionsLinkDesktop";
 import BannerPromotionsLinkMobile from "./BannerPromotionsLinkMobile";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -33,26 +36,24 @@ const BannerPromotionsLink: React.FC<ReactProps> = (props) => {
     : 'linear-gradient(130deg, rgba(245,245,245,0.2) 10%, rgba(245,245,245,0.4) 90%)'
   // console.log("categorySlugForGql: ", props.categorySlug)
 
-  return (
-    <>
-      {/* Mobile */}
-      <Hidden mdUp implementation='css' className={classes.width100}>
-        <BannerPromotionsLinkMobile
-          bannerForegroundImageUrl={undefined}
-          bannerBackgroundImageUrl={undefined}
-          bannerDither={bannerDitherMobile}
-        />
-      </Hidden>
-      {/* Desktop */}
-      <Hidden smDown implementation="css" className={classes.width100}>
-        <BannerPromotionsLinkDesktop
-          bannerForegroundImageUrl={undefined}
-          bannerBackgroundImageUrl={undefined}
-          bannerDither={bannerDither}
-        />
-      </Hidden>
-    </>
-  )
+  return <>
+    {/* Mobile */}
+    <Hidden mdUp implementation='css' className={classes.width100}>
+      <BannerPromotionsLinkMobile
+        bannerForegroundImageUrl={undefined}
+        bannerBackgroundImageUrl={undefined}
+        bannerDither={bannerDitherMobile}
+      />
+    </Hidden>
+    {/* Desktop */}
+    <Hidden mdDown implementation="css" className={classes.width100}>
+      <BannerPromotionsLinkDesktop
+        bannerForegroundImageUrl={undefined}
+        bannerBackgroundImageUrl={undefined}
+        bannerDither={bannerDither}
+      />
+    </Hidden>
+  </>;
 }
 
 

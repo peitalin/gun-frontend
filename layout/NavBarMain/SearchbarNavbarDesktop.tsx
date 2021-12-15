@@ -1,9 +1,12 @@
 import React from "react";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { buttonHoverDark, buttonHoverLight } from "./styles";
 // MUI
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 import { useRouter } from "next/router";
 import {
   Colors,
@@ -72,7 +75,7 @@ let styles = (theme: Theme) => createStyles({
     position: 'relative',
     // border: `1px solid ${Colors.uniswapDarkNavy}`,
     borderRadius: BorderRadius3x,
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
     marginLeft: 0,

@@ -1,17 +1,20 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // TYpings
 import { OrderStatus, Order } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 // Components
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
 import DisplayOrderId from "./DisplayOrderId";
@@ -19,8 +22,8 @@ import OrderStatusStepper from "./OrderStatusStepper";
 import OrderStatusStepperCancelled from "./OrderStatusStepperCancelled";
 import OrderProductPreview from "./OrderProductPreview";
 // theme
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -30,7 +33,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   const product = order.product;
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('xs'))
+  const mdDown = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <ErrorBounds className={clsx(
@@ -126,19 +129,19 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     marginBottom: "0.5rem",
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapMediumNavy
       : theme.colors.slateGrey,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   closeIcon: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarker,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapMediumGrey
         : Colors.slateGreyDarkest,
     },

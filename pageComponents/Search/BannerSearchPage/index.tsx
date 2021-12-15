@@ -1,6 +1,9 @@
 import React from "react";
 // styles
-import { withStyles, WithStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius,
@@ -97,134 +100,132 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
   const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.01) 10%, rgba(25,25,25,0.01) 90%)'
   const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.01) 10%, rgba(25,25,25,0.01) 90%)'
 
-  return (
-    <>
-      {/* Mobile */}
-      <Hidden lgUp implementation='css' className={classes.width100}>
-        <BannerSearchMobile
-          categoryName={props.bannerTitle ?? selectedCategoryName}
-          blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
-          bannerDither={bannerDitherMobile}
-          isExpanded={focusedOuter}
-        >
-          <CategorySearchbar
-            id={"category-search-1-mobile"}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            facets={facets}
-            setFacets={setFacets}
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
-            priceRange={priceRange}
-            setPriceRange={setPriceRange}
-            currentCategories={currentCategories}
-            setCurrentCategories={setCurrentCategories}
-            dealerStates={dealerStates}
-            setDealerStates={setDealerStates}
-            calibers={calibers}
-            setCalibers={setCalibers}
-            actionTypes={actionTypes}
-            setActionTypes={setActionTypes}
-            paginationParams={{
-              limit: limit,
-              offset: offset,
-              overfetchBy: overfetchBy,
-              totalCount: totalCount,
-              setTotalCount: setTotalCount,
-              pageParam: pageParam,
-              setPageParam: setPageParam,
-              index: index,
-              setIndex: setIndex,
-              debounceSetIndex: debounceSetIndex,
-            }}
-            // Category Page specific callbacks
-            disableCategoriesFilter={props.disableCategoriesFilter}
-            setCategorySlugsForGql={setCategorySlugsForGql}
-            setSearchTermForGql={setSearchTermForGql}
-            setCalibersForGql={setCalibersForGql}
-            setDealerStatesForGql={setDealerStatesForGql}
-            initialDropdownCategories={props.initialDropdownCategories}
-            isMobile={true}
-            setFocusedOuter={setFocusedOuter}
-            focusedOuter={focusedOuter}
-          />
-          {/* <RowOrCardsButtons
-            rowMode={rowMode}
-            setRowMode={setRowMode}
-            isMobile={true}
-          /> */}
-          <SortByDropdown
-            isMobile={true}
-            isDarkMode={isDarkMode}
-            setOrderBy={setOrderBy}
-            sortByOptions={props.sortByOptions}
-          />
-        </BannerSearchMobile>
-      </Hidden>
+  return <>
+    {/* Mobile */}
+    <Hidden lgUp implementation='css' className={classes.width100}>
+      <BannerSearchMobile
+        categoryName={props.bannerTitle ?? selectedCategoryName}
+        blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
+        bannerDither={bannerDitherMobile}
+        isExpanded={focusedOuter}
+      >
+        <CategorySearchbar
+          id={"category-search-1-mobile"}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          facets={facets}
+          setFacets={setFacets}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+          currentCategories={currentCategories}
+          setCurrentCategories={setCurrentCategories}
+          dealerStates={dealerStates}
+          setDealerStates={setDealerStates}
+          calibers={calibers}
+          setCalibers={setCalibers}
+          actionTypes={actionTypes}
+          setActionTypes={setActionTypes}
+          paginationParams={{
+            limit: limit,
+            offset: offset,
+            overfetchBy: overfetchBy,
+            totalCount: totalCount,
+            setTotalCount: setTotalCount,
+            pageParam: pageParam,
+            setPageParam: setPageParam,
+            index: index,
+            setIndex: setIndex,
+            debounceSetIndex: debounceSetIndex,
+          }}
+          // Category Page specific callbacks
+          disableCategoriesFilter={props.disableCategoriesFilter}
+          setCategorySlugsForGql={setCategorySlugsForGql}
+          setSearchTermForGql={setSearchTermForGql}
+          setCalibersForGql={setCalibersForGql}
+          setDealerStatesForGql={setDealerStatesForGql}
+          initialDropdownCategories={props.initialDropdownCategories}
+          isMobile={true}
+          setFocusedOuter={setFocusedOuter}
+          focusedOuter={focusedOuter}
+        />
+        {/* <RowOrCardsButtons
+          rowMode={rowMode}
+          setRowMode={setRowMode}
+          isMobile={true}
+        /> */}
+        <SortByDropdown
+          isMobile={true}
+          isDarkMode={isDarkMode}
+          setOrderBy={setOrderBy}
+          sortByOptions={props.sortByOptions}
+        />
+      </BannerSearchMobile>
+    </Hidden>
 
-      {/* Desktop */}
-      <Hidden mdDown implementation="css" className={classes.width100}>
-        <BannerSearchDesktop
-          categoryName={props.bannerTitle ?? selectedCategoryName}
-          blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
-          bannerDither={bannerDither}
-        >
-          <CategorySearchbar
-            id={"category-search-2-desktop"}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            facets={facets}
-            setFacets={setFacets}
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
-            priceRange={priceRange}
-            setPriceRange={setPriceRange}
-            currentCategories={currentCategories}
-            setCurrentCategories={setCurrentCategories}
-            dealerStates={dealerStates}
-            setDealerStates={setDealerStates}
-            calibers={calibers}
-            setCalibers={setCalibers}
-            actionTypes={actionTypes}
-            setActionTypes={setActionTypes}
-            paginationParams={{
-              limit: limit,
-              offset: offset,
-              overfetchBy: overfetchBy,
-              totalCount: totalCount,
-              setTotalCount: setTotalCount,
-              pageParam: pageParam,
-              setPageParam: setPageParam,
-              index: index,
-              setIndex: setIndex,
-              debounceSetIndex: debounceSetIndex,
-            }}
-            // Category Page specific callbacks
-            disableCategoriesFilter={props.disableCategoriesFilter}
-            setCategorySlugsForGql={setCategorySlugsForGql}
-            setSearchTermForGql={setSearchTermForGql}
-            setCalibersForGql={setCalibersForGql}
-            setDealerStatesForGql={setDealerStatesForGql}
-            initialDropdownCategories={props.initialDropdownCategories}
-            isMobile={false}
-            setFocusedOuter={setFocusedOuter}
-            focusedOuter={focusedOuter}
-          />
-          <RowOrCardsButtons
-            rowMode={rowMode}
-            setRowMode={setRowMode}
-            isMobile={false}
-          />
-          <SortByDropdown
-            isMobile={false}
-            isDarkMode={isDarkMode}
-            setOrderBy={setOrderBy}
-            sortByOptions={props.sortByOptions}
-          />
-        </BannerSearchDesktop>
-      </Hidden>
-    </>
-  )
+    {/* Desktop */}
+    <Hidden lgDown implementation="css" className={classes.width100}>
+      <BannerSearchDesktop
+        categoryName={props.bannerTitle ?? selectedCategoryName}
+        blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
+        bannerDither={bannerDither}
+      >
+        <CategorySearchbar
+          id={"category-search-2-desktop"}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          facets={facets}
+          setFacets={setFacets}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+          currentCategories={currentCategories}
+          setCurrentCategories={setCurrentCategories}
+          dealerStates={dealerStates}
+          setDealerStates={setDealerStates}
+          calibers={calibers}
+          setCalibers={setCalibers}
+          actionTypes={actionTypes}
+          setActionTypes={setActionTypes}
+          paginationParams={{
+            limit: limit,
+            offset: offset,
+            overfetchBy: overfetchBy,
+            totalCount: totalCount,
+            setTotalCount: setTotalCount,
+            pageParam: pageParam,
+            setPageParam: setPageParam,
+            index: index,
+            setIndex: setIndex,
+            debounceSetIndex: debounceSetIndex,
+          }}
+          // Category Page specific callbacks
+          disableCategoriesFilter={props.disableCategoriesFilter}
+          setCategorySlugsForGql={setCategorySlugsForGql}
+          setSearchTermForGql={setSearchTermForGql}
+          setCalibersForGql={setCalibersForGql}
+          setDealerStatesForGql={setDealerStatesForGql}
+          initialDropdownCategories={props.initialDropdownCategories}
+          isMobile={false}
+          setFocusedOuter={setFocusedOuter}
+          focusedOuter={focusedOuter}
+        />
+        <RowOrCardsButtons
+          rowMode={rowMode}
+          setRowMode={setRowMode}
+          isMobile={false}
+        />
+        <SortByDropdown
+          isMobile={false}
+          isDarkMode={isDarkMode}
+          setOrderBy={setOrderBy}
+          sortByOptions={props.sortByOptions}
+        />
+      </BannerSearchDesktop>
+    </Hidden>
+  </>;
 }
 
 

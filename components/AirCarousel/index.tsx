@@ -9,16 +9,16 @@ import AirButtonRight from "./AirButtonRight";
 import PositionIndicator from "./PositionIndicator";
 import { useScrollXPosition } from "utils/hooks";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
 const AirCarousel: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     disableButtons = false,

@@ -2,7 +2,10 @@
 import React from 'react';
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BorderRadius3x, Gradients, isThemeDark } from "layout/AppTheme";
 // Stripe
 import {
@@ -47,7 +50,7 @@ import { useSnackbar } from "notistack";
 import {
   PURCHASE_PROMOTION
 } from "queries/promoted_lists-mutations";
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 
 
 const VisaPurchaseProduct = (props: ReactProps) => {
@@ -357,10 +360,10 @@ const styles = (theme: Theme) => createStyles({
   creditCardContainer: {
     margin: "0px",
     height: 40,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.cream,
-    // color: theme.palette.type === 'dark'
+    // color: theme.palette.mode === 'dark'
     //   ? Colors.uniswapLightestGrey
     //   : Colors.black,
     border: `1px solid rgba(170, 170, 170, 0.4)`,

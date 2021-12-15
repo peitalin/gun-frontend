@@ -1,18 +1,21 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius4x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
-import Dialog from "@material-ui/core/Dialog";
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import Dialog from "@mui/material/Dialog";
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 // icons
-import PublicIcon from '@material-ui/icons/Public';
-import LockIcon from '@material-ui/icons/Lock';
+import PublicIcon from '@mui/icons-material/Public';
+import LockIcon from '@mui/icons-material/Lock';
 
 // types
 import { CollectionItemId } from "reduxStore/collections-reducer";
@@ -249,7 +252,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
             Save to...
           </Typography>
 
-          <IconButton onClick={() => closeModal()}>
+          <IconButton onClick={() => closeModal()} size="large">
             <ClearIcon className={classes.closeIcon}/>
           </IconButton>
           {
@@ -342,7 +345,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
 
       </div>
     </Dialog>
-  )
+  );
 }
 
 interface ReactProps extends WithStyles<typeof styles> {

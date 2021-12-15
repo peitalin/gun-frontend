@@ -1,20 +1,18 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  withStyles,
-  createStyles,
-  WithStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 import { commonStyles } from "../commonStyles";
 // components
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
 
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import lottie from "lottie-web";
 
@@ -23,7 +21,7 @@ const StartSelling3Escrow = (props: ReactProps) => {
 
   const { classes } = props;
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   let [animDesktop, setAnimDesktop] = React.useState(undefined)
   let [animMobile, setAnimMobile] = React.useState(undefined)
@@ -160,7 +158,7 @@ export const styles = (theme: Theme) => createStyles({
     textAlign: "center",
     paddingTop: "8rem",
     paddingBottom: "0rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.slateGreyBlack}`,
     // borderRadius: '16px',
@@ -177,7 +175,7 @@ export const styles = (theme: Theme) => createStyles({
     // backgroundColor: isThemeDark(theme)
     //   ? Colors.uniswapNavy
     //   : Colors.cream,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.slateGreyBlack}`,
     // borderBottom: isThemeDark(theme)
@@ -233,14 +231,14 @@ export const styles = (theme: Theme) => createStyles({
   reason: {
     fontSize: '1.125rem',
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightestGrey}`
       : `${Colors.slateGreyBlack}`,
   },
   reasonMobile: {
     fontSize: '1.125rem',
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightestGrey}`
       : `${Colors.slateGreyBlack}`,
   },
@@ -261,10 +259,10 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     fontSize: "1rem",
     fontWeight: 600,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.blue,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `3px solid ${Colors.uniswapNavy}`
       : `3px solid ${Colors.slateGrey}`,
     marginRight: '1rem',

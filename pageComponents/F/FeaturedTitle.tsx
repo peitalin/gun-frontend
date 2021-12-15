@@ -3,12 +3,15 @@ import clsx from "clsx";
 // Router
 import Link from "next/link";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, BoxShadows, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Product } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import { Colors } from "layout/AppTheme";
 
 

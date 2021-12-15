@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
@@ -8,7 +11,7 @@ import { genSrcSet, genImgBreakpoints } from "utils/images";
 import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
 // Material UI
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 
 
 const ImageInModal: React.FC<ReactProps> = (props) => {

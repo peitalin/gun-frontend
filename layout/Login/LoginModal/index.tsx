@@ -1,11 +1,13 @@
 import React from 'react';
-import { withStyles, WithStyles, fade } from '@material-ui/core/styles';
+import { alpha } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors } from 'layout/AppTheme';
 import clsx from "clsx";
 
-import Button from '@material-ui/core/Button';
-import TextField from "@material-ui/core/TextField";
-import Dialog from '@material-ui/core/Dialog';
+import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
+import Dialog from '@mui/material/Dialog';
 
 import styles from './commonStyles';
 import SignUp from './SignUp';
@@ -13,12 +15,12 @@ import LogIn from './LogIn';
 import ResetPassword from './ResetPassword';
 import CheckEmail from './CheckEmail';
 import ErrorBounds from "components/ErrorBounds";
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Typography from "@material-ui/core/Typography";
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from "@mui/material/Typography";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 const LoginPageModal: React.FC<ReactProps> = (props) => {
@@ -33,7 +35,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
   const [prefillEmail, setPrefillEmail] = React.useState(undefined);
 
 

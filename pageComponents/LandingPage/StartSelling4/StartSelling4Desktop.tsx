@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import {
-  withStyles,
-  createStyles,
-  WithStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows } from "layout/AppTheme";
 import { commonStyles } from "../commonStyles";
 // Typings
 import {} from "typings/gqlTypes";
 // components
-import Typography from "@material-ui/core/Typography";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import CardMedia from "@mui/material/CardMedia";
 import Tick from "components/Icons/Tick";
 import TickPoint from "./TickPoint";
 
@@ -215,7 +213,7 @@ export const styles = (theme: Theme) => createStyles({
     textAlign: "center",
     marginTop: "2rem",
     marginBottom: "4rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.slateGreyBlack}`,
   },

@@ -3,24 +3,27 @@ import clsx from "clsx";
 // Typings
 import { ListingType, UserPrivate } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from './commonStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import FormGroup from '@material-ui/core/FormGroup';
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import FormGroup from '@mui/material/FormGroup';
+import Button from "@mui/material/Button";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 // Components
 import CreateStoreForm from "pageComponents/StorePayoutCreation/CreateStorePayoutForm";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { payoutDoesNotExist } from "utils/store";
 
 
@@ -46,7 +49,7 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
 
   // CSS media queries
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   // console.log("payoutMETHOD: ", user?.payoutMethod)
 

@@ -1,20 +1,23 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, BorderRadius4x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // icons
-import PublicIcon from '@material-ui/icons/Public';
-import LockIcon from '@material-ui/icons/Lock';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import Close from '@material-ui/icons/Close';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import PublicIcon from '@mui/icons-material/Public';
+import LockIcon from '@mui/icons-material/Lock';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Close from '@mui/icons-material/Close';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import ConfirmActionModal from "components/ConfirmActionModal";
 
 import LoadingBar from "components/LoadingBar";
@@ -49,8 +52,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 
 
@@ -69,7 +72,7 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
 
   const theme = useTheme()
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'))
 
   const {
     user,
@@ -231,7 +234,7 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
               <IconButton
                 className={classes.iconButton}
                 onClick={() => setEditMode(s => !s)}
-              >
+                size="large">
                 <EditIcon />
               </IconButton>
             </div>
@@ -367,7 +370,7 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
                         }
                         dispatch(Actions.reduxModals.TOGGLE_COLLECTIONS_MODAL(true))
                       }}
-                    >
+                      size="large">
                       <PlaylistAddIcon />
                     </IconButton>
                   </Tooltip>
@@ -382,13 +385,13 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
                           }
                         })
                       }}
-                    >
+                      size="large">
                       <Close />
                     </IconButton>
                   </Tooltip>
                 </div>
               </div>
-            )
+            );
           })
         : <div className={classes.noProducts}>
             No products in this collection
@@ -396,7 +399,7 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
       }
 
     </div>
-  )
+  );
 }
 
 interface ReactProps extends WithStyles<typeof styles> {

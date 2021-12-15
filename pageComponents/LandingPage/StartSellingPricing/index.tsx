@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import {
-  withStyles,
-  createStyles,
-  WithStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   Gradients,
@@ -18,12 +16,12 @@ import { commonStyles } from "../commonStyles";
 // Typings
 import {} from "typings/gqlTypes";
 // components
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import CardMedia from "@mui/material/CardMedia";
 import Hidden from "components/HiddenFix";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
@@ -35,8 +33,8 @@ const StartSellingPricing = (props: ReactProps) => {
   const { classes, isDarkMode } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'));
 
   return (
     <>
@@ -214,7 +212,7 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: "2rem",
     marginBottom: "2rem",
     padding: "0rem 1rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
   },
@@ -225,7 +223,7 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: "2rem",
     marginBottom: "0rem",
     padding: "0rem 1.5rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
   },
@@ -236,7 +234,7 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: "2rem",
     marginBottom: "2rem",
     padding: "0rem 1rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
   },
@@ -247,7 +245,7 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: "2rem",
     marginBottom: "2rem",
     padding: "0rem 1.5rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
   },
@@ -279,7 +277,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   subtitleDesktop: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     fontSize: "1.25rem",
@@ -287,7 +285,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   subtitleMobile: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     fontSize: "1.125rem",
@@ -316,14 +314,14 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '2rem',
   },
   paymentItemsMobile: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightestBlack,
     fontSize: "1.125rem",
     fontWeight: 400
   },
   paymentItemsDesktop: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightestBlack,
     fontSize: "1.125rem",

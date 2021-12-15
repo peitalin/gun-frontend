@@ -1,11 +1,14 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { styles } from "../FeaturedProducts/stylesMobile";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import {
   Product,
@@ -16,7 +19,7 @@ import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import AirCarousel from "components/AirCarousel";
 import Link from "next/link";
-import ArrowRight from "@material-ui/icons/ArrowRight";
+import ArrowRight from "@mui/icons-material/ArrowRight";
 import { createNewsItemForProductPreview } from "typings/transformers";
 
 

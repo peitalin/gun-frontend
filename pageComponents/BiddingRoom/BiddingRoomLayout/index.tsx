@@ -1,13 +1,16 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 // typings
 import { UserPrivate, ChatRoomStatus, Conversation, SoldOutStatus, ChatRoom } from "typings/gqlTypes";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // graphql
 import { useSubscription, useApolloClient } from '@apollo/client';
 import gql from 'graphql-tag'
@@ -20,7 +23,7 @@ import BidList from "./BidList";
 import SendBidInput from './SendBidInput'
 import ProductPanel from './ProductPanel';
 import LoadingBar from "components/LoadingBar";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import EmptyBidsMessage from "./EmptyBidsMessage";
 
 
@@ -177,13 +180,13 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     flexWrap: "wrap",
     width: '100%',
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
     marginBottom: '1rem',

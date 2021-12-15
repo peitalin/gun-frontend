@@ -1,12 +1,14 @@
 import React from "react";
 // import * as Sentry from "@sentry/browser";
-import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 // Material UI
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
-import grey from "@material-ui/core/colors/grey";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { red, grey } from '@mui/material/colors';
 // Components
 
 

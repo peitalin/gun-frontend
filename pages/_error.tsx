@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { isThemeDark } from "layout/AppTheme";
 import { NextPage, NextPageContext } from 'next';
 // Typings
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // Components
 import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";
@@ -97,10 +100,10 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: '8px',
@@ -135,7 +138,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     height: 40,
     "&:hover": {
-      backgroundColor: fade(Colors.secondary, 0.9),
+      backgroundColor: alpha(Colors.secondary, 0.9),
       border: '0px solid #222',
       color: Colors.cream,
       transition: theme.transitions.create('backgroundColor', {

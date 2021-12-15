@@ -1,8 +1,9 @@
 
-import { createStyles, Theme, alpha } from '@material-ui/core/styles';
-import { ThemeOptions } from "@material-ui/core/styles";
+import { Theme, alpha } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import { DeprecatedThemeOptions } from "@mui/material/styles";
 
-declare module '@material-ui/core/styles/createTheme' {
+declare module '@mui/material/styles/createTheme' {
   interface Theme {
     colors: {
       cream: React.CSSProperties['color'],
@@ -54,7 +55,7 @@ declare module '@material-ui/core/styles/createTheme' {
       },
     },
   }
-  interface ThemeOptions {
+  interface DeprecatedThemeOptions {
     colors: {
       cream: React.CSSProperties['color'],
       darkWhite: React.CSSProperties['color'],
@@ -102,7 +103,7 @@ declare module '@material-ui/core/styles/createTheme' {
 
 
 export const isThemeDark = (theme: Theme) => {
-  return theme.palette.type === 'dark'
+  return theme.palette.mode === 'dark'
 }
 
 // Ultramarine blue
@@ -433,7 +434,7 @@ export interface Breakpoints {
   md: number;
   lg: number;
   xl: number;
-};
+}
 
 export type ScreenSizes = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -511,28 +512,14 @@ export const notifyStyles = (theme: Theme) => createStyles({
 
 /// To be used in: createTheme(AppTheme)
 /// in _app.tsx
-export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
+export const createAppTheme = (darkModeStr: "dark"|"light"): DeprecatedThemeOptions =>  {
   let darkMode = darkModeStr === 'dark'
   return {
-    colors: {
-      uniswapLightestGrey: darkMode ? '#B4B5BB' : "#222",
-      uniswapLightGrey: darkMode ? '#C4C5CB' : "#222",
-      uniswapLighterGrey: darkMode ? '#6D7283' : "#222",
-      uniswapGrey: darkMode ? '#41444E' : "#222",
-      uniswapMediumGrey: darkMode ? '#65666D' : "#222",
-      uniswapLightNavy: darkMode ? '#3A3F4A' : "#222",
-      uniswapNavy: darkMode ? '#2E3443' : "#222",
-      uniswapMediumNavy: darkMode ? '#2D2F36' : "#222",
-      uniswapGreyNavy: darkMode ? '#282A31' : "#222",
-      uniswapDarkNavy: darkMode ? "#222429" : "#222",
-      ...Colors,
-    },
-    gradients: {
-      ...Gradients
-    },
+    colors: Colors,
+    gradients: Gradients,
 
     palette: {
-      // type: true ? 'dark' : 'light',
+      // mode: true ? 'dark' : 'light',
 
       primary: {
         main: darkMode ? Colors.uniswapLightestGrey : Colors.black,
@@ -602,13 +589,13 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
           // borderRadius: 4,
           // border: 0,
         },
-        label: {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '0.9rem',
-          fontWeight: 600,
-        },
+        // label: {
+        //   display: 'flex',
+        //   justifyContent: 'center',
+        //   alignItems: 'center',
+        //   fontSize: '0.9rem',
+        //   fontWeight: 600,
+        // },
         textPrimary: {
           color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
           "&:hover": {
@@ -741,9 +728,9 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
         }
       },
       MuiBadge: {
-        anchorOriginTopRightRectangle: {
-          transform: 'scale(0.8) translate(50%, -50%)'
-        }
+        // anchorOriginTopRightRectangle: {
+        //   transform: 'scale(0.8) translate(50%, -50%)'
+        // }
       },
       MuiDialog: {
         paperWidthXs: {

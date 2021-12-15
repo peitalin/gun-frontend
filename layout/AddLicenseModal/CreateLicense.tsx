@@ -1,16 +1,20 @@
 import React from 'react';
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
 
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import Typography from '@mui/material/Typography';
 // Typings
 import { BorderRadius4x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 import ErrorBounds from "components/ErrorBounds";
 // Clear
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import ButtonLoading from "components/ButtonLoading";
 import { formatGunLicenseExpiry } from "./utils";
 //
@@ -37,7 +41,7 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 // import { formatPhoneNumber } from "layout/Login/utils";
 
 import HelpIcon from "components/Icons/HelpIcon";
-import Tooltip from "@material-ui/core/Tooltip"
+import Tooltip from "@mui/material/Tooltip"
 import DateFnsUtils from '@date-io/dayjs';
 import {
   MuiPickersUtilsProvider,
@@ -299,7 +303,7 @@ const styles = (theme: Theme) => createStyles({
   title: {
     marginTop: '2rem',
     margin: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.uniswapGrey}`,
   },
@@ -308,7 +312,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     padding: "2rem",
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.darkWhite,
   },
@@ -343,7 +347,7 @@ const styles = (theme: Theme) => createStyles({
   miniTitle: {
     fontSize: '1rem',
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     marginTop: '2rem',

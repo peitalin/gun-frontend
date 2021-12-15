@@ -1,10 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-ui/core/styles";
+import { Theme, lighten } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // validation
 import { FormikProps } from 'formik';
 import { User_Licenses } from "typings/gqlTypes";

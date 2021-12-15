@@ -1,14 +1,17 @@
 import React from "react";
 // styles
 import clsx from 'clsx';
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // typingsj
 import { UserPrivate } from "typings/gqlTypes";
 // MUI
-import FavouriteBorder from "@material-ui/icons/FavoriteBorder"
-import Favourite from "@material-ui/icons/Favorite"
-import IconButton from "@material-ui/core/IconButton";
+import FavouriteBorder from "@mui/icons-material/FavoriteBorder"
+import Favourite from "@mui/icons-material/Favorite"
+import IconButton from "@mui/material/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
 import { FOLLOW_STORE, UNFOLLOW_STORE } from "queries/following-stores-mutations";
@@ -103,13 +106,13 @@ const FollowStoreIcon: React.FC<ReactProps> = (props) => {
         }
       }}
       className={classes.followingStoresRoot}
+      // size="small"
       style={{
         top: 'calc(50% - 16px)',
         padding: '.25rem', // determines button radius size
         ...props.style
       }}
-      // size="small"
-    >
+      size="large">
       {
         added
         ? <Favourite classes={{
@@ -120,7 +123,7 @@ const FollowStoreIcon: React.FC<ReactProps> = (props) => {
           }}/>
       }
     </IconButton>
-  )
+  );
 }
 
 

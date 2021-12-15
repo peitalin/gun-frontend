@@ -2,11 +2,14 @@ import React from "react";
 // GraphQL
 import { Product, Product_Variants, ListingType } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 
 

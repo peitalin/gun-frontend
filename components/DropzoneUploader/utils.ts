@@ -40,10 +40,10 @@ export const accepts = (file: File, accept: string) => {
         return file.name === undefined || file.name.toLowerCase().endsWith(type.toLowerCase())
       } else if (type.endsWith('/*')) {
         // this is something like an image/* mime type
-        return baseMimeType === type.replace(/\/.*$/, '')
+        return baseMimeType === type.replace(/\/.*$/, '');
       }
       return mimeType === type
-    })
+    });
 }
 
 type ResolveFn<T> = (...args: any[]) => T

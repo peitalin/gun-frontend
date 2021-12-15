@@ -1,7 +1,10 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius4x,
@@ -12,13 +15,13 @@ import {
   BoxShadows
 } from "layout/AppTheme";
 // MUI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from "@material-ui/icons/Menu";
-import Button from "@material-ui/core/Button";
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Typography from "@mui/material/Typography";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown"
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 // hooks
 import Link from "next/link";
@@ -26,8 +29,8 @@ import { SelectOption } from "typings";
 import {
   Calibers
 } from "typings/gqlTypes";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { GET_CALIBERS } from "queries/calibers-queries";
 import { useQuery } from "@apollo/client";
@@ -42,7 +45,7 @@ const CaliberDropdown: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const [open, setOpen] = React.useState(false);
 
@@ -166,16 +169,16 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     cursor: 'pointer',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapGreyNavy
         : Colors.slateGreyDark,
       // borderBottom: '3px solid',
       "& > div > span": {
-        color: theme.palette.type === 'dark'
+        color: theme.palette.mode === 'dark'
           ? Colors.purple
           : Colors.blue,
         transition: theme.transitions.create(['color'], {
@@ -184,7 +187,7 @@ export const styles = (theme: Theme) => createStyles({
         })
       },
       "& > div > svg": {
-        fill: theme.palette.type === 'dark'
+        fill: theme.palette.mode === 'dark'
           ? Colors.purple
           : Colors.blue,
         transition: theme.transitions.create(['fill'], {
@@ -195,7 +198,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   dealerStateTitleText: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     minWidth: 120,
@@ -223,7 +226,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "flex-start",
   },
   dropdownArrow: {
-    fill: theme.palette.type === 'dark'
+    fill: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -236,22 +239,22 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     width: '100%',
     minWidth: 300,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius3x,
     boxShadow: BoxShadows.shadow5.boxShadow,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
   buttonRoot: {
     width: '100%',
     margin: '0.15rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.black,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -259,11 +262,11 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '100%',
     "&:hover": {
       "& > span": {
-        color: theme.palette.type === 'dark'
+        color: theme.palette.mode === 'dark'
           ? Colors.purple
           : Colors.black,
       },
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.black}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
@@ -273,10 +276,10 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   buttonSelected: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.secondary,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.blue}`,
     color: Colors.cream,
@@ -287,10 +290,10 @@ export const styles = (theme: Theme) => createStyles({
       "& > span": {
         color: Colors.cream,
       },
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.purple
         : Colors.blue,
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.blue}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {

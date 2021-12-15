@@ -1,9 +1,6 @@
 
-import {
-  fade,
-  createStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { alpha, Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, fontFam, Gradients, isThemeDark } from "layout/AppTheme";
 
 const textColor = Colors.uniswapLightestGrey
@@ -37,13 +34,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   input: {
     position: 'relative',
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    border: theme.palette.type === "dark"
+    border: theme.palette.mode === "dark"
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     borderRadius: BorderRadius,
@@ -58,7 +55,7 @@ export const styles = (theme: Theme) => createStyles({
     // Use the system font instead of the default Roboto font.
     fontFamily: fontFam,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },
@@ -66,35 +63,35 @@ export const styles = (theme: Theme) => createStyles({
   emptyInput: {
     // border: `1px solid ${Colors.uniswapLightNavy}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.lightGrey, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.lightGrey, 0.2)} 0 0 0 2px`,
     },
   },
   errorInputUntouched: {
     // border: `1px solid ${Colors.uniswapLightNavy}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.grey, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(Colors.grey, 0.1)}`,
+      color: `${alpha(Colors.grey, 0.1)}`,
     },
   },
   errorInput: {
-    border: `1px solid ${fade(theme.palette.error.light, 0.8)}`,
+    border: `1px solid ${alpha(theme.palette.error.light, 0.8)}`,
     '&:focus': {
       border: `1px solid ${theme.palette.error.light}`,
-      boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(theme.palette.error.light, 0.1)}`,
+      color: `${alpha(theme.palette.error.light, 0.1)}`,
     },
   },
   errorInputUnderline: {
     '&:focus': {
       border: `1px solid ${theme.palette.error.light}`,
-      boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(theme.palette.error.light, 0.1)}`,
+      color: `${alpha(theme.palette.error.light, 0.1)}`,
     },
   },
   // ".errorInput:focus"
@@ -109,7 +106,7 @@ export const styles = (theme: Theme) => createStyles({
     //   easing: theme.transitions.easing.easeIn,
     //   duration: "100ms",
     // }),
-    color: `${fade(theme.palette.error.light, 0.8)}`,
+    color: `${alpha(theme.palette.error.light, 0.8)}`,
     transition: theme.transitions.create(['opacity', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "150ms",
@@ -121,14 +118,14 @@ export const styles = (theme: Theme) => createStyles({
     right: '0.25rem',
     fontSize: '12px',
     fontFamily: fontFam,
-    color: `${fade(Colors.grey, 0.7)}`,
+    color: `${alpha(Colors.grey, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
     }),
   },
   errorMessageFocused: {
-    color: `${fade(Colors.lightBlue, 0.7)}`,
+    color: `${alpha(Colors.lightBlue, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
@@ -155,10 +152,10 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     position: 'relative',
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    border: theme.palette.type === "dark"
+    border: theme.palette.mode === "dark"
       ? `1px solid ${Colors.grey}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -169,9 +166,9 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   textFieldContainerFocused: {
-    boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+    boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
     borderColor: Colors.blue,
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
@@ -183,7 +180,7 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -194,7 +191,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: '0.5rem',
     bottom: '1.25rem',
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -202,7 +199,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.8rem",
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
     opacity: 0.25,
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -210,7 +207,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: '0.5rem',
     bottom: '0.25rem',
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     // bottom: '-1.125rem',
@@ -223,7 +220,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "16px",
     fontWeight: 400,
     width: '100%',
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
@@ -247,10 +244,10 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     position: 'relative',
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    border: theme.palette.type === "dark"
+    border: theme.palette.mode === "dark"
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -261,7 +258,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   textFieldContainerCCFocused: {
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
@@ -283,16 +280,16 @@ export const styles = (theme: Theme) => createStyles({
     border: 'none',
     fontSize: '0.75rem',
     fontWeight: 600,
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     '&:focus': {
       border: 'none',
       outline: 'none',
-      color: theme.palette.type === "dark"
+      color: theme.palette.mode === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
@@ -308,14 +305,14 @@ export const styles = (theme: Theme) => createStyles({
     border: 'none',
     fontSize: '0.75rem',
     fontWeight: 600,
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
     color: Colors.uniswapLighterGrey,
     '&:focus': {
       border: 'none',
       outline: 'none',
-      color: theme.palette.type === "dark"
+      color: theme.palette.mode === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
@@ -343,7 +340,7 @@ export const styles = (theme: Theme) => createStyles({
     // Use the system font instead of the default Roboto font.
     fontFamily: fontFam,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },

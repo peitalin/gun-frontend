@@ -1,9 +1,12 @@
 import React from 'react';
 import { NextPage, NextPageContext } from 'next';
 
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
 // Graphql
 import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
@@ -77,13 +80,13 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,

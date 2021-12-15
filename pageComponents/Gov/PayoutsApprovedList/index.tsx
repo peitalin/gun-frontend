@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Typings
 import {
@@ -19,10 +22,10 @@ import LoadingBar from "components/LoadingBar";
 import PayoutApprovedSummaryTable from "./PayoutApprovedSummaryTable";
 import ButtonLoading from "components/ButtonLoading";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Grid Components
 import PayoutsApprovedTable from "./PayoutsApprovedTable";
 import CsvDownloaderButton from "./CsvDownloaderButton";
@@ -39,7 +42,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
 
   const snackbar = useSnackbar()
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const [loading, setLoading] = React.useState(false)
 

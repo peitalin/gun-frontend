@@ -3,10 +3,13 @@ import { Colors, Gradients } from "layout/AppTheme";
 // Graphql
 import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
@@ -88,7 +91,7 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: '0.5rem',
     fontSize: '1.125rem',
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? theme.colors.uniswapLightestGrey
       : Colors.black,
   },

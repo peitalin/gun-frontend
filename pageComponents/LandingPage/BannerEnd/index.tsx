@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage } from 'next';
@@ -56,38 +59,36 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
-  return (
-    <>
-      {/* Desktop */}
-      <Hidden mdDown implementation="css" className={classes.width100}>
-        <BannerEndDesktop
-          height={680}
-          portraitMode={true}
-          ditherStyle={ditherStyle}
-          bannerContainerStyle={bannerContainerStyle}
-          bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
-          bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
-          isDarkMode={props.isDarkMode}
-          title={props.title}
-          subtitle={props.subtitle}
-        />
-      </Hidden>
-      {/* Mobile */}
-      <Hidden lgUp implementation='css' className={classes.width100}>
-        <BannerEndMobile
-          // height={660}
-          // portraitMode={true}
-          ditherStyle={ditherStyleMobile}
-          bannerContainerStyle={bannerContainerStyleMobile}
-          bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
-          bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
-          isDarkMode={props.isDarkMode}
-          title={props.title}
-          subtitle={props.subtitle}
-        />
-      </Hidden>
-    </>
-  )
+  return <>
+    {/* Desktop */}
+    <Hidden lgDown implementation="css" className={classes.width100}>
+      <BannerEndDesktop
+        height={680}
+        portraitMode={true}
+        ditherStyle={ditherStyle}
+        bannerContainerStyle={bannerContainerStyle}
+        bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
+        bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
+        isDarkMode={props.isDarkMode}
+        title={props.title}
+        subtitle={props.subtitle}
+      />
+    </Hidden>
+    {/* Mobile */}
+    <Hidden lgUp implementation='css' className={classes.width100}>
+      <BannerEndMobile
+        // height={660}
+        // portraitMode={true}
+        ditherStyle={ditherStyleMobile}
+        bannerContainerStyle={bannerContainerStyleMobile}
+        bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
+        bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
+        isDarkMode={props.isDarkMode}
+        title={props.title}
+        subtitle={props.subtitle}
+      />
+    </Hidden>
+  </>;
 }
 
 ///////////////// TYPINGS ///////////////////

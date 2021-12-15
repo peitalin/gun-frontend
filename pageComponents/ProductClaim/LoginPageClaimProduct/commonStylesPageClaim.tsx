@@ -1,4 +1,6 @@
-import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 
 const styles = (theme: Theme) => createStyles({
@@ -146,7 +148,7 @@ const styles = (theme: Theme) => createStyles({
   miniTitle: {
     fontSize: '1rem',
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     marginTop: '2rem',
@@ -166,7 +168,7 @@ const styles = (theme: Theme) => createStyles({
   },
   dateInput: {
     fontSize: '0.9rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
   },

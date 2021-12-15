@@ -8,10 +8,13 @@ import { Actions } from "reduxStore/actions";
 import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
 import { PaginatorVariables } from "reduxStore/paginator-variables-actions";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // MUI
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 // Snackbar
@@ -66,7 +69,7 @@ import PreventDragDropContainer from "./PreventDragDropContainer";
 import SectionBorder from "./SectionBorder";
 import StoreSuspended from "./StoreSuspended";
 // Product Preview Page
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import ButtonLoading from 'components/ButtonLoading';
 
 // SSR Subcomponents
@@ -135,8 +138,8 @@ import {
 // router
 import { useRouter } from "next/router";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Stepper for multiple fields
 import ProductCreateStepper from "./ProductCreateStepper";
 import VisaPurchaseClassifiedAd from "./VisaPurchaseClassifiedAd";
@@ -162,7 +165,7 @@ const ProductCreatePage = (props: ReactProps) => {
 
   // CSS media queries
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
   const router = useRouter();
 
   // Redux

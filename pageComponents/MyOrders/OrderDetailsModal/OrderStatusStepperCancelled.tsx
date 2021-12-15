@@ -1,18 +1,21 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Types
 import { asCurrency as c } from "utils/prices";
 import { Order, OrderStatus } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 
 
 const OrderStatusStepperCancelled: React.FC<ReactProps> = (props) => {

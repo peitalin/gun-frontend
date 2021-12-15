@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
@@ -13,8 +16,8 @@ import { SelectedVariantProps } from "pageComponents/P/ProductId";
 import FeaturedPreview from "../FeaturedPreview";
 import FeaturedPreviewButtonsDesktop from "./FeaturedPreviewButtonsDesktop";
 // Media Query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import BottomImageCarouselDesktop from "./BottomImageCarouselDesktop";
 
 

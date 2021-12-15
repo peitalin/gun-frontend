@@ -1,11 +1,14 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { styles } from "../FeaturedProducts/stylesDesktop";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
@@ -17,10 +20,10 @@ import {
   ProductPreviewsConnection,
 } from "typings/gqlTypes";
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
-import ArrowRight from "@material-ui/icons/ArrowRight";
+import ArrowRight from "@mui/icons-material/ArrowRight";
 import { createNewsItemForProductPreview } from "typings/transformers";
 
 
@@ -43,7 +46,7 @@ const NewProductsDesktop = (props: ReactProps) => {
 
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
 
   const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProductPreview(edge.node))
   console.log('nnnn', newsItemPreviews)

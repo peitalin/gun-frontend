@@ -1,11 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import Typography from "@mui/material/Typography";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 // Component
 import VisaIcon from "components/Icons/Visa";
 import ConfirmRemoveCardModalButton from "./ConfirmRemoveCardModalButton";

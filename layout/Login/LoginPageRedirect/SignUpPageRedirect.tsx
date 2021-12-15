@@ -1,19 +1,20 @@
 import React from 'react';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import TextInput from 'components/Fields/TextInput';
 // Typings
 import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 import Or from "layout/Login/Or";
 import ButtonLoading from "components/ButtonLoading";
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import LockIcon from "@material-ui/icons/Lock";
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import LockIcon from "@mui/icons-material/Lock";
 //
 import {
   createLicenseCategorySuggestions,
@@ -37,7 +38,7 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 import { formatPhoneNumber } from "layout/Login/utils";
 
 import HelpIcon from "components/Icons/HelpIcon";
-import Tooltip from "@material-ui/core/Tooltip"
+import Tooltip from "@mui/material/Tooltip"
 import DateFnsUtils from '@date-io/dayjs';
 import {
   MuiPickersUtilsProvider,

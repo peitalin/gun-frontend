@@ -6,10 +6,11 @@ import { styles } from "components/Fields/styles";
 // hooks
 import { useFocus } from "utils/hooks";
 // MUI
-import { TextField } from '@material-ui/core';
-import InputBase from "@material-ui/core/InputBase";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
+import { TextField } from '@mui/material';
+import InputBase from "@mui/material/InputBase";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import Button from '@mui/material/Button';
 import ValidationErrorMsg from "./ValidationErrorMsg";
 
 

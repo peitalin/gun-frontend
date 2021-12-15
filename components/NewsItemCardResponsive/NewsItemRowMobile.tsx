@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +13,7 @@ import { Product } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import ProductPreviewThumb from "components/ProductPreviewThumb";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 // helpers

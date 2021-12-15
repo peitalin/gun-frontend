@@ -1,7 +1,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark, BorderRadius } from "layout/AppTheme";
 // typings
 import {
@@ -22,8 +25,8 @@ import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
 import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
 import { useApolloClient } from "@apollo/client"
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 export const TrendingYesterday: React.FC<ReactProps> = (props) => {
@@ -34,7 +37,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
 
 
   const theme = useTheme()
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'));
 
   const [tab, setTab] = React.useState(0)
   const [openModal, setOpenModal] = React.useState(false)

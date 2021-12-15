@@ -1,18 +1,19 @@
 import React from 'react';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors } from "layout/AppTheme";
 
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import Typography from '@mui/material/Typography';
 // Typings
 import styles from './commonStyles';
 import ErrorBounds from "components/ErrorBounds";
-import LockIcon from "@material-ui/icons/Lock";
+import LockIcon from "@mui/icons-material/Lock";
 // Clear
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import ButtonLoading from "components/ButtonLoading";
 // import { formatGunLicenseExpiry } from "layout/LicenseModal/utils";
 //
@@ -38,7 +39,7 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 })
 import { formatPhoneNumber } from "layout/Login/utils";
 // import HelpIcon from "components/Icons/HelpIcon";
-// import Tooltip from "@material-ui/core/Tooltip"
+// import Tooltip from "@mui/material/Tooltip"
 // import DateFnsUtils from '@date-io/dayjs';
 // import {
 //   MuiPickersUtilsProvider,

@@ -1,7 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import ButtonLoading from "components/ButtonLoading";
 
 // Snackbar

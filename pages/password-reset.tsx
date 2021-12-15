@@ -1,13 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import ButtonLoading from "components/ButtonLoading";
 import TextInput from "components/Fields/TextInput";
 // Snackbar
@@ -19,7 +22,7 @@ import { useRouter } from "next/router";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 
-import Portal from '@material-ui/core/Portal';
+import Portal from '@mui/material/Portal';
 import { CONFIRM_RESET_PASSWORD } from "queries/emails-mutations";
 import { useMutation } from "@apollo/client";
 // Meta headers

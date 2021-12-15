@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Redux
@@ -10,11 +13,11 @@ import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import ProductEditPage from "./ProductEditPage";
 import ErrorBounds from 'components/ErrorBounds';
 import BackTo from "components/BackTo";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import { Product, ID } from "typings/gqlTypes";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -23,7 +26,7 @@ const ProductEditModal: React.FC<ReactProps> = (props) => {
   const { classes, product } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
   const dispatch = useDispatch();
 
   return (

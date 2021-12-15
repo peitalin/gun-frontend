@@ -280,5 +280,5 @@ export const transformNewsItemToFieldsProductPreview = (
 		isSold: p.isSoldElsewhere || p.soldOutStatus === SoldOutStatus.SOLD_OUT,
 		dealerState: p.dealerState,
 		sellerLicenseVerified: p.sellerLicenseVerified,
-	}
+	};
 }

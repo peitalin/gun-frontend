@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Typings
 import {
   Product,
@@ -9,7 +12,7 @@ import {
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import Loading from "components/Loading";
 import Link from "next/link";
 // helpers
@@ -149,7 +152,7 @@ const styles = (theme: Theme) => createStyles({
   fieldTitle: {
     fontWeight: 500,
     fontSize: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.charcoal,
     marginBottom: "0.5rem",
@@ -159,7 +162,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 400,
     fontSize: '0.9rem',
     width: '200px',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.charcoal,
     marginBottom: "0.5rem",
@@ -179,7 +182,7 @@ const styles = (theme: Theme) => createStyles({
   fieldInfo: {
     fontSize: '0.9rem',
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.black,
     marginBottom: "0.5rem",

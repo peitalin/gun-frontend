@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 
 // redux
@@ -10,13 +13,13 @@ import { useSelector, useDispatch } from "react-redux";
 // Utils Components
 import Tick from "components/Icons/Tick";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 // Next
 import dynamic from "next/dynamic";
@@ -42,7 +45,7 @@ const PurchaseSuccessBanner = (props) => {
   // };
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
 
 
   return (
@@ -89,13 +92,13 @@ const PurchaseSuccessBanner = (props) => {
         classes={{
           root: classes.iconButtonRoot
         }}
-      >
+        size="large">
         <ClearIcon classes={{
           root: classes.iconButtonSvg
         }}/>
       </IconButton>
     </div>
-  )
+  );
 }
 
 

@@ -1,14 +1,18 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { alpha, lighten, Theme } from '@mui/material/styles';
+
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 
 import { createDataForExpiringTable } from "./createData";
 
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import ButtonLoading from "components/ButtonLoading";
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 import RowExpanderTitle from "components/Gov/RowExpander/RowExpanderTitle";
@@ -319,7 +323,7 @@ const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.red}`,
     color: Colors.red,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.8),
+      backgroundColor: alpha(Colors.red, 0.8),
       border: `1px solid ${Colors.darkerRed}`,
       color: Colors.cream,
     },

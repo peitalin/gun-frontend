@@ -1,13 +1,16 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Graphql Queries
 import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
 import { UserPrivate } from "typings/gqlTypes";
 // Material UI
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // Utility Components
 import Loading from "components/Loading";
 import ErrorDisplay, { GraphQLErrors } from "components/ErrorDisplay";

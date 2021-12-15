@@ -1,15 +1,18 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { generateYouTubeVimeoEmbedLink } from "utils/links";
 
 
@@ -26,7 +29,7 @@ const VideoInModal: React.FC<ReactProps> = (props) => {
   );
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Card className={classes.card}>

@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 // Redux
@@ -10,8 +13,8 @@ import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { UserPrivate, Role } from "typings/gqlTypes";
 
 // MUI
-import MenuItem from '@material-ui/core/MenuItem';
-import Typography from "@material-ui/core/Typography";
+import MenuItem from '@mui/material/MenuItem';
+import Typography from "@mui/material/Typography";
 // components
 import Divider from "components/Divider";
 import Login from "layout/Login"
@@ -367,19 +370,19 @@ const styles = (theme: Theme) => createStyles({
   },
   mobileMenuItemTextEmph: {
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.gradientUniswapFluro1
       : Colors.gradientUniswapBlue1,
   },
   mobileMenuItemTextEmph2: {
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.purple,
   },
   mobileMenuItemTextEmph3: {
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.lightRed
       : Colors.lightRed,
   },
@@ -392,7 +395,7 @@ const styles = (theme: Theme) => createStyles({
   buttonLogin: {
     backgroundColor: Colors.cream,
     border: `1px solid ${Colors.charcoal}`,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.charcoal,
     minWidth: '150px',

@@ -10,7 +10,10 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, useTheme } from "@material-ui/core/styles";
+import { Theme, useTheme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -20,7 +23,7 @@ import {
   ProductPreviewItem,
 } from "typings/gqlTypes";
 // components
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import SearchHitsItem from './SearchHitsItem';
 import SearchHitsItemLoading from './SearchHitsItemLoading';
 // Snackbar

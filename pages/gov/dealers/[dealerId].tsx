@@ -3,8 +3,8 @@ import React from "react";
 import { NextPage, NextPageContext } from 'next';
 import { serverApolloClient } from "utils/apollo";
 import { ApolloClient, useQuery } from "@apollo/client";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "pageComponents/DealerDashboard/styles";
 import clsx from "clsx";
 // Typings

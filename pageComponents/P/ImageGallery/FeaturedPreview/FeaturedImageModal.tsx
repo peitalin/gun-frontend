@@ -1,21 +1,23 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "./styles";
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 // Image Modal
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 // Featured Preview
 import PreviewImageFeatured from "./PreviewImageFeatured";
-import FeaturedVideo from "./FeaturedVideo";
 // modal components
 import FeaturedImagePlaceholder from "./FeaturedImagePlaceholder";
 import SwipeableModalPreviews from "./InModal/SwipeableModalPreviews";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 
@@ -29,7 +31,7 @@ const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 const FeaturedImageModal = (props: ReactProps) => {
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))
 
   const {
@@ -90,35 +92,29 @@ const FeaturedImageModal = (props: ReactProps) => {
           >
             {
               previewItems.map(( previewItem, i ) => {
-                if (!!previewItem.youTubeEmbedLink) {
+                // only load image for current index on carousel
+                if (props.index === i) {
                   return (
-                    <FeaturedVideo key={i} previewItem={previewItem} />
+                    <PreviewImageFeatured
+                      className={clsx(props.previewImageClassName, "fadeIn")}
+                      key={i}
+                      previewItem={previewItem}
+                      onClick={() => {
+                        openModal(imageId)
+                      }}
+                      showLoadingBar={false}
+                    />
                   )
                 } else {
-                  // only load image for current index on carousel
-                  if (props.index === i) {
-                    return (
-                      <PreviewImageFeatured
-                        className={clsx(props.previewImageClassName, "fadeIn")}
-                        key={i}
-                        previewItem={previewItem}
-                        onClick={() => {
-                          openModal(imageId)
-                        }}
-                        showLoadingBar={false}
-                      />
-                    )
-                  } else {
-                    // otherwise render an empty placeholder
-                    // transitioning: shows a black background for fadeIn
-                    return (
-                      <FeaturedImagePlaceholder
-                        key={i}
-                        transitioning={true}
-                        previewsMissingMessage={props.previewsMissingMessage}
-                      />
-                    )
-                  }
+                  // otherwise render an empty placeholder
+                  // transitioning: shows a black background for fadeIn
+                  return (
+                    <FeaturedImagePlaceholder
+                      key={i}
+                      transitioning={true}
+                      previewsMissingMessage={props.previewsMissingMessage}
+                    />
+                  )
                 }
               })
             }

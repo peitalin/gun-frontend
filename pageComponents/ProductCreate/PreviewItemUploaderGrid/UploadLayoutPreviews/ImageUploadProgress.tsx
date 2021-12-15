@@ -18,15 +18,15 @@ import {
 // Typings
 import { DzuPreviewItem } from "typings/dropzone";
 // Carousel
-import LinearProgress from '@material-ui/core/LinearProgress';
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import LinearProgress from '@mui/material/LinearProgress';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from '../styles';
 // Icons
-import PauseIcon from "@material-ui/icons/PauseCircleOutline";
-import RestartIcon from "@material-ui/icons/Cached";
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import PauseIcon from "@mui/icons-material/PauseCircleOutline";
+import RestartIcon from "@mui/icons-material/Cached";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 
 
 

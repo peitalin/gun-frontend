@@ -1,16 +1,17 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./styles";
 // MUI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
+import Typography from "@mui/material/Typography";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown"
 // hooks
 import Link from "next/link";
 import { useRouter } from "next/router";
-import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
 const routeMappings = {
   'orders': "Profiles  -  Order Viewer",

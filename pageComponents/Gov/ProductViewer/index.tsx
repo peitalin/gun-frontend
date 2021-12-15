@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
@@ -182,10 +185,10 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDark}`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.cream}`,
   },

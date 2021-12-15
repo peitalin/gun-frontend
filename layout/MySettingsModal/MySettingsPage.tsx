@@ -3,12 +3,15 @@ import clsx from "clsx";
 // Graphql Queries
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, Gradients, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import Typography from "@mui/material/Typography";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 // Redux
@@ -29,8 +32,8 @@ import AdvancedSettings from "./AdvancedSettings";
 import { refetchUser } from "layout/GetUser";
 import { useApolloClient } from "@apollo/client";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -43,7 +46,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
   } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const apolloClient = useApolloClient();
 
@@ -67,7 +70,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
         </Typography>
         {
           asModal &&
-          <IconButton onClick={() => props.goBack()}>
+          <IconButton onClick={() => props.goBack()} size="large">
             <ClearIcon/>
           </IconButton>
         }

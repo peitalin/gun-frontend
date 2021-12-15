@@ -1,11 +1,14 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import Link from "next/link";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import LoadingCards from "./LoadingCards";
@@ -13,8 +16,8 @@ import Loading from "components/Loading";
 // Graphql Typings
 import { ProductPreviewsConnection, Order_By, ConnectionQuery } from "typings/gqlTypes";
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
@@ -69,7 +72,7 @@ const NewReleaseProducts = (props: ReactProps) => {
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const sm = useMediaQuery(theme.breakpoints.only("sm"))
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'))
 
 
   const { loading, error, data } = useQuery<QueryDataNewReleases, QueryVar>(
@@ -229,7 +232,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
   },
   title: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     marginTop: "1rem",

@@ -10,7 +10,10 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -21,16 +24,16 @@ import {
 } from "typings/gqlTypes";
 // components
 import ButtonLoading from "components/ButtonLoading";
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from "@material-ui/icons/Clear";
-import Typography from "@material-ui/core/Typography";
+import IconButton from '@mui/material/IconButton';
+import ClearIcon from "@mui/icons-material/Clear";
+import Typography from "@mui/material/Typography";
 import TextInputUnderline from "components/Fields/TextInputUnderline";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
@@ -60,11 +63,12 @@ import { createOption } from "components/Fields/MultiDropdownSelect";
 
 import dayjs from 'dayjs'
 import DateFnsUtils from '@date-io/dayjs';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from '@material-ui/pickers';
+import DatePicker from '@mui/lab/DatePicker';
 
 
 
@@ -284,7 +288,22 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
           <Typography variant="body1" className={classes.fieldHeading}>
             License Expiry
           </Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils} >
+          <DatePicker
+            InputAdornmentProps={{
+              classes: { root: classes.dateLabel }
+            }}
+            // margin="normal"
+            // label="License Expiry"
+            value={selectedDate}
+            onChange={handleDateChange}
+            // placeholder={"DD/MM/YYYY"}
+            maxDate={new Date("1/1/3000")}
+            // KeyboardButtonProps={{
+            //   'aria-label': 'change date',
+            // }}
+            renderInput={props => <div>muiv5 is shit</div>}
+          />
+          {/* <MuiPickersUtilsProvider utils={DateFnsUtils} >
             <KeyboardDatePicker
               autoOk={true}
               disableToolbar={true}
@@ -304,7 +323,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
                 'aria-label': 'change date',
               }}
             />
-          </MuiPickersUtilsProvider>
+          </MuiPickersUtilsProvider> */}
 
           <Typography variant="body1" className={classes.fieldHeading}>
             License State

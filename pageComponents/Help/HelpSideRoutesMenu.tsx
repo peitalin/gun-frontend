@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 // Router
 import Link from "next/link";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 
 
@@ -122,7 +125,7 @@ const styles = (theme: Theme) => createStyles({
   title: {
     fontSize: '1.25rem',
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
     "&:hover": {
@@ -162,9 +165,9 @@ const styles = (theme: Theme) => createStyles({
     borderRight: '2px solid rgba(0,0,0,0)',
     borderRadius: BorderRadius,
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? fade(Colors.lightGrey, 0.05)
-        : fade(Colors.black, 0.05),
+      background: theme.palette.mode === 'dark'
+        ? alpha(Colors.lightGrey, 0.05)
+        : alpha(Colors.black, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -177,18 +180,18 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     fontWeight: 500,
     "& > h6": {
-      color: theme.palette.type === 'dark'
+      color: theme.palette.mode === 'dark'
         ? Colors.purple
         : Colors.blue,
     },
-    borderRight: theme.palette.type === 'dark'
+    borderRight: theme.palette.mode === 'dark'
       ? `2px solid ${Colors.purple}`
       : `2px solid ${Colors.lightBlue}`,
     borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? fade(Colors.lightGrey, 0.05)
-        : fade(Colors.black, 0.05),
+      background: theme.palette.mode === 'dark'
+        ? alpha(Colors.lightGrey, 0.05)
+        : alpha(Colors.black, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",

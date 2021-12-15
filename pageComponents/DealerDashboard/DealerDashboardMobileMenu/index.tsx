@@ -1,6 +1,6 @@
 import React from "react";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./styles";
 import { UserPrivate } from "typings/gqlTypes";
 // Components

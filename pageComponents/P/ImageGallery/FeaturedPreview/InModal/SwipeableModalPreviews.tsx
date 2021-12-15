@@ -1,9 +1,12 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "../styles";
 import { Colors, isThemeDark } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 // Material UI
@@ -11,8 +14,8 @@ import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "../PreviewImageFeatured";
 import ImageInModal from "./ImageInModal";
 import VideoInModal from "./VideoInModal";
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 
 
 // import SwipeableViews from 'react-swipeable-views';
@@ -22,7 +25,7 @@ const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 //
 import AirButtonLeft from "components/AirCarousel/AirButtonLeft";
 import AirButtonRight from "components/AirCarousel/AirButtonRight";
-import Portal from "@material-ui/core/Portal";
+import Portal from "@mui/material/Portal";
 
 
 

@@ -1,7 +1,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
@@ -15,10 +18,10 @@ import {
   NewsItem,
 } from "typings/gqlTypes";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
 import NewsItemRowMedium from "components/NewsItemRowMedium";
@@ -69,7 +72,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   }
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const chatRoomId = chatRoom?.id
   const product = chatRoom?.product

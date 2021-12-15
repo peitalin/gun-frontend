@@ -1,13 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows, BorderRadius4x } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import ClearIcon from '@material-ui/icons/Clear';
-import Pagination from '@material-ui/lab/Pagination';
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import ClearIcon from '@mui/icons-material/Clear';
+import Pagination from '@mui/material/Pagination';
 // GraphQL Typings
 import {
   Order_By,
@@ -20,8 +23,8 @@ import DropdownInput from "components/Fields/DropdownInput";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
 import AdvancedSearchDropdown from './AdvancedSearchDropdown';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -542,10 +545,10 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: BorderRadius4x,
@@ -557,7 +560,7 @@ const styles = (theme: Theme) => createStyles({
     // opacity: 1,
     justifyContent: "center",
     alignItems: "center",
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     zIndex: 1,
@@ -585,7 +588,7 @@ const styles = (theme: Theme) => createStyles({
       delay: 200,
       duration: 300,
     }),
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius4x,
@@ -658,7 +661,7 @@ const styles = (theme: Theme) => createStyles({
   buttonRoot: {
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
-    background: fade(Colors.slateGrey, 0.4),
+    background: alpha(Colors.slateGrey, 0.4),
     border: 'none',
     borderRadius: '2rem',
     transition:  theme.transitions.create(['background', 'color'], {
@@ -704,11 +707,11 @@ const styles = (theme: Theme) => createStyles({
   searchbar: {
     position: 'relative',
     cursor: 'pointer',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapGreyNavy
         : Colors.slateGreyDarker,
     },
@@ -781,7 +784,7 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: BoxShadows.shadow4.boxShadow,
   },
   searchIcon: {
-    fill: theme.palette.type === 'dark'
+    fill: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.black,
   },
@@ -797,7 +800,7 @@ const styles = (theme: Theme) => createStyles({
     paddingBottom: 12,
     paddingLeft: 12,
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
     transition: theme.transitions.create('width'),
@@ -822,14 +825,14 @@ const styles = (theme: Theme) => createStyles({
     padding: '8px',
     borderRadius: '2rem',
     // backgroundColor: Colors.secondary,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.secondary,
     "&:hover": {
       color: Colors.cream,
       // backgroundColor: Colors.secondaryBright,
-      backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
+      backgroundColor: theme.palette.mode === 'dark'
+        ? alpha(Colors.purple, 0.9)
         : Colors.secondaryBright,
     },
   },
@@ -853,10 +856,10 @@ const styles = (theme: Theme) => createStyles({
     // height: 50,
     marginTop: '0.5rem',
     padding: '0rem 0.25rem',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: BorderRadius4x,
@@ -865,10 +868,10 @@ const styles = (theme: Theme) => createStyles({
     position: "fixed",
     bottom: '1rem',
     zIndex: 1,
-    // border: theme.palette.type === 'dark'
+    // border: theme.palette.mode === 'dark'
     //   ? `4px solid ${Colors.uniswapLightNavy}`
     //   : `4px solid ${Colors.slateGreyDarker}`,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `4px solid ${Colors.purple}`
       : `4px solid ${Colors.blue}`,
   },
@@ -878,7 +881,7 @@ const styles = (theme: Theme) => createStyles({
   },
   paginationPage: {
     "& > ul > li > button": {
-      color: theme.palette.type === 'dark'
+      color: theme.palette.mode === 'dark'
         ? Colors.uniswapLightestGrey
         : Colors.slateGreyBlack,
     },

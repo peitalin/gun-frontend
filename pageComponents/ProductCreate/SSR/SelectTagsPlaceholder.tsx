@@ -1,6 +1,6 @@
 import React from "react";
 // icon
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import { useSelector } from "react-redux"
 import { GrandReduxState } from "reduxStore/grand-reducer";

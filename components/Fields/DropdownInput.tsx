@@ -1,12 +1,14 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
+import { alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 // Select Component
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
 import { Colors, Gradients, fontFam, BorderRadius, isThemeDark } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";

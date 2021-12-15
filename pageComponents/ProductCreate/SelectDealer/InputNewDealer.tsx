@@ -1,8 +1,9 @@
 import React from "react";
-import { createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from '../commonStyles';
 // Util components
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
@@ -10,7 +11,7 @@ import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 // Typings
 import { Dealers } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInput from "components/Fields/TextInput";
 
 

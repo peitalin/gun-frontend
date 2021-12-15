@@ -1,7 +1,10 @@
 
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
@@ -22,8 +25,8 @@ import { GrandReduxState, Actions} from "reduxStore/grand-reducer";
 import { PaginatorVariables } from "reduxStore/paginator-variables-actions";
 
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
@@ -71,28 +74,26 @@ const NewProducts = (props: ReactProps) => {
   let connection = data?.productsNewReleasesConnection
 
 
-  return (
-    <>
-      <Hidden smDown implementation="js">
-        <NewProductsDesktop
-          title={props.title}
-          connection={connection}
-          cardsPerRow={cardsPerRow}
-          loading={loading}
-          showSeeMore={props.showSeeMore}
-        />
-      </Hidden>
-      <Hidden mdUp implementation="js">
-        <NewProductsMobileCarousel
-          title={props.title}
-          connection={connection}
-          cardsPerRow={cardsPerRow}
-          loading={loading}
-          showSeeMore={props.showSeeMore}
-        />
-      </Hidden>
-    </>
-  )
+  return <>
+    <Hidden mdDown implementation="js">
+      <NewProductsDesktop
+        title={props.title}
+        connection={connection}
+        cardsPerRow={cardsPerRow}
+        loading={loading}
+        showSeeMore={props.showSeeMore}
+      />
+    </Hidden>
+    <Hidden mdUp implementation="js">
+      <NewProductsMobileCarousel
+        title={props.title}
+        connection={connection}
+        cardsPerRow={cardsPerRow}
+        loading={loading}
+        showSeeMore={props.showSeeMore}
+      />
+    </Hidden>
+  </>;
 }
 
 

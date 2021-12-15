@@ -13,13 +13,16 @@ import {
   SoldOutStatus,
 } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Components
 import ButtonLoading from "components/ButtonLoading";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInput from "components/Fields/TextInput";
-import Switch from '@material-ui/core/Switch'
+import Switch from '@mui/material/Switch'
 import {
   EDIT_PROMOTED_SLOT,
 } from "queries/promoted_lists-mutations";

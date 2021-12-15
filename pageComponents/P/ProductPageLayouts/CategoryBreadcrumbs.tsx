@@ -1,11 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // MUI Components
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Breadcrumbs
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Colors } from "layout/AppTheme";
 // router
 import Link from "next/link";
@@ -69,7 +72,7 @@ const styles = (theme: Theme) => createStyles({
   },
   link: {
     fontSize: '0.8rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
     textDecoration: 'none',
@@ -78,7 +81,7 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   separator: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
   },

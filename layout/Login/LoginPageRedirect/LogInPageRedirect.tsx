@@ -1,15 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors } from "layout/AppTheme";
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 // Components
 import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 // Router
-import LockIcon from "@material-ui/icons/Lock";
+import LockIcon from "@mui/icons-material/Lock";
 import Or from "layout/Login/Or";
 import ButtonLoading from "components/ButtonLoading";
 

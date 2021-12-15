@@ -2,7 +2,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BoxShadows,
@@ -16,15 +19,15 @@ import { useSelector } from "react-redux";
 // components
 import { UserPrivate, Product } from "typings/gqlTypes";
 // Material UI
-import Typography from '@material-ui/core/Typography';
-import Dialog from "@material-ui/core/Dialog";
+import Typography from '@mui/material/Typography';
+import Dialog from "@mui/material/Dialog";
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // components
 import ButtonLoading from "components/ButtonLoading";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 import SaveSearchPage from './SaveSearchPage';
@@ -44,7 +47,7 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
     <>
@@ -157,14 +160,14 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     maxWidth: 180,
     borderRadius: BorderRadius3x,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.ultramarineBlue,
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.blue, 0.9),
+      backgroundColor: theme.palette.mode === 'dark'
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.blue, 0.9),
     }
   },
 });

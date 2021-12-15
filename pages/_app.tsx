@@ -13,15 +13,23 @@ import withRedux from "next-redux-wrapper";
 // Layout
 import Layout from "layout";
 // MUI
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 import { createAppTheme, Colors, Gradients, notifyStyles } from 'layout/AppTheme';
-import { PaletteOptions } from "@material-ui/core/styles/createPalette";
-import { ThemeOptions } from "@material-ui/core/styles";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { DeprecatedThemeOptions, adaptV4Theme, PaletteOptions } from "@mui/material/styles";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import {
+  Theme,
+  StyledEngineProvider,
+  createTheme
+} from '@mui/material/styles';
+import {
+  ThemeProvider,
+} from '@mui/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+
 import { useRouter } from 'next/router';
 // Apollo Graphql
 import { ApolloProvider, ApolloClient } from '@apollo/client';
@@ -37,6 +45,14 @@ import * as ga from "utils/analytics";
 
 import dayjs from 'dayjs'
 import utc from "dayjs/plugin/utc"
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+
 dayjs.extend(utc)
 
 
@@ -134,43 +150,51 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
 
   // console.log("MainApp userId: ", userId)
   // console.log("_app pageProps: ", pageProps)
+  let appTheme: DeprecatedThemeOptions = createAppTheme('dark');
+
+  const theme = createTheme(adaptV4Theme({ ...appTheme }))
+  console.log("THEME: ", theme)
 
   return (
-    <Provider store={store}>
-      <ApolloProvider client={apollo}>
-        <ThemeProviderDarkMode initialDarkModeSSR={initialDarkMode}>
-          <SnackbarProvider
-          // @ts-ignore
-            ref={notistackRef}
-            autoHideDuration={4000}
-            preventDuplicate
-            hideIconVariant
-            classes={{
-              variantSuccess: classes?.variantSuccess,
-              variantError: classes?.variantError,
-              variantInfo: classes?.variantInfo,
-              variantWarning: classes?.variantWarning,
-              // containerRoot: classes.containerRoot,
-            }}
-            action={(key) => {
-              return (
-                <IconButtonCancel
-                  onClick={onClickDismiss(key)}
-                  dark={true} // light colored close icon
-                />
-              )
-            }}
-            // dense
-            maxSnack={4}
-          >
-            <CssBaseline />
-            <Layout>
-              <Component {...pageProps} key={router?.route} />
-            </Layout>
-          </SnackbarProvider>
-        </ThemeProviderDarkMode>
-      </ApolloProvider>
-    </Provider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+
+        <Provider store={store}>
+          <ApolloProvider client={apollo}>
+              <SnackbarProvider
+              // @ts-ignore
+                ref={notistackRef}
+                autoHideDuration={4000}
+                preventDuplicate
+                hideIconVariant
+                classes={{
+                  variantSuccess: classes?.variantSuccess,
+                  variantError: classes?.variantError,
+                  variantInfo: classes?.variantInfo,
+                  variantWarning: classes?.variantWarning,
+                  // containerRoot: classes.containerRoot,
+                }}
+                action={(key) => {
+                  return (
+                    <IconButtonCancel
+                      onClick={onClickDismiss(key)}
+                      dark={true} // light colored close icon
+                    />
+                  )
+                }}
+                // dense
+                maxSnack={4}
+              >
+                <CssBaseline />
+                <Layout>
+                  <Component {...pageProps} key={router?.route} />
+                </Layout>
+              </SnackbarProvider>
+          </ApolloProvider>
+        </Provider>
+
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 
@@ -226,7 +250,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
   }, [initialDarkModeSSR])
 
   let darkModeTheme: PaletteOptions = {
-    type: localStorageDarkMode ?? darkModeRedux ?? initialDarkModeSSR
+    mode: localStorageDarkMode ?? darkModeRedux ?? initialDarkModeSSR
   };
   // darkModeRedux is initially undefined on server-side
   // so initialDarkModeSSR (determined by ?dark=1) will make the app render
@@ -237,26 +261,27 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
   // console.log("initialDarkModeSSR: ", initialDarkModeSSR)
   // console.log("darkModeTheme: ", darkModeTheme)
 
-  let appTheme: ThemeOptions = createAppTheme(darkModeRedux);
+  let appTheme: DeprecatedThemeOptions = createAppTheme(darkModeRedux);
 
   const theme = React.useMemo(
-    () =>
-      createTheme({
-        ...appTheme,
-        palette: {
-          ...appTheme.palette,
-          ...darkModeTheme
-        }
-      }),
+    () => createTheme(adaptV4Theme({
+      ...appTheme,
+      palette: {
+        ...appTheme.palette,
+        ...darkModeTheme
+      }
+    })),
 
     [darkModeRedux],
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  )
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
 }
 
 
@@ -289,8 +314,8 @@ interface AppHOCProps extends WithStyles<typeof notifyStyles> {
 
 
 export default
-withStyles(notifyStyles)(
-  withRedux(makeStore)(
+withRedux(makeStore)(
+  withStyles(notifyStyles)(
     MainApp
   )
 );

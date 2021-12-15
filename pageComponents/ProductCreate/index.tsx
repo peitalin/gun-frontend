@@ -1,14 +1,17 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Gradients, Colors, BoxShadows } from "layout/AppTheme";
 // Components
 import ProductCreatePage from "./ProductCreatePage";
 import BannerCreateProduct from "./BannerCreateProduct";
 // Router
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import AlignCenterLayout from "components/AlignCenterLayout";
 
 

@@ -4,15 +4,18 @@ import { useState, useEffect } from "react";
 import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
+import Typography from "@mui/material/Typography";
+import Avatar from '@mui/material/Avatar';
 import { logout } from "queries/requests";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";

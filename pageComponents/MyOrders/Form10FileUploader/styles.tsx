@@ -1,5 +1,6 @@
 
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
 
 
@@ -27,7 +28,7 @@ export const styles = (theme: Theme) => createStyles({
     bottom: '-0.25rem',
     right: '0.25rem',
     fontSize: '0.8rem',
-    color: `${fade(theme.palette.error.light, 0.6)}`,
+    color: `${alpha(theme.palette.error.light, 0.6)}`,
     fontFamily: fontFam,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,

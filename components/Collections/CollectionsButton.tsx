@@ -1,14 +1,17 @@
 import React from "react";
 // styles
 import clsx from 'clsx';
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Graphql
 import { UserPrivate } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { ADD_PRODUCT_TO_COLLECTION, REMOVE_PRODUCT_FROM_COLLECTION } from "queries/collections-mutations";
 // material-ui
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { CollectionItemId } from "reduxStore/collections-reducer";

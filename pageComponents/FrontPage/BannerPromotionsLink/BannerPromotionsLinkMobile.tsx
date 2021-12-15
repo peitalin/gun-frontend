@@ -1,22 +1,25 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
-import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-// import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowStripeIcon from "components/ArrowStripeIcon"
 // Router
 import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";

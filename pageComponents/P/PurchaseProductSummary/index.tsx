@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 import { commonBorderStyle } from "../common";
 // Typings
@@ -23,8 +26,8 @@ import ProductPricing from "./ProductPricing";
 // UI components
 import LoadingBar from "components/LoadingBar";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { useRouter } from "next/router";
 // checkout
 import { asCurrency as c } from "utils/prices";
@@ -60,9 +63,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   );
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const dispatch = useDispatch();
   const snackbar = useSnackbar();
@@ -280,7 +283,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.red,
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: alpha(Colors.red, 0.9),
     },
   },
   visaContainer: {

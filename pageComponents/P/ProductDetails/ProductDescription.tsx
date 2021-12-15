@@ -1,13 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { commonBorderStyle } from "../common";
 // GraphQL
 import { Product } from "typings/gqlTypes";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 // export const WHITE_SPACE_FOR_P_TAGS = "pre-wrap"
 // // RENDERS newlines, spaces, etc in <p> tags.
@@ -74,7 +77,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     minHeight: 190, // for SSR
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
@@ -87,7 +90,7 @@ const styles = (theme: Theme) => createStyles({
   productDescription: {
     // maxHeight: "33vh",
     overflowY: 'hidden',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
   },

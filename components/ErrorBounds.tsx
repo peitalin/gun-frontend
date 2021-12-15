@@ -2,13 +2,13 @@ import React from "react";
 import clsx from "clsx";
 import { Colors, BorderRadius } from "layout/AppTheme";
 
-import {
-  withStyles, WithStyles, createStyles, Theme
-} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-import red from '@material-ui/core/colors/red';
-import grey from '@material-ui/core/colors/grey';
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
+import { red, grey } from '@mui/material/colors';
 
 
 // Error boundaries wraps around a component,
@@ -113,7 +113,7 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: "1px 2px 3px 0px rgba(76,76,76,0.4)",
     borderRadius: BorderRadius,
     border: `1px solid ${Colors.red}`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
     transition: "all 100ms",

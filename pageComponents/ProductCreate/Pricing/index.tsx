@@ -3,7 +3,10 @@ import React from "react";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { AddVariantInput, EditVariantInput } from "reduxStore/product_create-actions";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Components
@@ -12,7 +15,7 @@ import ErrorBounds from 'components/ErrorBounds';
 import { ProductVariantInput } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import RefLink, { refLinks } from "../RefLink";
 // Validation
 import { FormikProps } from 'formik';

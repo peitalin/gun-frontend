@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
@@ -12,18 +15,18 @@ import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 // Material UI
 import ProductPreviewThumb from "components/ProductPreviewThumb";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";
 // import WatchlistButton from "components/WatchlistButton";
 import DescriptionLoadingText from "./DescriptionLoadingText";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 //
-import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 // graphql
 import { useMutation } from '@apollo/client';
 import {
@@ -46,7 +49,7 @@ const VoteOnNewsItem = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
   const snackbar = useSnackbar();
 
   const [

@@ -3,10 +3,13 @@ import clsx from "clsx";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import {
   OrdersConnection,
@@ -258,7 +261,7 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: "33%",
   },
   subtitle1: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey
       : Colors.black,
     marginTop: '2rem',
@@ -268,7 +271,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   flexRowTitle: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
@@ -280,7 +283,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
@@ -318,7 +321,7 @@ const styles = (theme: Theme) => createStyles({
     width: 32,
   },
   gridRoot: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,

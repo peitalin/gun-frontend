@@ -1,11 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { NextPage, NextPageContext } from 'next';
 // Utils
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // Components
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { useRouter } from "next/router";
@@ -159,7 +162,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     height: 40,
     "&:hover": {
-      backgroundColor: fade(Colors.secondary, 0.9),
+      backgroundColor: alpha(Colors.secondary, 0.9),
       border: '0px solid #222',
       color: Colors.cream,
       transition: theme.transitions.create('backgroundColor', {

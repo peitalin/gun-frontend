@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients } from "layout/AppTheme";
 
 import VerifyAccountBannerDesktop from "./VerifyAccountBannerDesktop";
@@ -11,7 +14,7 @@ import Hidden from "components/HiddenFix";
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { useSelector, useDispatch } from "react-redux";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 
 
 
@@ -22,24 +25,22 @@ const VerifyAccountBanner: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme()
-  const isDarkMode = theme.palette.type === 'dark'
+  const isDarkMode = theme.palette.mode === 'dark'
 
-  return (
-    <>
-      {/* Desktop */}
-      <Hidden mdDown implementation="css">
-        <VerifyAccountBannerDesktop
-          isDarkMode={isDarkMode}
-        />
-      </Hidden>
-      {/* Mobile */}
-      <Hidden lgUp implementation="css">
-        <VerifyAccountBannerMobile
-          isDarkMode={isDarkMode}
-        />
-      </Hidden>
-    </>
-  )
+  return <>
+    {/* Desktop */}
+    <Hidden lgDown implementation="css">
+      <VerifyAccountBannerDesktop
+        isDarkMode={isDarkMode}
+      />
+    </Hidden>
+    {/* Mobile */}
+    <Hidden lgUp implementation="css">
+      <VerifyAccountBannerMobile
+        isDarkMode={isDarkMode}
+      />
+    </Hidden>
+  </>;
 }
 
 
@@ -53,16 +54,16 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    // borderTop: theme.palette.type === 'dark'
+    // borderTop: theme.palette.mode === 'dark'
     //   ? `2px solid ${Colors.uniswapLightNavy}`
     //   : `2px solid ${Colors.slateGreyDark}`,
-    // borderBottom: theme.palette.type === 'dark'
+    // borderBottom: theme.palette.mode === 'dark'
     //   ? `2px solid ${Colors.uniswapLightNavy}`
     //   : `2px solid ${Colors.slateGreyDark}`,
     // background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
     // borderBottom: '2px solid',
     // borderImageSlice: 1,
-    // borderImageSource: theme.palette.type === 'dark'
+    // borderImageSource: theme.palette.mode === 'dark'
     //   ? `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`
     //   : `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
   },
@@ -90,7 +91,7 @@ const styles = (theme: Theme) => createStyles({
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
   },

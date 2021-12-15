@@ -3,10 +3,13 @@ import clsx from "clsx";
 // SSR
 import { NextPage } from 'next';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import {
   UserPrivate,
@@ -27,7 +30,7 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 
 import RowExpanderPayoutsComplete from "./RowExpanderPayoutsComplete";
 import { useRouter } from "next/router";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 import { showDate } from "utils/dates";
 import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";

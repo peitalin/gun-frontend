@@ -2,10 +2,13 @@ import React from "react";
 import clsx from "clsx";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // money
 import currency from "currency.js";
 import { convertSoldOutStatus } from "utils/strings";
@@ -103,7 +106,7 @@ const styles = (theme: Theme) => createStyles({
   priceWas: {
     textDecoration: "line-through",
     fontSize: "0.65rem",
-    color: fade("#7C858E", 0.5), // grey
+    color: alpha("#7C858E", 0.5), // grey
     // color: fade(Colors.secondaryBright, 0.5),
   },
 });

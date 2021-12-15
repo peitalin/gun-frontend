@@ -1,7 +1,8 @@
 import React from "react";
 // Styles
 import clsx from 'clsx';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
 // Modals
@@ -12,8 +13,8 @@ import { useRouter, NextRouter } from "next/router";
 import Hidden from 'components/HiddenFix';
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // DesktopMainBars
 import DesktopMainBar from "./DesktopMainBar";
 import MobileMainBar from "./MobileMainBar";
@@ -30,7 +31,7 @@ const MainBar = (props: ReactProps) => {
 
   const theme = useTheme();
 
-  const isDarkMode = theme.palette.type === 'dark'
+  const isDarkMode = theme.palette.mode === 'dark'
 
   let color = isDarkMode
     ? Colors.slateGrey

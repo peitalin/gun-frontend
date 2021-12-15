@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
@@ -11,10 +14,10 @@ import {
 import LoadingBar from "components/LoadingBar";
 import ButtonLoading from "components/ButtonLoading";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 // apollo
@@ -159,7 +162,7 @@ const styles = (theme: Theme) => createStyles({
   },
   markPayoutCompleteButton: {
     margin: "0.5rem 0rem 0.5rem 0.5rem",
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: BorderRadius,

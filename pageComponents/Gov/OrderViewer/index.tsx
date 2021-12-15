@@ -4,7 +4,10 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
@@ -17,11 +20,11 @@ import {
   OrderMutationResponse,
 } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 import TextInput from "components/Fields/TextInput";
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 // Utils Components
 import Loading from "components/Loading";
 import OrderSummary from "./OrderSummary";
@@ -30,8 +33,8 @@ import ProductCard from "./ProductCard";
 import RowExpander from "../OrdersPendingApprovals/OrdersPendingApprovalTable/RowExpander";
 import { createDataForPendingApprovalTable } from '../OrdersPendingApprovals/OrdersPendingApprovalTable/createData';
 import { canBeCancelled } from "pageComponents/Gov/OrderViewer/cancelHelpers";
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
 // Components
 import OrderViewerSection from "./OrderViewerSection";
 import OrderSearch from "./OrderSearch";
@@ -191,144 +194,142 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
     )
   }
 
-  return (
-    <>
-      <OrderSearch
-        orderId={orderId}
+  return <>
+    <OrderSearch
+      orderId={orderId}
+      setOrderId={setOrderId}
+      searchOrder={searchOrder}
+      errorMsg={errorMsg}
+      loading={loading}
+    >
+      <DisplayRecentOrderIds
+        recentTx={recentTx}
         setOrderId={setOrderId}
-        searchOrder={searchOrder}
-        errorMsg={errorMsg}
-        loading={loading}
-      >
-        <DisplayRecentOrderIds
-          recentTx={recentTx}
-          setOrderId={setOrderId}
-        />
-      </OrderSearch>
-      <Formik
-        initialValues={{
-          orderId: order.id,
-          markProductAbandoned: true,
-        }}
-        validationSchema={validationSchemas.PaymentCancel}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log('formik values: ', values);
-          console.log("cancelling order", order)
-          makeCancelledPayment({
-            orderId: values.orderId,
-            markProductAbandoned: values.markProductAbandoned,
-          }).then(res => {
-            console.log(res)
-            searchOrder(values.orderId)
-            setCancelMsg(JSON.stringify(res))
-          }).catch(e => {
-            console.log(e)
-            setErrorMsg(JSON.stringify(e))
-          })
-        }}
-      >
-        {(fprops) => {
+      />
+    </OrderSearch>
+    <Formik
+      initialValues={{
+        orderId: order.id,
+        markProductAbandoned: true,
+      }}
+      validationSchema={validationSchemas.PaymentCancel}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log('formik values: ', values);
+        console.log("cancelling order", order)
+        makeCancelledPayment({
+          orderId: values.orderId,
+          markProductAbandoned: values.markProductAbandoned,
+        }).then(res => {
+          console.log(res)
+          searchOrder(values.orderId)
+          setCancelMsg(JSON.stringify(res))
+        }).catch(e => {
+          console.log(e)
+          setErrorMsg(JSON.stringify(e))
+        })
+      }}
+    >
+      {(fprops) => {
 
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            validateField,
-            validateForm,
-          } = fprops;
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset,
+          validateField,
+          validateForm,
+        } = fprops;
 
-          // order details
-          const total = order?.total + order?.internationalFee ?? 0
-          const subtotal = 0
+        // order details
+        const total = order?.total + order?.internationalFee ?? 0
+        const subtotal = 0
 
-          console.log('values', values)
+        console.log('values', values)
 
-          return (
-            <CancelOrderForm
-              onSubmit={handleSubmit}
-              totalIncludingInternationalFees={c(total)}
-              loading={loading}
-              disableCancelOrderButton={
-                !order.id ||
-                !canOrderBeCancelled
-              }
-              onClickDebugPrint={() => {
-                console.log("fprops.errors:", fprops.errors)
-              }}
-              {...fprops}
-            >
-              <div className={classes.backButton}>
-                <IconButton onClick={() => setOrder(undefined)}>
-                  <KeyboardArrowLeft/>
-                </IconButton>
-                <Typography className={classes.goBackText} variant="subtitle2">
-                  Go Back
-                </Typography>
-              </div>
-              <OrderViewerSection title={"Order Summary"}>
-                <OrderSummary
-                  order={order}
-                  {...fprops}
-                />
-              </OrderViewerSection>
-              {
-                !!order?.id &&
-                <OrderViewerSection title={"Order History"}>
+        return (
+          <CancelOrderForm
+            onSubmit={handleSubmit}
+            totalIncludingInternationalFees={c(total)}
+            loading={loading}
+            disableCancelOrderButton={
+              !order.id ||
+              !canOrderBeCancelled
+            }
+            onClickDebugPrint={() => {
+              console.log("fprops.errors:", fprops.errors)
+            }}
+            {...fprops}
+          >
+            <div className={classes.backButton}>
+              <IconButton onClick={() => setOrder(undefined)} size="large">
+                <KeyboardArrowLeft/>
+              </IconButton>
+              <Typography className={classes.goBackText} variant="subtitle2">
+                Go Back
+              </Typography>
+            </div>
+            <OrderViewerSection title={"Order Summary"}>
+              <OrderSummary
+                order={order}
+                {...fprops}
+              />
+            </OrderViewerSection>
+            {
+              !!order?.id &&
+              <OrderViewerSection title={"Order History"}>
 
-                  <TableContainer
-                    component={Paper}
+                <TableContainer
+                  component={Paper}
+                >
+                  <Table
+                    aria-label="collapsible table"
+                    component={'div'}
                   >
-                    <Table
-                      aria-label="collapsible table"
-                      component={'div'}
-                    >
-                      <RowExpander
-                        key={order?.id}
-                        initialOpen={true}
-                        order={order}
-                        admin={undefined}
-                        index={0}
-                        refetchQueriesParams={undefined}
-                        variables={undefined}
-                        showApprovalButtons={false}
-                      />
-                    </Table>
-                  </TableContainer>
-                </OrderViewerSection>
-              }
-              <OrderViewerSection title={"Product Details"}>
-                {
-                  order.id &&
-                  <ProductCard
-                    order={order}
-                    product={order.product as any}
-                    store={order.sellerStore as any}
-                    total={total}
-                    subtotal={subtotal}
-                    {...fprops}
-                  />
-                }
+                    <RowExpander
+                      key={order?.id}
+                      initialOpen={true}
+                      order={order}
+                      admin={undefined}
+                      index={0}
+                      refetchQueriesParams={undefined}
+                      variables={undefined}
+                      showApprovalButtons={false}
+                    />
+                  </Table>
+                </TableContainer>
               </OrderViewerSection>
-              <OrderViewerSection title={"Price Breakdown"}>
-                <OrderPriceBreakdown
+            }
+            <OrderViewerSection title={"Product Details"}>
+              {
+                order.id &&
+                <ProductCard
                   order={order}
+                  product={order.product as any}
+                  store={order.sellerStore as any}
+                  total={total}
+                  subtotal={subtotal}
                   {...fprops}
                 />
-              </OrderViewerSection>
+              }
+            </OrderViewerSection>
+            <OrderViewerSection title={"Price Breakdown"}>
+              <OrderPriceBreakdown
+                order={order}
+                {...fprops}
+              />
+            </OrderViewerSection>
 
-              <Loading fixed loading={loading}/>
-            </CancelOrderForm>
-          )
-        }}
-      </Formik>
-    </>
-  )
+            <Loading fixed loading={loading}/>
+          </CancelOrderForm>
+        );
+      }}
+    </Formik>
+  </>;
 }
 
 
@@ -364,13 +365,13 @@ const styles = (theme: Theme) => createStyles({
   root: {
     padding: '3rem',
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
     display: 'flex',

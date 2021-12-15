@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
@@ -16,12 +19,12 @@ import {
   SET_DEFAULT_LICENSE_ID,
   EDIT_USER_LICENSE,
 } from "queries/user-mutations";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import UserLicenseRowCard from "./UserLicenseRowCard";
 import AddUserLicenseModal from "./AddUserLicenseModal";
 /// CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 

@@ -1,7 +1,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Message, BidStatus, Product } from "typings/gqlTypes";
 // Styles
 import {
@@ -14,12 +17,12 @@ import {
   Gradients,
 } from "layout/AppTheme";
 // format
-import { useMediaQuery, useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { formatNiceDate } from "utils/dates";
 import { asCurrency as c } from "utils/prices";
 
-import DoneIcon from '@material-ui/icons/Done';
-import CallMissedIcon from '@material-ui/icons/CallMissed';
+import DoneIcon from '@mui/icons-material/Done';
+import CallMissedIcon from '@mui/icons-material/CallMissed';
 import BidActionsByUser from "./BidActionsByUser";
 
 
@@ -37,7 +40,7 @@ const CounterBid = (props: BidProps) => {
   } = props;
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   return (
     <div className={clsx(

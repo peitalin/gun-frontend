@@ -1,13 +1,11 @@
 import React from "react";
-import {
-  withStyles,
-  createStyles,
-  WithStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows } from "layout/AppTheme";
 // components
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import Tick from "components/Icons/Tick";
 
 
@@ -51,7 +49,7 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: '0.5rem',
     marginTop: "0.25rem",
     marginBottom: "0.25rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightestGrey}`
       : `${Colors.slateGreyBlack}`,
   },

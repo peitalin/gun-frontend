@@ -1,5 +1,6 @@
 // styles
-import { createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, isThemeDark } from "layout/AppTheme";
 
 const fontFam = 'Helvetica Neue, Arial';

@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Router
 import Link from "next/link";
@@ -9,14 +12,14 @@ import { NewsItem } from "typings/gqlTypes";
 // Material UI
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";
 // import WatchlistButton from "components/WatchlistButton";
 import DescriptionLoadingText from "./DescriptionLoadingText";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import {
   transformNewsItemToFields
@@ -46,7 +49,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
   const [hover, setHover] = React.useState(false)
 
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'))
 
   let {
     productId,
@@ -353,7 +356,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexBasis: '100%',
     borderRadius: `${BorderRadius}px`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.cream,
   },
@@ -419,7 +422,7 @@ const styles = (theme: Theme) => createStyles({
   },
   category: {
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
     textTransform: "uppercase",
@@ -428,20 +431,20 @@ const styles = (theme: Theme) => createStyles({
   title: {
     fontWeight: 600,
     fontSize: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
     lineHeight: '1rem',
     margin: '0.25rem 0rem',
     "&:hover": {
-      color: theme.palette.type === 'dark'
+      color: theme.palette.mode === 'dark'
         ? Colors.purple
         : Colors.blue,
     },
   },
   modelMake: {
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyDarkest,
     lineHeight: '0.9rem',
@@ -450,7 +453,7 @@ const styles = (theme: Theme) => createStyles({
   },
   dealerState: {
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
     fontSize: '0.8rem',
@@ -484,7 +487,7 @@ const styles = (theme: Theme) => createStyles({
   soldInHrsText: {
     fontWeight: 500,
     fontSize: '0.75rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarkest,
     minWidth: 100,

@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Typography from "@mui/material/Typography";
 // Icons
 import { Colors, BorderRadius2x, BorderRadius, BoxShadows, Gradients } from "layout/AppTheme";
 import Link from "next/link";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -24,7 +27,7 @@ const SectionBorder: React.FC<ReactProps> = ({
 
   // CSS media queries
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   if (type === "form") {
     return (
@@ -69,14 +72,14 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   sectionBorder: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       // : Gradients.gradientGrey2.background,
       : Colors.cream,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow4.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? 'unset'
       : `1px solid ${Colors.slateGrey}`,
   },

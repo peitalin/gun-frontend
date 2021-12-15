@@ -2,13 +2,10 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { Colors } from "layout/AppTheme";
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  makeStyles,
-  Theme
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Swipeable
 import SwipeableViews from "components/Swiper/SwipeableViews";
 import { virtualize, bindKeyboard } from 'react-swipeable-views-utils';
@@ -187,7 +184,6 @@ interface ReactChildren<T> {
   }): React.ReactNode
 }
 
-// export const useStyles = makeStyles({
 export const styles = (theme: Theme) => createStyles({
   gridPaginatorRoot: {
     width: '100%',

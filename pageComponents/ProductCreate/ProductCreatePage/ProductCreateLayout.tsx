@@ -1,11 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import {
   Colors,
   BorderRadius2x,
@@ -15,7 +13,7 @@ import {
 // Product Preview Card
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import PreventDragDropContainer from "./PreventDragDropContainer";
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import {
   Product,
   NewsItem,
@@ -23,8 +21,8 @@ import {
 } from "typings/gqlTypes";
 import RenderInstructions from "./RenderInstructions";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { isThemeDark } from "layout/AppTheme";
 
 
@@ -44,8 +42,8 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
   // with a callback to Formik.onSubmit prop
   // CSS media queries
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
 
   return (

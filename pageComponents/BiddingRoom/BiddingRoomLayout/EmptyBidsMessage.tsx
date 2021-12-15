@@ -1,9 +1,12 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 
 
@@ -43,13 +46,13 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     padding: '2rem',
     minHeight: 300,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
     marginBottom: '1rem',

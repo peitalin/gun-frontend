@@ -1,4 +1,5 @@
-import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
+import { Theme, alpha, lighten } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import {
   fontFam,
   Colors,
@@ -109,10 +110,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonRoot: {
     margin: '0.1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.slateGreyBlack}`,
     borderRadius: '2rem',
@@ -130,7 +131,7 @@ export const styles = (theme: Theme) => createStyles({
   buttonSelected: {
     // backgroundImage: Gradients.gradientUniswapBlue.background,
     backgroundColor: Gradients.gradientUniswapBlue.color1,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.slateGreyBlack}`,
     fontSize: '0.7rem',
@@ -160,13 +161,13 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: '0rem',
     marginBottom: '0.5rem',
     // border: `1px solid ${Colors.lightGrey}`,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     // overrides .MuiAccordion-rounded:first-child
     // border radius
     borderRadius: `${BorderRadius}px !important`,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
     transition: theme.transitions.create('border', {
@@ -179,7 +180,7 @@ export const styles = (theme: Theme) => createStyles({
       duration: "0ms",
     }),
     '&:focus': {
-      boxShadow: `${fade(Colors.blue, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.blue, 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },
@@ -202,7 +203,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   selectedCategoryClosed: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey // to match uniswapLightestGrey with placeholder dim
       : Colors.uniswapMediumGrey,
     fontSize: '1rem',
@@ -221,7 +222,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   selectedCategoryEmpty: {
     // color: Colors.uniswapLighterGrey,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumGrey // to match uniswapLightestGrey with placeholder dim
       : Colors.darkerGrey,
     // in TextInputa.input class

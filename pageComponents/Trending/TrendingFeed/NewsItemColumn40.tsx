@@ -1,7 +1,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, isThemeDark, BorderRadius } from "layout/AppTheme";
 // typings
 import {
@@ -14,7 +17,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer"
 
 import NewsItemCard from "./NewsItemCard";
 // Material UI
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 

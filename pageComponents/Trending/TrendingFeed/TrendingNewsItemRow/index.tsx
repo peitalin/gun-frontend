@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Typings
 import {
@@ -12,12 +15,12 @@ import {
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 import DescriptionLoadingText from "./DescriptionLoadingText";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import {
   transformNewsItemToFields,
@@ -44,7 +47,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
   const snackbar = useSnackbar();
 
   const {
@@ -87,7 +90,6 @@ const TrendingNewsItemRow = (props: ReactProps) => {
   let categoryName = categoryPreviewsBackup.find(c => c.id === categoryId)?.name
 
   return (
-
     <div className={classes.productPanelRoot}>
       <div className={classes.productCardBox}>
         <div className={clsx(classes.productRowRoot)}>

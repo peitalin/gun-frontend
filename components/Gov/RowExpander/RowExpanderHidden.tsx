@@ -1,9 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { alpha, lighten, Theme } from '@mui/material/styles';
 
-import Collapse from '@material-ui/core/Collapse';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
+
+import Collapse from '@mui/material/Collapse';
 
 
 
@@ -46,18 +50,18 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   hiddenRowRoot: {
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? lighten(Colors.uniswapGreyNavy, 0.01)
       : lighten(Colors.slateGrey, 0.01),
   },
   backgroundGrey: {
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDark,
   },
   backgroundGrey2: {
-    backgroundColor: theme.palette.type === 'dark'
-      ? fade(Colors.uniswapGrey, 0.7)
+    backgroundColor: theme.palette.mode === 'dark'
+      ? alpha(Colors.uniswapGrey, 0.7)
       : Colors.slateGreyDarker,
   },
 });

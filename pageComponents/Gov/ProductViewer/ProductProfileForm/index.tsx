@@ -4,7 +4,10 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
@@ -14,9 +17,9 @@ import {
   StoreMutationResponse,
 } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 // Utils Components
 import Loading from "components/Loading";
 import ProductDetails from "./ProductDetails";
@@ -132,121 +135,119 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
 
 
 
-  return (
-    <>
-      <Formik
-        initialValues={{
+  return <>
+    <Formik
+      initialValues={{
+        productId: product?.id,
+        isSuspended: false,
+      }}
+      validationSchema={validationSchemas.SuspendUnsuspendProduct}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log('formik values: ', values);
+        toggleSuspendProduct({
           productId: product?.id,
-          isSuspended: false,
-        }}
-        validationSchema={validationSchemas.SuspendUnsuspendProduct}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log('formik values: ', values);
-          toggleSuspendProduct({
-            productId: product?.id,
-            isSuspended: !product.isSuspended,
-          })
-        }}
-      >
-        {(fprops) => {
+          isSuspended: !product.isSuspended,
+        })
+      }}
+    >
+      {(fprops) => {
 
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            validateField,
-            validateForm,
-          } = fprops;
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset,
+          validateField,
+          validateForm,
+        } = fprops;
 
-          return (
-            <SuspendProductFormWrapper
-              handleSubmit={handleSubmit}
-              isSuspended={product?.isSuspended}
-              onClickDebugPrint={() => {
-                console.log("fprops.errors:", fprops.errors)
-                setLoading(false)
-              }}
-              {...fprops}
-            >
-              <div className={classes.backButton}>
-                <IconButton onClick={() => props.setProduct(undefined)}>
-                  <KeyboardArrowLeft/>
-                </IconButton>
-                <Typography className={classes.goBackText} variant="subtitle2">
-                  Go Back
-                </Typography>
-              </div>
-              <ViewParagraph title={"Product Summary"}>
-                <ProductDetails
-                  product={product}
-                  {...fprops}
-                />
-              </ViewParagraph>
-              <Loading fixed loading={loading}/>
-            </SuspendProductFormWrapper>
-          )
-        }}
-      </Formik>
+        return (
+          <SuspendProductFormWrapper
+            handleSubmit={handleSubmit}
+            isSuspended={product?.isSuspended}
+            onClickDebugPrint={() => {
+              console.log("fprops.errors:", fprops.errors)
+              setLoading(false)
+            }}
+            {...fprops}
+          >
+            <div className={classes.backButton}>
+              <IconButton onClick={() => props.setProduct(undefined)} size="large">
+                <KeyboardArrowLeft/>
+              </IconButton>
+              <Typography className={classes.goBackText} variant="subtitle2">
+                Go Back
+              </Typography>
+            </div>
+            <ViewParagraph title={"Product Summary"}>
+              <ProductDetails
+                product={product}
+                {...fprops}
+              />
+            </ViewParagraph>
+            <Loading fixed loading={loading}/>
+          </SuspendProductFormWrapper>
+        );
+      }}
+    </Formik>
 
-      <Formik
-        initialValues={{
+    <Formik
+      initialValues={{
+        storeId: product?.store?.id,
+        isSuspended: false,
+      }}
+      validationSchema={validationSchemas.SuspendUnsuspendStore}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log('suspendUnsuspendStore formik values: ', values);
+        toggleSuspendStore({
           storeId: product?.store?.id,
-          isSuspended: false,
-        }}
-        validationSchema={validationSchemas.SuspendUnsuspendStore}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log('suspendUnsuspendStore formik values: ', values);
-          toggleSuspendStore({
-            storeId: product?.store?.id,
-            isSuspended: !product.store?.isSuspended,
-          })
-        }}
-      >
-        {(fprops) => {
+          isSuspended: !product.store?.isSuspended,
+        })
+      }}
+    >
+      {(fprops) => {
 
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            validateField,
-            validateForm,
-          } = fprops;
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset,
+          validateField,
+          validateForm,
+        } = fprops;
 
-          return (
-            <SuspendStoreFormWrapper
-              handleSubmit={handleSubmit}
-              isSuspended={product?.store?.isSuspended}
-              onClickDebugPrint={() => {
-                console.log("fprops.errors:", fprops.errors)
-                setLoading(false)
-              }}
-              {...fprops}
-            >
-              <ViewParagraph title={"Seller Summary"}>
-                <SellerDetails
-                  product={product}
-                  {...fprops}
-                />
-              </ViewParagraph>
-              <Loading fixed loading={loading}/>
-            </SuspendStoreFormWrapper>
-          )
-        }}
-      </Formik>
-    </>
-  )
+        return (
+          <SuspendStoreFormWrapper
+            handleSubmit={handleSubmit}
+            isSuspended={product?.store?.isSuspended}
+            onClickDebugPrint={() => {
+              console.log("fprops.errors:", fprops.errors)
+              setLoading(false)
+            }}
+            {...fprops}
+          >
+            <ViewParagraph title={"Seller Summary"}>
+              <SellerDetails
+                product={product}
+                {...fprops}
+              />
+            </ViewParagraph>
+            <Loading fixed loading={loading}/>
+          </SuspendStoreFormWrapper>
+        )
+      }}
+    </Formik>
+  </>;
 }
 
 

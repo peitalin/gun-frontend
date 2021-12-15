@@ -1,7 +1,10 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius4x,
@@ -13,22 +16,22 @@ import {
   isThemeDark
 } from "layout/AppTheme";
 // MUI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
-import Dialog from "@material-ui/core/Dialog";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown"
+import Dialog from "@mui/material/Dialog";
 import DropdownInput from "components/Fields/DropdownInput";
 // Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import CaliberMenu from "./CaliberMenu";
 import DealerStatesMenu from "./DealerStatesMenu";
 // typings
 import {
   DealerState,
 } from "typings/gqlTypes";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 //
 import { SelectOptionCaliber } from "typings";
 
@@ -186,16 +189,16 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     cursor: 'pointer',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapGreyNavy
         : Colors.slateGreyDark,
       // borderBottom: '3px solid',
       "& > div > div > span": {
-        color: theme.palette.type === 'dark'
+        color: theme.palette.mode === 'dark'
           ? Colors.purple
           : Colors.blue,
         transition: theme.transitions.create(['color'], {
@@ -204,7 +207,7 @@ export const styles = (theme: Theme) => createStyles({
         })
       },
       "& > div > svg": {
-        fill: theme.palette.type === 'dark'
+        fill: theme.palette.mode === 'dark'
           ? Colors.purple
           : Colors.blue,
         transition: theme.transitions.create(['fill'], {
@@ -228,12 +231,12 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "flex-start",
     padding: '1rem',
     paddingTop: "2rem",
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius3x,
     boxShadow: BoxShadows.shadow1.boxShadow,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
@@ -259,7 +262,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: '0.5rem',
   },
   advancedSearchButtonText: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     minWidth: 120,
@@ -277,7 +280,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   dropdownArrow: {
-    fill: theme.palette.type === 'dark'
+    fill: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -315,7 +318,7 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     top: 0,
     right: 0,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarker,
     border: isThemeDark(theme)
@@ -327,7 +330,7 @@ export const styles = (theme: Theme) => createStyles({
         : Colors.slateGreyBlack,
     },
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapMediumGrey
         : Colors.slateGreyDarkest,
     },

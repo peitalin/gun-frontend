@@ -1,14 +1,15 @@
 import React from 'react';
-import {
-  withStyles, WithStyles, createStyles, Theme
-} from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 
-import Fade from '@material-ui/core/Fade';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
+import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 
 
 const Loading: React.FC<ReactProps> = (props) => {
@@ -95,7 +96,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    minHeight: `calc(100vh - ${theme.spacing(8)}px)`,
+    minHeight: `calc(100vh - ${theme.spacing(8)})`,
     // offset is 64px (topbar) + 64px (footer: theme.spacing.unit * 8)
     // but keep footer below the fold while loading this time
   },
@@ -109,14 +110,14 @@ const styles = (theme: Theme) => createStyles({
   },
   rootFixed: {
     position: 'fixed',
-    right: `${theme.spacing(9)}px`,
-    bottom: `calc(${theme.spacing(8)}px)`,
+    right: theme.spacing(9),
+    bottom: `calc(${theme.spacing(8)})`,
     // unit * 6 = height of foot, then add 2 * unit for padding
   },
   rootAbsolute: {
     position: 'absolute',
-    right: `${theme.spacing(9)}px`,
-    bottom: `calc(${theme.spacing(8)}px)`,
+    right: theme.spacing(9),
+    bottom: `calc(${theme.spacing(8)})`,
   },
   placeholder: {
     position: 'fixed',

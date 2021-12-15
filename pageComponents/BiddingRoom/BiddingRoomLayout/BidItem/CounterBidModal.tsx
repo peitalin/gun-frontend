@@ -8,7 +8,10 @@ import {
   BorderRadius4x
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -18,8 +21,8 @@ import ButtonLoading from "components/ButtonLoading";
 import TextInputAdorned from 'components/Fields/TextInputAdorned';
 import { Rifm } from 'rifm';
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 // gql
@@ -34,12 +37,12 @@ import { validationSchemas } from "utils/validation";
 import { useFormik } from 'formik';
 
 import TooltipToggle from "./TooltipToggle";
-import IconButton from "@material-ui/core/IconButton";
-import ReplyIcon from '@material-ui/icons/Reply';
+import IconButton from "@mui/material/IconButton";
+import ReplyIcon from '@mui/icons-material/Reply';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
 
 
 
@@ -54,7 +57,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   // RIFM - masking currency values
   const [displayedPrice, setDisplayedPrice] = React.useState('');
@@ -121,117 +124,115 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
 
 
 
-  return (
-    <>
-      <Dialog
-        open={showModal}
-        onClose={() => setShowModal(false)}
-        BackdropProps={{ classes: { root: classes.modalBackdrop } }}
-        PaperProps={{ classes: { root: classes.modalPaperScrollPaper } }}
+  return <>
+    <Dialog
+      open={showModal}
+      onClose={() => setShowModal(false)}
+      BackdropProps={{ classes: { root: classes.modalBackdrop } }}
+      PaperProps={{ classes: { root: classes.modalPaperScrollPaper } }}
+    >
+      <form
+        onSubmit={formik.handleSubmit}
+        className={classes.createInitialBidFormRoot}
       >
-        <form
-          onSubmit={formik.handleSubmit}
-          className={classes.createInitialBidFormRoot}
-        >
-          <div className={classes.flexRow}>
-            <Typography variant="h4" className={classes.title}>
-              Make a Counter Bid
-            </Typography>
-          </div>
+        <div className={classes.flexRow}>
+          <Typography variant="h4" className={classes.title}>
+            Make a Counter Bid
+          </Typography>
+        </div>
 
-          <div className={classes.flexRow}>
-            <Rifm
-              // $ need to be in regexp to prevent cursor jumping on backspace
-              accept={/[\d.]/g}
-              format={formatCurrency}
-              value={displayedPrice}
-              onChange={value => {
-                // values before currency mask
-                // multiple by 100 as formik/graphql takes cents, not dollars
-                let displayDollars = parseNumber(value)
-                let dollars = parseFloat(displayDollars)
-                setDisplayedPrice(displayDollars)
-                // console.log("dollars", dollars)
-                let cents = Math.round(parseFloat((dollars * 100) as any)) // round: 200.9999 => 201
-                // console.log('cents: ', cents)
-                if (cents) {
-                  setOfferPrice(cents)
-                } else {
-                  // setOfferPrice(undefined)
-                }
-                formik.setFieldValue("offerPrice", cents)
-                // multiple by 100 as formik/graphql takes cents, not dollars
-              }}
-            >
-              {({ value, onChange }) => (
-                <TextInputAdorned
-                  startAdornment={"$ "}
-                  name={'bid'}
-                  type="currency"
-                  autoFocus="autofocus"
-                  autoComplete={"new-password"}
-                  // placeholder="0.00"
-                  placeholder={"Enter a bid"}
-                  className={classes.inputField}
-                  // value={formik.values.offerPrice}
-                  // onChange={formik.handleChange}
-                  value={value || ""}
-                  onChange={(e) => {
-                    formik.handleChange(e)
-                    e.persist()
-                    onChange(e)
-                  }}
-                  inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
-                />
-              )}
-            </Rifm>
-          </div>
-          <div className={classes.flexRow}>
-            <Button
-              type="submit"
-              className={classes.modalButtons}
-              variant={"outlined"}
-              color={"secondary"}
-              onClick={() => {}}
-              // submit dispatches formik and then sendCounterBid()
-            >
-              Place Bid
-            </Button>
-            <Button
-              className={classes.modalButtons}
-              variant={"outlined"}
-              color={"primary"}
-              onClick={() => setShowModal(false)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </form>
-      </Dialog>
-      <TooltipToggle placement={"top"}
-        title={"Counter Bid"}
-        disabled={bidDisabled}
-      >
-        <span>
-          <IconButton
-            type="submit"
-            className={clsx(
-              mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
-              // classes.bidMsgPurple,
-              bidDisabled ? classes.bidMsgDisabled : classes.bidMsgPurple,
-            )}
-            onClick={() => setShowModal(true)}
-            disabled={bidDisabled}
+        <div className={classes.flexRow}>
+          <Rifm
+            // $ need to be in regexp to prevent cursor jumping on backspace
+            accept={/[\d.]/g}
+            format={formatCurrency}
+            value={displayedPrice}
+            onChange={value => {
+              // values before currency mask
+              // multiple by 100 as formik/graphql takes cents, not dollars
+              let displayDollars = parseNumber(value)
+              let dollars = parseFloat(displayDollars)
+              setDisplayedPrice(displayDollars)
+              // console.log("dollars", dollars)
+              let cents = Math.round(parseFloat((dollars * 100) as any)) // round: 200.9999 => 201
+              // console.log('cents: ', cents)
+              if (cents) {
+                setOfferPrice(cents)
+              } else {
+                // setOfferPrice(undefined)
+              }
+              formik.setFieldValue("offerPrice", cents)
+              // multiple by 100 as formik/graphql takes cents, not dollars
+            }}
           >
-            <ReplyIcon
-              // className={classes.bidMsgPurple}
-              className={bidDisabled ? null : classes.bidMsgPurple}
-            />
-          </IconButton>
-        </span>
-      </TooltipToggle>
-    </>
-  )
+            {({ value, onChange }) => (
+              <TextInputAdorned
+                startAdornment={"$ "}
+                name={'bid'}
+                type="currency"
+                autoFocus="autofocus"
+                autoComplete={"new-password"}
+                // placeholder="0.00"
+                placeholder={"Enter a bid"}
+                className={classes.inputField}
+                // value={formik.values.offerPrice}
+                // onChange={formik.handleChange}
+                value={value || ""}
+                onChange={(e) => {
+                  formik.handleChange(e)
+                  e.persist()
+                  onChange(e)
+                }}
+                inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
+              />
+            )}
+          </Rifm>
+        </div>
+        <div className={classes.flexRow}>
+          <Button
+            type="submit"
+            className={classes.modalButtons}
+            variant={"outlined"}
+            color={"secondary"}
+            onClick={() => {}}
+            // submit dispatches formik and then sendCounterBid()
+          >
+            Place Bid
+          </Button>
+          <Button
+            className={classes.modalButtons}
+            variant={"outlined"}
+            color={"primary"}
+            onClick={() => setShowModal(false)}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </Dialog>
+    <TooltipToggle placement={"top"}
+      title={"Counter Bid"}
+      disabled={bidDisabled}
+    >
+      <span>
+        <IconButton
+          type="submit"
+          className={clsx(
+            mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
+            // classes.bidMsgPurple,
+            bidDisabled ? classes.bidMsgDisabled : classes.bidMsgPurple,
+          )}
+          onClick={() => setShowModal(true)}
+          disabled={bidDisabled}
+          size="large">
+          <ReplyIcon
+            // className={classes.bidMsgPurple}
+            className={bidDisabled ? null : classes.bidMsgPurple}
+          />
+        </IconButton>
+      </span>
+    </TooltipToggle>
+  </>;
 }
 
 
@@ -296,20 +297,20 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: 40,
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.green,
     color: Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.green}`,
     "&:hover": {
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.green}`,
-      backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.green, 0.9),
+      backgroundColor: theme.palette.mode === 'dark'
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.green, 0.9),
     }
   },
   bidInputWrapper: {

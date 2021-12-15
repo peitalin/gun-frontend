@@ -3,20 +3,23 @@ import React from 'react';
 // Styles
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // typings
 import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { UserPrivate } from "typings/gqlTypes";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Material UI
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import Link from "next/link";
 
 
@@ -86,20 +89,20 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: 40,
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.green,
     color: Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.green}`,
     "&:hover": {
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.green}`,
-      backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.green, 0.9),
+      backgroundColor: theme.palette.mode === 'dark'
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.green, 0.9),
     }
   },
 });

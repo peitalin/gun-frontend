@@ -2,7 +2,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
@@ -28,10 +31,10 @@ import {
  } from "queries/news-items-queries";
 import { useQuery, useApolloClient } from "@apollo/client";
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Components
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import AlignCenterLayout from "components/AlignCenterLayout";
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import NewsItemCardAsRow from "components/NewsItemCardAsRow";
@@ -62,7 +65,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'))
 
 
   /////////////////////////////////// paginator

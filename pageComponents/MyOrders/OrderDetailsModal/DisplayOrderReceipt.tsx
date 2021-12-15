@@ -1,17 +1,20 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import { Order } from "typings/gqlTypes";
 // Icons
-import LockIcon from "@material-ui/icons/Lock";
-import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import LockIcon from "@mui/icons-material/Lock";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 // Components
 import { asCurrency as c } from "utils/prices";
 import Divider from "components/Divider";
@@ -146,10 +149,10 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     marginBottom: "0.5rem",
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapMediumNavy
       : theme.colors.slateGrey,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     marginLeft: "0.25rem",

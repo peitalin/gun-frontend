@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
@@ -14,10 +17,10 @@ import {
 import DownloadIcon from "components/Icons/DownloadIcon";
 import LoadingBar from "components/LoadingBar";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // snackbar
 import { useSnackbar } from "notistack";
 // apollo
@@ -29,7 +32,7 @@ import {
 import CsvDownloader from 'react-csv-downloader';
 import dayjs from 'dayjs';
 // Copy and tooltip for emails when on mobile
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import copy from "clipboard-copy";
 import { useRouter } from "next/router";
 
@@ -45,7 +48,7 @@ const CsvDownloaderButton = (props: ReactProps) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const [mouseOver, setMouseOver] = React.useState(false)
 

@@ -1,5 +1,8 @@
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 
 
@@ -16,7 +19,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
   },
   title: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
     ? Colors.uniswapLighterGrey
     : Colors.slateGreyDarkest,
     paddingLeft: '0.5rem', // subtract 1rem for carousel buttons: 1rem on both sides

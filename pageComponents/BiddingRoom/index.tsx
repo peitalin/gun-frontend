@@ -3,27 +3,30 @@ import React from 'react';
 // Styles
 import { Colors, BoxShadows, BorderRadius2x } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // graphql
 import { useSubscription } from '@apollo/client';
 import { useApolloClient } from "@apollo/client";
 // components
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import BiddingRoomLayout from './BiddingRoomLayout';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { UserPrivate, ChatRoomStatus } from "typings/gqlTypes";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Material UI
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
+import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
 import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding";
 import AlignCenterLayout from "components/AlignCenterLayout";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 
 

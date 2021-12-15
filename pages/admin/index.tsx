@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
@@ -22,8 +25,8 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
 })
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -35,7 +38,7 @@ const AdminDashboardHome = (props: ReactProps) => {
 
   const router = useRouter();
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>

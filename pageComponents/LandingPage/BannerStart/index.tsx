@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage, NextPageContext } from 'next';
@@ -11,7 +14,7 @@ import Hidden from 'components/HiddenFix';
 import BannerStartDesktop from "./BannerStartDesktop";
 import BannerStartMobile from "./BannerStartMobile";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 
 
 
@@ -63,7 +66,7 @@ const BannerStart: NextPage<ReactProps> = (props) => {
   return (
     <div className={classes.root}>
       {/* Desktop */}
-      <Hidden mdDown implementation="css" className={classes.width100}>
+      <Hidden lgDown implementation="css" className={classes.width100}>
         <BannerStartDesktop
           height={640}
           portraitMode={true}
@@ -91,7 +94,7 @@ const BannerStart: NextPage<ReactProps> = (props) => {
         />
       </Hidden>
     </div>
-  )
+  );
 }
 
 ///////////////// TYPINGS ///////////////////

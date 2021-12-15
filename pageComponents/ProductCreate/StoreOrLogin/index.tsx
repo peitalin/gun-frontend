@@ -1,13 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import {
-  createStyles, Theme, fade,
-  withStyles, WithStyles
-} from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { fontFam, Colors, Gradients } from "layout/AppTheme";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import Login from "layout/Login";
 import SellerProfile from "./SellerProfile";
 // Redux
@@ -22,8 +22,8 @@ import { payoutDoesNotExist, storeDoesNotExist } from "utils/store";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import StoreOrLoginContainer from "./StoreOrLoginContainer";
 
 
@@ -169,7 +169,7 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     width: '100%',
     "&:hover": {
-      backgroundColor: fade(Colors.ultramarineBlueDark, 1),
+      backgroundColor: alpha(Colors.ultramarineBlueDark, 1),
       border: `1px solid ${Colors.ultramarineBlueDark}`,
       transition: theme.transitions.create(['color', 'border'], {
         easing: theme.transitions.easing.easeIn,

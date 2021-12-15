@@ -1,12 +1,15 @@
 import React from 'react';
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Components
 import Hidden from "components/HiddenFix";
 // Recommendations
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 import YouMayAlsoLikeMobile from "components/Recommendations/YouMayAlsoLikeMobile";
 // Next
@@ -59,7 +62,7 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
           <Hidden mdUp>
             <YouMayAlsoLikeMobile/>
           </Hidden>
-          <Hidden smDown>
+          <Hidden mdDown>
             <YouMayAlsoLike
               // initialProducts={initialProductsLimitedRelease}
               title={props.recommendationsTitle ?? "Related Products"}
@@ -69,7 +72,7 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
         </div>
       }
     </div>
-  )
+  );
 };
 
 interface ReactProps extends WithStyles<typeof styles> {

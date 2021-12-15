@@ -1,7 +1,10 @@
 
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
@@ -11,7 +14,7 @@ import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import DescriptionLoading from "components/NewsItemCardResponsive/DescriptionLoading";
 // next
@@ -31,7 +34,7 @@ import {
   displayHrsToSold,
   printRelativeTime,
 } from "utils/dates"
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
@@ -416,7 +419,7 @@ const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontWeight: 600,
     fontSize: '0.825rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightestBlack,
     lineHeight: '1rem',
@@ -425,7 +428,7 @@ const styles = (theme: Theme) => createStyles({
     // position: 'absolute',
     bottom: '0.25rem',
     right: '0rem',
-    // border: theme.palette.type === 'dark'
+    // border: theme.palette.mode === 'dark'
     //   ? `1px solid ${Colors.uniswapLighterGrey}`
     //   : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -434,14 +437,14 @@ const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontWeight: 500,
     fontSize: '0.9rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
   },
   soldInHrsText: {
     fontWeight: 500,
     fontSize: '0.75rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarkest,
     minWidth: 100,

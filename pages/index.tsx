@@ -1,6 +1,9 @@
 import React from "react";
 // styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // GQL
 import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
 import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";

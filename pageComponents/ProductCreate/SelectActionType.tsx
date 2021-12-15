@@ -3,12 +3,15 @@ import clsx from "clsx";
 // Redux
 import { ActionTypes, ActionType } from "typings";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from './commonStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import FormGroup from '@material-ui/core/FormGroup';
-import Button from '@material-ui/core/Button';
+import Typography from "@mui/material/Typography";
+import FormGroup from '@mui/material/FormGroup';
+import Button from '@mui/material/Button';
 // Select Component
 import { sortActionTypeByName } from "./categoryHooks";
 // Util components
@@ -16,10 +19,10 @@ import ErrorBounds from 'components/ErrorBounds';
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 // MUI expander
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 

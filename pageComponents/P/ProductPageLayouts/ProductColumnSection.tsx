@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Next
 import Hidden from "components/HiddenFix";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { lgUpMediaQuery } from "../common";
 
 
@@ -14,7 +17,7 @@ const ProductColumnSection: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
   const lgUp = useMediaQuery(lgUpMediaQuery);
 
   if (!!props.isMobileRow) {

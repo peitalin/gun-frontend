@@ -1,6 +1,9 @@
 import React from 'react';
 import clsx from "clsx"
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Components
 import {
   NavBarHeight,
@@ -8,8 +11,8 @@ import {
   NewsBarHeight,
   CategoryBarHeight,
 } from "layout/NavBarMain/styles";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -21,8 +24,8 @@ const PageContainer: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
 
   return (
     <div className={clsx(
@@ -55,7 +58,7 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     minWidth: '320px',
     minHeight: `calc(100vh - 140px)`,
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? theme.gradients.gradientUniswapDark.background
       : theme.gradients.gradientGrey3.background,
     // offset 140px for navbar

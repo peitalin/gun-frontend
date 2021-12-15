@@ -4,7 +4,10 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
@@ -13,9 +16,9 @@ import {
   UserMutationResponse,
 } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 // Utils Components
 import Loading from "components/Loading";
 import DealerProfileDetails from "./DealerProfileDetails";
@@ -120,81 +123,79 @@ const DealerProfileForm: React.FC<ReactProps> = (props) => {
     return data;
   }
 
-  return (
-    <>
-      <Formik
-        initialValues={{
-          dealerId: dealer?.id,
-        }}
-        validationSchema={validationSchemas.DeleteDealer}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log('formik values: ', values);
-          deleteDealerMutation({
-            variables: {
-              dealerId: dealer?.id
-            }
-          })
-        }}
-      >
-        {(fprops) => {
+  return <>
+    <Formik
+      initialValues={{
+        dealerId: dealer?.id,
+      }}
+      validationSchema={validationSchemas.DeleteDealer}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log('formik values: ', values);
+        deleteDealerMutation({
+          variables: {
+            dealerId: dealer?.id
+          }
+        })
+      }}
+    >
+      {(fprops) => {
 
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            validateField,
-            validateForm,
-          } = fprops;
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset,
+          validateField,
+          validateForm,
+        } = fprops;
 
-          return (
-            <DeleteDealerFormWrapper
-              handleSubmit={handleSubmit}
-              onClickDebugPrint={() => {
-                console.log("fprops.errors:", fprops.errors)
-                setLoading(false)
-              }}
-              {...fprops}
-            >
+        return (
+          <DeleteDealerFormWrapper
+            handleSubmit={handleSubmit}
+            onClickDebugPrint={() => {
+              console.log("fprops.errors:", fprops.errors)
+              setLoading(false)
+            }}
+            {...fprops}
+          >
 
-              <Loading fixed loading={loading}/>
+            <Loading fixed loading={loading}/>
 
-              <div className={classes.backButton}>
-                <IconButton onClick={() => props.setDealer(undefined)}>
-                  <KeyboardArrowLeft/>
-                </IconButton>
-                <Typography className={classes.goBackText} variant="subtitle2">
-                  Go Back
-                </Typography>
-              </div>
+            <div className={classes.backButton}>
+              <IconButton onClick={() => props.setDealer(undefined)} size="large">
+                <KeyboardArrowLeft/>
+              </IconButton>
+              <Typography className={classes.goBackText} variant="subtitle2">
+                Go Back
+              </Typography>
+            </div>
 
-              <ViewParagraph title={"Dealer Summary"}>
-                <DealerProfileDetails
-                  dealer={dealer}
-                  {...fprops}
-                />
-              </ViewParagraph>
+            <ViewParagraph title={"Dealer Summary"}>
+              <DealerProfileDetails
+                dealer={dealer}
+                {...fprops}
+              />
+            </ViewParagraph>
 
-            </DeleteDealerFormWrapper>
-          )
-        }}
-      </Formik>
+          </DeleteDealerFormWrapper>
+        );
+      }}
+    </Formik>
 
-      <ViewParagraph title={"Set User for Dealer"}>
-        <SetDealerForUser
-          dealer={dealer}
-          searchDealerAsAdmin={props.searchDealerAsAdmin}
-          setDealerForUser={setDealerForUser}
-          unlinkUsersForDealerId={unlinkUsersForDealer}
-        />
-      </ViewParagraph>
-    </>
-  )
+    <ViewParagraph title={"Set User for Dealer"}>
+      <SetDealerForUser
+        dealer={dealer}
+        searchDealerAsAdmin={props.searchDealerAsAdmin}
+        setDealerForUser={setDealerForUser}
+        unlinkUsersForDealerId={unlinkUsersForDealer}
+      />
+    </ViewParagraph>
+  </>;
 }
 
 

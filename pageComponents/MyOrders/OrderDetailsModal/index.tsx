@@ -1,13 +1,16 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // Material UI
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // utils
 import { UserPrivate, Order } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
@@ -88,7 +91,7 @@ const styles = (theme: Theme) => createStyles({
     height: '38px',
     minWidth: cardDimensionsDefault.width,
     borderRadius: BorderRadius,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.grey}`
       : `1px solid ${Colors.black}`,
     marginTop: '0.5rem',

@@ -1,10 +1,13 @@
 import React from "react";
 // Styles
 import clsx from 'clsx';
-import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 import { UserPrivate, Role } from "typings/gqlTypes";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 // Icons
 import Visa from 'components/Icons/Visa';
 import Mastercard from 'components/Icons/Mastercard';
@@ -18,8 +21,8 @@ import { DISCORD_LINK } from 'utils/links'
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import Link from "next/link";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import AlignCenterLayout from "components/AlignCenterLayout";
 
 // for printing testing only
@@ -46,8 +49,8 @@ const Footer: React.FC<ReactProps> = (props) => {
   })
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
     <footer className={classes.footerContainer}>

@@ -2,7 +2,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BoxShadows,
@@ -12,15 +15,15 @@ import {
 // components
 import { UserPrivate, Product } from "typings/gqlTypes";
 // Material UI
-import Typography from '@material-ui/core/Typography';
-import Dialog from "@material-ui/core/Dialog";
+import Typography from '@mui/material/Typography';
+import Dialog from "@mui/material/Dialog";
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // components
 import ButtonLoading from "components/ButtonLoading";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 // Redux
@@ -39,7 +42,7 @@ const AddUserLicenseModal: React.FC<ReactProps> = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user

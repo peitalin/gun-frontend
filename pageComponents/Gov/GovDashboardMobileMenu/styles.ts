@@ -1,4 +1,7 @@
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients, isThemeDark } from "layout/AppTheme";
 import {
   NewsBarHeight,
@@ -30,7 +33,7 @@ export const dashboardBarStyle = (theme: Theme) => ({
     ? blurDark
     : blurLight,
   boxShadow: BoxShadows.shadow1.boxShadow,
-  borderBottom: theme.palette.type === 'dark'
+  borderBottom: theme.palette.mode === 'dark'
     ? `1px solid ${Colors.uniswapMediumNavy}`
     : `1px solid ${Colors.slateGreyDark}`,
 })
@@ -125,7 +128,7 @@ export const styles = (theme: Theme) => createStyles({
     whiteSpace: 'nowrap',
   },
   dashboardSelectedLink: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
     fontSize: '1rem',
@@ -184,13 +187,13 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : "unset",
-    // border: theme.palette.type === 'dark'
+    // border: theme.palette.mode === 'dark'
     //   ? `1px solid ${Colors.uniswapGrey}`
     //   : `1px solid ${Colors.slateGreyDark}`,
   },
@@ -206,7 +209,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: 50,
     cursor: 'pointer',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
   },

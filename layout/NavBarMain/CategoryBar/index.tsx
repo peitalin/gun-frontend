@@ -1,7 +1,8 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./styles";
 import Hidden from "components/HiddenFix";
 // Components
@@ -44,7 +45,7 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
               user={props.user}
             />
           </Hidden>
-        : <Hidden lgDown implementation="css">
+        : <Hidden xlDown implementation="css">
           <CategoryBarDesktop
             categories={initialCategories}
             isMainPage={_isMainPage}

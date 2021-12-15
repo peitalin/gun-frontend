@@ -2,17 +2,20 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Typings
 import { UserPrivate, Dealer } from "typings/gqlTypes";
 // Material UI
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import EditDealerForm from "./EditDealerForm";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -29,7 +32,7 @@ const EditDealerProfile = (props: ReactProps) => {
 
   // CSS
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
   const md = useMediaQuery(theme.breakpoints.only('md'))
   const lg = useMediaQuery(theme.breakpoints.only('lg'))
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'))

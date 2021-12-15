@@ -1,13 +1,15 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./styles";
 // Material UI
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "./PreviewImageFeatured";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 
@@ -15,7 +17,7 @@ import { useTheme } from '@material-ui/core/styles';
 const FeaturedImagePlaceholder = (props: ReactProps) => {
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const {
     classes,

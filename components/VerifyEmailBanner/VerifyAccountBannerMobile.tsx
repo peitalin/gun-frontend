@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients } from "layout/AppTheme";
 import { DISCORD_LINK } from 'utils/links'
 
 // Utils Components
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 // MUI
 import IconButtonCancel from "components/IconButtonCancel";
 
@@ -96,19 +99,19 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    // borderTop: theme.palette.type === 'dark'
+    // borderTop: theme.palette.mode === 'dark'
     //   ? `2px solid ${Colors.uniswapLightNavy}`
     //   : `2px solid ${Colors.slateGreyDark}`,
-    // borderBottom: theme.palette.type === 'dark'
+    // borderBottom: theme.palette.mode === 'dark'
     //   ? `2px solid ${Colors.uniswapLightNavy}`
     //   : `2px solid ${Colors.slateGreyDark}`,
     // background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
     // borderBottom: '2px solid',
     // borderImageSlice: 1,
-    // borderImageSource: theme.palette.type === 'dark'
+    // borderImageSource: theme.palette.mode === 'dark'
     //   ? `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`
     //   : `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
   },
@@ -138,7 +141,7 @@ const styles = (theme: Theme) => createStyles({
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
     cursor: "pointer",
@@ -148,7 +151,7 @@ const styles = (theme: Theme) => createStyles({
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
     cursor: "pointer",
@@ -158,7 +161,7 @@ const styles = (theme: Theme) => createStyles({
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.magenta
       : Colors.magenta,
     marginLeft: '0.25rem',

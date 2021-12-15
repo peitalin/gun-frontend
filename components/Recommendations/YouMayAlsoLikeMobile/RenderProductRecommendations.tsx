@@ -1,12 +1,15 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import { col2MinWidth } from "pageComponents/P/common";
 import { BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import { Product, ProductsConnection } from "typings/gqlTypes";
 // Router
@@ -14,8 +17,8 @@ import Link from "next/link";
 // Paginator hooks
 import ProductRecommendationRow from "./ProductRecommendationRow";
 // CSS
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 
@@ -31,7 +34,7 @@ const RenderProductRecommendations: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const itemsExist = !!products?.edges?.length;
 

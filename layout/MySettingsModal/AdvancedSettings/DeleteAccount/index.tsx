@@ -2,9 +2,12 @@ import React from "react";
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";

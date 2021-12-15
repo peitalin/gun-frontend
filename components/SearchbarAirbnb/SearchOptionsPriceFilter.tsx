@@ -1,13 +1,16 @@
 import React from "react";
 import { Colors, Gradients, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import ErrorBounds from "components/ErrorBounds";
 // MUI
-import ClearIcon from '@material-ui/icons/Clear';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import Slider from '@material-ui/core/Slider';
-import Button from "@material-ui/core/Button";
+import ClearIcon from '@mui/icons-material/Clear';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import Slider from '@mui/material/Slider';
+import Button from "@mui/material/Button";
 
 
 

@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients } from "layout/AppTheme";
 
 
@@ -84,7 +87,7 @@ const styles = (theme: Theme) => createStyles({
     borderWidth: "2px",
     borderStyle: "solid",
     borderColor: "transparent",
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     transition: theme.transitions.create('opacity', {

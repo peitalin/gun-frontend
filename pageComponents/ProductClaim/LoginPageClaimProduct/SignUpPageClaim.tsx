@@ -1,19 +1,20 @@
 import React from 'react';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 
 import {
   ClaimItemMutationResponse
 } from "typings/gqlTypes";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 // Typings
 import styles from './commonStylesPageClaim';
 import ErrorBounds from "components/ErrorBounds";
 import Or from "layout/Login/Or";
 import ButtonLoading from "components/ButtonLoading";
-import FormControl from '@material-ui/core/FormControl';
-import LockIcon from "@material-ui/icons/Lock";
+import FormControl from '@mui/material/FormControl';
+import LockIcon from "@mui/icons-material/Lock";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import TextInputFormControlUnderline from "components/Fields/TextInputFormControlUnderline"
 //
@@ -32,7 +33,7 @@ import { createOption } from "components/Fields/MultiDropdownSelect";
 
 import dynamic from "next/dynamic";
 import HelpIcon from "components/Icons/HelpIcon";
-import Tooltip from "@material-ui/core/Tooltip"
+import Tooltip from "@mui/material/Tooltip"
 import DateFnsUtils from '@date-io/dayjs';
 import {
   MuiPickersUtilsProvider,

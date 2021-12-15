@@ -1,10 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-ui/core/styles";
+import { Theme, lighten } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import TextInput from "components/Fields/TextInput";
 // Snackbar
 import { useSnackbar } from "notistack";
@@ -161,7 +164,7 @@ const styles = (theme: Theme) => createStyles({
   warningText: {
     marginTop: '1rem',
     marginBottom: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack
   },

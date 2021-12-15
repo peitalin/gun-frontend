@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   BorderRadius,
   Colors,
@@ -15,14 +18,14 @@ import {
 import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
-import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
+import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
 import TextInput from "components/Fields/TextInput";
 // SSR
 import { NextPage } from 'next';
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // typings
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 import Image from 'next/image';
@@ -195,7 +198,7 @@ export const styles = (theme: Theme) => createStyles({
   mainTitleSm: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.lightestGrey
       : Colors.slateGreyBlack,
     lineHeight: '2rem',
@@ -211,7 +214,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
   },
   subline1Sm: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey
       : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
@@ -241,16 +244,16 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
   },
   buttonSignupEmail: {
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.purple
       : Colors.ultramarineBlue,
     fontSize: '0.7rem',
     color: Colors.cream,
     minWidth: "140px",
     "&:hover": {
-      background: theme.palette.type === "dark"
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.ultramarineBlue, 0.9),
+      background: theme.palette.mode === "dark"
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.ultramarineBlue, 0.9),
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -270,12 +273,12 @@ export const styles = (theme: Theme) => createStyles({
   textInputSmall: {
     fontSize: '16px',
     height: '100%',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapLightNavy
       : Colors.slateGrey,
     borderRadius: BorderRadius,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
       border: `1px solid ${Colors.ultramarineBlue}`,

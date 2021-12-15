@@ -1,5 +1,8 @@
 import React from "react";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // MUI
 import { useRouter } from "next/router";
@@ -13,8 +16,8 @@ import {
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -32,7 +35,7 @@ const SearchbarMain = (props: SearchbarProps) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 40;

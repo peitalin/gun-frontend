@@ -1,7 +1,8 @@
 import React from "react";
 // Styles
 import clsx from 'clsx';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "../styles";
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { UserPrivate } from "typings/gqlTypes"
@@ -11,14 +12,14 @@ import Logo from "components/Icons/Logo";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import NotificationsMenu from "layout/NavBarMain/NotificationsMenu";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // Router
 import Link from "next/link";
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
-// import Tooltip from '@material-ui/core/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import CategoryBarDesktop from "../CategoryBar/CategoryBarDesktop";
 import TriangleSvg from "./TriangleSvg";
-import { useTheme } from "@material-ui/core"
+import { useTheme } from "@mui/material"
 import {
   logoBackgroundColorDark,
   logoBackgroundColorLight,
@@ -91,7 +92,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         />
       </div>
 
-      <Hidden lgDown implementation="css">
+      <Hidden xlDown implementation="css">
         <CategoryBarDesktop
           categories={initialCategories}
           isMainPage={props.isMainPage}
@@ -206,7 +207,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
       </div>
 
     </div>
-  )
+  );
 }
 
 interface DesktopMainBarProps extends WithStyles<typeof styles> {

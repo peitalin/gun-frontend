@@ -10,7 +10,10 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -20,11 +23,11 @@ import {
   BlankMutationResponse,
 } from "typings/gqlTypes";
 // components
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import ButtonLoading from "components/ButtonLoading";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import SavedSearchItem from './SavedSearchItem';
 // Snackbar
 import { useSnackbar } from "notistack";
@@ -37,8 +40,8 @@ import {
 } from "queries/saved-search-queries";
 // Category
 import { Categories, Calibers, DealerState } from "typings/gqlTypes";
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 // Validation
 import { validationSchemas } from "utils/validation";
 import { useFormik } from 'formik';
@@ -422,14 +425,14 @@ const styles = (theme: Theme) => createStyles({
     marginTop: "1rem",
     marginBottom: "1rem",
     borderRadius: BorderRadius4x,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.ultramarineBlue,
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.ultramarineBlueDark, 0.9),
+      backgroundColor: theme.palette.mode === 'dark'
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.ultramarineBlueDark, 0.9),
     }
   },
   dropdownContainer: {

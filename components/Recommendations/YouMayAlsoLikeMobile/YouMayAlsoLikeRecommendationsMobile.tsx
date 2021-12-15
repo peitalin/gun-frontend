@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import { col2MinWidth } from "../../../pageComponents/P/common";
 import { BorderRadius } from "layout/AppTheme";
@@ -13,8 +16,8 @@ import {
 import { ProductsConnection, ConnectionQuery } from "typings/gqlTypes";
 import { useQuery } from "@apollo/client";
 // CSS
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import RenderProductRecommendations from "./RenderProductRecommendations";
 
 
@@ -28,7 +31,7 @@ const YouMayAlsoLikeRecommendationsMobile = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const {
     loading,

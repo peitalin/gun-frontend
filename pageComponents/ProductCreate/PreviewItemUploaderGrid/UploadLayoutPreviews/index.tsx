@@ -11,10 +11,11 @@ import {
   IPreviewProps,
 } from "components/DropzoneUploader/Dropzone";
 
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from '../styles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import { ReducerName } from "typings/dropzone";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
@@ -27,8 +28,8 @@ import ImagePreview from "./ImagePreview";
 // Youtube component
 import AddYouTubeVimeoLink from "components/UploaderComponents/AddYouTubeVimeoLink";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 

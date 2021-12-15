@@ -2,16 +2,19 @@ import React from "react";
 // Graphql
 import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Avatar from '@material-ui/core/Avatar';
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Avatar from '@mui/material/Avatar';
 import { useRouter } from "next/router";
 // Router
 import EditSellerProfile from "./EditSellerProfile";

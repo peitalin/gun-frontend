@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "components/Fields/styles";
 
 

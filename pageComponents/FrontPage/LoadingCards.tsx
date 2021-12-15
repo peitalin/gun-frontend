@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import {
   NewsItem,
@@ -44,7 +47,7 @@ const LoadingCards = (props: ReactProps) => {
       [...Array(count).keys()].map(i =>
         <div className={classes.loadingProductCardRoot} key={i}>
           {/* Desktop Loading Cards */}
-          <Hidden smDown implementation="css">
+          <Hidden mdDown implementation="css">
             <div className={classes.productImage}>
               <div className={clsx(
                 classes.flexItem,
@@ -77,7 +80,7 @@ const LoadingCards = (props: ReactProps) => {
       )
     }
     </div>
-  )
+  );
 }
 
 

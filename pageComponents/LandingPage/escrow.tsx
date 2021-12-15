@@ -1,12 +1,15 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
 import { commonStyles } from "./commonStyles";
 // styles
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -34,7 +37,7 @@ const LandingPageEscrow: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  let isDarkMode = theme.palette.type === 'dark'
+  let isDarkMode = theme.palette.mode === 'dark'
 
   return (
     <div className={classes.landingPageRoot}>

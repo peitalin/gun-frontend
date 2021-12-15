@@ -1,5 +1,8 @@
 
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius4x,
@@ -31,10 +34,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonRoot: {
     margin: '0.15rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.black,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -42,11 +45,11 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '48%',
     "&:hover": {
       "& > span": {
-        color: theme.palette.type === 'dark'
+        color: theme.palette.mode === 'dark'
           ? Colors.purple
           : Colors.black,
       },
-      // border: theme.palette.type === 'dark'
+      // border: theme.palette.mode === 'dark'
       //   ? `1px solid ${Colors.purple}`
       //   : `1px solid ${Colors.black}`,
       // transition: theme.transitions.create(['color', 'border', 'background'], {
@@ -56,15 +59,15 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   activeButton: {
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.black}`,
   },
   buttonSelected: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.secondary,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.blue}`,
     color: Colors.cream,
@@ -75,10 +78,10 @@ export const styles = (theme: Theme) => createStyles({
       "& > span": {
         color: Colors.cream,
       },
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.purple
         : Colors.blue,
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.blue}`,
       // transition: theme.transitions.create(['color', 'border', 'background'], {

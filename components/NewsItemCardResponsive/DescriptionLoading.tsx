@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 
 
@@ -116,14 +119,14 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative', // for watchList Button position: absolute
   },
   loadingDescription: {
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? theme.colors.uniswapLightNavy
       : Colors.slateGreyDark,
     height: '100%',
     width: '100%',
   },
   loadingDescriptionLine1: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',
@@ -132,7 +135,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine2: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',
@@ -142,7 +145,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine3: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',
@@ -152,7 +155,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine4: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',
@@ -175,7 +178,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   loadingDescriptionPic: {
     color: theme.colors.uniswapLightNavy,
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     borderRadius: '4px',
@@ -185,7 +188,7 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '0.75rem',
   },
   loadingDescriptionLine1Mobile: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',
@@ -194,7 +197,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine2Mobile: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',
@@ -204,7 +207,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine3Mobile: {
-    backgroundColor: theme.palette.type === "dark"
+    backgroundColor: theme.palette.mode === "dark"
       ? theme.colors.uniswapNavy
       : Colors.slateGreyDark,
     height: '1rem',

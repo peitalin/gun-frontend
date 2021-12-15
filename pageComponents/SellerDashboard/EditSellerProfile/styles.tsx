@@ -1,4 +1,5 @@
-import { createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 
 
@@ -15,13 +16,13 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: '540px',
   },
   formBordersDesktop: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? 'unset'
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius2x,
@@ -56,7 +57,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     fontWeight: 600,
     marginBottom: '0.5rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -64,7 +65,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.8rem",
     fontWeight: 500,
     marginBottom: '0.25rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
     marginTop: "0.25rem",
@@ -73,7 +74,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -81,7 +82,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
     marginTop: "0.5rem",
@@ -176,7 +177,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   bioLength: {
     fontSize: '0.8rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -301,13 +302,13 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     marginTop: '1.5rem',
     marginBottom: '0.5rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.charcoal,
   },
   // avatar image
   greyText: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.charcoal,
   },

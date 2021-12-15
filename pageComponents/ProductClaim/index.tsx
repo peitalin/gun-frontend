@@ -1,13 +1,16 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Typings
 import { NewsItem } from "typings/gqlTypes";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 // components
@@ -26,7 +29,7 @@ const ProductClaim: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   // image gallery index
   const [index, setIndex] = React.useState(0);

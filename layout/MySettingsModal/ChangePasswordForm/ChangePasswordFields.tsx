@@ -3,12 +3,15 @@ import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 /// Debounce
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInputUnderline from "components/Fields/TextInputUnderline";
 import Divider from "components/Divider";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import ButtonLoading from "components/ButtonLoading";
 import ErrorBounds from "components/ErrorBounds";
 // router

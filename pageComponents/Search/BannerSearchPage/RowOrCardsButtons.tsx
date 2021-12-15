@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius3x, Colors } from "layout/AppTheme";
 // Typings
 import {
 } from "typings/gqlTypes";
-import IconButton from "@material-ui/core/IconButton";
-import ListIcon from "@material-ui/icons/List";
-import GridIcon from "@material-ui/icons/ViewModule";
+import IconButton from "@mui/material/IconButton";
+import ListIcon from "@mui/icons-material/List";
+import GridIcon from "@mui/icons-material/ViewModule";
 
 
 
@@ -90,21 +93,21 @@ export const styles = (theme: Theme) => createStyles({
     height: 48,
     width: 48,
     borderRadius: `${BorderRadius3x}px 0px 0px ${BorderRadius3x}px`,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.darkWhite}`,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? `${Colors.uniswapMediumNavy}`
         : `${Colors.slateGrey}`,
     },
-    borderTop: theme.palette.type === 'dark'
+    borderTop: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    borderLeft: theme.palette.type === 'dark'
+    borderLeft: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
@@ -113,27 +116,27 @@ export const styles = (theme: Theme) => createStyles({
     width: 48,
     // borderRadius: BorderRadius3x,
     borderRadius: `0px ${BorderRadius3x}px ${BorderRadius3x}px 0px`,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.darkWhite}`,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? `${Colors.uniswapMediumNavy}`
         : `${Colors.slateGrey}`,
     },
-    borderTop: theme.palette.type === 'dark'
+    borderTop: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    borderRight: theme.palette.type === 'dark'
+    borderRight: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   listOrGridIconSelected: {
     borderRadius: BorderRadius3x,
-    fill: theme.palette.type === 'dark'
+    fill: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.gradientUniswapBlue1,
   },

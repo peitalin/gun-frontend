@@ -2,13 +2,16 @@ import React from "react";
 import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { commonBorderStyle } from "../common";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 // Typings
 import { Product, UserPublic, Bids, BidStatus } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import ButtonLoading from "components/ButtonLoading";
 // Snackbar
 import { useSnackbar } from "notistack";
@@ -196,7 +199,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     width: '100%',
     // maxWidth: "600px",
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
@@ -235,20 +238,20 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     fontWeight: 500,
     marginBottom: "0.5rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
   caption: {
     fontSize: '0.875rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,
   },
   captionSmall: {
     fontSize: '0.8rem',
     paddingLeft: '1rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey
       : Colors.slateGreyDarkest,
   },
@@ -261,7 +264,7 @@ const styles = (theme: Theme) => createStyles({
     width: '3rem',
     height: '3rem',
     transform: 'rotate(90deg)',
-    fill: theme.palette.type === 'dark'
+    fill: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyBlack,
   },
@@ -278,7 +281,7 @@ const styles = (theme: Theme) => createStyles({
     right: "0.75rem",
     borderRadius: '4px',
     fontSize: '0.875rem',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Gradients.gradientUniswapDark.background
       : Gradients.gradientGrey2.background,
     padding: '0.3rem 0.6rem',
@@ -288,26 +291,26 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   bidGreen: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.green
       : Colors.blue,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.green}`
       : `1px solid ${Colors.blue}`,
   },
   bidGrey: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarker,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapMediumGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   bidRed: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.red
       : Colors.red,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.red}`
       : `1px solid ${Colors.red}`,
   },
@@ -324,8 +327,8 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     border: `1px solid ${Colors.green}`,
     "&:hover": {
-      backgroundColor: fade(Colors.green, 0.9),
-      border: `1px solid ${fade(Colors.green, 0.9)}`,
+      backgroundColor: alpha(Colors.green, 0.9),
+      border: `1px solid ${alpha(Colors.green, 0.9)}`,
     },
     width: "100%",
     maxWidth: 340,

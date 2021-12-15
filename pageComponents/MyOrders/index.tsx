@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x } from "layout/AppTheme";
 
 // redux
@@ -17,8 +20,8 @@ import {
 // graphl
 import { useLazyQuery, useQuery } from "@apollo/client";
 // MUI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // Subcomponents
 import OrderRowSellers from "pageComponents/MyOrders/OrderRowSellers";
 import OrderRowBuyers from "pageComponents/MyOrders/OrderRowBuyers";
@@ -31,8 +34,8 @@ import {
   Order_By,
 } from "typings/gqlTypes";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Utils Component
 import ErrorDisplay from "components/ErrorDisplay";
 import AlignCenterLayout from "components/AlignCenterLayout";
@@ -73,7 +76,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
   const router = useRouter();
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
   const maxWidthForOrders = mdDown ? '100%' : MAX_WIDTH_ORDERS_PAGER
 
   const aClient = useApolloClient();
@@ -522,7 +525,7 @@ const OrdersLayout: React.FC<OrdersLayoutProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
   const lg = useMediaQuery(theme.breakpoints.only('lg'))
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'))
 
@@ -702,13 +705,13 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     marginBottom: '2rem',
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : Colors.cream,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     width: '100%',

@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +14,7 @@ import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";

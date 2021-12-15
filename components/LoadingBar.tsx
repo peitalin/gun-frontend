@@ -1,9 +1,12 @@
 import React from "react";
 import clsx from 'clsx';
-import Fade from '@material-ui/core/Fade';
-import { withStyles, WithStyles, createStyles, Theme, fade } from '@material-ui/core/styles';
+import Fade from '@mui/material/Fade';
+import { Theme, alpha } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { isThemeDark, Colors } from "layout/AppTheme";
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 
 
 // NOTE: This LoadingBar has position: 'absolute'
@@ -229,7 +232,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    minHeight: `calc(100vh - ${theme.spacing(8)}px)`,
+    minHeight: `calc(100vh - ${theme.spacing(8)})`,
     // offset is 64px (topbar) + 64px (footer: theme.spacing.unit * 8)
     // but keep footer below the fold while loading
   },
@@ -242,8 +245,8 @@ const styles = (theme: Theme) => createStyles({
   },
   rootFixed: {
     position: 'fixed',
-    right: `${theme.spacing(9)}px`,
-    bottom: `calc(${theme.spacing(8)}px)`,
+    right: theme.spacing(9),
+    bottom: `calc(${theme.spacing(8)})`,
     // unit * 6 = height of foot, then add 2 * unit for padding
   },
   rootAbsoluteTop: {

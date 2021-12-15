@@ -1,7 +1,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Message, BidStatus, Product } from "typings/gqlTypes";
 // Styles
 import {
@@ -16,12 +19,12 @@ import {
 import { useMutation } from "@apollo/client";
 import { UPDATE_BID_MESSAGE } from "queries/chat-mutations";
 // format
-import { useMediaQuery, useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { formatNiceDate } from "utils/dates";
 import { asCurrency as c } from "utils/prices";
 
-import DoneIcon from '@material-ui/icons/Done';
-import CallReceivedIcon from '@material-ui/icons/CallReceived';
+import DoneIcon from '@mui/icons-material/Done';
+import CallReceivedIcon from '@mui/icons-material/CallReceived';
 import BidActionsByUser from "./BidActionsByUser";
 
 
@@ -39,7 +42,7 @@ const NormalBid = (props: BidProps) => {
   } = props;
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
 
   return (

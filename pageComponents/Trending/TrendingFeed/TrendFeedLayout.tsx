@@ -1,10 +1,13 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, isThemeDark, BorderRadius, BorderRadius2x } from "layout/AppTheme";
 
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import AntTabContainer from "./AntTabComponents/AntTabContainer";
 import AntTab from "./AntTabComponents/AntTab";
 import ShowOnMobileOrDesktopSSR from 'components/ShowOnMobileOrDesktopSSR';

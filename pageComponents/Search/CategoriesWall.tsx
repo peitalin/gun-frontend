@@ -2,7 +2,10 @@ import React from "react";
 import { Categories } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import CategoryCarouselStart from "components/CategoryCarouselStart";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 

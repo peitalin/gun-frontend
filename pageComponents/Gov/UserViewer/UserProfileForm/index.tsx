@@ -4,7 +4,10 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
@@ -13,9 +16,9 @@ import {
   User_Licenses,
 } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 // Utils Components
 import Loading from "components/Loading";
 import UserProfileDetails from "./UserProfileDetails";
@@ -143,7 +146,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
             {...fprops}
           >
             <div className={classes.backButton}>
-              <IconButton onClick={() => props.setUser(undefined)}>
+              <IconButton onClick={() => props.setUser(undefined)} size="large">
                 <KeyboardArrowLeft/>
               </IconButton>
               <Typography className={classes.goBackText} variant="subtitle2">
@@ -161,10 +164,10 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
             </ViewParagraph>
             <Loading fixed loading={loading}/>
           </ApproveUserFormWrapper>
-        )
+        );
       }}
       </Formik>
-  )
+  );
 }
 
 

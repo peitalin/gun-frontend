@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Styles
-import { createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { fontFam, Colors } from "layout/AppTheme";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 // Typings
 import { ProductPreviewItemInput, ProductPreviewItem } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";

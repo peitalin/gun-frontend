@@ -1,7 +1,10 @@
 
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
@@ -18,8 +21,8 @@ import FeaturedProductsDesktop from "pageComponents/FrontPage/FeaturedProducts/F
 import Hidden from 'components/HiddenFix';
 
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Graphql
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
@@ -72,28 +75,26 @@ const FeaturedProducts = (props: ReactProps) => {
   let categorySlug = promotedList?.categoryFilterSlug
   let connection = promotedList?.promotedSlotsConnection
 
-  return (
-    <>
-      <Hidden smDown implementation="js">
-        <FeaturedProductsDesktop
-          title={props.title}
-          connection={connection}
-          cardsPerRow={cardsPerRow}
-          showSeeMore={!!categorySlug}
-          categorySlug={categorySlug}
-        />
-      </Hidden>
-      <Hidden mdUp implementation="js">
-        <FeaturedProductsMobileCarousel
-          title={props.title}
-          connection={connection}
-          cardsPerRow={cardsPerRow}
-          showSeeMore={!!categorySlug}
-          categorySlug={categorySlug}
-        />
-      </Hidden>
-    </>
-  )
+  return <>
+    <Hidden mdDown implementation="js">
+      <FeaturedProductsDesktop
+        title={props.title}
+        connection={connection}
+        cardsPerRow={cardsPerRow}
+        showSeeMore={!!categorySlug}
+        categorySlug={categorySlug}
+      />
+    </Hidden>
+    <Hidden mdUp implementation="js">
+      <FeaturedProductsMobileCarousel
+        title={props.title}
+        connection={connection}
+        cardsPerRow={cardsPerRow}
+        showSeeMore={!!categorySlug}
+        categorySlug={categorySlug}
+      />
+    </Hidden>
+  </>;
 }
 
 

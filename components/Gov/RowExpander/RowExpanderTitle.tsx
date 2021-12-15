@@ -1,11 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { alpha, lighten, Theme } from '@mui/material/styles';
 
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
+
+import IconButton from '@mui/material/IconButton';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // Snackbar
 import { useSnackbar } from "notistack";
 // router
@@ -57,11 +61,11 @@ const styles = (theme: Theme) => createStyles({
   rowExpanderRoot: {
     width: "100%",
     display: "flex",
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? theme.colors.uniswapLightestGrey
       : theme.colors.uniswapDarkNavy,
     flexDirection: "row",
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? lighten(Colors.uniswapGreyNavy, 0.01)
       : lighten(Colors.slateGrey, 0.01),
     '& > *': {
@@ -69,13 +73,13 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   backgroundGrey: {
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDark,
   },
   backgroundGrey2: {
-    backgroundColor: theme.palette.type === 'dark'
-      ? fade(Colors.uniswapGrey, 0.7)
+    backgroundColor: theme.palette.mode === 'dark'
+      ? alpha(Colors.uniswapGrey, 0.7)
       : Colors.slateGreyDarker,
   },
 });

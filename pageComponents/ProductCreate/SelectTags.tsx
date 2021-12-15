@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 import { ReducerName } from "typings/dropzone";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from './commonStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import FormGroup from '@material-ui/core/FormGroup';
+import Typography from "@mui/material/Typography";
+import FormGroup from '@mui/material/FormGroup';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
 import dynamic from 'next/dynamic'

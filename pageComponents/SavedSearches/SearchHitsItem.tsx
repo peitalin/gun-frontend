@@ -10,7 +10,10 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // components
 import Link from "next/link";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
@@ -32,8 +35,8 @@ import {
 import { SearchHitsQData, SearchHitsQVar } from "./SearchHits";
 import MarkHitAsSeenButton from "./MarkHitAsSeenButton"
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSnackbar } from "notistack"
 import { categoryPreviewsBackup } from "utils/categories"
 
@@ -49,7 +52,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
   } = props
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const productTitle = props.productTitle
 

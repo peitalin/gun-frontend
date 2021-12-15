@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import AddIcon from '@material-ui/icons/Add';
-import MenuItem from '@material-ui/core/MenuItem';
+import Typography from "@mui/material/Typography";
+import AddIcon from '@mui/icons-material/Add';
+import MenuItem from '@mui/material/MenuItem';
 import TextInputUnderline from "components/Fields/TextInputUnderline";
-import Switch from '@material-ui/core/Switch';
+import Switch from '@mui/material/Switch';
 import Loading from "components/Loading";
 // types
 import {

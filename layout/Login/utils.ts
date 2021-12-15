@@ -175,7 +175,7 @@ export const runOnLoginExpiration = (fn: (...args: any) => any): void => {
 
 
 export const validateLicenseExpiryDate = (dateString: string) => {
-  return !!dateString.match(/[0-9]{1,2}[/][0-9]{1,2}[/][0-9]{4}/g)
+  return !!dateString.match(/[0-9]{1,2}[/][0-9]{1,2}[/][0-9]{4}/g);
 }
 
 

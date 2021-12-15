@@ -2,7 +2,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BoxShadows,
@@ -13,9 +16,9 @@ import {
 // components
 import { UserPrivate, Product } from "typings/gqlTypes";
 // Material UI
-import Typography from '@material-ui/core/Typography';
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
+import Typography from '@mui/material/Typography';
+import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
 import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding";
 
 // graphql
@@ -25,8 +28,8 @@ import { ChatRoom, Message } from "typings/gqlTypes";
 // components
 import ButtonLoading from "components/ButtonLoading";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 // Redux
@@ -49,8 +52,8 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const snackbar = useSnackbar()
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
@@ -164,20 +167,20 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
     width: '100%',
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.purple
       : Colors.green,
     color: Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.green}`,
     "&:hover": {
-      border: theme.palette.type === 'dark'
+      border: theme.palette.mode === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.green}`,
-      backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.green, 0.9),
+      backgroundColor: theme.palette.mode === 'dark'
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.green, 0.9),
     }
   },
 });

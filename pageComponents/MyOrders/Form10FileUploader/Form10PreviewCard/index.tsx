@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
 
 // graphl
@@ -16,18 +19,18 @@ import { ADD_FORM_10 } from "queries/orders-mutations";
 import { Order, OrderStatus } from "typings/gqlTypes";
 
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from '@material-ui/core/Tooltip';
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
+import Tooltip from '@mui/material/Tooltip';
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import Tick from "components/Icons/Tick";
 // Uploader components
 import Form10Modal from "./Form10Modal";
 // Snackbar
 import { useSnackbar } from "notistack";
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 
 
 export const cardDimensionsDefault = {
@@ -212,7 +215,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     fontSize: '0.7rem',
     textAlign: 'center',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
   },
@@ -238,10 +241,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   cardMediaWide: {
     // objectFit: "scale-down",
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapNavy
       : Colors.slateGrey,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     padding: '1.1rem',

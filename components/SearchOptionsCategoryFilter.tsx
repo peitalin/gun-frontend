@@ -1,21 +1,24 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
-import Button from "@material-ui/core/Button";
-import ClearIcon from '@material-ui/icons/Clear';
+import Button from "@mui/material/Button";
+import ClearIcon from '@mui/icons-material/Clear';
 // GraphQL Typings
 import {
   Categories,
 } from "typings/gqlTypes";
 
 // MUI expander
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // Dropdown Select Component
 import { selectStyles } from "components/SearchOptions";
@@ -247,7 +250,7 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
-    background: fade(Colors.slateGrey, 0.6),
+    background: alpha(Colors.slateGrey, 0.6),
     border: 'none',
     borderRadius: '4px',
     transition:  theme.transitions.create(['background', 'color'], {
@@ -264,10 +267,10 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   buttonSelected: {
-    background: fade(Colors.red, 0.9),
+    background: alpha(Colors.red, 0.9),
     color: Colors.cream,
     "&:hover": {
-      background: fade(Colors.red, 0.8),
+      background: alpha(Colors.red, 0.8),
       color: Colors.white,
       transition:  theme.transitions.create('background', {
         easing: theme.transitions.easing.easeIn,

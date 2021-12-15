@@ -10,7 +10,10 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -22,15 +25,15 @@ import {
 } from "typings/gqlTypes";
 // components
 import ButtonLoading from "components/ButtonLoading";
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckIcon from "@material-ui/icons/Check";
-import Tooltip from "@material-ui/core/Tooltip"
+import IconButton from '@mui/material/IconButton';
+import ClearIcon from "@mui/icons-material/Clear";
+import CheckIcon from "@mui/icons-material/Check";
+import Tooltip from "@mui/material/Tooltip"
 import ConfirmActionModal from "components/ConfirmActionModal";
 import LicenseField from "./LicenseField";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
@@ -74,7 +77,7 @@ const UserLicenseRowCard = (props: ReactProps) => {
   let verified = license?.verified
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
   const snackbar = useSnackbar();
   const dispatch = useDispatch()
 

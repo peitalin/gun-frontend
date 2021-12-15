@@ -3,16 +3,19 @@ import clsx from "clsx";
 // Router
 import Link from "next/link";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, Colors, BorderRadius } from "layout/AppTheme";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Components
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // theme css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Hidden from 'components/HiddenFix';
 import CategoryCarouselStartDesktop from "./CategoryCarouselStartDesktop";
 
@@ -23,8 +26,8 @@ const CategoryCarouselStart = (props: ReactProps) => {
   const { classes } = props
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   return (
     <div className={classes.categoryCarouselRoot}>

@@ -2,28 +2,29 @@ import React from "react";
 import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./styles";
 import {
   Colors, isThemeDark,
 } from "layout/AppTheme";
 import { UserPrivate } from "typings/gqlTypes";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // import { useScrollYPosition } from "utils/hooks";
 // hooks
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import TriangleSvg from "../MainBar/TriangleSvg";
-import { useTheme } from "@material-ui/core"
+import { useTheme } from "@mui/material"
 import {
   logoBackgroundColorDark,
   logoBackgroundColorDark2,
   logoBackgroundColorLight,
   logoBackgroundColorLight2,
 } from "../styles"
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@mui/icons-material/Search';
 import ArrowStripeIcon from "components/ArrowStripeIcon"
 
 

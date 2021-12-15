@@ -1,5 +1,8 @@
 import React from "react";
-import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors, fontFam } from "layout/AppTheme";
 
 
@@ -31,7 +34,7 @@ const styles = (theme: Theme) => createStyles({
   },
   dividerLine: {
     flexGrow: 1,
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     height: '1px',

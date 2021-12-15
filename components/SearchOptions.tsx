@@ -1,6 +1,9 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius,
@@ -40,8 +43,8 @@ import SearchOptionsCategoryFilter from "components/SearchOptionsCategoryFilter"
 import SearchOptionsPaginator from "components/SearchOptionsPaginator";
 import SortByDropdown from "components/SortByDropdown";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -53,7 +56,7 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
   )
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
 
   const {
     classes,

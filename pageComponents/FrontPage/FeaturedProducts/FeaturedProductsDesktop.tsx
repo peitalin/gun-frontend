@@ -1,11 +1,14 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { styles } from "./stylesDesktop";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 // Components
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
@@ -16,9 +19,9 @@ import {
   PromotedSlotsConnection,
 } from "typings/gqlTypes";
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ArrowRight from "@material-ui/icons/ArrowRight";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ArrowRight from "@mui/icons-material/ArrowRight";
 
 
 

@@ -13,12 +13,15 @@ import {
   SoldOutStatus,
 } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import Typography from "@mui/material/Typography";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
@@ -29,8 +32,8 @@ import AddRemoveProductButtons from "./AddRemoveProductButtons";
 
 import { useLazyQuery } from "@apollo/client";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // gql
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 import { useSnackbar } from "notistack";
@@ -55,7 +58,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
   const snackbar = useSnackbar();
 
   const [selectedProductOption, setSelectedProductOption] = React.useState({
@@ -135,7 +138,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
         <IconButton
           onClick={() => props.closeModal()}
           className={classes.closeButton}
-        >
+          size="large">
           <ClearIcon/>
         </IconButton>
       </div>

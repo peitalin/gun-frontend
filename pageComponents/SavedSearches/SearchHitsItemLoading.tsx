@@ -10,7 +10,10 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // components
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 // typings
@@ -18,8 +21,8 @@ import {
   SEARCH_HIT_ITEM_HEIGHT
 } from "./SearchHitsItem"
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSnackbar } from "notistack"
 
 
@@ -34,7 +37,7 @@ const SearchHitsItemLoading = (props: SearchHitsItemLoadingProps) => {
   const snackbar = useSnackbar()
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
 
   return (

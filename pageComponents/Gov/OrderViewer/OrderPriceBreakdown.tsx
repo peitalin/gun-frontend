@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
@@ -10,7 +13,7 @@ import {
   PayeeType,
 } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // helpers
 import { formatDateTime } from "utils/dates";
 import currency from "currency.js";
@@ -351,10 +354,10 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 40,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.darkGrey}`,
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
@@ -365,15 +368,15 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 40,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.darkGrey}`,
     borderRadius: `${BorderRadius}px`,
     "&:hover": {
-      background: fade(Colors.lightBlue, 0.2),
+      background: alpha(Colors.lightBlue, 0.2),
     }
   },
   orderRow: {
@@ -383,7 +386,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     height: 40,
     // borderRadius: `${BorderRadius}px`,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightestGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderTop: `none`,
@@ -393,7 +396,7 @@ const styles = (theme: Theme) => createStyles({
     }),
     margin: "0rem 0rem",
     "&:hover": {
-      background: fade(Colors.lightBlue, 0.1),
+      background: alpha(Colors.lightBlue, 0.1),
     }
   },
   borderRoundedBottom: {
@@ -401,7 +404,7 @@ const styles = (theme: Theme) => createStyles({
   },
   orderCellText: {
     textAlign: 'start',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
     textTransform: 'capitalize',

@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import {
   Colors,
   BorderRadius,
@@ -10,9 +13,9 @@ import {
   Gradients
 } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import FormGroup from '@material-ui/core/FormGroup';
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import FormGroup from '@mui/material/FormGroup';
+import Button from "@mui/material/Button";
 // Validation
 import { validationSchemas } from "utils/validation";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';

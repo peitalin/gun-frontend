@@ -3,19 +3,22 @@ import clsx from "clsx";
 // Router
 import Link from "next/link";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Categories } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Components
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import AirCarousel from "components/AirCarousel";
 import AirItemTall from "components/AirCarousel/AirItemTall"
-// import Tooltip from '@material-ui/core/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 // theme css
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 import { renderCategoryIcon } from "./renderCategoryIcons";
 
 
@@ -156,7 +159,7 @@ export const styles = (theme: Theme) => createStyles({
     height: '120px',
     position: "relative",
     "& > div > p": {
-      color: theme.palette.type === 'dark'
+      color: theme.palette.mode === 'dark'
         ? Colors.uniswapLightestGrey
         : Colors.black,
       transition: theme.transitions.create('color', {

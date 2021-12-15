@@ -1,20 +1,23 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // TYpings
 import { OrderStatus, Order } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 // theme
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -24,7 +27,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   const product = order.product;
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   let form10FileId = order?.currentSnapshot?.form10File?.id;
   let form10MimeType = order?.currentSnapshot?.form10File?.mimeType;
@@ -123,11 +126,11 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
   },
   closeIcon: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarker,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: theme.palette.mode === 'dark'
         ? Colors.uniswapMediumGrey
         : Colors.slateGreyDarkest,
     },

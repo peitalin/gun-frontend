@@ -1,11 +1,11 @@
 import React from "react";
 import clsx from "clsx";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from '../commonStyles';
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import FormGroup from '@material-ui/core/FormGroup';
+import Typography from "@mui/material/Typography";
+import FormGroup from '@mui/material/FormGroup';
 // Util components
 import ErrorBounds from 'components/ErrorBounds';
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';

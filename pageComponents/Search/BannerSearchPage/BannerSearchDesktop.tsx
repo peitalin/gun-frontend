@@ -1,30 +1,33 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
-import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
+import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
 // Router
 import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from '@mui/material/Hidden';
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
-import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from '@material-ui/core/Tooltip';
+import CardMedia from "@mui/material/CardMedia";
+import Tooltip from '@mui/material/Tooltip';
 
 
 
@@ -42,7 +45,7 @@ const BannerSearch: NextPage<ReactProps> = (props) => {
   const router = useRouter()
   const theme = useTheme();
   const isDarkMode = isThemeDark(theme)
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   let pathname = router.pathname
 

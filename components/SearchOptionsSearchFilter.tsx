@@ -1,16 +1,19 @@
 import React from "react";
 import clsx from "clsx";
 import { Colors, Gradients, BoxShadows, isThemeDark } from "layout/AppTheme";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import ErrorBounds from "components/ErrorBounds";
 // MUI
-import SearchIcon from '@material-ui/icons/Search';
-import ClearIcon from '@material-ui/icons/Clear';
-import InputBase from '@material-ui/core/InputBase';
-import Button from "@material-ui/core/Button";
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+import InputBase from '@mui/material/InputBase';
+import Button from "@mui/material/Button";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -25,7 +28,7 @@ const SearchOptionsSearchFilter = (props: SearchOptionsProps) => {
   const [borderRadius, setBorderRadius] = React.useState(false);
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
 
   const inputRefEl = React.useRef(null);
 
@@ -247,7 +250,7 @@ let styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: 0,
     fontSize: '16px', // above 16px so mobile web doesn't zoom
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? theme.colors.uniswapLightestGrey
       : Colors.charcoal,
     transition: theme.transitions.create('width', {

@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   BorderRadius,
   Colors,
@@ -15,12 +18,12 @@ import {
 import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // SSR
 import { NextPage } from 'next';
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import CardMedia from "@material-ui/core/CardMedia";
+import { useTheme } from "@mui/material/styles";
+import CardMedia from "@mui/material/CardMedia";
 import Login from "layout/Login"
 import ArrowStripeIcon from "components/ArrowStripeIcon"
 
@@ -182,7 +185,7 @@ export const styles = (theme: Theme) => createStyles({
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.lightestGrey
       : Colors.slateGreyBlack,
     lineHeight: '2.5rem',
@@ -190,7 +193,7 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 400,
   },
   subline1: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.lightGrey
       : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
@@ -210,7 +213,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     boxShadow: BoxShadows.shadow2.boxShadow,
-    // border: theme.palette.type === 'dark'
+    // border: theme.palette.mode === 'dark'
     //   ? `1px solid ${Colors.uniswapLightestGrey}`
     //   : `1px solid ${Colors.slateGreyBlack}`,
     // maxWidth: 400,
@@ -230,8 +233,8 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: "150px",
     "&:hover": {
       background: isThemeDark(theme)
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.ultramarineBlue, 0.9),
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.ultramarineBlue, 0.9),
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -265,21 +268,21 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: "300px",
   },
   copyLink: {
-    color: fade(Colors.blue, 1),
+    color: alpha(Colors.blue, 1),
     "&:hover": {
-      color: fade(Colors.blue, 0.7),
+      color: alpha(Colors.blue, 0.7),
       cursor: "pointer",
     },
   },
   textInputSmall: {
     fontSize: '16px',
     height: '100%',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapLightNavy
       : Colors.slateGrey,
     borderRadius: BorderRadius,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
       border: `1px solid ${Colors.ultramarineBlue}`,

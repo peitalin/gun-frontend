@@ -1,10 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, BorderRadius4x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 import CreateCollectionMenu from "./CreateCollectionMenu";
 import CollectionItems from "./CollectionItems";
@@ -33,8 +36,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 
 
@@ -46,7 +49,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 
   const snackbar = useSnackbar()
   const theme = useTheme()
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'))
 
   const {
     user,

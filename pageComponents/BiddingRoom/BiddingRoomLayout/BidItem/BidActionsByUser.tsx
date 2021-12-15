@@ -1,7 +1,10 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Message, Product, BidStatus } from "typings/gqlTypes";
 // Styles
 import {
@@ -14,23 +17,23 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 // format
-import { useMediaQuery, useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 import ConfirmActionModal from "components/ConfirmActionModal";
 import CounterBidModal from "./CounterBidModal";
 import TooltipToggle from "./TooltipToggle";
 
-import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import CallReceivedIcon from '@material-ui/icons/CallReceived';
-import BlockIcon from '@material-ui/icons/Block';
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import CallReceivedIcon from '@mui/icons-material/CallReceived';
+import BlockIcon from '@mui/icons-material/Block';
 
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
-import ReplyIcon from '@material-ui/icons/Reply';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
+import ReplyIcon from '@mui/icons-material/Reply';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from "next/link";
 
 
@@ -50,7 +53,7 @@ const BidActionsByUser = (props: BidProps) => {
   } = props;
 
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   // const [openDeclineModal, setOpenDeclineModal] = React.useState(false)
   const [openAcceptModal, setOpenAcceptModal] = React.useState(false)
@@ -82,9 +85,11 @@ const BidActionsByUser = (props: BidProps) => {
                 as={`/p/${product?.id}?bidId=${props.bidId}`}
               >
                 <a>
-                  <IconButton className={
-                    mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton
-                  }>
+                  <IconButton
+                    className={
+                      mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton
+                    }
+                    size="large">
                     <ArrowForwardIcon
                       className={classes.acceptedBidCheckoutIcon}
                     />
@@ -94,7 +99,7 @@ const BidActionsByUser = (props: BidProps) => {
             </span>
           </Tooltip>
         </div>
-      )
+      );
     }
   }
 
@@ -118,7 +123,7 @@ const BidActionsByUser = (props: BidProps) => {
                   )}
                   onClick={() => setOpenWithdrawBidModal(true)}
                   disabled={bidDisabled}
-                >
+                  size="large">
                   <BlockIcon
                     className={bidDisabled ? null : classes.bidMsgRed}
                   />
@@ -141,7 +146,7 @@ const BidActionsByUser = (props: BidProps) => {
           </>
         }
       </div>
-    )
+    );
   } else {
     return (
       <div className={clsx(classes.flexRow)}>
@@ -160,7 +165,7 @@ const BidActionsByUser = (props: BidProps) => {
                 )}
                 onClick={() => setOpenAcceptModal(true)}
                 disabled={bidDisabled}
-              >
+                size="large">
                 <CheckIcon
                   className={bidDisabled ? null : classes.bidMsgBlue}
                 />
@@ -233,7 +238,7 @@ const BidActionsByUser = (props: BidProps) => {
           }}
         /> */}
       </div>
-    )
+    );
   }
 }
 

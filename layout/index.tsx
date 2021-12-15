@@ -1,7 +1,10 @@
 import React from 'react';
 import clsx from "clsx";
 import Header from "./Header";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Components
 import dynamic from "next/dynamic";
 // import Footer from "./Footer";

@@ -1,5 +1,8 @@
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 
 

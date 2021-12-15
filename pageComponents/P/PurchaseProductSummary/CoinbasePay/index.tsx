@@ -1,7 +1,10 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Typings
 import { ProductsConnection, CoinbaseExchangeRates } from "typings/gqlTypes";
 // Router
@@ -14,7 +17,7 @@ import { GET_COINBASE_EXCHANGE_RATES } from "queries/coinbase-queries";
 // import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 
 import EthereumLogo from "components/Icons/Ethereum";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 // checkout
 import { asCurrency as c } from "utils/prices";
 

@@ -1,10 +1,13 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, Gradients, BorderRadius, isThemeDark } from "layout/AppTheme";
 import { PromotedSlot, Role } from "typings/gqlTypes";
 // Material UI
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
@@ -14,8 +17,8 @@ import { UserPrivate } from "typings/gqlTypes";
 import BuyPromotedSlotPage from "./BuyPromotedSlotPage";
 import AdminEditSlot from "./AdminEditSlot";
 /// CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
@@ -109,7 +112,7 @@ const styles = (theme: Theme) => createStyles({
     // maxHeight: "calc(100% - 0px)",
     width: '100%',
     maxWidth: '540px',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
     borderRadius: BorderRadius2x,

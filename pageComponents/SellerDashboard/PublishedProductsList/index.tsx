@@ -7,7 +7,10 @@ import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Router
 import { useRouter } from "next/router";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
@@ -20,8 +23,8 @@ import {
   Order_By,
 } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 // Components
 import ProductRow from "pageComponents/SellerDashboard/PublishedProductsList/ProductRow";
 import ProductEdit from "pageComponents/ProductEdit"
@@ -29,8 +32,8 @@ import BackTo from "components/BackTo";
 import LoadingBar from "components/LoadingBar";
 import ResponsivePadding from "../ResponsivePadding";
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // pagination
 import { useQuery, useLazyQuery, DocumentNode } from "@apollo/client";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
@@ -78,8 +81,8 @@ const PublishedProductsList = (props: ReactProps) => {
 
   const theme = useTheme();
   // const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   let {
     orderBy,
@@ -496,13 +499,13 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
   },
   titleCell1: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.charcoal}`,
     flexBasis: '60%',
     flexGrow: 1,
     padding: '0.5rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     justifyContent: 'flex-start',
@@ -511,14 +514,14 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
   },
   titleCell2: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.charcoal}`,
     flexBasis: '10%',
     flexGrow: 1,
     padding: '0.5rem',
     paddingLeft: '0rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     justifyContent: 'flex-start',
@@ -531,7 +534,7 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '30%',
     flexGrow: 1,
     padding: '0.5rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
     justifyContent: 'flex-start',
@@ -556,7 +559,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     marginBottom: '2rem',
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? theme.colors.uniswapDarkNavy
       : Colors.cream,
     width: '100%',

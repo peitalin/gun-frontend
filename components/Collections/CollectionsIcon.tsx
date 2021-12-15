@@ -1,13 +1,16 @@
 import React from "react";
 // styles
 import clsx from 'clsx';
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 // MUI
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
 // redux
@@ -18,7 +21,7 @@ import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 
 
 
@@ -92,13 +95,13 @@ const CollectionIcon: React.FC<ReactProps> = (props) => {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         className={classes.collectionRoot}
+        // size="small"
         style={{
           top: 'calc(50% - 16px)',
           padding: '.25rem', // determines button radius size
           ...props.style
         }}
-        // size="small"
-      >
+        size="large">
         {
           added
           ? <RemoveIcon classes={{
@@ -110,7 +113,7 @@ const CollectionIcon: React.FC<ReactProps> = (props) => {
         }
       </IconButton>
     </Tooltip>
-  )
+  );
 }
 
 

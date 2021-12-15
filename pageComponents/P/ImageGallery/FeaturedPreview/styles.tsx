@@ -1,4 +1,5 @@
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import {
   Colors,
   BorderRadius,
@@ -17,7 +18,7 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
     // borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.black
       : Colors.lightestGrey,
   },

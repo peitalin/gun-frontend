@@ -1,17 +1,15 @@
 import React from "react"
 // styles
 import clsx from "clsx";
-import {
-  fade,
-  withStyles, WithStyles,
-  createStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { alpha, Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
 // hooks
 import { useFocus } from "utils/hooks";
 // MUI
-import InputBase from "@material-ui/core/InputBase";
+import InputBase from "@mui/material/InputBase";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
@@ -160,17 +158,17 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     fontWeight: 400,
     fontFamily: fontFam,
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     padding: '0.5rem 0rem',
   },
   inputBorder: {
     position: 'relative',
-    background: theme.palette.type === "dark"
+    background: theme.palette.mode === "dark"
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
-    border: theme.palette.type === "dark"
+    border: theme.palette.mode === "dark"
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
@@ -182,10 +180,10 @@ export const styles = (theme: Theme) => createStyles({
     }),
     // Use the system font instead of the default Roboto font.
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       // color: Colors.blue,
-      color: theme.palette.type === "dark"
+      color: theme.palette.mode === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
@@ -197,8 +195,8 @@ export const styles = (theme: Theme) => createStyles({
   emptyInput: {
     border: `1px solid ${Colors.mediumLightGrey}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.lightGrey, 0.2)} 0 0 0 2px`,
-      color: theme.palette.type === "dark"
+      boxShadow: `${alpha(Colors.lightGrey, 0.2)} 0 0 0 2px`,
+      color: theme.palette.mode === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
@@ -207,13 +205,13 @@ export const styles = (theme: Theme) => createStyles({
     // border: `1px solid ${Colors.mediumLightGrey}`,
     '&:focus': {
       // boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
-      color: theme.palette.type === "dark"
+      color: theme.palette.mode === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
     "&:focus-within": {
       // color: `${fade(Colors.grey, 0.1)}`,
-      color: theme.palette.type === "dark"
+      color: theme.palette.mode === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
@@ -225,7 +223,7 @@ export const styles = (theme: Theme) => createStyles({
       // boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(theme.palette.error.light, 0.1)}`,
+      color: `${alpha(theme.palette.error.light, 0.1)}`,
     },
   },
   // ".errorInput:focus"
@@ -240,7 +238,7 @@ export const styles = (theme: Theme) => createStyles({
     //   easing: theme.transitions.easing.easeIn,
     //   duration: "100ms",
     // }),
-    color: `${fade(theme.palette.error.light, 0.7)}`,
+    color: `${alpha(theme.palette.error.light, 0.7)}`,
     transition: theme.transitions.create(['opacity', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "150ms",
@@ -252,7 +250,7 @@ export const styles = (theme: Theme) => createStyles({
     right: '0.25rem',
     fontSize: '12px',
     fontFamily: fontFam,
-    color: theme.palette.type === "dark"
+    color: theme.palette.mode === "dark"
       ? Colors.uniswapLightestGrey
       : Colors.black,
     transition: theme.transitions.create('color', {
@@ -261,7 +259,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   errorMessageFocused: {
-    color: `${fade(Colors.lightBlue, 0.7)}`,
+    color: `${alpha(Colors.lightBlue, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",

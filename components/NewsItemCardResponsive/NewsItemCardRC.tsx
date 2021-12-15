@@ -1,11 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Material UI
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import CollectionsIcon from "components/Collections/CollectionsIcon";
 // Typings
@@ -14,8 +17,8 @@ import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
 // Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import DescriptionLoading from "./DescriptionLoading";
 // Carousel
 import MainPreviewImage from "./MainPreviewImage";

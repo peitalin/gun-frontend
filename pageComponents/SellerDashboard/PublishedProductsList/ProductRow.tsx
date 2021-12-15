@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +15,7 @@ import { Product, ProductEditInput, ProductPrivate } from "typings/gqlTypes";
 // Material UI
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import PriceDisplayProductEdit from "components/PriceDisplayProductEdit";
 import Loading from "components/Loading";
 // Snackbar
@@ -20,18 +23,18 @@ import { useSnackbar, ProviderContext } from "notistack";
 // helpers
 import { useRouter } from "next/router";
 // MUI
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
-import LinkIcon from '@material-ui/icons/Link';
-import Tooltip from '@material-ui/core/Tooltip';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
+import LinkIcon from '@mui/icons-material/Link';
+import Tooltip from '@mui/material/Tooltip';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 // media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Graphql
 import {
   PUBLISH_PRODUCT,
@@ -74,8 +77,8 @@ const ProductRow = (props: ReactProps) => {
 
   const snackbar = useSnackbar();
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
 
 
   const [publishProduct, publishProductResponse] = useMutation<MData3, MVar3>(
@@ -667,7 +670,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     marginRight: '0rem',
     paddingBottom: '1rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGrey}`,
     position: 'relative',
@@ -681,7 +684,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     marginRight: '0rem',
     paddingBottom: '0.5rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGrey}`,
     position: 'relative',
@@ -691,7 +694,7 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey
       : Colors.charcoal,
     fontSize: "1rem",
@@ -729,7 +732,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: "0.7rem",
     color: Colors.green,
-    // color: theme.palette.type === 'dark'
+    // color: theme.palette.mode === 'dark'
     //   ? Colors.green
     //   : Colors.lightBlue,
   },

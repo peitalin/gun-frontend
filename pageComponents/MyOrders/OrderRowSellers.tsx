@@ -1,13 +1,16 @@
 import React from "react";
 // styles
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Order } from "typings/gqlTypes";
 // Material UI
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewThumb from "components/ProductPreviewThumb";
@@ -15,8 +18,8 @@ import OrderDetailsModal from "./OrderDetailsModal";
 // File requests
 import Link from "next/link";
 // mediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Form10FileUploader from "./Form10FileUploader";
 
 import OrderStatusDisplay from "./OrderStatusDisplay";
@@ -114,13 +117,13 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     padding: '1rem',
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDark}`,
     marginBottom: '0.5rem',

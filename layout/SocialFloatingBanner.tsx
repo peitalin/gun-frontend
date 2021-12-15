@@ -1,9 +1,12 @@
 import React from "react";
 // Styles
 import clsx from 'clsx';
-import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients, isThemeDark, BorderRadius4x } from "layout/AppTheme";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 // Social Icons
 import Discord from 'components/Icons/Discord';
 import Github from 'components/Icons/Github';
@@ -13,9 +16,9 @@ import Twitter from 'components/Icons/Twitter';
 import YouTube from 'components/Icons/YouTube';
 import Pinterest from 'components/Icons/Pinterest';
 import Link from "next/link";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Tooltip from "@material-ui/core/Tooltip";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Tooltip from "@mui/material/Tooltip";
 import { DISCORD_LINK } from 'utils/links'
 
 

@@ -1,6 +1,6 @@
 import React from "react";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "pageComponents/DealerDashboard/styles";
 import clsx from "clsx";
 // Typings
@@ -8,7 +8,7 @@ import { UserPrivate } from "typings/gqlTypes";
 // Components
 import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // next
 // SSR disable
 import dynamic from "next/dynamic";

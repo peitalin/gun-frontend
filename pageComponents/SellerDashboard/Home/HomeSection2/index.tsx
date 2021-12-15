@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import {
-  withStyles,
-  createStyles,
-  WithStyles,
-  Theme,
-  fade,
-} from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
 // components
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // sections
 import Link from "next/link";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 const HomeSection2 = ({ classes }: ReactProps) => {
@@ -82,7 +79,7 @@ const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: alpha(Colors.red, 0.9),
       transition: theme.transitions.create('background-color', {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",

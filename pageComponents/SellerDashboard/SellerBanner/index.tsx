@@ -1,12 +1,15 @@
 import React from "react";
 import { useState } from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "../styles";
 // Typings
 import { StorePrivate } from "typings/gqlTypes";
 // Material UI
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // Components
 import Banner from "components/Banner";
 

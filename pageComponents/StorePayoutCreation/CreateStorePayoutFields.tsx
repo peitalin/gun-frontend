@@ -1,10 +1,13 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "./styles";
 import clsx from "clsx";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInput from "components/Fields/TextInput";
 // Typings
 import { HtmlEvent } from "typings";

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextPage, NextPageContext } from 'next';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import ServerStyleSheets from '@mui/styles/ServerStyleSheets';
 import { Colors } from 'layout/AppTheme';
 
 

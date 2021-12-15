@@ -1,7 +1,10 @@
 
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
@@ -21,8 +24,8 @@ import PromotionCardsLoading from "pageComponents/PromoteListings/PromotionCards
 import Hidden from 'components/HiddenFix';
 
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
@@ -92,32 +95,30 @@ const PromotionCards = (props: ReactProps) => {
     )
   }
 
-  return (
-    <>
-      <Hidden smDown implementation="css">
-        <PromotionCardsDesktop
-          title={props.title}
-          connection={connection}
-          cardsPerRow={cardsPerRow}
-          onClick={openPromotedSlotPurchaseModal}
-          setCurrentPromotedSlot={props.setCurrentPromotedSlot}
-          setPosition={props.setPosition}
-          user={user}
-        />
-      </Hidden>
-      <Hidden mdUp implementation="css">
-        <PromotionCardsMobileCarousel
-          title={props.title}
-          connection={connection}
-          cardsPerRow={cardsPerRow}
-          onClick={openPromotedSlotPurchaseModal}
-          setCurrentPromotedSlot={props.setCurrentPromotedSlot}
-          setPosition={props.setPosition}
-          user={user}
-        />
-      </Hidden>
-    </>
-  )
+  return <>
+    <Hidden mdDown implementation="css">
+      <PromotionCardsDesktop
+        title={props.title}
+        connection={connection}
+        cardsPerRow={cardsPerRow}
+        onClick={openPromotedSlotPurchaseModal}
+        setCurrentPromotedSlot={props.setCurrentPromotedSlot}
+        setPosition={props.setPosition}
+        user={user}
+      />
+    </Hidden>
+    <Hidden mdUp implementation="css">
+      <PromotionCardsMobileCarousel
+        title={props.title}
+        connection={connection}
+        cardsPerRow={cardsPerRow}
+        onClick={openPromotedSlotPurchaseModal}
+        setCurrentPromotedSlot={props.setCurrentPromotedSlot}
+        setPosition={props.setPosition}
+        user={user}
+      />
+    </Hidden>
+  </>;
 }
 
 

@@ -1,15 +1,18 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 import { MainBarHeight, CategoryBarHeight } from "layout/NavBarMain/styles";
 import { DashboardBarHeight } from "pageComponents/Gov/GovDashboardMobileMenu/styles";
 
 // MUI
-import MenuIcon from "@material-ui/icons/Menu";
-import ClearIcon from "@material-ui/icons/Clear";
-import Button from "@material-ui/core/Button";
+import MenuIcon from "@mui/icons-material/Menu";
+import ClearIcon from "@mui/icons-material/Clear";
+import Button from "@mui/material/Button";
 import Divider from "components/Divider";
 // Components
 import MobileMenuUserProfile from "./MobileMenuUserProfile";
@@ -128,11 +131,11 @@ const styles = (theme: Theme) => createStyles({
     left: '0.25rem',
     width: 'calc(100vw - 1rem)',
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       // ? Colors.uniswapBlack
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyBlack}`,
     // transform: "translateX(-100%)",

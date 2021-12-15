@@ -3,14 +3,17 @@ import clsx from "clsx";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Typings
 import {
   UserPrivate,

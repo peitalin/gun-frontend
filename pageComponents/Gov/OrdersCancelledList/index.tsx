@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
@@ -16,16 +19,16 @@ import {
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from "@mui/material/MenuItem";
 import DownloadIcon from "components/Icons/DownloadIcon";
 import LoadingBar from "components/LoadingBar";
 import CancelledOrderRow from "./CancelledOrderRow";
 import ButtonLoading from "components/ButtonLoading";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media query
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // Graphql
 import { useQuery, useLazyQuery } from "@apollo/client";
 // snackbar
@@ -57,8 +60,8 @@ const OrdersCancelledList = (props: ReactProps) => {
   // const aClient = useApolloClient();
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
+  const xsDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [mouseOver, setMouseOver] = React.useState(false)
   const [loading2, setLoading2] = React.useState(false)
@@ -286,7 +289,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
   },
   flexRowTitle: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
@@ -298,7 +301,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
@@ -349,13 +352,13 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   paper: {
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: theme.palette.mode === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
     paddingBottom: '0.25rem',
@@ -370,7 +373,7 @@ const styles = (theme: Theme) => createStyles({
   noCancelledOrdersBox: {
     borderRadius: '0px',
     border: '0px solid #eaeaea',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
     padding: '2rem',

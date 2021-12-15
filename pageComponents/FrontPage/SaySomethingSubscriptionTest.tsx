@@ -1,13 +1,16 @@
 
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Graphql
 import { useSubscription, useMutation } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import TextField from "components/Fields/TextInput";
 
 import {

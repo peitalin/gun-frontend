@@ -5,22 +5,25 @@ import {
   SavedSearchHitsConnection,
 } from "typings/gqlTypes";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, isThemeDark, BorderRadius, BoxShadows } from "layout/AppTheme";
 // MUI
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from "@material-ui/icons/Menu";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 // Icons
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import SettingsIcon from '@material-ui/icons/Settings';
-import IconButton from '@material-ui/core/IconButton';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import SettingsIcon from '@mui/icons-material/Settings';
+import IconButton from '@mui/material/IconButton';
 import ProductPreviewThumb from "components/ProductPreviewThumb";
 import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 
-import Badge from '@material-ui/core/Badge';
+import Badge from '@mui/material/Badge';
 
 import {
   GET_SAVED_SEARCH_HITS_BY_USER
@@ -32,7 +35,7 @@ import { printRelativeTime } from "utils/dates";
 
 // Router
 import Link from "next/link";
-import Hidden from "@material-ui/core/Hidden";
+import Hidden from "@mui/material/Hidden";
 import { useLazyQuery } from "@apollo/client"
 import LoadingBar from "components/LoadingBar";
 import MarkHitAsSeenButton from "pageComponents/SavedSearches/MarkHitAsSeenButton"
@@ -109,140 +112,162 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
 
 
 
-  return (
-    <>
-      <Hidden smDown implementation="css">
-        <Button
-          className={props.className}
-          classes={{
-            label: classes.navbarButtonLabel
-          }}
-          onClick={handleClickMenu}
-          aria-controls="notifications-menu"
-          aria-haspopup="true"
-        >
-          <NotificationsIcon style={{ fill: color }}/>
-          <Badge
-            badgeContent={numHits}
-            className={classes.badge}
-            classes={{
-              root: classes.badgeRoot
-            }}
-            color="secondary"
-          >
-          </Badge>
-        </Button>
-      </Hidden>
-      <Hidden mdUp implementation="css">
-        <Button
-          className={props.className}
-          onClick={handleClickMenu}
-          aria-controls="user-menu"
-          aria-haspopup="true"
-        >
-          <MenuIcon/>
-        </Button>
-      </Hidden>
-
-      <Menu
+  return <>
+    <Hidden mdDown implementation="css">
+      <Button
+        className={props.className}
         classes={{
-          paper: classes.menu,
+          label: classes.navbarButtonLabel
         }}
-        style={{
-          zIndex: 5005, // to be above modals
-        }}
-        id="user-menu"
-        anchorEl={anchorEl}
-        // anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-        // anchorPosition={{ top: 80, left: 1200 }}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
+        onClick={handleClickMenu}
+        aria-controls="notifications-menu"
+        aria-haspopup="true"
       >
+        <NotificationsIcon style={{ fill: color }}/>
+        <Badge
+          badgeContent={numHits}
+          className={classes.badge}
+          classes={{
+            root: classes.badgeRoot
+          }}
+          color="secondary"
+        >
+        </Badge>
+      </Button>
+    </Hidden>
+    <Hidden mdUp implementation="css">
+      <Button
+        className={props.className}
+        onClick={handleClickMenu}
+        aria-controls="user-menu"
+        aria-haspopup="true"
+      >
+        <MenuIcon/>
+      </Button>
+    </Hidden>
 
-        <div className={classes.innerContainer}>
+    <Menu
+      classes={{
+        paper: classes.menu,
+      }}
+      style={{
+        zIndex: 5005, // to be above modals
+      }}
+      id="user-menu"
+      anchorEl={anchorEl}
+      // anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+      // anchorPosition={{ top: 80, left: 1200 }}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleCloseMenu}
+    >
 
-          {
-            loading &&
-            <LoadingBar
-              height={"4px"}
-              width={"100%"}
-            />
-          }
+      <div className={classes.innerContainer}>
 
-          <div className={classes.titleBox}>
-            <div className={classes.title}>
-              Saved Search Notifications
-            </div>
-            <Link href={"/saved-searches"}>
-              <a>
-                <IconButton
-                  className={classes.settingsIcon}
-                  // onClick={props.closeModal}
-                  size={"medium"}
-                >
-                  <SettingsIcon
-                    style={{ fill: color }}
-                    className={classes.settingsIcon}
-                  />
-                </IconButton>
-              </a>
-            </Link>
+        {
+          loading &&
+          <LoadingBar
+            height={"4px"}
+            width={"100%"}
+          />
+        }
+
+        <div className={classes.titleBox}>
+          <div className={classes.title}>
+            Saved Search Notifications
           </div>
+          <Link href={"/saved-searches"}>
+            <a>
+              <IconButton
+                className={classes.settingsIcon}
+                // onClick={props.closeModal}
+                size={"medium"}
+              >
+                <SettingsIcon
+                  style={{ fill: color }}
+                  className={classes.settingsIcon}
+                />
+              </IconButton>
+            </a>
+          </Link>
+        </div>
 
-          {
-            (savedSearchHitsEdges ?? [])
-            .filter(edge => edge?.node?.id)
-            .map(( edge, i ) => {
+        {
+          (savedSearchHitsEdges ?? [])
+          .filter(edge => edge?.node?.id)
+          .map(( edge, i ) => {
 
-              let hit = edge?.node
-              let externalLink = hit?.externalProduct?.sourceSiteUrl
-              let productId = hit?.product?.id
+            let hit = edge?.node
+            let externalLink = hit?.externalProduct?.sourceSiteUrl
+            let productId = hit?.product?.id
 
-              let make = hit?.product?.currentSnapshot?.make
-                ?? hit?.externalProduct?.currentExternalProductSnapshot?.make
-              let model = hit?.product?.currentSnapshot?.model
-                ?? hit?.externalProduct?.currentExternalProductSnapshot?.model
-              let caliber = hit?.product?.currentSnapshot?.caliber
-                ?? hit?.externalProduct?.currentExternalProductSnapshot?.caliber
+            let make = hit?.product?.currentSnapshot?.make
+              ?? hit?.externalProduct?.currentExternalProductSnapshot?.make
+            let model = hit?.product?.currentSnapshot?.model
+              ?? hit?.externalProduct?.currentExternalProductSnapshot?.model
+            let caliber = hit?.product?.currentSnapshot?.caliber
+              ?? hit?.externalProduct?.currentExternalProductSnapshot?.caliber
 
-              let createdAt = hit?.product?.currentSnapshot?.createdAt
-                ?? hit?.externalProduct?.currentExternalProductSnapshot?.createdAt
+            let createdAt = hit?.product?.currentSnapshot?.createdAt
+              ?? hit?.externalProduct?.currentExternalProductSnapshot?.createdAt
 
-              let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
-                ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
+            let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
+              ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
 
-              let categoryId = hit?.product?.categoryId
-                ?? hit?.externalProduct?.categoryId
+            let categoryId = hit?.product?.categoryId
+              ?? hit?.externalProduct?.categoryId
 
-              // console.log('hit: ', hit?.seen)
+            // console.log('hit: ', hit?.seen)
 
-              return (
-                <div className={classes.menuItemOuter} key={hit?.id ?? i}>
-                  <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-                    {
-                      externalLink
-                      ? <a className={classes.menuLink}
-                          href={externalLink}
-                          target={"_blank"}
-                        >
-                          {
-                            featuredPreviewItem
-                            ? <ProductPreviewThumb
-                                previewItem={featuredPreviewItem}
-                                  height={40}
-                                  width={60}
-                                  style={{
-                                    minWidth: 60,
-                                    minHeight: 40,
-                                  }}
-                              />
-                            : <ProductPreviewThumbCategory
-                                categoryId={categoryId}
-                                width={60}
+            return (
+              <div className={classes.menuItemOuter} key={hit?.id ?? i}>
+                <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+                  {
+                    externalLink
+                    ? <a className={classes.menuLink}
+                        href={externalLink}
+                        target={"_blank"}
+                      >
+                        {
+                          featuredPreviewItem
+                          ? <ProductPreviewThumb
+                              previewItem={featuredPreviewItem}
                                 height={40}
-                              />
-                          }
+                                width={60}
+                                style={{
+                                  minWidth: 60,
+                                  minHeight: 40,
+                                }}
+                            />
+                          : <ProductPreviewThumbCategory
+                              categoryId={categoryId}
+                              width={60}
+                              height={40}
+                            />
+                        }
+                        <div className={classes.textBox}>
+                          <span className={classes.menuText1}>
+                            {`${make}`}
+                          </span>
+                          <span className={classes.menuText2}>
+                            {`${model} ${caliber}`}
+                          </span>
+                          <span className={classes.menuText4}>
+                            {`${printRelativeTime(createdAt)}`}
+                          </span>
+                        </div>
+                      </a>
+                    : <Link href={"/p/[productId]"} as={`/p/${productId}`}>
+                        <a className={classes.menuLink} target={"_blank"}>
+                          <ProductPreviewThumb
+                            previewItem={featuredPreviewItem}
+                            height={40}
+                            width={60}
+                            style={{
+                              minWidth: 60,
+                              minHeight: 40,
+                            }}
+                          />
                           <div className={classes.textBox}>
                             <span className={classes.menuText1}>
                               {`${make}`}
@@ -255,60 +280,36 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                             </span>
                           </div>
                         </a>
-                      : <Link href={"/p/[productId]"} as={`/p/${productId}`}>
-                          <a className={classes.menuLink} target={"_blank"}>
-                            <ProductPreviewThumb
-                              previewItem={featuredPreviewItem}
-                              height={40}
-                              width={60}
-                              style={{
-                                minWidth: 60,
-                                minHeight: 40,
-                              }}
-                            />
-                            <div className={classes.textBox}>
-                              <span className={classes.menuText1}>
-                                {`${make}`}
-                              </span>
-                              <span className={classes.menuText2}>
-                                {`${model} ${caliber}`}
-                              </span>
-                              <span className={classes.menuText4}>
-                                {`${printRelativeTime(createdAt)}`}
-                              </span>
-                            </div>
-                          </a>
-                        </Link>
-                    }
-                  </MenuItem>
+                      </Link>
+                  }
+                </MenuItem>
 
-                  <MarkHitAsSeenButton
-                    searchHitId={hit.id}
-                    isSeen={hit.seen}
-                    toolTip={false}
-                    // needed to update query cache connections
-                    limit={NOTIFICATIONS_LIMIT}
-                    offset={NOTIFICATIONS_OFFSET}
-                    unseenOnly={unseenOnly}
-                  />
-                </div>
-              )
-            })
-          }
+                <MarkHitAsSeenButton
+                  searchHitId={hit.id}
+                  isSeen={hit.seen}
+                  toolTip={false}
+                  // needed to update query cache connections
+                  limit={NOTIFICATIONS_LIMIT}
+                  offset={NOTIFICATIONS_OFFSET}
+                  unseenOnly={unseenOnly}
+                />
+              </div>
+            )
+          })
+        }
 
-          <MenuItem className={classes.menuItem2} onClick={handleCloseMenu}>
-            <Link href="/saved-searches">
-              <a className={classes.menuLink}>
-                <span className={classes.menuText3}> See More </span>
-              </a>
-            </Link>
-          </MenuItem>
+        <MenuItem className={classes.menuItem2} onClick={handleCloseMenu}>
+          <Link href="/saved-searches">
+            <a className={classes.menuLink}>
+              <span className={classes.menuText3}> See More </span>
+            </a>
+          </Link>
+        </MenuItem>
 
-        </div>
+      </div>
 
-      </Menu>
-    </>
-  )
+    </Menu>
+  </>;
 }
 
 

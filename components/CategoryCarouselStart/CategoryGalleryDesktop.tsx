@@ -1,16 +1,19 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Components
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Router
 import Link from "next/link";
 // typings
 import { Categories } from "typings/gqlTypes";
 // theme css
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 import { renderCategoryIcon } from "./renderCategoryIcons";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 
@@ -112,7 +115,7 @@ export const styles = (theme: Theme) => createStyles({
   linkImage: {
     position: "relative",
     "& > p": {
-      color: theme.palette.type === 'dark'
+      color: theme.palette.mode === 'dark'
         ? Colors.uniswapLightestGrey
         : Colors.black,
       transition: theme.transitions.create('color', {
@@ -142,11 +145,11 @@ export const styles = (theme: Theme) => createStyles({
     // border: isThemeDark(theme)
     //   ? `1px solid ${Colors.uniswapLightNavy}`
     //   : `1px solid ${Colors.slateGreyDark}`,
-    // background: theme.palette.type === 'dark'
+    // background: theme.palette.mode === 'dark'
     //   ? Colors.uniswapDarkNavy
     //   : Colors.slateGreyDark,
     // "&:hover": {
-    //   background: theme.palette.type === 'dark'
+    //   background: theme.palette.mode === 'dark'
     //     ? Colors.uniswapMediumNavy
     //     : Colors.slateGreyDarker,
     // },

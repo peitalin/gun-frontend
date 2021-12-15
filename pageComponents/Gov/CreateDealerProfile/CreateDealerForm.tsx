@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from './styles';
 // Graphql
 import { useMutation } from "@apollo/client";
@@ -21,18 +21,18 @@ import CreateDealerFields from "./CreateDealerFields";
 // Snackbar
 import { useSnackbar } from "notistack";
 // Material UI
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from "@material-ui/core/Typography";
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from "@mui/material/Typography";
 import ButtonLoading from "components/ButtonLoading";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
 // Icons
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 
@@ -155,7 +155,7 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
       <div className={mdUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
 
         <div className={classes.backButton}>
-          <IconButton onClick={() => setMenuOpen(s => !s)}>
+          <IconButton onClick={() => setMenuOpen(s => !s)} size="large">
             <CloseIcon/>
           </IconButton>
         </div>
@@ -195,7 +195,7 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
 
       </div>
     </div>
-  )
+  );
 }
 
 

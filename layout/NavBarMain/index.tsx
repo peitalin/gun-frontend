@@ -4,7 +4,7 @@ import React from "react";
 import CategoryBarMobile from "./CategoryBar/CategoryBarMobile";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 // Redux
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { useDispatch, useSelector } from "react-redux";
@@ -20,8 +20,8 @@ import {
   isStartPageFn,
   isDashboardPageFn,
 } from "./MainBar";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 const NavBar: React.FC<ReactProps> = (props) => {
@@ -45,7 +45,7 @@ const NavBar: React.FC<ReactProps> = (props) => {
   let _isDashboardPage = isDashboardPageFn(router)
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
     <>

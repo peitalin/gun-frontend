@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Redux
 import { connect } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from "components/ErrorBounds";
@@ -317,7 +320,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     color: Colors.blue,
     "&:hover": {
-      color: fade(Colors.blue, 0.9),
+      color: alpha(Colors.blue, 0.9),
     },
   },
   email: {

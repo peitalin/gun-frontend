@@ -1,9 +1,12 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 // utils
 import { Order } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";

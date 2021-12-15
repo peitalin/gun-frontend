@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Typings
 import { Product } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Divider from "components/Divider";
 // Components
 import { Colors } from "layout/AppTheme";
@@ -24,7 +27,7 @@ const YouMayAlsoLike = dynamic(
     ssr: false,
   }
 );
-import Hidden from "@material-ui/core/Hidden";
+import Hidden from "@mui/material/Hidden";
 
 
 
@@ -77,7 +80,7 @@ const SuspendedPage = (props: ReactProps) => {
       <Hidden mdUp>
         <YouMayAlsoLikeMobile/>
       </Hidden>
-      <Hidden smDown>
+      <Hidden mdDown>
         <YouMayAlsoLike
           // initialProducts={initialProductsLimitedRelease}
           title={"You may also like"}
@@ -139,7 +142,7 @@ const styles = (theme: Theme) => createStyles({
     border: '0px solid #222',
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: alpha(Colors.red, 0.9),
       border: '0px solid #222',
       color: Colors.cream,
       transition: theme.transitions.create('backgroundColor', {

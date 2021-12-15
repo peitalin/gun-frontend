@@ -3,12 +3,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Styles
-import { withStyles, WithStyles, alpha } from "@material-ui/core/styles";
+import { alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from './styles';
 import { Colors, isThemeDark } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";

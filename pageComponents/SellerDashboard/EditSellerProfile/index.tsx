@@ -2,20 +2,23 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Typings
 import { StorePrivate, UserPrivate } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import EditStoreForm from "./EditStoreForm";
 import ResponsivePadding from "../ResponsivePadding";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // Redux
 import { connect, useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -31,7 +34,7 @@ const EditSellerProfile = (props: ReactProps) => {
   } = props;
   // CSS
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
   const md = useMediaQuery(theme.breakpoints.only('md'))
   const lg = useMediaQuery(theme.breakpoints.only('lg'))
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'))
@@ -168,10 +171,10 @@ const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
     height: 40,
     position: "relative",
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.black}`,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? `${Colors.uniswapLightNavy}`
       : `${Colors.black}`,
     borderRadius: BorderRadius,

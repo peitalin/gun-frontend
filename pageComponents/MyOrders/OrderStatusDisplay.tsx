@@ -2,18 +2,21 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Typings
 import { Order, OrderStatus } from "typings/gqlTypes";
 // Material UI
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { useApolloClient } from "@apollo/client";
 
 
@@ -26,7 +29,7 @@ const OrderStatusDisplay: React.FC<ReactProps> = (props) => {
   const { classes, order } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
 
   return (

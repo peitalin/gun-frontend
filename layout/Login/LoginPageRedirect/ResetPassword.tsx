@@ -1,16 +1,17 @@
 import React from 'react';
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Colors } from "layout/AppTheme";
 
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from '@mui/material/FormControl';
 import TextInput from "components/Fields/TextInput";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 // Components
 import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 // Clear
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import ButtonLoading from "components/ButtonLoading";
 
 

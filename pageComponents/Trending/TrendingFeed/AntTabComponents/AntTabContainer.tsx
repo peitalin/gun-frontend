@@ -1,10 +1,13 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark, BorderRadius } from "layout/AppTheme";
 
-import Tabs from '@material-ui/core/Tabs';
+import Tabs from '@mui/material/Tabs';
 
 
 

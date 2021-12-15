@@ -2,7 +2,10 @@
 import React from 'react';
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BorderRadius3x, Gradients, isThemeDark } from "layout/AppTheme";
 // Stripe
 import {
@@ -49,7 +52,7 @@ import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { useMutation } from '@apollo/client';
 // Snackbar
 import { useSnackbar } from "notistack";
-import { useTheme } from "@material-ui/core";
+import { useTheme } from "@mui/material";
 
 import {
   AUTHORIZE_PAYMENT,
@@ -865,7 +868,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     cursor: 'pointer',
     "&:hover": {
-      color: fade(Colors.blue, 0.9),
+      color: alpha(Colors.blue, 0.9),
     },
   },
   bidButtonContainer: {

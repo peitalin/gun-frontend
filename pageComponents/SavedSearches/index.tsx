@@ -2,10 +2,13 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   Colors,
   BoxShadows,
@@ -22,7 +25,7 @@ import { Categories, Calibers } from "typings/gqlTypes";
 import { useMutation, useQuery } from '@apollo/client';
 // components
 import ButtonLoading from "components/ButtonLoading";
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 import ManageSaveSearchPage from './ManageSaveSearchPage';
 import ExistingSavedSearches from "./ExistingSavedSearches";
 import SearchHits from "./SearchHits";
@@ -47,7 +50,7 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'));
 
   let dealerStates =  dealerStatesDropdownItems;
 

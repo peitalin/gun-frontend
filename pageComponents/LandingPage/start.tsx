@@ -1,11 +1,14 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
 import { commonStyles } from "./commonStyles";
 // styles
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
@@ -30,7 +33,7 @@ const LandingPageStart: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  let isDarkMode = theme.palette.type === 'dark'
+  let isDarkMode = theme.palette.mode === 'dark'
 
   return (
     <div className={classes.landingPageRoot}>

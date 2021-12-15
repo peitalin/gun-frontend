@@ -1,14 +1,17 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x, Colors, BorderRadius } from "layout/AppTheme";
 // Components
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
 // theme css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { CategoryPreviewCard } from ".";
 
 
@@ -111,7 +114,7 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 700,
     fontSize: '1rem',
     textAlign: 'start',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
   },

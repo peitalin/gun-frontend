@@ -1,5 +1,6 @@
 import React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { ReduxStateLogin } from 'reduxStore/login-reducer';
 import clsx from "clsx";
 

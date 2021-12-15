@@ -1,7 +1,10 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, Gradients } from "layout/AppTheme";
 // Typings
 import { PromotedList, Categories, PageConfig } from "typings/gqlTypes";

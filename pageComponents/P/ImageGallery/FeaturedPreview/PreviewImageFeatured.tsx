@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
@@ -10,11 +13,11 @@ import { genSrcSet, genImgBreakpoints } from "utils/images";
 import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { lgUpMediaQuery } from "../../common";
 
 
@@ -30,7 +33,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
   const image = previewItem?.image;
 
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+  const lgDown = useMediaQuery(theme.breakpoints.down('xl'));
   const lgUp = useMediaQuery(lgUpMediaQuery);
 
 
@@ -199,7 +202,7 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
   },
@@ -207,7 +210,7 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
   },
@@ -215,7 +218,7 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
   },
@@ -223,7 +226,7 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
   },
@@ -233,7 +236,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     height: '100%',
     width: '100%',
-    // backgroundColor: theme.palette.type === 'dark'
+    // backgroundColor: theme.palette.mode === 'dark'
     //   ? Colors.uniswapDarkGrey
     //   : Colors.slateGreyDark,
   },

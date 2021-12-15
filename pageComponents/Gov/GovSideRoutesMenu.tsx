@@ -1,7 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius, BorderRadius3x } from "layout/AppTheme";
 // Router
 import Link from "next/link";
@@ -12,7 +15,7 @@ import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 // Utils
 import { UserPrivate } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 
 
@@ -286,7 +289,7 @@ const styles = (theme: Theme) => createStyles({
   },
   subtitle: {
     fontSize: "1rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarkest,
   },
@@ -314,14 +317,14 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
-    // background: theme.palette.type === 'dark'
+    // background: theme.palette.mode === 'dark'
     //   ? Colors.uniswapDarkNavy
     //   : 'transparent',
     background: "transparent",
     border: '2px solid rgba(0,0,0,0)',
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? fade(Colors.lightGrey, 0.1)
+      background: theme.palette.mode === 'dark'
+        ? alpha(Colors.lightGrey, 0.1)
         : Colors.cream,
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
@@ -335,15 +338,15 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `2px solid ${Colors.uniswapMediumGrey}`
       : `2px solid ${Colors.slateGreyLightBlack}`,
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? fade(Colors.lightGrey, 0.1)
+      background: theme.palette.mode === 'dark'
+        ? alpha(Colors.lightGrey, 0.1)
         : Colors.cream,
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
@@ -357,10 +360,10 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 400,
     marginTop: "1rem",
     marginBottom: "1rem",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyLightestBlack,
-    // color: theme.palette.type === 'dark'
+    // color: theme.palette.mode === 'dark'
     //   ? Colors.uniswapLighterGrey
     //   : Colors.slateGreyDarker,
   },

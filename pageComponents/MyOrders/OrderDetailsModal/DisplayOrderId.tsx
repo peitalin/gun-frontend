@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import { Order } from "typings/gqlTypes";
 import Link from "next/link";
@@ -106,7 +109,7 @@ const styles = (theme: Theme) => createStyles({
   },
   storeName: {
     fontWeight: 500,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? theme.colors.uniswapLighterGrey
       : theme.colors.uniswapDarkNavy,
     marginBottom: "0.25rem",

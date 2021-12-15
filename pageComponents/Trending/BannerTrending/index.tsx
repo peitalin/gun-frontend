@@ -1,6 +1,9 @@
 import React from "react";
 // styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // typings
@@ -8,8 +11,8 @@ import Hidden from 'components/HiddenFix';
 import BannerTrendingLinkDesktop from "./BannerTrendingDesktop";
 import BannerTrendingLinkMobile from "./BannerTrendingMobile";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 

@@ -45,23 +45,23 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     return (
       <Hidden
         className={props.className}
-        lgDown
+        xlDown
         implementation={props.implementation ?? "css"}
       >
         {props.children}
       </Hidden>
-    )
+    );
   } else {
     // is nothing supplied default to desktop
     return (
       <Hidden
         className={props.className}
-        lgDown
+        xlDown
         implementation={props.implementation ?? "css"}
       >
         {props.children}
       </Hidden>
-    )
+    );
   }
 }
 

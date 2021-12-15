@@ -1,5 +1,8 @@
 import React from "react";
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius2x } from "layout/AppTheme";
 // Redux
 import { connect, useSelector, useDispatch } from "react-redux"
@@ -28,7 +31,7 @@ import {
 } from "./utils";
 import { useRouter } from "next/router";
 // make snackbars appear above modal dither
-import Portal from '@material-ui/core/Portal';
+import Portal from '@mui/material/Portal';
 import {
   validateEmail,
   translateErrorMsg,

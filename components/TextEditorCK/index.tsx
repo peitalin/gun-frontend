@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect, useRef } from 'react'
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 
 import { FormikProps, FormikErrors, FormikTouched, FormikState } from 'formik';
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";

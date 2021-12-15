@@ -1,10 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 
 const Row = ({ fieldName, fieldValue, styleValue, styleName, classes }: ReactProps) => (
@@ -42,26 +45,26 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     height: 50,
     marginBottom: '0.25rem',
-    background: theme.palette.type === 'dark'
+    background: theme.palette.mode === 'dark'
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? fade(Colors.lightBlue, 0.3)
-        : fade(Colors.lightBlue, 0.3),
+      background: theme.palette.mode === 'dark'
+        ? alpha(Colors.lightBlue, 0.3)
+        : alpha(Colors.lightBlue, 0.3),
     },
     borderRadius: `${BorderRadius}px`,
   },
   orderHeader: {
     lineHeight: '1.25rem',
     textAlign: "end",
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
   orderText: {
     lineHeight: '1.25rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
@@ -71,7 +74,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexGrow: 1,
     padding: '0.5rem',
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },

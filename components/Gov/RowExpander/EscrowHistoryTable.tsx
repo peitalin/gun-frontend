@@ -1,7 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { formatDateTime } from "utils/dates";
 // graphql
 
@@ -71,7 +74,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   escrowHistoryTableRoot: {
-    borderBottom: theme.palette.type === 'dark'
+    borderBottom: theme.palette.mode === 'dark'
       ? `2px solid ${Colors.uniswapLightNavy}`
       : `2px solid ${Colors.slateGreyDarkest}`,
   },
@@ -137,7 +140,7 @@ const styles = (theme: Theme) => createStyles({
   },
   backOdd: {
     backgroundColor: Colors.slateGreyDark,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.charcoal
       : Colors.charcoal,
     "&:hover": {
@@ -147,7 +150,7 @@ const styles = (theme: Theme) => createStyles({
   },
   backEven: {
     backgroundColor: Colors.slateGrey,
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.charcoal
       : Colors.charcoal,
     "&:hover": {

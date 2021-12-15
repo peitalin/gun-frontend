@@ -2,11 +2,14 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors } from "layout/AppTheme";
 // Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 
 
 const IconButtonCancel: React.FC<ReactProps> = (props) => {
@@ -30,14 +33,14 @@ const IconButtonCancel: React.FC<ReactProps> = (props) => {
           ? classes.iconButtonRootDark
           : classes.iconButtonRoot
       }}
-    >
+      size="large">
       <ClearIcon classes={{
         root: dark
           ? clsx(classes.iconButtonSvgDark, props.iconClassName)
           : clsx(classes.iconButtonSvg, props.iconClassName)
       }}/>
     </IconButton>
-  )
+  );
 }
 
 

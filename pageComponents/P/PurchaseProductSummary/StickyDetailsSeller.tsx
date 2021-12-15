@@ -4,18 +4,21 @@ import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout
 // Router
 import Link from "next/link";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { commonBorderStyle } from "../common";
 // Typings
 import { Product, UserPublic, ListingType, ProductClassifiedAd } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
+import Typography from "@mui/material/Typography";
+import Avatar from '@mui/material/Avatar';
 // Copy
 import copy from "clipboard-copy";
 // Snackbar
 import { useSnackbar } from "notistack";
-import ArrowDownwardIcon from '@material-ui/icons/Forward';
+import ArrowDownwardIcon from '@mui/icons-material/Forward';
 import Tick from "components/Icons/Tick"
 import { showDate } from "utils/dates";
 import { GrandReduxState } from "reduxStore/grand-reducer";

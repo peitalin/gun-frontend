@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
@@ -161,7 +164,7 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
         />
       </div>
     </ErrorBounds>
-  )
+  );
 }
 
 interface ReactProps extends WithStyles<typeof styles> {

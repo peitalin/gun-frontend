@@ -2,12 +2,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // MUI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // CSS
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from '@mui/material/styles';
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 
@@ -17,7 +20,7 @@ const ToolTips = (props: ReactProps) => {
   const { classes } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const smDown = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <div className={clsx(

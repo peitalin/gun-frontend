@@ -1,9 +1,12 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";
 // Material UI
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -11,8 +14,8 @@ import { Actions } from "reduxStore/actions";
 // Components
 import MySettingsPage from "./MySettingsPage";
 /// CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 

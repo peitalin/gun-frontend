@@ -2,10 +2,13 @@ import React from "react";
 import clsx from "clsx";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // money
 import currency from "currency.js";
 import { convertSoldOutStatus } from "utils/strings";

@@ -1,11 +1,14 @@
 import React from "react";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import LoadingBar from "components/LoadingBar";
 // Media uploader
 import { IInputProps } from "components/DropzoneUploader/Dropzone";
 
-import { createStyles, Theme, WithStyles, withStyles, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { BorderRadius, Colors } from "layout/AppTheme";
 
 

@@ -2,13 +2,16 @@ import React from "react";
 import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { Theme, alpha } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { commonBorderStyle } from "../common";
 // Typings
 import { Dealers } from "typings/gqlTypes";
 // Material UI
-import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
+import Typography from "@mui/material/Typography";
+import Avatar from '@mui/material/Avatar';
 // Copy
 import copy from "clipboard-copy";
 // Snackbar

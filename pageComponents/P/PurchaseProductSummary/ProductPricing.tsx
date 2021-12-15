@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import { Product, Product_Variants, Bids } from "typings/gqlTypes";
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import { initialProductCreateState } from "reduxStore/product_create-reducer";
 
 

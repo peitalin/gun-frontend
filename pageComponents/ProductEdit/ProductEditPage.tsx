@@ -26,11 +26,11 @@ import {
   DzuPreviewOrder,
   DzuPreviewItem
 } from "typings/dropzone";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from "./commonStyles";
 // MUI
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // Errors
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
@@ -38,7 +38,7 @@ import ButtonLoading from "components/ButtonLoading";
 import ProductEditFormLayout from "./ProductEditFormLayout";
 import Title from "pageComponents/ProductCreate/TitleSerialNumber";
 import BackTo from "components/BackTo";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Subcomponents
 import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
 import MakeModel from "pageComponents/ProductCreate/MakeModel";
@@ -83,7 +83,7 @@ const SelectDealer = dynamic(() => import("pageComponents/ProductCreate/SelectDe
 // same dir components
 import SectionBorder from "pageComponents/ProductCreate/ProductCreatePage/SectionBorder";
 // Product Preview Page
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 
 // SSR Subcomponents
 import dynamic from 'next/dynamic'
@@ -103,8 +103,8 @@ import { EDIT_PRODUCT } from "queries/products-mutations";
 import { useRouter } from "next/router";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   reduxToFormikCurrentVariants
 } from "pageComponents/ProductCreate/ProductCreatePage/utils";

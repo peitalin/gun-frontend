@@ -4,8 +4,8 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { styles } from './styles';
 import { Colors } from "layout/AppTheme";
 // Graphql
@@ -18,21 +18,21 @@ import CreateStoreFields from "./CreateStorePayoutFields";
 // Snackbar
 import { useSnackbar } from "notistack";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import ButtonLoading from "components/ButtonLoading";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
 // Icons
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 import Login from "layout/Login";
 // Graphql Queries
 import { SET_PAYOUT_METHOD } from "queries/user-mutations";
 import { useRouter } from "next/router";
 // media query
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // store deleted
 
 
@@ -229,7 +229,7 @@ const CreateStorePayoutFormWrapper: React.FC<FormWrapperProps> = (props) => {
               onClick={() =>
                 dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
               }
-            >
+              size="large">
               <ClearIcon/>
             </IconButton>
           }
@@ -266,7 +266,7 @@ const CreateStorePayoutFormWrapper: React.FC<FormWrapperProps> = (props) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 interface FormWrapperProps extends WithStyles<typeof styles> {

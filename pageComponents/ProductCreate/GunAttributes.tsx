@@ -1,10 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { styles } from "./commonStyles";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import TextInputAdorned from "components/Fields/TextInputAdorned";
 import TextInput from "components/Fields/TextInput";
 // Components
@@ -15,8 +18,8 @@ import {
   maxLengthTitle,
 } from "utils/limitsAndRules";
 import RefLink, { refLinks } from "./RefLink";
-import Switch from '@material-ui/core/Switch';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import Switch from '@mui/material/Switch';
+import InputAdornment from '@mui/material/InputAdornment';
 import { formatCurrency, parseNumber} from "utils/currencyInput";
 import { number } from "yup";
 

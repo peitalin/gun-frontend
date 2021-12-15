@@ -1,10 +1,11 @@
 import React from "react";
-import { createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Dealers, DealerState } from "typings/gqlTypes";
-// Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
 // Util components

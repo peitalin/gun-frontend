@@ -1,19 +1,22 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Colors, BorderRadius2x, isThemeDark, BoxShadows } from "layout/AppTheme";
 import {
   NewsItem,
   UserPrivate,
 } from "typings/gqlTypes";
 // css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // MUI
 import NewsItemCardDetails from "./NewsItemCardDetails";
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 
 
 
@@ -26,7 +29,7 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const [previewLoaded, setPreviewLoaded] = React.useState(false)
 
@@ -45,7 +48,7 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
             props.isModal ? classes.closeButtonMobile : classes.closeButtonDesktop,
           )}
           onClick={props.closeModal}
-        >
+          size="large">
           <ClearIcon className={classes.clearIcon}/>
         </IconButton>
       }
@@ -114,7 +117,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    // border: theme.palette.type === 'dark'
+    // border: theme.palette.mode === 'dark'
     //   ? `1px solid ${Colors.uniswapLightNavy}`
     //   : `1px solid ${Colors.slateGreyDarker}`,
     // borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,

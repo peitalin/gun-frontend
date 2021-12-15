@@ -1,22 +1,26 @@
 import React from "react";
 import clsx from "clsx";
 // Material UI
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 // Media uploader
 import { IInputProps } from "components/DropzoneUploader/Dropzone";
 // icon
 import { Colors, BorderRadius } from "layout/AppTheme";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
 
-import Button from "@material-ui/core/Button";
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+
+import Button from "@mui/material/Button";
 import LoadingBar from "components/LoadingBar";
 import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 import { cardDimensionsDefault } from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 // Typings
 import { Order, OrderStatus } from "typings/gqlTypes";
-import Tooltip from '@material-ui/core/Tooltip';
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import Tooltip from '@mui/material/Tooltip';
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 
 
 
@@ -169,7 +173,7 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   uploadButtonDisabled: {
-    border: theme.palette.type === 'dark'
+    border: theme.palette.mode === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarkest}`,
   },
@@ -185,7 +189,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.8rem',
   },
   uploadButtonTextLimit: {
-    color: theme.palette.type === 'dark'
+    color: theme.palette.mode === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarkest,
     fontSize: '0.9rem',
