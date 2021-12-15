@@ -10,7 +10,7 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -428,8 +428,8 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     "&:hover": {
       backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.ultramarineBlueDark, 0.9),
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.ultramarineBlueDark, 0.9),
     }
   },
   dropdownContainer: {

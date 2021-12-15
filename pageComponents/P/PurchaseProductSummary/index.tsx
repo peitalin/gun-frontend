@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 import { commonBorderStyle } from "../common";
 // Typings
@@ -280,7 +280,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.red,
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: alpha(Colors.red, 0.9),
     },
   },
   visaContainer: {

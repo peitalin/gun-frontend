@@ -1,6 +1,6 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
@@ -247,7 +247,7 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
-    background: fade(Colors.slateGrey, 0.6),
+    background: alpha(Colors.slateGrey, 0.6),
     border: 'none',
     borderRadius: '4px',
     transition:  theme.transitions.create(['background', 'color'], {
@@ -264,10 +264,10 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   buttonSelected: {
-    background: fade(Colors.red, 0.9),
+    background: alpha(Colors.red, 0.9),
     color: Colors.cream,
     "&:hover": {
-      background: fade(Colors.red, 0.8),
+      background: alpha(Colors.red, 0.8),
       color: Colors.white,
       transition:  theme.transitions.create('background', {
         easing: theme.transitions.easing.easeIn,

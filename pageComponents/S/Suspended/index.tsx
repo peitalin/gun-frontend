@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 // Typings
 import { Product } from "typings/gqlTypes";
 // Utils
@@ -139,7 +139,7 @@ const styles = (theme: Theme) => createStyles({
     border: '0px solid #222',
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: alpha(Colors.red, 0.9),
       border: '0px solid #222',
       color: Colors.cream,
       transition: theme.transitions.create('backgroundColor', {

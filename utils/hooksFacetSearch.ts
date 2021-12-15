@@ -22,6 +22,7 @@ import {
 } from "components/GridPaginatorGeneric/GridPaginatorHelpers";
 import { NextRouter } from "next/router";
 import { SelectOptionCaliber } from "typings"
+import { defaultCalibersInsertInput } from "utils/calibers"
 
 
 
@@ -88,13 +89,27 @@ export const useFacetSearchOptions = ({
       }) as Categories
     : undefined
 
-  const initialCaliber = !!router?.query?.caliber
-    ? decodeURIComponent(router?.query?.caliber as string)
-    : ""
+  const initialCalibers: SelectOptionCaliber[] = !!router?.query?.calibers
+    ? ((router?.query?.calibers as string)?.split(',') ?? [])?.map(c => {
+        let caliberStr = decodeURIComponent(c)
+        let caliberMatch = defaultCalibersInsertInput.find(c => c.name === caliberStr)
+        if (caliberMatch) {
+          return {
+            label: caliberMatch.name,
+            synonyms: caliberMatch.synonyms,
+            value: caliberMatch.name,
+          } as SelectOptionCaliber
+        } else {
+          return undefined
+        }
+      }).filter(x => !!x)
+    : undefined
 
-  const initialState: DealerState = !!router?.query?.state
-    ? decodeURIComponent(router?.query?.state as DealerState)
-    : "" as any
+  const initialStates: DealerState[] = !!router?.query?.states
+    ? (router?.query?.states as string)?.split(',')?.map(
+        s => decodeURIComponent(s) as DealerState
+      )
+    : undefined
 
   /// Search Terms
   const [searchTerm, setSearchTerm] = React.useState(initialSearchTerm);
@@ -117,14 +132,14 @@ export const useFacetSearchOptions = ({
     dealerStates,
     setDealerStates
   ] = React.useState<DealerState[]>(
-    initialState ? [initialState] : undefined
+    initialStates ? initialStates : []
   )
 
   const [
     calibers,
     setCalibers
   ] = React.useState<SelectOptionCaliber[]>(
-    initialCaliber ? [] : []
+    initialCalibers ? initialCalibers : []
   )
 
   const [
@@ -174,23 +189,15 @@ export const useFacetSearchOptions = ({
     }
   }, [initialPageParam])
 
-  React.useEffect(() => {
-    if (initialCaliber) {
-      setCalibers([])
-    } else {
-      setCalibers([])
-      // default empty array for all calibers filter
-    }
-  }, [initialCaliber])
 
-  React.useEffect(() => {
-    if (initialState) {
-      setDealerStates([initialState])
-    } else {
-      setDealerStates([])
-      // default empty array for all states filter
-    }
-  }, [initialState])
+  // React.useEffect(() => {
+  //   if (initialStates) {
+  //     setDealerStates(initialStates)
+  //   } else {
+  //     setDealerStates([])
+  //     // default empty array for all states filter
+  //   }
+  // }, [initialState])
 
   ////////////////////////////////////////////////////
   /// query params syncing
@@ -308,6 +315,49 @@ export const useFacetSearchOptions = ({
         params = params.filter(param => !param.includes("category="))
       }
 
+      // Sync calibers
+      if (calibers?.length > 0) {
+        let encodedCalibers = calibers.map(c => encodeURI(c.value))
+        // console.log('encoded calibers: ', encodedCalibers)
+        if (!params.some(p => p.startsWith('calibers='))) {
+          // page query doesnt yet exist, add page param
+          params = [`calibers=${encodedCalibers.join(',')}`, ...params]
+        } else {
+          // page query exists, modify it
+          params = params.map(param => {
+            if (param.startsWith("calibers=")) {
+              return `calibers=${encodedCalibers.join(',')}`
+            } else {
+              return param
+            }
+          })
+        }
+      } else {
+        params = params.filter(param => !param.includes("calibers="))
+      }
+
+      console.log('dealer states: ', dealerStates)
+      // Sync dealer states
+      if (dealerStates?.length > 0) {
+        let encodedStates = dealerStates.map(s => encodeURI(s))
+        console.log('encoded states: ', encodedStates)
+        if (!params.some(p => p.startsWith('states='))) {
+          // page query doesnt yet exist, add page param
+          params = [`states=${encodedStates.join(',')}`, ...params]
+        } else {
+          // page query exists, modify it
+          params = params.map(param => {
+            if (param.startsWith("states=")) {
+              return `states=${encodedStates.join(',')}`
+            } else {
+              return param
+            }
+          })
+        }
+      } else {
+        params = params.filter(param => !param.includes("states="))
+      }
+
 
       // console.log("params before join: ", params)
       let params_str: string = params.join('&')
@@ -328,7 +378,7 @@ export const useFacetSearchOptions = ({
         )
       }
     }
-  }, [pageParam, searchTerm, currentCategories])
+  }, [pageParam, searchTerm, currentCategories, calibers, dealerStates])
 
 
   // scroll to top when page changes

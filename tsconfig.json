@@ -13,17 +13,37 @@
     "jsx": "preserve",
     "module": "esnext",
     "target": "es6",
-    "lib": ["es2018", "dom", "dom.iterable", "esnext"],
+    "lib": [
+      "es2018",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "baseUrl": ".",
     "paths": {
-        "components/*": ["components/*"],
-        "layout/*": ["layout/*"],
-        "pages/*": ["pages/*"],
-        "reduxStore/*": ["reduxStore/*"],
-        "queries/*": ["queries/*"],
-        "typings/*": ["typings/*"],
-        "utils/*": ["utils/*"]
-    }
+      "components/*": [
+        "components/*"
+      ],
+      "layout/*": [
+        "layout/*"
+      ],
+      "pages/*": [
+        "pages/*"
+      ],
+      "reduxStore/*": [
+        "reduxStore/*"
+      ],
+      "queries/*": [
+        "queries/*"
+      ],
+      "typings/*": [
+        "typings/*"
+      ],
+      "utils/*": [
+        "utils/*"
+      ]
+    },
+    "incremental": true
   },
   "exclude": [
     "node_modules",

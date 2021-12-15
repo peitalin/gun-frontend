@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 // Router
 import Link from "next/link";
@@ -191,8 +191,8 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
     "&:hover": {
       background: theme.palette.type === 'dark'
-        ? fade(Colors.lightGrey, 0.05)
-        : fade(Colors.black, 0.05),
+        ? alpha(Colors.lightGrey, 0.05)
+        : alpha(Colors.black, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -215,8 +215,8 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
     "&:hover": {
       background: theme.palette.type === 'dark'
-        ? fade(Colors.lightGrey, 0.05)
-        : fade(Colors.black, 0.05),
+        ? alpha(Colors.lightGrey, 0.05)
+        : alpha(Colors.black, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",

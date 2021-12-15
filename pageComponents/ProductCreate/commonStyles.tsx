@@ -1,4 +1,4 @@
-import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
+import { createStyles, Theme, alpha, lighten } from "@material-ui/core/styles";
 import {
   fontFam,
   Colors,
@@ -179,13 +179,13 @@ export const styles = (theme: Theme) => createStyles({
       duration: "0ms",
     }),
     '&:focus': {
-      boxShadow: `${fade(Colors.blue, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.blue, 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },
   },
   expansionPanelError: {
-    border: `1px solid ${Colors.fadedRed}`,
+    border: `1px solid ${Colors.lightRed}`,
   },
   expanderRoot: {
   },

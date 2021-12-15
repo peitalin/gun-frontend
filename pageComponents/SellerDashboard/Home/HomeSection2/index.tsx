@@ -4,7 +4,7 @@ import {
   createStyles,
   WithStyles,
   Theme,
-  fade,
+  alpha,
 } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
@@ -82,7 +82,7 @@ const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: alpha(Colors.red, 0.9),
       transition: theme.transitions.create('background-color', {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",

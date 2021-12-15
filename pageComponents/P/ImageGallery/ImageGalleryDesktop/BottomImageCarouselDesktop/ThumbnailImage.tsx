@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
@@ -116,7 +116,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   showLoadingBar?: boolean;
 }
 
-// const patternColor = fade(Colors.black, 0.9);
+// const patternColor = alpha(Colors.black, 0.9);
 // const backgroundColor = Colors.black;
 
 const styles = (theme: Theme) => createStyles({

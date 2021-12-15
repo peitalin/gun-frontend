@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Redux
 import { connect } from "react-redux";
@@ -317,7 +317,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     color: Colors.blue,
     "&:hover": {
-      color: fade(Colors.blue, 0.9),
+      color: alpha(Colors.blue, 0.9),
     },
   },
   email: {

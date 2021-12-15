@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { commonBorderStyle } from "../common";
 import { useTheme } from "@material-ui/core";
 // Typings
@@ -324,8 +324,8 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     border: `1px solid ${Colors.green}`,
     "&:hover": {
-      backgroundColor: fade(Colors.green, 0.9),
-      border: `1px solid ${fade(Colors.green, 0.9)}`,
+      backgroundColor: alpha(Colors.green, 0.9),
+      border: `1px solid ${alpha(Colors.green, 0.9)}`,
     },
     width: "100%",
     maxWidth: 340,

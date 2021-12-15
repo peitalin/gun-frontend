@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -103,8 +103,8 @@ const styles = (theme: Theme) => createStyles({
   priceWas: {
     textDecoration: "line-through",
     fontSize: "0.65rem",
-    color: fade("#7C858E", 0.5), // grey
-    // color: fade(Colors.secondaryBright, 0.5),
+    color: alpha("#7C858E", 0.5), // grey
+    // color: alpha(Colors.secondaryBright, 0.5),
   },
 });
 

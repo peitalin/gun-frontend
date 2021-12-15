@@ -2,7 +2,7 @@
 import React from 'react';
 import clsx from "clsx";
 import {
-  withStyles, createStyles, Theme, fade
+  withStyles, createStyles, Theme, alpha
 } from '@material-ui/core/styles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 import Loading from "components/Loading"
@@ -133,7 +133,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     // backgroundColor: Colors.ultramarineBlue,
     // "&:hover": {
-    //   backgroundColor: fade(Colors.ultramarineBlue, 0.9),
+    //   backgroundColor: alpha(Colors.ultramarineBlue, 0.9),
     // },
   },
 });

@@ -47,8 +47,6 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
     }
   })
 
-  console.log("calibersssssss:", props.calibers)
-
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexCol)}>
       <DropdownInput

@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -47,8 +47,8 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGrey,
     "&:hover": {
       background: theme.palette.type === 'dark'
-        ? fade(Colors.lightBlue, 0.3)
-        : fade(Colors.lightBlue, 0.3),
+        ? alpha(Colors.lightBlue, 0.3)
+        : alpha(Colors.lightBlue, 0.3),
     },
     borderRadius: `${BorderRadius}px`,
   },
@@ -79,7 +79,7 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: '25%',
     alignItems: 'flex-end',
     borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
-    // border: `1px solid ${fade(Colors.purple, 0.5)}`,
+    // border: `1px solid ${alpha(Colors.purple, 0.5)}`,
   },
   largeCol: {
     flexBasis: '75%',

@@ -210,5 +210,5 @@ export interface SelectOption {
 export interface SelectOptionCaliber {
   label: string
   value: string
-  synonyms?: string[]
+  synonyms?: string[] | RegExp[]
 }

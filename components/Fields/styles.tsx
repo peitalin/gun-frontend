@@ -1,6 +1,6 @@
 
 import {
-  fade,
+  alpha,
   createStyles,
   Theme,
 } from "@material-ui/core/styles";
@@ -58,7 +58,7 @@ export const styles = (theme: Theme) => createStyles({
     // Use the system font instead of the default Roboto font.
     fontFamily: fontFam,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },
@@ -66,35 +66,35 @@ export const styles = (theme: Theme) => createStyles({
   emptyInput: {
     // border: `1px solid ${Colors.uniswapLightNavy}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.lightGrey, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.lightGrey, 0.2)} 0 0 0 2px`,
     },
   },
   errorInputUntouched: {
     // border: `1px solid ${Colors.uniswapLightNavy}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.grey, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(Colors.grey, 0.1)}`,
+      color: `${alpha(Colors.grey, 0.1)}`,
     },
   },
   errorInput: {
-    border: `1px solid ${fade(theme.palette.error.light, 0.8)}`,
+    border: `1px solid ${alpha(theme.palette.error.light, 0.8)}`,
     '&:focus': {
       border: `1px solid ${theme.palette.error.light}`,
-      boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(theme.palette.error.light, 0.1)}`,
+      color: `${alpha(theme.palette.error.light, 0.1)}`,
     },
   },
   errorInputUnderline: {
     '&:focus': {
       border: `1px solid ${theme.palette.error.light}`,
-      boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(theme.palette.error.light, 0.1)}`,
+      color: `${alpha(theme.palette.error.light, 0.1)}`,
     },
   },
   // ".errorInput:focus"
@@ -109,7 +109,7 @@ export const styles = (theme: Theme) => createStyles({
     //   easing: theme.transitions.easing.easeIn,
     //   duration: "100ms",
     // }),
-    color: `${fade(theme.palette.error.light, 0.8)}`,
+    color: `${alpha(theme.palette.error.light, 0.8)}`,
     transition: theme.transitions.create(['opacity', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "150ms",
@@ -121,14 +121,14 @@ export const styles = (theme: Theme) => createStyles({
     right: '0.25rem',
     fontSize: '12px',
     fontFamily: fontFam,
-    color: `${fade(Colors.grey, 0.7)}`,
+    color: `${alpha(Colors.grey, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
     }),
   },
   errorMessageFocused: {
-    color: `${fade(Colors.lightBlue, 0.7)}`,
+    color: `${alpha(Colors.lightBlue, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
@@ -169,7 +169,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   textFieldContainerFocused: {
-    boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+    boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
     borderColor: Colors.blue,
     color: theme.palette.type === "dark"
       ? Colors.uniswapLightestGrey
@@ -233,11 +233,11 @@ export const styles = (theme: Theme) => createStyles({
     // Use the system font instead of the default Roboto font.
     fontFamily: fontFam,
     '&:focus': {
-      // boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      // boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       color: Colors.blue,
     },
     // '&:invalid': {
-    //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
+    //   boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 1px`,
     //   borderColor: theme.palette.error.main,
     // },
   },
@@ -343,12 +343,12 @@ export const styles = (theme: Theme) => createStyles({
     // Use the system font instead of the default Roboto font.
     fontFamily: fontFam,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },
     // '&:invalid': {
-    //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
+    //   boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 1px`,
     //   borderColor: theme.palette.error.main,
     // },
   },

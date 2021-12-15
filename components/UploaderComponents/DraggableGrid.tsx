@@ -9,7 +9,7 @@ import {
 } from 'react-sortable-hoc';
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 
 
 
@@ -76,11 +76,11 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: fade(Colors.black, 0.15),
+    // backgroundColor: alpha(Colors.black, 0.15),
     borderRadius: `${BorderRadius}px`,
     "&:hover": {
       cursor: "grab",
-      // backgroundColor: fade(Colors.blue, 0.4),
+      // backgroundColor: alpha(Colors.blue, 0.4),
     }
   },
 })

@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { styles } from "./styles";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // components
 import Banner from "components/Banner";
@@ -48,7 +48,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
     if (isDarkMode) {
       return <RiflesBackground color={Colors.uniswapGreyNavy}/>
     } else {
-      return <RiflesBackground color={fade(Colors.slateGreyDarker, 0.5)}/>
+      return <RiflesBackground color={alpha(Colors.slateGreyDarker, 0.5)}/>
     }
   }
 

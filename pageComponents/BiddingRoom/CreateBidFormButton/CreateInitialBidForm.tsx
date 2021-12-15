@@ -9,7 +9,7 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
@@ -270,8 +270,8 @@ const styles = (theme: Theme) => createStyles({
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.green}`,
       backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.green, 0.9),
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.green, 0.9),
     }
   },
   bidInputWrapper: {

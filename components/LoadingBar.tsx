@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from 'clsx';
 import Fade from '@material-ui/core/Fade';
-import { withStyles, WithStyles, createStyles, Theme, fade } from '@material-ui/core/styles';
+import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { isThemeDark, Colors } from "layout/AppTheme";
 import { useTheme } from '@material-ui/core';
 
@@ -173,7 +173,6 @@ const LoadingBar: React.FC<ReactProps> = (props) => {
       'width': width,
       'height': height,
       'overflow': 'hidden',
-      // 'backgroundColor': `${fade(color, 0.2)}`,
       'backgroundClip': 'paddingBox',
     };
   };

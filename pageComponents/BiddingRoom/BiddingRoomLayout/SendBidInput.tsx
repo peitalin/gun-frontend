@@ -1,7 +1,7 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { fade, withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { alpha, withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 import { useMutation, useApolloClient } from "@apollo/client";
@@ -201,8 +201,8 @@ const styles = (theme: Theme) => createStyles({
       : Colors.secondary,
     "&:hover": {
       background: theme.palette.type === "dark"
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.secondary, 0.9),
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.secondary, 0.9),
     },
   },
   bidInputWrapper: {

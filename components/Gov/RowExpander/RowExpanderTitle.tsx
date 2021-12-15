@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { alpha, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
@@ -75,7 +75,7 @@ const styles = (theme: Theme) => createStyles({
   },
   backgroundGrey2: {
     backgroundColor: theme.palette.type === 'dark'
-      ? fade(Colors.uniswapGrey, 0.7)
+      ? alpha(Colors.uniswapGrey, 0.7)
       : Colors.slateGreyDarker,
   },
 });

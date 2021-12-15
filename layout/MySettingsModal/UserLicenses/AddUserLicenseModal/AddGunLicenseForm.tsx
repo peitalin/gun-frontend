@@ -445,9 +445,6 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     "&:hover": {
       backgroundColor: alpha(Colors.ultramarineBlueDark, 0.9),
-      // backgroundColor: isThemeDark(theme)
-      //   ? fade(Colors.purple, 0.9)
-      //   : fade(Colors.ultramarineBlueDark, 0.9),
     }
   },
   bidInputWrapper: {

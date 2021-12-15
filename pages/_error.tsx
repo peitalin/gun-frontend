@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { isThemeDark } from "layout/AppTheme";
 import { NextPage, NextPageContext } from 'next';
 // Typings
@@ -135,7 +135,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     height: 40,
     "&:hover": {
-      backgroundColor: fade(Colors.secondary, 0.9),
+      backgroundColor: alpha(Colors.secondary, 0.9),
       border: '0px solid #222',
       color: Colors.cream,
       transition: theme.transitions.create('backgroundColor', {

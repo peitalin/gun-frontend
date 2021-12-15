@@ -118,16 +118,16 @@ const SearchResults: React.FC<ReactProps> = (props) => {
     dealerStatesForGql,
     setDealerStatesForGql
   ] = React.useState<string[]>(
-    router?.query?.state
-      ? [router.query.state as string]
+    (dealerStates?.length > 0)
+      ? dealerStates.map(s => s)
       : []
   )
   const [
     calibersForGql,
     setCalibersForGql
   ] = React.useState<string[]>(
-    router?.query?.caliber
-      ? [router.query.caliber as string]
+    (calibers?.length > 0)
+      ? calibers.map(c => c.value)
       : []
   )
   const [

@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
@@ -373,7 +373,7 @@ const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.darkGrey}`,
     borderRadius: `${BorderRadius}px`,
     "&:hover": {
-      background: fade(Colors.lightBlue, 0.2),
+      background: alpha(Colors.lightBlue, 0.2),
     }
   },
   orderRow: {
@@ -393,7 +393,7 @@ const styles = (theme: Theme) => createStyles({
     }),
     margin: "0rem 0rem",
     "&:hover": {
-      background: fade(Colors.lightBlue, 0.1),
+      background: alpha(Colors.lightBlue, 0.1),
     }
   },
   borderRoundedBottom: {

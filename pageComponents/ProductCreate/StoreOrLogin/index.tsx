@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import {
-  createStyles, Theme, fade,
+  createStyles, Theme, alpha,
   withStyles, WithStyles
 } from "@material-ui/core/styles";
 import { fontFam, Colors, Gradients } from "layout/AppTheme";
@@ -169,7 +169,7 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     width: '100%',
     "&:hover": {
-      backgroundColor: fade(Colors.ultramarineBlueDark, 1),
+      backgroundColor: alpha(Colors.ultramarineBlueDark, 1),
       border: `1px solid ${Colors.ultramarineBlueDark}`,
       transition: theme.transitions.create(['color', 'border'], {
         easing: theme.transitions.easing.easeIn,

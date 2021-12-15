@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 import {
   BorderRadius,
   Colors,
@@ -230,8 +230,8 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: "150px",
     "&:hover": {
       background: isThemeDark(theme)
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.ultramarineBlue, 0.9),
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.ultramarineBlue, 0.9),
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -265,9 +265,9 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: "300px",
   },
   copyLink: {
-    color: fade(Colors.blue, 1),
+    color: alpha(Colors.blue, 1),
     "&:hover": {
-      color: fade(Colors.blue, 0.7),
+      color: alpha(Colors.blue, 0.7),
       cursor: "pointer",
     },
   },
@@ -279,7 +279,7 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.slateGrey,
     borderRadius: BorderRadius,
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
       border: `1px solid ${Colors.ultramarineBlue}`,

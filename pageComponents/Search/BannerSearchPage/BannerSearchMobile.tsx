@@ -8,14 +8,9 @@ import { styles } from "./styles";
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { UserPrivate } from "typings/gqlTypes";
 // Router
 import { useRouter } from 'next/router';
 

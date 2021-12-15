@@ -1,7 +1,7 @@
 import React from "react";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -103,9 +103,9 @@ const styles = (theme: Theme) => createStyles({
   priceWas: {
     textDecoration: "line-through",
     fontSize: "0.875rem",
-    color: fade(Colors.darkGrey, 0.5), // grey
+    color: alpha(Colors.darkGrey, 0.5), // grey
     fontWeight: 500,
-    // color: fade(Colors.secondaryBright, 0.5),
+    // color: alpha(Colors.secondaryBright, 0.5),
   },
   priceSavings: {
     marginLeft: '0.5rem',

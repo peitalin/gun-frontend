@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { alpha, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { createDataForExpiringTable } from "./createData";
 
@@ -319,7 +319,7 @@ const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.red}`,
     color: Colors.red,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.8),
+      backgroundColor: alpha(Colors.red, 0.8),
       border: `1px solid ${Colors.darkerRed}`,
       color: Colors.cream,
     },

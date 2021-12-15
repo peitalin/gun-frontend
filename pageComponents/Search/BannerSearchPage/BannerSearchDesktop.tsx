@@ -7,24 +7,14 @@ import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
 // Router
 import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import Login from "layout/Login";
-import Hidden from '@material-ui/core/Hidden';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-import { UserPrivate } from "typings/gqlTypes";
-import Link from "next/link";
 import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from '@material-ui/core/Tooltip';
 
 
 

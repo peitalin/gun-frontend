@@ -2,7 +2,7 @@ import React from "react"
 // styles
 import clsx from "clsx";
 import {
-  fade,
+  alpha,
   withStyles, WithStyles,
   createStyles,
   Theme,
@@ -182,7 +182,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
     // Use the system font instead of the default Roboto font.
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       // color: Colors.blue,
       color: theme.palette.type === "dark"
@@ -190,14 +190,14 @@ export const styles = (theme: Theme) => createStyles({
         : Colors.black,
     },
     // '&:invalid': {
-    //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
+    //   boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 1px`,
     //   borderColor: theme.palette.error.main,
     // },
   },
   emptyInput: {
     border: `1px solid ${Colors.mediumLightGrey}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.lightGrey, 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha(Colors.lightGrey, 0.2)} 0 0 0 2px`,
       color: theme.palette.type === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
@@ -206,26 +206,26 @@ export const styles = (theme: Theme) => createStyles({
   errorInputUntouched: {
     // border: `1px solid ${Colors.mediumLightGrey}`,
     '&:focus': {
-      // boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
+      // boxShadow: `${alpha(Colors.grey, 0.2)} 0 0 0 2px`,
       color: theme.palette.type === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
     "&:focus-within": {
-      // color: `${fade(Colors.grey, 0.1)}`,
+      // color: `${alpha(Colors.grey, 0.1)}`,
       color: theme.palette.type === "dark"
         ? Colors.uniswapLightestGrey
         : Colors.black,
     },
   },
   errorInput: {
-    // border: `1px solid ${fade(theme.palette.error.light, 0.4)}`,
+    // border: `1px solid ${alpha(theme.palette.error.light, 0.4)}`,
     '&:focus': {
       // border: `1px solid ${theme.palette.error.light}`,
-      // boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
+      // boxShadow: `${alpha(theme.palette.error.light, 0.2)} 0 0 0 2px`,
     },
     "&:focus-within": {
-      color: `${fade(theme.palette.error.light, 0.1)}`,
+      color: `${alpha(theme.palette.error.light, 0.1)}`,
     },
   },
   // ".errorInput:focus"
@@ -240,7 +240,7 @@ export const styles = (theme: Theme) => createStyles({
     //   easing: theme.transitions.easing.easeIn,
     //   duration: "100ms",
     // }),
-    color: `${fade(theme.palette.error.light, 0.7)}`,
+    color: `${alpha(theme.palette.error.light, 0.7)}`,
     transition: theme.transitions.create(['opacity', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "150ms",
@@ -261,7 +261,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   errorMessageFocused: {
-    color: `${fade(Colors.lightBlue, 0.7)}`,
+    color: `${alpha(Colors.lightBlue, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",

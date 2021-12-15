@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows, BorderRadius4x } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -335,7 +335,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
           classes.height50,
           // focused ? classes.height65 : classes.height50,
           (floatPaginator) && classes.arrowContainerMobile,
-          (floatPaginator) ? 'fadeInFast' : undefined,
+          (floatPaginator) ? 'alphaInFast' : undefined,
           isMobile && classes.marginTop,
           (isMobile && focused) && classes.displayNoneDelayed,
           // hide on mobile when menu is focused/expanded
@@ -658,7 +658,7 @@ const styles = (theme: Theme) => createStyles({
   buttonRoot: {
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
-    background: fade(Colors.slateGrey, 0.4),
+    background: alpha(Colors.slateGrey, 0.4),
     border: 'none',
     borderRadius: '2rem',
     transition:  theme.transitions.create(['background', 'color'], {
@@ -829,7 +829,7 @@ const styles = (theme: Theme) => createStyles({
       color: Colors.cream,
       // backgroundColor: Colors.secondaryBright,
       backgroundColor: theme.palette.type === 'dark'
-        ? fade(Colors.purple, 0.9)
+        ? alpha(Colors.purple, 0.9)
         : Colors.secondaryBright,
     },
   },

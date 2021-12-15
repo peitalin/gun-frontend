@@ -1,4 +1,4 @@
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import {
   Colors,
   Gradients,
@@ -26,8 +26,8 @@ export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;
 
 
 /// hover colors for menu buttons
-export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
-export const buttonHoverLight = fade(Colors.slateGrey, 0.7)
+export const buttonHoverDark = alpha(Colors.uniswapDarkNavy, 0.7)
+export const buttonHoverLight = alpha(Colors.slateGrey, 0.7)
 
 export const logoBackgroundColorDark = Colors.uniswapBlack
 export const logoBackgroundColorDark2 = Colors.uniswapDarkPurple
