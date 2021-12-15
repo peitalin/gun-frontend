@@ -2,7 +2,13 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { Colors } from "layout/AppTheme";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  makeStyles,
+  Theme
+} from "@material-ui/core/styles";
 // Swipeable
 import SwipeableViews from "components/Swiper/SwipeableViews";
 import { virtualize, bindKeyboard } from 'react-swipeable-views-utils';
@@ -35,7 +41,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     disableFadeIn = false,
   } = props;
 
-  const { classes } = props
+  const classes = useStyles()
   // const theme = useTheme();
   const [ hashmap, setHashmap ] = React.useState({})
 
@@ -141,7 +147,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
 
 
 
-interface ReactProps<T> extends WithStyles<typeof styles> {
+interface ReactProps<T> {
   connection: GenericConnection<T>;
   index: number;
   totalCount: number;
@@ -173,7 +179,7 @@ interface ReactChildren<T> {
   }): React.ReactNode
 }
 
-export const styles = (theme: Theme) => createStyles({
+export const useStyles = makeStyles({
   gridPaginatorRoot: {
     width: '100%',
     display: 'flex',
@@ -206,10 +212,9 @@ export const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)(
-  React.memo((props) =>
-    <GridPaginatorGeneric {...props}/>
-  ) as typeof GridPaginatorGeneric
-)
+
+export default React.memo(
+  (props) => <GridPaginatorGeneric {...props}/>
+) as typeof GridPaginatorGeneric
 
 

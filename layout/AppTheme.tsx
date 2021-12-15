@@ -1,10 +1,8 @@
 
-import { createMuiTheme, fade } from '@material-ui/core/styles';
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, Theme, alpha } from '@material-ui/core/styles';
 import { ThemeOptions } from "@material-ui/core/styles";
 
-
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
     colors: {
       cream: React.CSSProperties['color'],
@@ -114,7 +112,7 @@ const backgroundColor = "#2E3443"
 
 export const Colors = {
   secondary: secondary,
-  secondaryBright: fade(secondary, 0.9),
+  secondaryBright: alpha(secondary, 0.9),
   primary: "#191919",
   // steel blue grey
   slateGrey: "#EDF0F2",
@@ -154,7 +152,7 @@ export const Colors = {
   lighterPurple: "#ba9aef",
   lightPurple: "#B8B3E9",
   // red
-  fadedRed: "rgba(224, 88, 76, 0.8)", // for errors
+  alphaRed: "rgba(224, 88, 76, 0.8)", // for errors
   darkestRed: "#842022",
   darkerRed: "#9C2829",
   darkRed: "#AF2B2F",
@@ -511,7 +509,7 @@ export const notifyStyles = (theme: Theme) => createStyles({
   // },
 });
 
-/// To be used in: createMuiTheme(AppTheme)
+/// To be used in: createTheme(AppTheme)
 /// in _app.tsx
 export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
   let darkMode = darkModeStr === 'dark'
@@ -641,7 +639,7 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
             color: Colors.cream,
             // backgroundColor: "#75CFA3",
             // backgroundColor: '#65CFA3', // green
-            // backgroundColor: fade(Colors.red, 0.9), // red/pink
+            // backgroundColor: alpha(Colors.red, 0.9), // red/pink
             backgroundColor: Colors.secondaryBright,
           }
         },

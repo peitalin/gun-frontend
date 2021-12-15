@@ -2,7 +2,7 @@
 import React from 'react';
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BorderRadius3x, Gradients, isThemeDark } from "layout/AppTheme";
 // Stripe
 import {
@@ -161,7 +161,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       <div className={clsx(
         classes.formContainer,
         classes.testMode,
-        // showStripeElement ? "fadeInFast" : "hidden",
       )}>
         ADMIN TESTING ONLY
         <div className={clsx(classes.flexCol)}>
@@ -334,7 +333,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     cursor: 'pointer',
     "&:hover": {
-      color: fade(Colors.blue, 0.9),
+      color: alpha(Colors.blue, 0.9),
     },
   },
   bidButtonContainer: {

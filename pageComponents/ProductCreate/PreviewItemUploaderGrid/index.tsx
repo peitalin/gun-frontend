@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Styles
-import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, alpha } from "@material-ui/core/styles";
 import { styles } from './styles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core";
@@ -252,7 +252,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
           },
           dropzone: {
             border: (errorMessage && touched)
-              ? `2px dashed ${Colors.fadedRed}`
+              ? `2px dashed ${Colors.lightRed}`
               : isThemeDark(theme)
                   ? `2px dashed ${Colors.uniswapLighterGrey}`
                   : `2px dashed ${Colors.slateGreyDarker}`,
@@ -267,7 +267,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
           },
           dropzoneActive: {
             border: "2px dashed #2484FF",
-            backgroundColor: fade(Colors.lightBlue, 0.2),
+            backgroundColor: alpha(Colors.lightBlue, 0.2),
           },
           inputLabel: (files, extra) => (extra.reject ? { color: '#CD584F' } : {}),
         }}

@@ -1,5 +1,5 @@
 // styles
-import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
+import { createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius2x, isThemeDark } from "layout/AppTheme";
 
 const fontFam = 'Helvetica Neue, Arial';

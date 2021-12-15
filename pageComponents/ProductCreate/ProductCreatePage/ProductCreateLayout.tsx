@@ -3,7 +3,6 @@ import clsx from "clsx";
 import {
   createStyles,
   Theme,
-  fade,
   withStyles,
   WithStyles
 } from "@material-ui/core/styles";

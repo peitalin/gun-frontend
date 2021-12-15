@@ -18,7 +18,9 @@ import { createAppTheme, Colors, Gradients, notifyStyles } from 'layout/AppTheme
 import { PaletteOptions } from "@material-ui/core/styles/createPalette";
 import { ThemeOptions } from "@material-ui/core/styles";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 // Apollo Graphql
@@ -239,7 +241,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 
   const theme = React.useMemo(
     () =>
-      createMuiTheme({
+      createTheme({
         ...appTheme,
         palette: {
           ...appTheme.palette,

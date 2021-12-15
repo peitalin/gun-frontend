@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Styles
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { createStyles, Theme } from "@material-ui/core/styles";
 import { fontFam, Colors } from "layout/AppTheme";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 // Typings

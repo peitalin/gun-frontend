@@ -2,7 +2,7 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -187,8 +187,8 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     "&:hover": {
       backgroundColor: isThemeDark(theme)
-        ? fade(Colors.purple, 0.9)
-        : fade(Colors.blue, 0.9),
+        ? alpha(Colors.purple, 0.9)
+        : alpha(Colors.blue, 0.9),
     }
   },
   paddingDesktop: {

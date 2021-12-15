@@ -1,10 +1,10 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
-import { Product, Connection, ProductCreateInput } from "typings/gqlTypes";
+import { ProductCreateInput } from "typings/gqlTypes";
 // Material UI
 import ButtonLoading from "components/ButtonLoading";
 // Utility Components

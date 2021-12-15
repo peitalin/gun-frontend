@@ -2,7 +2,7 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 import {
   Colors,
   BoxShadows,
@@ -133,7 +133,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.ultramarineBlue,
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: fade(Colors.ultramarineBlueDark, 0.9),
+      backgroundColor: alpha(Colors.ultramarineBlueDark, 0.9),
     }
   },
 });

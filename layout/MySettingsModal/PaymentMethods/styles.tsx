@@ -1,5 +1,5 @@
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 
 
@@ -99,7 +99,7 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: 250,
     width: "calc(100%)",
     '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      boxShadow: `${alpha('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       color: Colors.blue,
     },

@@ -10,7 +10,7 @@ import {
   BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade, useTheme } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, useTheme } from "@material-ui/core/styles";
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
