@@ -26,7 +26,13 @@ import { GenericConnection } from "typings";
 
 
 
-function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
+function GridPaginatorGeneric<T>(
+  props: ReactProps<T> & ReactChildren<T>
+) {
+
+  // need to add styles typings because I don't know how to do
+  // typings with generics and withStyles(...) together
+  let propsWithStyles = (props as GridPaginatorPropsStyled<T>)
 
   const {
     index,
@@ -39,9 +45,9 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     maxWidth = 1160,
     disableAnimation = false,
     disableFadeIn = false,
-  } = props;
+  } = propsWithStyles
 
-  const classes = useStyles()
+  const { classes } = propsWithStyles
   // const theme = useTheme();
   const [ hashmap, setHashmap ] = React.useState({})
 
@@ -169,6 +175,8 @@ interface ReactProps<T> {
   emptyComponent?: React.ReactNode
 }
 
+type GridPaginatorPropsStyled<T> = ReactProps<T> & WithStyles<typeof styles>
+
 interface ReactChildren<T> {
   // GridPaginator will split node[] into node[][]
   // and pass node back to style child components in a higher-order function
@@ -179,7 +187,8 @@ interface ReactChildren<T> {
   }): React.ReactNode
 }
 
-export const useStyles = makeStyles({
+// export const useStyles = makeStyles({
+export const styles = (theme: Theme) => createStyles({
   gridPaginatorRoot: {
     width: '100%',
     display: 'flex',
@@ -213,8 +222,15 @@ export const useStyles = makeStyles({
 
 
 
+// export default React.memo(
+//   (props) => <GridPaginatorGeneric {...props}/>
+// ) as typeof GridPaginatorGeneric
+
+const GridPaginatorGenericStyled = withStyles(styles)(GridPaginatorGeneric)
+
 export default React.memo(
-  (props) => <GridPaginatorGeneric {...props}/>
+  (props) => <GridPaginatorGenericStyled {...props}/>
 ) as typeof GridPaginatorGeneric
+
 
 
