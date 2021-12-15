@@ -1,6 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import {
+  lighten,
+  createStyles,
+  withStyles, WithStyles,
+  Theme,
+} from '@material-ui/core/styles';
 // Table
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,15 +13,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-// Typings
-import { Connection } from "typings/gqlTypes";
 
 
 
-const EnhancedTableToolbar = props => {
+const EnhancedTableToolbar = (props: ReactProps) => {
 
-  const classes = useToolbarStyles({});
-  const { numSelected } = props;
+  const {
+    numSelected,
+    classes,
+  } = props;
 
   return (
     <Toolbar
@@ -51,8 +56,12 @@ const EnhancedTableToolbar = props => {
   );
 };
 
+interface ReactProps extends WithStyles<typeof styles> {
+  numSelected: number;
+  title?: string;
+}
 
-const useToolbarStyles = makeStyles(theme => ({
+const styles = (theme: Theme) => createStyles({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
@@ -70,6 +79,6 @@ const useToolbarStyles = makeStyles(theme => ({
   title: {
     flex: '1 1 100%',
   },
-}));
+})
 
-export default EnhancedTableToolbar;
+export default withStyles(styles)( EnhancedTableToolbar );

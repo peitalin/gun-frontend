@@ -1,8 +1,7 @@
 
 import {
   fade,
-  withStyles, WithStyles,
-  createStyles, makeStyles, createMuiTheme,
+  createStyles,
   Theme,
 } from "@material-ui/core/styles";
 import { Colors, BorderRadius, fontFam, Gradients, isThemeDark } from "layout/AppTheme";

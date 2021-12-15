@@ -1,20 +1,24 @@
 import React from 'react';
 import clsx from 'clsx';
+import {
+  withStyles, WithStyles,
+} from '@material-ui/core/styles';
+import { styles } from "./styles";
 // Table
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-// Typings
-import { Connection } from "typings/gqlTypes";
-import { useStyles } from "./styles";
 
 
 
-const EnhancedTableHead = (props) => {
+const EnhancedTableHead = (props: ReactProps) => {
 
-  const classes = useStyles({})
+  const {
+    classes,
+    columnNames,
+  } = props
 
   const {
     onSelectAllClick,
@@ -25,11 +29,10 @@ const EnhancedTableHead = (props) => {
     onRequestSort,
     disableItemSelection = false,
   } = props;
+
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
-
-  const { columnNames } = props;
 
   return (
     <TableHead>
@@ -72,5 +75,22 @@ const EnhancedTableHead = (props) => {
   );
 }
 
+interface ReactProps extends WithStyles<typeof styles> {
+  onSelectAllClick(event: any): void
+  order?: 'desc' | 'asc'
+  orderBy?: string
+  numSelected: number
+  rowCount: number
+  onRequestSort(event, property): any
+  disableItemSelection: boolean
+  title?: string
+  columnNames: Array<{
+    id: string;
+    numeric: boolean;
+    disablePadding?: boolean;
+    label: string;
+  }>
+}
 
-export default EnhancedTableHead;
+
+export default withStyles(styles)(EnhancedTableHead);

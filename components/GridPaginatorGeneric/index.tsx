@@ -2,9 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { Colors } from "layout/AppTheme";
-import { withStyles, createStyles, WithStyles, makeStyles } from "@material-ui/core/styles";
-// Typings
-import { Product, ProductsConnection } from "typings/gqlTypes";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Swipeable
 import SwipeableViews from "components/Swiper/SwipeableViews";
 import { virtualize, bindKeyboard } from 'react-swipeable-views-utils';
@@ -13,18 +11,12 @@ const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 // const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 import AlignCenterLayout from "components/AlignCenterLayout";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
-/// gql
-import { useApolloClient } from "@apollo/client";
 // helpers
-import { noAnim, someAnim, GridMap } from "./GridPaginatorHelpers";
-// Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { noAnim, someAnim } from "./GridPaginatorHelpers";
 import {
   useEffectUpdateGridAccum,
 } from "utils/hooksFacetSearch";
 import { GenericConnection } from "typings";
-import { ProductFragment } from "queries/fragments";
 
 
 
@@ -43,7 +35,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     disableFadeIn = false,
   } = props;
 
-  const classes = useStyles();
+  const { classes } = props
   // const theme = useTheme();
   const [ hashmap, setHashmap ] = React.useState({})
 
@@ -149,7 +141,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
 
 
 
-interface ReactProps<T> {
+interface ReactProps<T> extends WithStyles<typeof styles> {
   connection: GenericConnection<T>;
   index: number;
   totalCount: number;
@@ -170,6 +162,7 @@ interface ReactProps<T> {
   containerStyle?: any;
   emptyComponent?: React.ReactNode
 }
+
 interface ReactChildren<T> {
   // GridPaginator will split node[] into node[][]
   // and pass node back to style child components in a higher-order function
@@ -180,7 +173,7 @@ interface ReactChildren<T> {
   }): React.ReactNode
 }
 
-export const useStyles = makeStyles({
+export const styles = (theme: Theme) => createStyles({
   gridPaginatorRoot: {
     width: '100%',
     display: 'flex',
@@ -213,8 +206,10 @@ export const useStyles = makeStyles({
 });
 
 
-export default React.memo(
-  (props) => <GridPaginatorGeneric {...props}/>,
-) as typeof GridPaginatorGeneric
+export default withStyles(styles)(
+  React.memo((props) =>
+    <GridPaginatorGeneric {...props}/>
+  ) as typeof GridPaginatorGeneric
+)
 
 

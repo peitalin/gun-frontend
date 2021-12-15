@@ -1,8 +1,13 @@
 
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import {
+  lighten,
+  createStyles,
+  withStyles, WithStyles,
+  Theme,
+} from '@material-ui/core/styles';
 
 
-export const useStyles = makeStyles(theme => ({
+export const styles = (theme: Theme) => createStyles({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
@@ -50,4 +55,4 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
     flexWrap: 'wrap',
   },
-}));
+})

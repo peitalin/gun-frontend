@@ -4,7 +4,7 @@ import clsx from "clsx";
 import {
   fade,
   withStyles, WithStyles,
-  createStyles, makeStyles, createMuiTheme,
+  createStyles,
   Theme,
 } from "@material-ui/core/styles";
 import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
