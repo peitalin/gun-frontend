@@ -287,7 +287,7 @@ const styles = (theme: Theme) => createStyles({
   },
   stepTitleError: {
     cursor: "pointer",
-    color: Colors.fadedRed,
+    color: Colors.lightRed,
     "&:hover": {
       color: Colors.ultramarineBlue,
     },

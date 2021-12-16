@@ -15,7 +15,7 @@ const AntTab = withStyles((theme: Theme) =>
     root: {
       textTransform: 'none',
       minWidth: 60,
-      fontWeight: theme.typography.fontWeightRegular,
+      // fontWeight: theme.typography.fontWeightRegular,
       marginRight: theme.spacing(4),
       '&:hover': {
         color: isThemeDark(theme) ? Colors.lightPurple : Colors.lightBlue,
