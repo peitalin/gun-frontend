@@ -87,6 +87,8 @@ const SearchResults: React.FC<ReactProps> = (props) => {
     setCalibers,
     actionTypes,
     setActionTypes,
+    conditions,
+    setConditions,
     paginationParams: {
       limit,
       offset,
@@ -138,6 +140,15 @@ const SearchResults: React.FC<ReactProps> = (props) => {
       ? [router.query.actionType as string]
       : []
   )
+  const [
+    conditionsForGql,
+    setConditionsForGql
+  ] = React.useState<string[]>(
+    (conditions?.length > 0)
+      ? conditions.map(c => c)
+      : []
+  )
+  console.log("conditionsForGql: ", conditionsForGql)
 
   // rowMode by default on mobile
   // const [rowMode, setRowMode] = React.useState(mdDown)
@@ -155,14 +166,13 @@ const SearchResults: React.FC<ReactProps> = (props) => {
       },
       // sort by newest by default
       sortBy: orderBy?.value as SortByNewsItems,
-      // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
+      searchTerm: searchTermForGql || "*",
+      // require button click to change search with "ForGql" args
       categorySlugs: categorySlugsForGql,
-      // require button click to change search
       dealerStates: dealerStatesForGql,
       calibers: calibersForGql,
       actionTypes: actionTypesForGql,
-      searchTerm: searchTermForGql || "*",
-      // require button click to change search
+      conditions: conditionsForGql,
     },
     fetchPolicy: "cache-and-network",
   });
@@ -246,6 +256,8 @@ const SearchResults: React.FC<ReactProps> = (props) => {
           setCalibers={setCalibers}
           actionTypes={actionTypes}
           setActionTypes={setActionTypes}
+          conditions={conditions}
+          setConditions={setConditions}
           paginationParams={{
             limit: limit,
             offset: offset,
@@ -264,6 +276,7 @@ const SearchResults: React.FC<ReactProps> = (props) => {
           setSearchTermForGql={setSearchTermForGql}
           setCalibersForGql={setCalibersForGql}
           setDealerStatesForGql={setDealerStatesForGql}
+          setConditionsForGql={setConditionsForGql}
           initialDropdownCategories={props.initialDropdownCategories}
           rowMode={rowMode}
           setRowMode={setRowMode}
@@ -373,11 +386,12 @@ interface QueryData1 {
 interface QueryVar1 {
   query: ConnectionQuery;
   sortBy?: SortByNewsItems;
+  searchTerm?: string;
   categorySlugs?: string[];
   dealerStates?: string[];
   calibers?: string[];
   actionTypes?: string[];
-  searchTerm?: string;
+  conditions?: string[];
 }
 
 

@@ -207,6 +207,17 @@ export type CollectionItemsEdge = {
   node: CollectionItem;
 };
 
+export enum Condition {
+  PERFECT = 'PERFECT',
+  EXCELLENT = 'EXCELLENT',
+  VERY_GOOD = 'VERY_GOOD',
+  GOOD = 'GOOD',
+  FAIR = 'FAIR',
+  POOR = 'POOR',
+  NA = 'NA',
+  ALL_CONDITIONS = 'ALL_CONDITIONS'
+}
+
 export type Connection = {
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
@@ -6664,6 +6675,7 @@ export type QueryGetNewsItemsSearchConnectionArgs = {
   dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
   calibers?: Maybe<Array<Maybe<Scalars['String']>>>;
   actionTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
+  conditions?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 

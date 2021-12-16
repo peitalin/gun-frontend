@@ -274,6 +274,10 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                 setDealerStates={(d) => {
                   props.setDealerStates(d)
                 }}
+                conditions={props.conditions}
+                setConditions={(c) => {
+                  props.setConditions(c)
+                }}
                 calibers={props.calibers}
                 setCalibers={(d) => {
                   props.setCalibers(d)
@@ -470,6 +474,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
   actionTypes: string[],
   setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
+  conditions: string[],
+  setConditions: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {
     limit: number
     offset?: number

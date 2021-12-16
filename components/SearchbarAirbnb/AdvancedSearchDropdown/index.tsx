@@ -23,12 +23,11 @@ import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import CaliberMenu from "./CaliberMenu";
 import DealerStatesMenu from "./DealerStatesMenu";
+import ConditionsMenu from "./ConditionsMenu";
 // typings
 import {
   DealerState,
 } from "typings/gqlTypes";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 //
 import { SelectOptionCaliber } from "typings";
 
@@ -57,6 +56,10 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
     ? props.dealerStates?.slice(0, 3)?.join(", ") + '...'
     : props.dealerStates?.join(', ')
 
+  let conditionsStr = props.dealerStates?.length > 3
+    ? props.conditions?.slice(0, 3)?.join(", ") + '...'
+    : props.conditions?.join(', ')
+
   let caliberStr = props.calibers?.length > 3
     ? props.calibers?.slice(0, 3)?.map(obj => obj.label)?.join(", ") + '...'
     : props.calibers?.map(obj => obj.label)?.join(', ')
@@ -80,7 +83,7 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
                 props.calibers?.length > 0
               ) &&
               <span className={
-                (props.dealerStates?.length === 0)
+                (props.dealerStates?.length === 0) || (props.conditions?.length === 0)
                   ? classes.iconText
                   : classes.iconTextSm
               }>
@@ -92,7 +95,7 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
                 props.dealerStates?.length > 0
               ) &&
               <span className={
-                (props.calibers?.length === 0)
+                (props.calibers?.length === 0) || (props.conditions?.length === 0)
                   ? classes.iconText
                   : classes.iconTextSm
               }>
@@ -100,8 +103,21 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
               </span>
             }
             {
+              (
+                props.conditions?.length > 0
+              ) &&
+              <span className={
+                (props.calibers?.length === 0) || (props.dealerStates?.length === 0)
+                  ? classes.iconText
+                  : classes.iconTextSm
+              }>
+                {`${conditionsStr}`}
+              </span>
+            }
+            {
               (!props.calibers?.length) &&
               (!props.dealerStates?.length) &&
+              (!props.conditions?.length) &&
               <span className={classes.iconText}>
                 Filter By
               </span>
@@ -136,6 +152,13 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
                 dealerStates={props.dealerStates}
                 setDealerStates={props.setDealerStates}
               />
+              <Typography variant="h4" className={classes.subtitle}>
+                Filter by Condition
+              </Typography>
+              <ConditionsMenu
+                conditions={props.conditions}
+                setConditions={props.setConditions}
+              />
             </div>
             <div className={classes.column2}>
               <Typography variant="h4" className={classes.subtitle}>
@@ -168,8 +191,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   setMobileFocused?(a: boolean): void;
   dealerStates?: DealerState[];
   setDealerStates(c: DealerState[]): void;
-  // calibers?: string[];
-  // setCalibers(c: string[]): void;
+  conditions?: string[];
+  setConditions(c: string[]): void;
   calibers?: SelectOptionCaliber[];
   setCalibers(c: SelectOptionCaliber[]): void;
 }

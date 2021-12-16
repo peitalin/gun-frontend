@@ -33,6 +33,7 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
     setSearchTermForGql,
     setCalibersForGql,
     setDealerStatesForGql,
+    setConditionsForGql,
     rowMode,
     setRowMode,
     ...facetSearchParams
@@ -56,6 +57,8 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
     setCalibers,
     actionTypes,
     setActionTypes,
+    conditions,
+    setConditions,
     paginationParams: {
       limit,
       offset,
@@ -125,6 +128,8 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setCalibers={setCalibers}
             actionTypes={actionTypes}
             setActionTypes={setActionTypes}
+            conditions={conditions}
+            setConditions={setConditions}
             paginationParams={{
               limit: limit,
               offset: offset,
@@ -143,6 +148,7 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setSearchTermForGql={setSearchTermForGql}
             setCalibersForGql={setCalibersForGql}
             setDealerStatesForGql={setDealerStatesForGql}
+            setConditionsForGql={setConditionsForGql}
             initialDropdownCategories={props.initialDropdownCategories}
             isMobile={true}
             setFocusedOuter={setFocusedOuter}
@@ -187,6 +193,8 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setCalibers={setCalibers}
             actionTypes={actionTypes}
             setActionTypes={setActionTypes}
+            conditions={conditions}
+            setConditions={setConditions}
             paginationParams={{
               limit: limit,
               offset: offset,
@@ -205,6 +213,7 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setSearchTermForGql={setSearchTermForGql}
             setCalibersForGql={setCalibersForGql}
             setDealerStatesForGql={setDealerStatesForGql}
+            setConditionsForGql={setConditionsForGql}
             initialDropdownCategories={props.initialDropdownCategories}
             isMobile={false}
             setFocusedOuter={setFocusedOuter}
@@ -239,6 +248,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
   setCalibersForGql(c: string[]): void
   setDealerStatesForGql(c: string[]): void
+  setConditionsForGql(c: string[]): void
 
   initialDropdownCategories: Categories[];
   // row or cards toggle

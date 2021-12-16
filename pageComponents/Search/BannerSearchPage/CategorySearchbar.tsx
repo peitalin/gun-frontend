@@ -37,6 +37,8 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     setCalibers,
     actionTypes,
     setActionTypes,
+    conditions,
+    setConditions,
     paginationParams: {
       limit,
       offset,
@@ -56,6 +58,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     setPageParam(1) // reset to page 1 every time you hit search button
     props.setSearchTermForGql(searchTerm)
     props.setDealerStatesForGql(dealerStates)
+    props.setConditionsForGql(conditions)
     // console.log("options:", calibers)
     // let flatCalibers = (calibers ?? []).flatMap(c => c.synonyms)
     let flatCalibers = (calibers ?? []).flatMap(c => c.value)
@@ -108,6 +111,8 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           setCalibers={setCalibers}
           actionTypes={actionTypes}
           setActionTypes={setActionTypes}
+          conditions={conditions}
+          setConditions={setConditions}
           // end facets
           placeholder={"Search for products..."}
           paginationParams={{
@@ -141,6 +146,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableCategoriesFilter: boolean
   setCalibersForGql(c: string[]): void
   setDealerStatesForGql(c: string[]): void
+  setConditionsForGql(c: string[]): void
 
   initialDropdownCategories: Categories[];
   isMobile: boolean;

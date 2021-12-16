@@ -28,6 +28,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     $dealerStates: [String]
     $calibers: [String]
     $actionTypes: [String]
+    $conditions: [String]
   ) {
     getNewsItemsSearchConnection(
       query: $query
@@ -38,6 +39,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
       dealerStates: $dealerStates
       calibers: $calibers
       actionTypes: $actionTypes
+      conditions: $conditions
     ) {
       edges {
         node {

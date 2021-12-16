@@ -14,6 +14,7 @@ import {
   FacetsDistributionObject,
   Categories,
   DealerState,
+  Condition,
 } from "typings/gqlTypes";
 import { categoryPreviewsBackup } from "utils/categories"
 import {
@@ -111,6 +112,12 @@ export const useFacetSearchOptions = ({
       )
     : undefined
 
+  const initialConditions: Condition[] = !!router?.query?.conditions
+    ? (router?.query?.conditions as string)?.split(',')?.map(
+        s => decodeURIComponent(s) as Condition
+      )
+    : undefined
+
   /// Search Terms
   const [searchTerm, setSearchTerm] = React.useState(initialSearchTerm);
 
@@ -146,6 +153,13 @@ export const useFacetSearchOptions = ({
     actionTypes,
     setActionTypes
   ] = React.useState<string[]>(undefined)
+
+  const [
+    conditions,
+    setConditions
+  ] = React.useState<Condition[]>(
+    initialConditions ? initialConditions : []
+  )
 
   // for paging through swipeable-views
   const [index, setIndex] = React.useState(0);
@@ -189,15 +203,6 @@ export const useFacetSearchOptions = ({
     }
   }, [initialPageParam])
 
-
-  // React.useEffect(() => {
-  //   if (initialStates) {
-  //     setDealerStates(initialStates)
-  //   } else {
-  //     setDealerStates([])
-  //     // default empty array for all states filter
-  //   }
-  // }, [initialState])
 
   ////////////////////////////////////////////////////
   /// query params syncing
@@ -320,10 +325,8 @@ export const useFacetSearchOptions = ({
         let encodedCalibers = calibers.map(c => encodeURI(c.value))
         // console.log('encoded calibers: ', encodedCalibers)
         if (!params.some(p => p.startsWith('calibers='))) {
-          // page query doesnt yet exist, add page param
           params = [`calibers=${encodedCalibers.join(',')}`, ...params]
         } else {
-          // page query exists, modify it
           params = params.map(param => {
             if (param.startsWith("calibers=")) {
               return `calibers=${encodedCalibers.join(',')}`
@@ -336,16 +339,12 @@ export const useFacetSearchOptions = ({
         params = params.filter(param => !param.includes("calibers="))
       }
 
-      console.log('dealer states: ', dealerStates)
       // Sync dealer states
       if (dealerStates?.length > 0) {
         let encodedStates = dealerStates.map(s => encodeURI(s))
-        console.log('encoded states: ', encodedStates)
         if (!params.some(p => p.startsWith('states='))) {
-          // page query doesnt yet exist, add page param
           params = [`states=${encodedStates.join(',')}`, ...params]
         } else {
-          // page query exists, modify it
           params = params.map(param => {
             if (param.startsWith("states=")) {
               return `states=${encodedStates.join(',')}`
@@ -357,6 +356,26 @@ export const useFacetSearchOptions = ({
       } else {
         params = params.filter(param => !param.includes("states="))
       }
+
+      // Sync conditions
+      if (conditions?.length > 0) {
+        let encodedConditions = conditions.map(s => encodeURI(s))
+        console.log('encoded conditions: ', encodedConditions)
+        if (!params.some(p => p.startsWith('conditions='))) {
+          params = [`conditions=${encodedConditions.join(',')}`, ...params]
+        } else {
+          params = params.map(param => {
+            if (param.startsWith("conditions=")) {
+              return `conditions=${encodedConditions.join(',')}`
+            } else {
+              return param
+            }
+          })
+        }
+      } else {
+        params = params.filter(param => !param.includes("conditions="))
+      }
+
 
 
       // console.log("params before join: ", params)
@@ -378,7 +397,7 @@ export const useFacetSearchOptions = ({
         )
       }
     }
-  }, [pageParam, searchTerm, currentCategories, calibers, dealerStates])
+  }, [pageParam, searchTerm, currentCategories, calibers, dealerStates, conditions])
 
 
   // scroll to top when page changes
@@ -413,6 +432,9 @@ export const useFacetSearchOptions = ({
     // actionType filters
     actionTypes,
     setActionTypes,
+    // condition filters
+    conditions,
+    setConditions,
     // pagination
     paginationParams: {
       limit,
@@ -446,6 +468,8 @@ export interface FacetSearchParams {
   setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
   actionTypes: string[],
   setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
+  conditions: string[],
+  setConditions: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {
     limit: number; //
     offset: number;
