@@ -351,11 +351,9 @@ const SearchResults: React.FC<ReactProps> = (props) => {
                         ? <NewsItemCardAsRow
                             newsItem={newsItem}
                           />
-                        : <div style={{ marginLeft: '0.5rem'}}>
-                            <NewsItemCardResponsive
-                              newsItem={newsItem}
-                            />
-                          </div>
+                        : <NewsItemCardResponsive
+                            newsItem={newsItem}
+                          />
                     }
                   </div>
                 )

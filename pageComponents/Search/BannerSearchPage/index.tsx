@@ -110,6 +110,12 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
           bannerDither={bannerDitherMobile}
           isExpanded={focusedOuter}
         >
+          <SortByDropdown
+            isMobile={true}
+            isDarkMode={isDarkMode}
+            setOrderBy={setOrderBy}
+            sortByOptions={props.sortByOptions}
+          />
           <CategorySearchbar
             id={"category-search-1-mobile"}
             searchTerm={searchTerm}
@@ -154,17 +160,6 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             setFocusedOuter={setFocusedOuter}
             focusedOuter={focusedOuter}
           />
-          {/* <RowOrCardsButtons
-            rowMode={rowMode}
-            setRowMode={setRowMode}
-            isMobile={true}
-          /> */}
-          <SortByDropdown
-            isMobile={true}
-            isDarkMode={isDarkMode}
-            setOrderBy={setOrderBy}
-            sortByOptions={props.sortByOptions}
-          />
         </BannerSearchMobile>
       </Hidden>
 
@@ -175,6 +170,17 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
           blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
           bannerDither={bannerDither}
         >
+          <SortByDropdown
+            isMobile={false}
+            isDarkMode={isDarkMode}
+            setOrderBy={setOrderBy}
+            sortByOptions={props.sortByOptions}
+            styleContainer={{
+              position: "absolute",
+              bottom: '0.25rem',
+              right: '0.5rem',
+            }}
+          />
           <CategorySearchbar
             id={"category-search-2-desktop"}
             searchTerm={searchTerm}
@@ -223,12 +229,6 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
             rowMode={rowMode}
             setRowMode={setRowMode}
             isMobile={false}
-          />
-          <SortByDropdown
-            isMobile={false}
-            isDarkMode={isDarkMode}
-            setOrderBy={setOrderBy}
-            sortByOptions={props.sortByOptions}
           />
         </BannerSearchDesktop>
       </Hidden>

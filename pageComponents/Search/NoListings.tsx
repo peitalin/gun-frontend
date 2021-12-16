@@ -26,13 +26,7 @@ const NoListings = (props: ReactProps) => {
       </Typography>
       <Typography>
         Try search other keywords,
-        Try search other keywords, browse by
-        <Link href={"/categories"}>
-          <a className={classes.link}>
-            {" categories"}
-          </a>
-        </Link>
-        , or
+        try other search filters, or
         <Link href={"/sell"}>
           <a className={classes.link}>
             {" upload your product"}

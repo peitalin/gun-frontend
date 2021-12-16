@@ -6,7 +6,7 @@ import { Colors, BorderRadius2x, fontFam } from "layout/AppTheme";
 export const styles = (theme: Theme) => createStyles({
   rootDesktop: {
     position: 'relative',
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   rootMobile: {
     position: 'relative',
