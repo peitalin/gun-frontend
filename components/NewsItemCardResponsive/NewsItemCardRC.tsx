@@ -100,7 +100,7 @@ const NewsItemCardRC = (props: ReactProps) => {
     // minus 16px (1rem) for left-padding on carousel
     // divide by 4, numCardsPerRow
     // minus 16px (1rem) for each card in the row
-    return (maxWidthOfRow - 16) / cardsPerRow - 16
+    return (maxWidthOfRow - 16) / cardsPerRow - 12
   }
 
   const cardWidthStyle = {
