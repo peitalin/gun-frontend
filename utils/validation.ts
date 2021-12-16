@@ -83,7 +83,7 @@ export const validationSchemas = {
           // this.createError(Object: { path: String, message: String }):
           if (this.parent.listingType !== ListingType.CLASSIFIED) {
             // value = dealerId must be supplied
-            return value
+            return !!value
           } else {
             // no dealerid needed for classified Ads, return true
             return true
@@ -184,7 +184,7 @@ export const validationSchemas = {
           // this.createError(Object: { path: String, message: String }):
           if (this.parent.listingType !== ListingType.CLASSIFIED) {
             // value = dealerId must be supplied
-            return value
+            return !!value
           } else {
             // no dealerid needed for classified Ads, return true
             return true
