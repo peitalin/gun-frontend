@@ -41,7 +41,7 @@ const SortByDropdown: React.FC<ReactProps> = (props) => {
   return (
     <div className={
       isMobile ? classes.sortByContainerMobile : classes.sortByContainerDesktop
-    }>
+    } style={props.styleContainer}>
       <div className={
         isMobile ? classes.sortByDropDownMobile : classes.sortByDropDownDesktop
       } style={props.style}>
@@ -61,7 +61,10 @@ const SortByDropdown: React.FC<ReactProps> = (props) => {
           }
           options={props.sortByOptions}
           placeholder={"Select a category"}
-          className={classes.width100}
+          className={clsx(
+            classes.width100,
+            classes.height50
+          )}
           styles={selectStyles({
             width: 200,
             isDarkMode: isDarkMode,
@@ -94,12 +97,13 @@ interface ReactProps extends WithStyles<typeof styles> {
   setOrderBy(a: any): void
   sortByOptions: Array<{ label: string, value: any }>
   style?: any;
+  styleContainer?: any;
 }
 
 
 export const styles = (theme: Theme) => createStyles({
   sortByContainerDesktop: {
-    position: 'absolute',
+    // position: 'absolute',
     bottom: '0rem',
     width: '100%',
     display: "flex",
@@ -108,12 +112,12 @@ export const styles = (theme: Theme) => createStyles({
   },
   sortByDropDownDesktop: {
     maxWidth: 140,
-    marginBottom: '-1.5rem',
+    // marginBottom: '-1.5rem',
     marginRight: '1rem',
     flexBasis: '50%',
   },
   sortByContainerMobile: {
-    position: 'absolute',
+    // position: 'absolute',
     top: '0.5rem',
     right: '0.5rem',
     // marginTop: "3rem",
@@ -128,6 +132,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   width100: {
     width: '100%',
+  },
+  height50: {
+    height: '50px',
   },
 });
 

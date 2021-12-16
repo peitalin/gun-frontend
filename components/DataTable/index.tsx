@@ -234,8 +234,6 @@ const DataTable: React.FC<DataTableProps> = (props) => {
         </div>
 
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
           // count={rows.length}
           count={props.totalCount || 0}
           rowsPerPage={rowsPerPage}
@@ -246,8 +244,9 @@ const DataTable: React.FC<DataTableProps> = (props) => {
           nextIconButtonProps={{
             'aria-label': 'next page',
           }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={[5, 10, 25]}
+          onChangeRowsPerPage={handleChangeRowsPerPage as any}
         />
 
         <div className={classes.tableSection}>

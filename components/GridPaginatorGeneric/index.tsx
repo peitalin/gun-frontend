@@ -165,7 +165,7 @@ interface ReactProps<T> {
   classNameRoot?: any;
   className?: any;
   gridItemClassName?: any;
-  maxWidth?: number;
+  maxWidth?: number | string;
   // product rows only, for seller dashboard
   refetchProducts?(): void;
   loading?: boolean;

@@ -16,7 +16,6 @@ import {
   Calibers,
 } from "typings/gqlTypes";
 // Select Component
-import DropdownInput from "components/Fields/DropdownInput";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
 import AdvancedSearchDropdown from './AdvancedSearchDropdown';
@@ -560,7 +559,8 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    borderRadius: BorderRadius4x,
+    // borderRadius: BorderRadius4x,
+    borderRadius: `${BorderRadius}px ${BorderRadius4x}px ${BorderRadius4x}px ${BorderRadius}px `,
   },
 
   searchOptionsRootMobile: {
@@ -578,9 +578,9 @@ const styles = (theme: Theme) => createStyles({
     // height: '100vh',
     // width: '100vw',
     // position: 'fixed',
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
+    // height: '100%',
+    // width: '100%',
+    // position: 'absolute',
     top: 0,
     left: 0,
     transition:  theme.transitions.create(['height', 'width'], {
@@ -600,7 +600,8 @@ const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    borderRadius: BorderRadius4x,
+    // borderRadius: BorderRadius4x,
+    borderRadius: `${BorderRadius}px ${BorderRadius4x}px ${BorderRadius4x}px ${BorderRadius}px `,
   },
   displayNoneDelayed: {
     // display: 'none',
@@ -712,6 +713,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     flexDirection: 'row',
   },
+
   searchbar: {
     position: 'relative',
     cursor: 'pointer',
@@ -726,7 +728,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: BorderRadius4x,
+    // borderRadius: BorderRadius4x,
+    borderRadius: `${BorderRadius}px ${BorderRadius4x}px ${BorderRadius4x}px ${BorderRadius}px `,
   },
   height65: {
     height: 65,
