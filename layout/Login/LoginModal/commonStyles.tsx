@@ -1,4 +1,4 @@
-import { withStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius4x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 
 const emailInputMaxWidth = 350;

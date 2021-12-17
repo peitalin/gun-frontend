@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
 // Select Component
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
@@ -10,8 +10,6 @@ import { useTheme } from "@material-ui/core/styles";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";
-import { useSelector } from "react-redux";
-import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { useSnackbar } from "notistack"
 
 
@@ -21,11 +19,8 @@ const DropdownInput = (props: ReactProps) => {
   const ref = React.useRef(null);
   const focused = useFocus(ref);
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
-
   const theme = useTheme();
+  const isDarkMode = isThemeDark(theme)
 
   const {
     // Formik
@@ -169,6 +164,10 @@ const DropdownInput = (props: ReactProps) => {
                       ? Colors.uniswapMediumNavy
                       : Colors.slateGrey,
                   }),
+                  menuList: styles => ({
+                    ...styles,
+                    maxHeight: '315px',
+                  }),
                 }
             }
             inputRef={ref}
@@ -301,6 +300,10 @@ const DropdownInput = (props: ReactProps) => {
                     background: isDarkMode
                       ? Colors.uniswapMediumNavy
                       : Colors.slateGrey,
+                  }),
+                  menuList: styles => ({
+                    ...styles,
+                    maxHeight: '315px',
                   }),
                   control: (base, state) => ({
                     ...base,

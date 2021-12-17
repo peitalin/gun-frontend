@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
 import { Order, OrderStatus } from "typings/gqlTypes";

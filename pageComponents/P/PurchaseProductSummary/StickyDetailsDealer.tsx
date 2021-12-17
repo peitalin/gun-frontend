@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { commonBorderStyle } from "../common";
 // Typings
 import { Dealers } from "typings/gqlTypes";

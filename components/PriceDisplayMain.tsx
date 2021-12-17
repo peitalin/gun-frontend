@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";

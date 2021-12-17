@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, WithStyles, fade } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { Colors } from 'layout/AppTheme';
 import clsx from "clsx";
 

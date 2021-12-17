@@ -1,7 +1,7 @@
 // UI components
 import ButtonLoading from "components/ButtonLoading";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core";
 

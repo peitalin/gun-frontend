@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { createStyles, Theme } from "@material-ui/core/styles";
 import {
   Colors,
   BorderRadius,

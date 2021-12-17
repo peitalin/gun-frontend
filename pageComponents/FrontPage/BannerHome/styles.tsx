@@ -1,5 +1,5 @@
 // styles
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients, fontFam, isThemeDark, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 
 

@@ -1,6 +1,6 @@
 import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 
 
 export const lgUpMediaQuery = '(min-width:1024px)';

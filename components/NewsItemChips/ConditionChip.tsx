@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius, Colors, isThemeDark, BorderRadius3x } from "layout/AppTheme";
 import { Condition } from "typings";
 import { getConditionScore, getConditionText } from "typings/condition";

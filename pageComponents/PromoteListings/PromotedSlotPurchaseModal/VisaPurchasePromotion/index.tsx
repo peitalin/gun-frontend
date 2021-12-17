@@ -2,7 +2,7 @@
 import React from 'react';
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BorderRadius3x, Gradients, isThemeDark } from "layout/AppTheme";
 // Stripe
 import {

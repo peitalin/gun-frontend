@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage, NextPageContext } from 'next';

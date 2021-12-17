@@ -4,16 +4,14 @@ import Select from 'react-select';
 // styles
 import clsx from "clsx";
 import { styles } from "components/Fields/styles";
-import { Colors, fontFam, BorderRadius, Gradients } from "layout/AppTheme";
+import { Colors, fontFam, BorderRadius, isThemeDark } from "layout/AppTheme";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 // focus
 import { useFocus } from "utils/hooks";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 // Snackbar
-import { useSnackbar, ProviderContext } from "notistack";
-// Redux
-import { useSelector } from "react-redux";
-import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
+import { useSnackbar } from "notistack";
+import { useTheme } from "@material-ui/core/styles";
 
 
 
@@ -22,11 +20,9 @@ const MultiDropdownSelect = (props: ReactProps) => {
 
   const ref = React.useRef();
   const focused = useFocus(ref);
-  const snackbar = useSnackbar();
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
+  const theme = useTheme();
+  const isDarkMode = isThemeDark(theme)
 
   const {
     errorMessage,

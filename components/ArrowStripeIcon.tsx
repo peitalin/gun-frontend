@@ -1,7 +1,7 @@
 import React from 'react';
 // styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 
 

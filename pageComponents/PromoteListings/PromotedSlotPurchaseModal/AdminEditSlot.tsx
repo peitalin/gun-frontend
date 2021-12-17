@@ -13,7 +13,7 @@ import {
   SoldOutStatus,
 } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Components
 import ButtonLoading from "components/ButtonLoading";

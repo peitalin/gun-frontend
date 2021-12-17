@@ -1,6 +1,6 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import { styles } from "./styles";
 

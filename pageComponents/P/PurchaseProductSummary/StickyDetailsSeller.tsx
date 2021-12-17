@@ -4,7 +4,7 @@ import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout
 // Router
 import Link from "next/link";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { commonBorderStyle } from "../common";
 // Typings
 import { Product, UserPublic, ListingType, ProductClassifiedAd } from "typings/gqlTypes";

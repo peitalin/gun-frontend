@@ -5,7 +5,7 @@ import LoadingBar from "components/LoadingBar";
 // Media uploader
 import { IInputProps } from "components/DropzoneUploader/Dropzone";
 
-import { createStyles, Theme, WithStyles, withStyles, fade } from "@material-ui/core/styles";
+import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core/styles";
 import { BorderRadius, Colors } from "layout/AppTheme";
 
 

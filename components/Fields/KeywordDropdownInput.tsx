@@ -11,10 +11,7 @@ import ValidationErrorMsg from "./ValidationErrorMsg";
 /// Debounce
 const throttle = require('lodash.throttle');
 // Snackbar
-import { useSnackbar, ProviderContext } from "notistack";
-// Redux
-import { useSelector } from "react-redux";
-import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
+import { useSnackbar } from "notistack";
 
 
 
@@ -24,10 +21,6 @@ const KeywordDropdownInput = (props: ReactProps) => {
   const ref = React.useRef();
   const focused = useFocus(ref);
   const snackbar = useSnackbar();
-
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
 
   const {
     errorMessage,

@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 import { MainBarHeight, CategoryBarHeight } from "layout/NavBarMain/styles";
 import { DashboardBarHeight } from "pageComponents/Gov/GovDashboardMobileMenu/styles";
