@@ -56,6 +56,8 @@ const SearchbarMain = (props: SearchbarProps) => {
     setCalibers,
     actionTypes,
     setActionTypes,
+    conditions,
+    setConditions,
     paginationParams: {
       limit,
       offset,
@@ -122,6 +124,8 @@ const SearchbarMain = (props: SearchbarProps) => {
       setCalibers={setCalibers}
       actionTypes={actionTypes}
       setActionTypes={setActionTypes}
+      conditions={conditions}
+      setConditions={setConditions}
       // end facets
       placeholder={"Search for products..."}
       paginationParams={{

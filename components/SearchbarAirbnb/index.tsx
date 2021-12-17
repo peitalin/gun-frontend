@@ -477,6 +477,7 @@ export const selectStyles = ({ width }: { width?: any }) => ({
 
 interface ReactProps extends WithStyles<typeof styles> {
   id: string;
+  isMobile: boolean;
   // search term
   searchTerm: string;
   setSearchTerm?(searchTerm?: string): void;
@@ -528,7 +529,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
-  isMobile: boolean;
   disableAdornment?: boolean;
 }
 export interface SelectOption {
