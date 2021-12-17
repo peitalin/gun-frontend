@@ -16,8 +16,6 @@ import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-// SSR
-import { NextPage } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -28,7 +26,7 @@ import ArrowStripeIcon from "components/ArrowStripeIcon"
 
 
 
-const BannerEndDesktop: NextPage<ReactProps> = (props) => {
+const BannerEndDesktop: React.FC<ReactProps> = (props) => {
 
   const {
     classes,

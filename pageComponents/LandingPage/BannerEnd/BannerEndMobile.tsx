@@ -17,20 +17,10 @@ import { commonStyles } from "../commonStyles";
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-import TextInput from "components/Fields/TextInput";
-// SSR
-import { NextPage } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// typings
-import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 import Image from 'next/image';
-
-import { useFormik } from 'formik';
-import { validationSchemas } from "utils/validation";
 import { useSnackbar } from "notistack";
-import { useMutation } from "@apollo/client";
 
 import Login from "layout/Login"
 import ArrowStripeIcon from "components/ArrowStripeIcon"
@@ -39,7 +29,7 @@ import ArrowStripeIcon from "components/ArrowStripeIcon"
 
 
 
-const BannerEndMobile: NextPage<ReactProps> = (props) => {
+const BannerEndMobile: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
