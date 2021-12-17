@@ -20,7 +20,6 @@ export const styles = (theme: Theme) => createStyles({
     padding: '0.5rem',
     width: '100%',
     minWidth: 240,
-    marginBottom: '1rem',
   },
   innerColumnFlexCol: {
     flexDirection: "column",
@@ -90,5 +89,27 @@ export const styles = (theme: Theme) => createStyles({
       // }),
       backgroundPosition: '-75px',
     }
+  },
+  checkboxRow: {
+    width: '50%',
+  },
+  checkbox: {
+    marginRight: '0.5rem',
+  },
+  checkboxSelected: {
+    "& > span": {
+      color: Colors.purple,
+    },
+  },
+  linkHover: {
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.blue,
+    cursor: "pointer",
+  },
+  hoverCheckbox: {
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.blue,
   },
 });

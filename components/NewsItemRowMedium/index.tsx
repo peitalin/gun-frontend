@@ -322,6 +322,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
             position: 'absolute',
             bottom: '0.5rem',
             right: '0rem',
+            marginRight: '0.4rem',
             height: 28,
           }}
         />

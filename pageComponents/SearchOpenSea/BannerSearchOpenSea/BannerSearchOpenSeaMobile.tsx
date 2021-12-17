@@ -23,7 +23,6 @@ const BannerSearchOpenSeaMobile: NextPage<ReactProps> = (props) => {
     // bannerForegroundImageUrl,
     // bannerBackgroundImageUrl,
     bannerDither,
-    categorySlug,
   } = props;
 
   // const user = useSelector<GrandReduxState, UserPrivate>(
@@ -35,15 +34,11 @@ const BannerSearchOpenSeaMobile: NextPage<ReactProps> = (props) => {
   let pathname = router.pathname
 
   return (
-    <div className={
-      props.isExpanded
-      ? classes.rootMobileExpanded
-      : classes.rootMobile
-    }>
+    <div className={classes.rootMobile}>
       <Banner
         // in /public/img
         bannerContainerStyles={{
-          marginBottom: "1rem",
+          marginBottom: "0.75rem",
         }}
         className={
           pathname.includes('new')
@@ -107,9 +102,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   blurb?: string
   categoryName?: string
   categorySlug?: string
-  // bannerForegroundImageUrl: string
-  // bannerBackgroundImageUrl: string
-  isExpanded: boolean
 }
 
 export default withStyles(styles)( BannerSearchOpenSeaMobile );

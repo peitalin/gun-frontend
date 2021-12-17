@@ -10,14 +10,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   rootMobile: {
     position: 'relative',
-    marginBottom: '3rem',
+    marginBottom: '0rem',
   },
   positionRelative: {
     position: "relative",
-  },
-  rootMobileExpanded: {
-    position: 'relative',
-    marginBottom: '1rem',
   },
   bannerInnerBoxLeft: {
     display: 'flex',

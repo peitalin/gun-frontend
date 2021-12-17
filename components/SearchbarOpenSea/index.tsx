@@ -53,22 +53,20 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
+  const [showPaginator, setShowPaginator] = React.useState(false);
 
-  const clickBackgroundId = `search-background-${router.pathname}`
-
-
-  const focusSearchOnMobile = (b: boolean) => {
-    if (isMobile) {
-      // clickaway listerner for mobile only
-      setMobileFocused(b)
+  React.useEffect(() => {
+    if (totalCount > 0) {
+      setShowPaginator(true)
+    } else {
+      setShowPaginator(false)
     }
-  }
+  }, [totalCount])
 
   const handleClickSearch = (searchTerm) => {
     if (props.onClickSearch) {
       props.onClickSearch(searchTerm)
     }
-    focusSearchOnMobile(false)
   }
 
   const handleEnterSearch = (event) => {
@@ -115,22 +113,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   const searchBlurId = `search-input-to-blur-on-enter-${id}`
 
   const [searchFocused, setSearchFocused] = React.useState(false)
-  const [categoryFocused, setCategoryFocused] = React.useState(false)
-  const [advancedSearchFocused, setAdvancedSearchFocused] = React.useState(false)
-  const [mobileFocused, setMobileFocused] = React.useState(false)
-
-  const focused = searchFocused
-    || categoryFocused
-    || advancedSearchFocused
-    || mobileFocused
-
-  // console.log('focused: ', focused)
-  // console.log('advancedSearchFocused: ', advancedSearchFocused)
-  // console.log('mobileFocused: ', mobileFocused)
-  // console.log(`isMobile && !focused: ${isMobile && !focused}`)
-  // console.log(`isMobile>>> ${isMobile}`)
-  // console.log('totalCount: ', totalCount)
-  // console.log('searchTerm: ', searchTerm)
 
 
   return (
@@ -142,8 +124,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
           isMobile
             ? classes.searchOptionsRootMobile
             : classes.searchOptionsRoot,
-          (isMobile && focused) && classes.searchMobileExpanded,
-          (isMobile && !focused) && classes.searchMobileNotExpanded,
+          isMobile && classes.searchMobileNotExpanded,
           props.className,
         )}
         style={{ ...props.style }}
@@ -153,7 +134,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
         <div className={classes.topSection} style={props.topSectionStyles}>
           <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
             style={{
-              flexDirection: isMobile ? "column" : "row",
+              // flexDirection: isMobile ? "column" : "row",
               ...props.filterSectionStyles
             }}
           >
@@ -174,10 +155,12 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                   ref={searchRef}
                   type={"text"}
                   autoComplete={"new-password"} // this disables autofill
-                  // inputRef={input => {
-                  // }}
                   id={searchBlurId}
-                  placeholder="Search for firearms…"
+                  placeholder={
+                    isMobile
+                    ? "Search for guns"
+                    : "Search for firearms…"
+                  }
                   classes={{
                     root: clsx(
                       classes.inputRoot,
@@ -185,18 +168,12 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                     ),
                     input: classes.inputInput,
                   }}
-                  onFocus={e => {
-                    // console.log('onFocus:', e)
-                    setSearchFocused(true)
-                    focusSearchOnMobile(true)
-                  }}
-                  onBlur={e => {
-                    // console.log('onBlur:', e)
-                    setSearchFocused(false)
-                  }}
+                  onFocus={e => setSearchFocused(true)}
+                  onBlur={e => setSearchFocused(false)}
                   onChange={e => setSearchTerm(e.target.value)}
                   onKeyPress={handleEnterSearch}
                   startAdornment={
+                    !props.disableAdornment &&
                     <div className={classes.searchAdornIcon}
                       onClick={() => searchRef.current.focus()}
                     >
@@ -214,8 +191,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               className={clsx(
                 classes.searchButtonBluePurple,
                 isMobile ? classes.searchButtonMobile : classes.searchButtonDesktop,
-                (isMobile && !focused) && classes.displayNoneDelayed,
-                classes.searchButtonWide,
+                isMobile ? classes.searchButtonShort : classes.searchButtonWide,
                 classes.height40,
               )}
               classes={{
@@ -226,7 +202,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               onClick={() => handleClickSearch(searchTerm)}
             >
               <SearchIcon className={classes.iconOuter}/>
-              Search
+              { !isMobile && <span>Search</span> }
             </Button>
 
           </div>
@@ -235,14 +211,13 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
       {
         !disablePaginators &&
+        showPaginator &&
         <div className={clsx(
           classes.arrowContainer,
           classes.height50,
           classes.arrowContainerMobile,
-          'alphaInFast',
+          'fadeIn',
           isMobile && classes.marginTop,
-          (isMobile && focused) && classes.displayNoneDelayed,
-          // hide on mobile when menu is focused/expanded
         )}
           style={props.paginatorStyles}
         >
@@ -284,77 +259,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
 
 
-
-// export const selectStyles = ({ width }: { width?: any }) => ({
-//   container: base => ({
-//     ...base,
-//     flex: 1,
-//     border: 'none',
-//     width: width || '175px',
-//     cursor: "pointer",
-//     "&:hover": {
-//       cursor: "pointer",
-//     },
-//   }),
-//   control: styles => ({
-//     ...styles,
-//     // border: '1px solid #eaeaea',
-//     border: 'none',
-//     boxShadow: 'none',
-//     // background: buttonBackgroundColor,
-//     backgroundColor: Colors.dropDownGrey,
-//     '&:hover': {
-//       border: 'none',
-//       cursor: "pointer",
-//       backgroundColor: Colors.dropDownGreyHover,
-//     },
-//     "&:focus": {
-//       border: 'none',
-//     },
-//     borderRadius: '4px',
-//     fontSize: '0.9rem',
-//     color: Colors.darkGrey,
-//     // fontSize: '1rem',
-//     width: '100%',
-//   }),
-//   singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
-//     color: Colors.darkGrey,
-//   }),
-//   indicatorSeparator: styles => ({
-//     display:'none'
-//   }),
-//   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-//     return {
-//       ...styles,
-//       backgroundColor: isSelected
-//         ? Colors.charcoal
-//         : isFocused
-//           ? Colors.lightGrey
-//           : Colors.dropDownGrey,
-//       fontFamily: '"Helvetica Neue",Arial,sans-serif',
-//       fontSize: '1rem',
-//       cursor: isDisabled ? 'not-allowed' : 'pointer',
-//       "&:hover": {
-//         cursor: isDisabled ? 'not-allowed' : 'pointer',
-//       },
-//     };
-//   },
-//   menu: styles => ({
-//     ...styles,
-//     zIndex: 10,
-//     marginTop: '2px',
-//     cursor: "pointer",
-//     "&:hover": {
-//       cursor: "pointer",
-//     },
-//   })
-// });
-
-
-
-
-/////////// Typings //////////////
-
 interface ReactProps extends WithStyles<typeof styles> {
   id: string;
   // search term
@@ -391,6 +295,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   style?: any;
   isMobile: boolean;
+  disableAdornment?: boolean;
 }
 export interface SelectOption {
   label: string;
@@ -459,7 +364,7 @@ const styles = (theme: Theme) => createStyles({
   },
   searchMobileNotExpanded: {
     height: '52px', // height of the SearchInput plus 2px border
-    width: '262px', // width of the SearchInput plus 2px border
+    width: '242px', // width of the SearchInput plus 2px border
     transition:  theme.transitions.create(['height', 'width'], {
       easing: theme.transitions.easing.easeIn,
       delay: 200,
@@ -507,14 +412,14 @@ const styles = (theme: Theme) => createStyles({
   searchbar: {
     position: 'relative',
     cursor: 'pointer',
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
-    "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? Colors.uniswapGreyNavy
-        : Colors.slateGreyDarker,
-    },
+    // background: theme.palette.type === 'dark'
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.cream,
+    // "&:hover": {
+    //   background: theme.palette.type === 'dark'
+    //     ? Colors.uniswapGreyNavy
+    //     : Colors.slateGreyDarker,
+    // },
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -546,19 +451,19 @@ const styles = (theme: Theme) => createStyles({
   //   }),
   // },
   searchWide: {
-    width: 260,
+    width: 240,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "0ms",
     }),
   },
-  // searchButtonShort: {
-  //   width: 160,
-  //   transition: theme.transitions.create(['width', 'height'], {
-  //     easing: theme.transitions.easing.sharp,
-  //     duration: "0ms",
-  //   }),
-  // },
+  searchButtonShort: {
+    width: 40,
+    transition: theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "0ms",
+    }),
+  },
   searchButtonWide: {
     width: 160,
     transition: theme.transitions.create(['width', 'height'], {
@@ -597,6 +502,7 @@ const styles = (theme: Theme) => createStyles({
   },
   searchButtonMobile: {
     margin: '0px',
+    marginLeft: '-3.1rem',
   },
   searchButtonBluePurple: {
     color: Colors.cream,
@@ -646,14 +552,12 @@ const styles = (theme: Theme) => createStyles({
     position: "fixed",
     left: '50%',
     transform: 'translateX(-50%)',
-    bottom: '1rem',
+    minWidth: 375,
+    bottom: '0rem',
     zIndex: 1,
-    // border: theme.palette.type === 'dark'
-    //   ? `4px solid ${Colors.uniswapLightNavy}`
-    //   : `4px solid ${Colors.slateGreyDarker}`,
     border: theme.palette.type === 'dark'
-      ? `4px solid ${Colors.purple}`
-      : `4px solid ${Colors.blue}`,
+      ? `2px solid ${Colors.purple}`
+      : `2px solid ${Colors.blue}`,
   },
   paginationPage: {
     "& > ul > li > button": {

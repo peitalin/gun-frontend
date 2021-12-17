@@ -22,17 +22,7 @@ const BannerSearchOpenSea = (props: ReactProps) => {
   const {
     classes,
     disableMetaHeader,
-    focused,
-    selectedCategory,
   } = props;
-
-  const selectedCategoryName: string = selectedCategory
-    ? selectedCategory?.name
-    : "All Products"
-
-  const selectedCategoryBlurb: string = selectedCategory
-    ? selectedCategory?.blurb
-    : ""
 
   // const selectedCategorySlug: string = selectedCategory
   //   ? selectedCategory?.slug
@@ -47,18 +37,17 @@ const BannerSearchOpenSea = (props: ReactProps) => {
       {/* Mobile */}
       <Hidden lgUp implementation='css' className={classes.width100}>
         <BannerSearchOpenSeaMobile
-          categoryName={props.bannerTitle ?? selectedCategoryName}
-          blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
+          categoryName={props.bannerTitle}
+          blurb={props.bannerBlurb}
           bannerDither={bannerDitherMobile}
-          isExpanded={focused}
         />
       </Hidden>
 
       {/* Desktop */}
       <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerSearchOpenSeaDesktop
-          categoryName={props.bannerTitle ?? selectedCategoryName}
-          blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
+          categoryName={props.bannerTitle}
+          blurb={props.bannerBlurb}
           bannerDither={bannerDither}
         />
       </Hidden>
@@ -69,8 +58,6 @@ const BannerSearchOpenSea = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   disableMetaHeader: boolean
-  selectedCategory: Categories
-  focused?: boolean;
   bannerTitle?: string;
   bannerBlurb?: string;
 }

@@ -69,6 +69,16 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
+  const [showPaginator, setShowPaginator] = React.useState(false);
+
+  React.useEffect(() => {
+    if (totalCount > 0) {
+      setShowPaginator(true)
+    } else {
+      setShowPaginator(false)
+    }
+  }, [totalCount])
+
 
   const clickBackgroundId = `search-background-${router.pathname}`
 
@@ -227,6 +237,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                   onChange={e => setSearchTerm(e.target.value)}
                   onKeyPress={handleEnterSearch}
                   startAdornment={
+                    !props.disableAdornment &&
                     <div className={classes.searchAdornIcon}
                       onClick={() => searchRef.current.focus()}
                     >
@@ -338,6 +349,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
       {
         !disablePaginators &&
+        showPaginator &&
         <div className={clsx(
           classes.arrowContainer,
           classes.height50,
@@ -517,6 +529,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   style?: any;
   isMobile: boolean;
+  disableAdornment?: boolean;
 }
 export interface SelectOption {
   label: string;
@@ -876,14 +889,15 @@ const styles = (theme: Theme) => createStyles({
     position: "fixed",
     left: '50%',
     transform: 'translateX(-50%)',
-    bottom: '1rem',
+    minWidth: 375,
+    bottom: '0rem',
     zIndex: 1,
     // border: theme.palette.type === 'dark'
     //   ? `4px solid ${Colors.uniswapLightNavy}`
     //   : `4px solid ${Colors.slateGreyDarker}`,
     border: theme.palette.type === 'dark'
-      ? `4px solid ${Colors.purple}`
-      : `4px solid ${Colors.blue}`,
+      ? `2px solid ${Colors.purple}`
+      : `2px solid ${Colors.blue}`,
   },
   backButton: {
   },

@@ -36,8 +36,6 @@ const SortByDropdown: React.FC<ReactProps> = (props) => {
   } = props;
 
 
-  // console.log("sortByOptions: ", props.sortByOptions)
-
   return (
     <div className={
       isMobile ? classes.sortByContainerMobile : classes.sortByContainerDesktop
@@ -60,7 +58,7 @@ const SortByDropdown: React.FC<ReactProps> = (props) => {
             // let UI update first for menu to close
           }
           options={props.sortByOptions}
-          placeholder={"Select a category"}
+          placeholder={"Sort By"}
           className={clsx(
             classes.width100,
             classes.height50
@@ -129,6 +127,7 @@ export const styles = (theme: Theme) => createStyles({
   sortByDropDownMobile: {
     maxWidth: 110,
     flexBasis: '50%',
+    marginRight: '0.5rem',
   },
   width100: {
     width: '100%',

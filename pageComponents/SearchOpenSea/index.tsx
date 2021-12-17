@@ -46,6 +46,7 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 import SearchbarOpenSeaWrapper from "./SearchbarOpenSeaWrapper";
 import FilterDrawer from "./FilterDrawer"
+import FilterMobileIcon from "./FilterDrawer/FilterMobileIcon";
 
 
 
@@ -61,6 +62,7 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+  const isMobile = lgDown
   const isDarkMode = isThemeDark(theme)
 
   /////////////////////////////////// paginator
@@ -106,51 +108,12 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
     syncUrlParams: true,
   })
 
+  // requires "enter" or click to dispath search,
+  // instead of searching as you type
   const [searchTermForGql, setSearchTermForGql] = React.useState<string>(
     (router?.query?.q as any)
   )
-  const [categorySlugsForGql, setCategorySlugsForGql] = React.useState(
-    router?.query?.category
-      ? [router.query.category as string]
-      : []
-  )
-  const [
-    dealerStatesForGql,
-    setDealerStatesForGql
-  ] = React.useState<string[]>(
-    (dealerStates?.length > 0)
-      ? dealerStates.map(s => s)
-      : []
-  )
-  const [
-    calibersForGql,
-    setCalibersForGql
-  ] = React.useState<string[]>(
-    (calibers?.length > 0)
-      ? calibers.map(c => c.value)
-      : []
-  )
-  const [
-    actionTypesForGql,
-    setActionTypesForGql
-  ] = React.useState<string[]>(
-    router?.query?.actionType
-      ? [router.query.actionType as string]
-      : []
-  )
-  const [
-    conditionsForGql,
-    setConditionsForGql
-  ] = React.useState<string[]>(
-    (conditions?.length > 0)
-      ? conditions.map(c => c)
-      : []
-  )
-  console.log("limit: ", limit)
 
-  // rowMode by default on mobile
-  // const [rowMode, setRowMode] = React.useState(mdDown)
-  // rowMode by default
   const [rowMode, setRowMode] = React.useState(true)
 
 
@@ -175,8 +138,6 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
   });
 
 
-  // console.log("categorySlugsForGql", categorySlugsForGql)
-
   React.useEffect(() => {
     if (!loading && !!newsItemsConnection?.totalCount) {
       setTotalCount(newsItemsConnection?.totalCount)
@@ -185,12 +146,16 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
 
   const newsItemsConnection = data?.getNewsItemsSearchConnection
 
-  const [openDrawer, setOpenDrawer] = React.useState(true)
-  const [focusedOuter, setFocusedOuter] = React.useState(false)
+  // default: close on mobile, open on desktop
+  const [openDrawer, setOpenDrawer] = React.useState(!isMobile)
 
-  let selectedCategorySlug = categorySlugsForGql?.[0];
-  let selectedCategory = (currentCategories ?? []).find(c => c.slug === selectedCategorySlug)
-
+  React.useEffect(() => {
+    if (isMobile) {
+      setOpenDrawer(false)
+    } else {
+      setOpenDrawer(true)
+    }
+  }, [isMobile])
   // let totalItemsInFacet = totalItemsInCategoriesFacets({
   //   facets: facets,
   //   facetsDistribution: newsItemsConnection?.facetsDistribution as any,
@@ -215,6 +180,14 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
         style={{ zIndex: 1505, top: 0, right: 0 }}
       />
 
+      {
+        isMobile &&
+        <FilterMobileIcon
+          openDrawer={openDrawer}
+          setOpenDrawer={setOpenDrawer}
+        />
+      }
+
 
       <div className={clsx(
         classes.flexColStart,
@@ -223,15 +196,12 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
 
         <BannerSearchOpenSea
           disableMetaHeader={false}
-          selectedCategory={selectedCategory}
-          focused={focusedOuter}
           bannerTitle={props.bannerTitle}
           bannerBlurb={props.bannerBlurb}
         />
 
         <AlignCenterLayout
-          // maxWidth={1160 + 120 }
-          maxWidth={11600 }
+          maxWidth={2048}
           className={classes.root}
           pageRecommendationsContainerClassname={classes.greyBackground}
           withRecommendations={false}
@@ -241,6 +211,7 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
             <FilterDrawer
               openDrawer={openDrawer}
               setOpenDrawer={setOpenDrawer}
+              isMobile={isMobile}
 
               currentCategories={currentCategories}
               setCurrentCategories={setCurrentCategories}
@@ -294,17 +265,9 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
                   setIndex: setIndex,
                   debounceSetIndex: debounceSetIndex,
                 }}
-                // Category Page specific callbacks
-                disableCategoriesFilter={true}
-                setCategorySlugsForGql={setCategorySlugsForGql}
                 setSearchTermForGql={setSearchTermForGql}
-                setCalibersForGql={setCalibersForGql}
-                setDealerStatesForGql={setDealerStatesForGql}
-                setConditionsForGql={setConditionsForGql}
                 initialDropdownCategories={props.initialDropdownCategories}
-                isMobile={false}
-                setFocusedOuter={setFocusedOuter}
-                focusedOuter={focusedOuter}
+                isMobile={isMobile}
                 rowMode={rowMode}
                 setRowMode={setRowMode}
                 isDarkMode={isDarkMode}

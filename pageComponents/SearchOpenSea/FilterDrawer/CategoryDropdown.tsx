@@ -8,7 +8,8 @@ import {
   BorderRadius2x,
   BorderRadius,
   Gradients,
-  BoxShadows
+  BoxShadows,
+  isThemeDark
 } from "layout/AppTheme";
 import Button from "@material-ui/core/Button";
 import Link from "next/link";
@@ -20,6 +21,8 @@ import { GET_CATEGORIES } from "queries/categories-queries";
 import {
   categoryPreviewsBackup
 } from "utils/categories"
+import Checkbox from '@material-ui/core/Checkbox';
+import { Category } from "@material-ui/icons";
 
 
 
@@ -35,106 +38,72 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   //   GET_CATEGORIES,
   // )
 
-  // let categoriesDropdownItems = props.syncUrlToCategory
-  //   ? [ ...(categoryData?.data?.getCategories ?? []) ]
-  //   : [
-  //       { id: undefined, slug: 'all', name: "All Categories" },
-  //       ...(categoryData?.data?.getCategories ?? []),
-  //     ]
+  const [hover, setHover] = React.useState(undefined)
 
   let categoriesRemovedItems = categoryPreviewsBackup.filter(c => c.slug !== 'items')
-
-  // let categoriesDropdownItems = props.syncUrlToCategory
-  //   ? [ ...(categoriesRemovedItems ?? []) ]
-  //   : [
-  //       { id: undefined, slug: 'all', name: "All Categories" },
-  //       ...(categoriesRemovedItems ?? []),
-  //     ]
 
   let categoriesDropdownItems = [
     ...(categoriesRemovedItems ?? []),
     { id: undefined, slug: 'all', name: "All Categories" },
   ]
-  // let selectedCategory = props.currentCategories?.[0]
+
+  const onChange = (category: Categories) => {
+    if (category.slug === 'all' || !category) {
+      props.setCurrentCategories([])
+    }
+    if (props.currentCategories.includes(category)) {
+      props.setCurrentCategories(
+        props.currentCategories.filter(c => c.slug !== category.slug)
+      )
+    } else {
+      props.setCurrentCategories([...props.currentCategories, category])
+    }
+  }
 
   return (
     <div className={clsx(
-        classes.categoryDropdownRoot,
-        props.className,
-      )}
-    >
+      classes.categoryDropdownRoot,
+      props.className,
+    )}>
       <div className={classes.categoryDropdownContainer}>
         <div className={classes.categoryButtonsContainer}>
           {
-            props.syncUrlToCategory
-            ? categoriesDropdownItems.map((category, i) => {
-                // a category change triggers a route change
-                // if we enable syncUrlToCategory
-                return (
-                  <Link key={category.name + `${i}`}
-                    href={`/new?category=${category?.slug}`}
-                  >
-                    <a>
-                      <Button
-                        key={category.name + `${i}`}
-                        classes={{
-                          root: clsx(
-                            classes.buttonRoot,
-                            (props.currentCategories ?? []).find(c => category?.id === c?.id)
-                              ? classes.buttonSelected
-                              : null,
-                          )
-                        }}
-                        variant="outlined"
-                        onClick={() => {
-                          // console.log("setting: ", category)
-                          if (category.slug === 'all') {
-                            props.setCurrentCategories([])
-                          } else {
-                            props.setCurrentCategories([category as any])
-                          }
-                          // if (category.slug) {
-                          // } else {
-                          //   // all-categories, empty category filters
-                          //   props.setCurrentCategories([])
-                          // }
-                        }}
-                      >
-                        {category.name}
-                      </Button>
-                    </a>
-                  </Link>
-                )
-              })
-            : categoriesDropdownItems.map((category, i) => {
-                return (
-                  <Button
-                    key={category.name + `${i}`}
+            categoriesDropdownItems.map((category, i) => {
+
+              let allCategories = category.slug === "all"
+                && props.currentCategories?.length === 0
+
+              let checked = !!(props.currentCategories ?? []).find(c => category?.id === c?.id)
+                || allCategories
+
+              let highlight = hover === i
+
+              return (
+                <div key={category.name + `${i}`}>
+                  <Checkbox
+                    checked={checked}
+                    onChange={() => onChange(category as Categories)}
                     classes={{
                       root: clsx(
-                        classes.buttonRoot,
-                        (props.currentCategories ?? []).find(c => category?.id === c?.id)
-                          ? classes.buttonSelected
-                          : null,
-                      )
+                        classes.checkbox,
+                        checked ? classes.checkboxSelected : null,
+                        highlight && classes.hoverCheckbox,
+                      ),
                     }}
-                    variant="outlined"
-                    onClick={() => {
-                      console.log("setting: ", category)
-                      if (category.slug === 'all') {
-                        props.setCurrentCategories([])
-                      } else if (category.slug) {
-                        props.setCurrentCategories([category as any])
-                      } else {
-                        // all-categories, empty category filters
-                        props.setCurrentCategories([])
-                      }
-                    }}
+                    onMouseEnter={() => setHover(i)}
+                    onMouseLeave={() => setHover(undefined)}
+                  />
+                  <span
+                    className={highlight && classes.linkHover}
+                    onClick={() => onChange(category as Categories)}
+                    onMouseEnter={() => setHover(i)}
+                    onMouseLeave={() => setHover(undefined)}
                   >
                     {category.name}
-                  </Button>
-                )
-              })
+                  </span>
+                </div>
+              )
+            })
           }
         </div>
       </div>
@@ -155,8 +124,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-
-/////////////// STYLES /////////////////////
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -188,10 +155,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   categoryDropdownContainer: {
-    // zIndex: 2, // above advancedSearch button
-    // position: 'absolute',
     top: '3.5rem',
-    // padding: '1rem',
     width: '100%',
     minWidth: 300,
     display: "flex",
@@ -208,67 +172,28 @@ export const styles = (theme: Theme) => createStyles({
   categoryButtonsContainer: {
     display: "flex",
     flexDirection: "column",
-    // flexWrap: "wrap",
-    padding: '1rem',
+    // padding: '0rem 1rem',
+    padding: '0rem 0.5rem',
     width: '100%',
   },
-  buttonRoot: {
-    width: '100%',
-    margin: '0.15rem',
-    color: theme.palette.type === 'dark'
-      ? Colors.uniswapLighterGrey
-      : Colors.black,
-    backgroundColor: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    borderRadius: BorderRadius,
-    flexGrow: 1,
-    flexBasis: '100%',
-    "&:hover": {
-      "& > span": {
-        color: theme.palette.type === 'dark'
-          ? Colors.purple
-          : Colors.black,
-      },
-      border: theme.palette.type === 'dark'
-        ? `1px solid ${Colors.purple}`
-        : `1px solid ${Colors.black}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: "200ms",
-      }),
-    }
+  checkbox: {
+    marginRight: '0.5rem',
   },
-  buttonSelected: {
-    background: theme.palette.type === 'dark'
-      ? Colors.purple
-      : Colors.secondary,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.purple}`
-      : `1px solid ${Colors.blue}`,
-    color: Colors.cream,
+  checkboxSelected: {
     "& > span": {
-      color: Colors.cream,
+      color: Colors.purple,
     },
-    "&:hover": {
-      "& > span": {
-        color: Colors.cream,
-      },
-      background: theme.palette.type === 'dark'
-        ? Colors.purple
-        : Colors.blue,
-      border: theme.palette.type === 'dark'
-        ? `1px solid ${Colors.purple}`
-        : `1px solid ${Colors.blue}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: "200ms",
-      }),
-      backgroundPosition: '-75px',
-    }
+  },
+  linkHover: {
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.blue,
+    cursor: "pointer",
+  },
+  hoverCheckbox: {
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.blue,
   },
 });
 

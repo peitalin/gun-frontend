@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import {
   DealerState,
 } from "typings/gqlTypes";
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 
@@ -21,6 +22,21 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
+  const [hover, setHover] = React.useState(undefined)
+
+  const onChange = (d: DealerState) => {
+    console.log("setting: ", d)
+    if (d === DealerState.ALL_STATES) {
+      props.setDealerStates([])
+      return
+    }
+
+    if (props.dealerStates.includes(d)) {
+      props.setDealerStates(props.dealerStates.filter(state => state !== d))
+    } else {
+      props.setDealerStates([...props.dealerStates, d])
+    }
+  }
 
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexRow)}>
@@ -32,35 +48,35 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
           let allStates = d === DealerState.ALL_STATES
             && props.dealerStates?.length === 0
 
-          return (
-            <Button
-              key={d + `${i}`}
-              classes={{
-                root: clsx(
-                  classes.buttonRoot,
-                  (props.dealerStates?.includes(d) || allStates)
-                    && classes.buttonSelected,
-                  // !isDisabled && classes.activeButton,
-                )
-              }}
-              // disabled={isDisabled}
-              variant="outlined"
-              onClick={() => {
-                console.log("setting: ", d)
-                if (d === DealerState.ALL_STATES) {
-                  props.setDealerStates([])
-                  return
-                }
+          let checked = (props.dealerStates?.includes(d) || allStates)
+          let highlight = hover === i
 
-                if (props.dealerStates.includes(d)) {
-                  props.setDealerStates(props.dealerStates.filter(state => state !== d))
-                } else {
-                  props.setDealerStates([...props.dealerStates, d])
-                }
-            }}
-            >
-              {DealerStatesLabels[d]}
-            </Button>
+          return (
+            <div key={d + `${i}`} className={classes.checkboxRow}>
+              <Checkbox
+                checked={checked}
+                onChange={() => onChange(d)}
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(undefined)}
+                classes={{
+                  root: clsx(
+                    classes.checkbox,
+                    checked
+                      ? classes.checkboxSelected
+                      : null,
+                    highlight && classes.hoverCheckbox,
+                  ),
+                }}
+              />
+              <span
+                className={highlight && classes.linkHover}
+                onClick={() => onChange(d)}
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(undefined)}
+              >
+                {DealerStatesLabels[d]}
+              </span>
+            </div>
           )
         })
       }

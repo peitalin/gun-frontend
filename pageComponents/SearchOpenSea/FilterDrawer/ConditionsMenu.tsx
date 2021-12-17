@@ -1,7 +1,7 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import {
   Colors,
   isThemeDark,
@@ -12,6 +12,9 @@ import Button from "@material-ui/core/Button";
 import {
   Condition,
 } from "typings/gqlTypes";
+import Checkbox from '@material-ui/core/Checkbox';
+import { ClassSharp } from "@material-ui/icons";
+
 
 
 
@@ -21,46 +24,58 @@ const ConditionsMenu: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
+  const [hover, setHover] = React.useState(undefined)
+
+  const onChange = (d: Condition) => {
+    if (d === Condition.ALL_CONDITIONS) {
+      props.setConditions([])
+      return
+    }
+    if (props.conditions.includes(d)) {
+      props.setConditions(props.conditions.filter(state => state !== d))
+    } else {
+      props.setConditions([...props.conditions, d])
+    }
+  }
 
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexRow)}>
       {
         conditionsDropdownItems.map((d, i) => {
 
-          // let isDisabled = !availableConditions.includes(d)
-
-          let allStates = d === Condition.ALL_CONDITIONS
+          let allConditions = d === Condition.ALL_CONDITIONS
             && props.conditions?.length === 0
 
-          return (
-            <Button
-              key={d + `${i}`}
-              classes={{
-                root: clsx(
-                  classes.buttonRoot,
-                  (props.conditions?.includes(d) || allStates)
-                    && classes.buttonSelected,
-                  // !isDisabled && classes.activeButton,
-                )
-              }}
-              // disabled={isDisabled}
-              variant="outlined"
-              onClick={() => {
-                console.log("setting: ", d)
-                if (d === Condition.ALL_CONDITIONS) {
-                  props.setConditions([])
-                  return
-                }
+          let checked = props.conditions.includes(d) || allConditions
 
-                if (props.conditions.includes(d)) {
-                  props.setConditions(props.conditions.filter(state => state !== d))
-                } else {
-                  props.setConditions([...props.conditions, d])
-                }
-            }}
-            >
-              {ConditionsLabels[d]}
-            </Button>
+          let highlight = hover === i
+
+          return (
+            <div key={d + `${i}`} className={classes.checkboxRow}>
+              <Checkbox
+                checked={checked}
+                onChange={() => onChange(d)}
+                classes={{
+                  root: clsx(
+                    classes.checkbox,
+                    checked
+                      ? classes.checkboxSelected
+                      : null,
+                    highlight && classes.hoverCheckbox,
+                  )
+                }}
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(undefined)}
+              />
+              <span
+                className={highlight && classes.linkHover}
+                onClick={() => onChange(d)}
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(undefined)}
+              >
+                {ConditionsLabels[d]}
+              </span>
+            </div>
           )
         })
       }

@@ -46,19 +46,21 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
     classes,
     openDrawer,
     setOpenDrawer,
+    isMobile = false,
   } = props;
 
   const theme = useTheme();
 
-  const [expanded0, setExpanded0] = React.useState(true)
-  const [expanded1, setExpanded1] = React.useState(true)
-  const [expanded2, setExpanded2] = React.useState(true)
-  const [expanded3, setExpanded3] = React.useState(true)
-
   return (
-    <div className={classes.drawerSticky}>
+    <div className={clsx(
+      classes.drawerSticky,
+      (isMobile && openDrawer) && classes.drawerFixedMobile,
+    )}>
 
-      <div className={classes.drawerHeaderSpacer}>
+      <div className={clsx(
+        classes.drawerHeaderSpacer,
+        props.isMobile ?? classes.drawerHeaderSpacerMobile,
+      )}>
         <div className={classes.drawerHeader}>
           <div className={clsx(
             openDrawer ? "fadeInFast": "hidden",
@@ -78,7 +80,9 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 
       <div className={clsx(
         classes.drawerPaper,
-        openDrawer ? classes.drawerOpen : classes.drawerClose,
+        isMobile
+          ? openDrawer ? classes.drawerOpenMobile : classes.drawerCloseMobile
+          : openDrawer ? classes.drawerOpenDesktop : classes.drawerCloseDesktop,
       )}>
         <div className={clsx(
           classes.drawerInnerColumn,
@@ -128,7 +132,7 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
               calibers={props.calibers}
               setCalibers={props.setCalibers}
               style={{
-                height: 360,
+                height: 375,
                 width: '100%',
               }}
             />
@@ -156,6 +160,7 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   openDrawer: boolean
   setOpenDrawer(b: any): void
+  isMobile: boolean;
 
   priceRange: number[]
   setPriceRange(a?: any): void;
@@ -178,6 +183,12 @@ export const styles = (theme: Theme) => createStyles({
   drawerSticky: {
     position: 'sticky',
     top: '4rem',
+    zIndex: 1,
+  },
+  drawerFixedMobile: {
+    top: '5.4rem',
+    position: 'fixed',
+    zIndex: 2,
   },
   drawerPaper: {
     position: 'relative',
@@ -196,11 +207,17 @@ export const styles = (theme: Theme) => createStyles({
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
-  drawerClose: {
-    width: 60,
+  drawerCloseMobile: {
+    width: 0,
   },
-  drawerOpen: {
-    width: 420,
+  drawerOpenMobile: {
+    width: '100vw',
+  },
+  drawerCloseDesktop: {
+    width: 56,
+  },
+  drawerOpenDesktop: {
+    width: 360,
   },
   drawerHeaderSpacer: {
     height: FILTER_HEADER_HEIGHT,
@@ -219,6 +236,9 @@ export const styles = (theme: Theme) => createStyles({
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
     // boxShadow: BoxShadows.shadow1.boxShadow,
+  },
+  drawerHeaderSpacerMobile: {
+    marginRight: '-1rem',
   },
   drawerHeader: {
     position: 'absolute',
@@ -291,7 +311,8 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   bottomSpacer: {
-    height: '200px',
+    height: '266px',
+    // enough to scroll calibers accordion to top of filter drawer
   },
 });
 

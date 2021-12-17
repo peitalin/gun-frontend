@@ -62,31 +62,16 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
   const onClickSearch = (event) => {
     setPageParam(1) // reset to page 1 every time you hit search button
     props.setSearchTermForGql(searchTerm)
-    props.setDealerStatesForGql(dealerStates)
-    props.setConditionsForGql(conditions)
-    // console.log("options:", calibers)
-    // let flatCalibers = (calibers ?? []).flatMap(c => c.synonyms)
-    let flatCalibers = (calibers ?? []).flatMap(c => c.value)
-    // console.log("flat options:", flatCalibers)
-    // flatten list of lists of caliber synonyms
-    props.setCalibersForGql(flatCalibers)
-
-    props.setCategorySlugsForGql(
-      currentCategories?.map(c => c.slug) ?? []
-    )
   }
 
   return (
-    <div className={classes.searchContainer}>
+    <div className={clsx(
+      classes.searchContainer,
+      props.isMobile && classes.searchContainerMobile,
+    )}>
       <div className={
         props.isMobile
-        ? props.focusedOuter
-          ? clsx(
-            classes.searchContainerInnerMobile,
-            classes.searchMobileHeightFocused,
-            "fadeIn",
-          )
-          : clsx(
+        ? clsx(
             classes.searchContainerInnerMobile,
             classes.searchMobileHeight,
             "fadeIn",
@@ -94,68 +79,6 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
           )
         : classes.searchContainerInner
       }>
-
-        {/* mobile */}
-
-        {/* <SearchbarOpenSea
-          id={"category-search-1-mobile"}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          facets={facets}
-          setFacets={setFacets}
-          orderBy={orderBy}
-          setOrderBy={setOrderBy}
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
-          currentCategories={currentCategories}
-          setCurrentCategories={setCurrentCategories}
-          dealerStates={dealerStates}
-          setDealerStates={setDealerStates}
-          calibers={calibers}
-          setCalibers={setCalibers}
-          actionTypes={actionTypes}
-          setActionTypes={setActionTypes}
-          conditions={conditions}
-          setConditions={setConditions}
-          paginationParams={{
-            limit: limit,
-            offset: offset,
-            overfetchBy: overfetchBy,
-            totalCount: totalCount,
-            setTotalCount: setTotalCount,
-            pageParam: pageParam,
-            setPageParam: setPageParam,
-            index: index,
-            setIndex: setIndex,
-            debounceSetIndex: debounceSetIndex,
-          }}
-          // Category Page specific callbacks
-          disableCategoriesFilter={props.disableCategoriesFilter}
-          setCategorySlugsForGql={setCategorySlugsForGql}
-          setSearchTermForGql={setSearchTermForGql}
-          setCalibersForGql={setCalibersForGql}
-          setDealerStatesForGql={setDealerStatesForGql}
-          setConditionsForGql={setConditionsForGql}
-          initialDropdownCategories={props.initialDropdownCategories}
-          isMobile={true}
-          setFocusedOuter={setFocusedOuter}
-          focusedOuter={focusedOuter}
-        />
-
-        <div className={classes.positionRelative}>
-          <RowOrCardsButtons
-            rowMode={rowMode}
-            setRowMode={setRowMode}
-            isMobile={true}
-          />
-          <SortByDropdown
-            isMobile={true}
-            isDarkMode={isDarkMode}
-            setOrderBy={setOrderBy}
-            sortByOptions={props.sortByOptions}
-          />
-        </div> */}
-
         <SearchbarOpenSea
           id={props.id}
           searchTerm={searchTerm}
@@ -176,27 +99,37 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
           }}
           // disableSearchFilter
           isMobile={props.isMobile}
+          disableAdornment={props.isMobile}
         />
       </div>
 
       <div className={classes.flexGrow}/>
 
-      <RowOrCardsButtons
-        rowMode={props.rowMode}
-        setRowMode={props.setRowMode}
-        isMobile={false}
-      />
-      <div className={classes.positionRelative}>
-        <SortByDropdown
+      {
+        !props.isMobile &&
+        <RowOrCardsButtons
+          rowMode={props.rowMode}
+          setRowMode={props.setRowMode}
           isMobile={false}
+        />
+      }
+      <div className={
+        props.isMobile
+          ? classes.positionRelativeMobile
+          : classes.positionRelative
+      }>
+        <SortByDropdown
+          isMobile={props.isMobile}
           isDarkMode={isDarkMode}
           setOrderBy={setOrderBy}
-          sortByOptions={[
-            { label: "Newest", value: SortByNewsItems.CREATED_AT_DESC },
-            { label: "Oldest", value: SortByNewsItems.CREATED_AT_ASC },
-            { label: "Price (High)", value: SortByNewsItems.PRICE_DESC },
-            { label: "Price (Low)", value: SortByNewsItems.PRICE_ASC },
-          ]}
+          sortByOptions={
+            [
+              { label: "Newest", value: SortByNewsItems.CREATED_AT_DESC },
+              { label: "Oldest", value: SortByNewsItems.CREATED_AT_ASC },
+              { label: "Highest $", value: SortByNewsItems.PRICE_DESC },
+              { label: "Lowest $", value: SortByNewsItems.PRICE_ASC },
+            ]
+          }
         />
       </div>
     </div>
@@ -206,17 +139,9 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
 interface ReactProps extends WithStyles<typeof styles> {
   id: string;
   setSearchTermForGql(s: string): void
-  setCategorySlugsForGql(c: string[]): void
-
-  disableCategoriesFilter: boolean
-  setCalibersForGql(c: string[]): void
-  setDealerStatesForGql(c: string[]): void
-  setConditionsForGql(c: string[]): void
 
   initialDropdownCategories: Categories[];
   isMobile: boolean;
-  focusedOuter: boolean
-  setFocusedOuter(b: boolean): void;
   isDarkMode: boolean;
   rowMode: boolean
   setRowMode(a: boolean): void
@@ -225,7 +150,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   searchContainer: {
-    // padding: '0rem 1rem 1rem 1rem',
+    position: "relative",
     width: '100%',
     left: 0,
     display: 'flex',
@@ -233,8 +158,15 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
+  searchContainerMobile: {
+    flexWrap: "wrap",
+  },
   positionRelative: {
     position: "relative",
+  },
+  positionRelativeMobile: {
+    position: "relative",
+    marginBottom: '0.5rem',
   },
   flexGrow: {
     flexGrow: 1,
@@ -247,15 +179,14 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
   },
   searchContainerInnerMobile: {
-    marginTop: "-0.5rem",
-    marginBottom: "1.5rem",
+    marginBottom: "0.5rem",
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: '0rem', // offset gridOrList buttons padding Right
   },
   searchMobileHeight: {
-    height: '2rem',
+    height: '100%',
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.easeInOut,
       duration: "350ms",
