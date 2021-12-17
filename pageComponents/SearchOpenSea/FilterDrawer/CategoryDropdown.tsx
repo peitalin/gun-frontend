@@ -50,8 +50,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   const onChange = (category: Categories) => {
     if (category.slug === 'all' || !category) {
       props.setCurrentCategories([])
-    }
-    if (props.currentCategories.includes(category)) {
+    } else if (props.currentCategories.includes(category)) {
       props.setCurrentCategories(
         props.currentCategories.filter(c => c.slug !== category.slug)
       )
