@@ -91,7 +91,7 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 
           <FilterAccordionRow
             title={"Filter Categories"}
-            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+            openInitially={true}
           >
             <CategoryDropdown
               // className={clsx()}
@@ -106,7 +106,7 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 
           <FilterAccordionRow
             title={"Filter Dealer State"}
-            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+            openInitially={false}
           >
             <DealerStatesMenu
               dealerStates={props.dealerStates}
@@ -116,7 +116,7 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 
           <FilterAccordionRow
             title={"Filter Condition"}
-            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+            openInitially={false}
           >
             <ConditionsMenu
               conditions={props.conditions}
@@ -126,7 +126,7 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 
           <FilterAccordionRow
             title={"Filter Calibers"}
-            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+            openInitially={false}
           >
             <CaliberMenu
               calibers={props.calibers}
@@ -192,7 +192,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   drawerPaper: {
     position: 'relative',
-    height: `calc(100vh - ${MainBarHeight}px - ${FILTER_HEADER_HEIGHT}px - 0.5rem)`,
+    // height: '100%',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
@@ -251,6 +251,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   drawerInnerColumn: {
+    height: `calc(100vh)`,
   },
   accordion: {
     boxShadow: 'unset',
