@@ -1,27 +1,19 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-import ArrowStripeIcon from "components/ArrowStripeIcon";
-// Router
-import { useRouter } from 'next/router';
-// SSR
-import { NextPage, NextPageContext } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import Link from "next/link";
+import StripeArrowButton from "components/StripeArrowButton";
 
 
 
-const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
+const BannerTrendingLinkMobile: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -74,27 +66,10 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
             </div>
           </div>
           <div className={classes.bannerInnerBoxRightMobile}>
-            <Link href={props.link}>
-              <a>
-                <Button
-                  className={
-                      clsx(
-                        classes.buttonGoToPromotions,
-                        classes.buttonHeightMobile
-                      )
-                  }
-                  variant="text"
-                  color="primary"
-                  classes={{
-                    label: classes.buttonLabelDesktop,
-                  }}
-                >
-                  <ArrowStripeIcon
-                    title={props.buttonText}
-                  />
-                </Button>
-              </a>
-            </Link>
+            <StripeArrowButton
+              href={props.link}
+              title={props.buttonText}
+            />
           </div>
         </div>
       </Banner>

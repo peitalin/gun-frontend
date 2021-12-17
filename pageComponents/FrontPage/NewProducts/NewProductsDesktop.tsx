@@ -46,7 +46,6 @@ const NewProductsDesktop = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   const newsItemPreviews = connection?.edges?.map(edge => createNewsItemForProductPreview(edge.node))
-  console.log('nnnn', newsItemPreviews)
 
   return (
     <main className={classes.root}>

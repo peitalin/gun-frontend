@@ -7,23 +7,11 @@ import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-// import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowStripeIcon from "components/ArrowStripeIcon"
-// Router
-import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-import { UserPrivate } from "typings/gqlTypes";
-import Link from "next/link";
-
+import StripeArrowButton from "components/StripeArrowButton";
 
 
 const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
@@ -74,32 +62,15 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
           <div className={classes.bannerInnerBoxRightMobile}>
             <div className={classes.mainTitleContainerMobile}>
               <Typography variant={"h2"} className={classes.mainTitleXs}>
-                List your products
+                Promote your products
               </Typography>
             </div>
           </div>
           <div className={classes.bannerInnerBoxRightMobile}>
-            <Link href={"/promotions"}>
-              <a>
-                <Button
-                  className={
-                      clsx(
-                        classes.buttonGoToPromotions,
-                        classes.buttonHeightMobile
-                      )
-                  }
-                  variant="text"
-                  color="primary"
-                  classes={{
-                    label: classes.buttonLabelDesktop,
-                  }}
-                >
-                  <ArrowStripeIcon
-                    title={"Go Now"}
-                  />
-                </Button>
-              </a>
-            </Link>
+            <StripeArrowButton
+              href={"/promotions"}
+              title={"Go Now"}
+            />
           </div>
         </div>
       </Banner>

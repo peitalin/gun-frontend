@@ -1,26 +1,21 @@
 import React from "react";
 import clsx from "clsx";
 // styles
-import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius2x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-// Router
-import { useRouter } from 'next/router';
-// SSR
-import { NextPage, NextPageContext } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Link from "next/link";
-import ArrowStripeIcon from "components/ArrowStripeIcon";
+import StripeArrowButton from "components/StripeArrowButton";
 
 
 
-const BannerTrendingLink: NextPage<ReactProps> = (props) => {
+const BannerTrendingLink: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -75,27 +70,10 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
               {props.subheadingDesktop}
           </Typography>
           <div className={classes.buttonBox}>
-            <Link href={props.link}>
-              <a>
-                <Button
-                  className={
-                    clsx(
-                      classes.buttonGoToPromotions,
-                      classes.buttonHeightDesktop,
-                    )
-                  }
-                  variant="text"
-                  color="primary"
-                  classes={{
-                    label: classes.buttonLabelDesktop,
-                  }}
-                >
-                  <ArrowStripeIcon
-                    title={props.buttonText}
-                  />
-                </Button>
-              </a>
-            </Link>
+            <StripeArrowButton
+              href={props.link}
+              title={props.buttonText}
+            />
           </div>
         </div>
         <div className={clsx(

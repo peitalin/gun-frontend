@@ -7,23 +7,12 @@ import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-// Router
-import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { UserPrivate } from "typings/gqlTypes";
-import Link from "next/link";
-import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from '@material-ui/core/Tooltip';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowStripeIcon from "../../../components/ArrowStripeIcon";
+import StripeArrowButton from "components/StripeArrowButton";
 
 
 
@@ -74,36 +63,17 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
         )}>
           <div className={classes.mainTitleContainer}>
             <Typography className={classes.mainTitle}>
-              List your products
+              Promote your products
             </Typography>
           </div>
           <Typography variant={"subtitle2"} className={classes.subline1}>
             Feature your product on the front page.
           </Typography>
-          <div className={classes.buttonBox}>
-            <Link href={"/promotions"}>
-              <a>
-                <Button
-                  className={
-                    clsx(
-                      classes.buttonGoToPromotions,
-                      classes.buttonHeightDesktop,
-                    )
-                  }
-                  variant="text"
-                  color="primary"
-                  classes={{
-                    label: classes.buttonLabelDesktop,
-                  }}
-                >
-                  <ArrowStripeIcon
-                    title={"Go Now"}
-                  />
-                  {/* <ArrowForwardIcon/> */}
-                </Button>
-              </a>
-            </Link>
-          </div>
+          <StripeArrowButton
+            style={{ marginTop: "1rem" }}
+            href={"/promotions"}
+            title={"Go Now"}
+          />
         </div>
         <div className={clsx(
           classes.bannerInnerBoxRight,
