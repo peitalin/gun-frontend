@@ -5,20 +5,12 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import {
   Colors,
   BorderRadius4x,
-  BorderRadius3x,
   BorderRadius2x,
   BorderRadius,
   Gradients,
   BoxShadows
 } from "layout/AppTheme";
-// theme
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-// MUI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 import Button from "@material-ui/core/Button";
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Link from "next/link";
 // Graphql
 import { useQuery } from '@apollo/client';
@@ -52,13 +44,17 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
   let categoriesRemovedItems = categoryPreviewsBackup.filter(c => c.slug !== 'items')
 
-  let categoriesDropdownItems = props.syncUrlToCategory
-    ? [ ...(categoriesRemovedItems ?? []) ]
-    : [
-        { id: undefined, slug: 'all', name: "All Categories" },
-        ...(categoriesRemovedItems ?? []),
-      ]
+  // let categoriesDropdownItems = props.syncUrlToCategory
+  //   ? [ ...(categoriesRemovedItems ?? []) ]
+  //   : [
+  //       { id: undefined, slug: 'all', name: "All Categories" },
+  //       ...(categoriesRemovedItems ?? []),
+  //     ]
 
+  let categoriesDropdownItems = [
+    ...(categoriesRemovedItems ?? []),
+    { id: undefined, slug: 'all', name: "All Categories" },
+  ]
   // let selectedCategory = props.currentCategories?.[0]
 
   return (
@@ -67,12 +63,6 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
         props.className,
       )}
     >
-      {/* <div className={classes.categoryTitleText}>
-        <span className={classes.iconText}>
-          { selectedCategory?.name || "Category" }
-        </span>
-        <KeyboardArrowDown className={classes.dropdownArrow}/>
-      </div> */}
       <div className={classes.categoryDropdownContainer}>
         <div className={classes.categoryButtonsContainer}>
           {
@@ -172,14 +162,12 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   categoryDropdownRoot: {
     position: "relative",
-    borderRadius: BorderRadius4x,
+    // borderRadius: BorderRadius4x,
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
     cursor: 'pointer',
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
+    width: "100%",
   },
   categoryTitleText: {
     color: theme.palette.type === 'dark'
@@ -230,6 +218,9 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.black,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,

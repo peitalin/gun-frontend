@@ -238,8 +238,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
         <div className={clsx(
           classes.arrowContainer,
           classes.height50,
-          // (floatPaginator) && classes.arrowContainerMobile,
-          // (floatPaginator) ? 'alphaInFast' : undefined,
           classes.arrowContainerMobile,
           'alphaInFast',
           isMobile && classes.marginTop,
@@ -646,7 +644,8 @@ const styles = (theme: Theme) => createStyles({
   },
   arrowContainerMobile: {
     position: "fixed",
-    left: 'calc(50% - 186px)', // width of paginator bar is 373px, half that is 186px
+    left: '50%',
+    transform: 'translateX(-50%)',
     bottom: '1rem',
     zIndex: 1,
     // border: theme.palette.type === 'dark'

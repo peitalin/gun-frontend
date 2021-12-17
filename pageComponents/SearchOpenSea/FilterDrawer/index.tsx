@@ -28,6 +28,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CollectionsIcon from '@material-ui/icons/Collections';
 
 import FilterListIcon from '@material-ui/icons/FilterList';
+import FilterAccordionRow from "./FilterAccordionRow";
 
 // Select Component
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
@@ -48,6 +49,11 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
+
+  const [expanded0, setExpanded0] = React.useState(true)
+  const [expanded1, setExpanded1] = React.useState(true)
+  const [expanded2, setExpanded2] = React.useState(true)
+  const [expanded3, setExpanded3] = React.useState(true)
 
   return (
     <div className={classes.drawerSticky}>
@@ -74,69 +80,73 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
         classes.drawerPaper,
         openDrawer ? classes.drawerOpen : classes.drawerClose,
       )}>
-        <div className={classes.drawerInnerColumn}>
+        <div className={clsx(
+          classes.drawerInnerColumn,
+          openDrawer ? "fadeInFast" : "hidden",
+        )}>
 
-          <div className={openDrawer ? "fadeInFast" : "hidden"}>
-
-            <MenuItem  className={classes.menuItem}>
-              <CollectionsIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}>Categories </span>
-            </MenuItem>
+          <FilterAccordionRow
+            title={"Filter Categories"}
+            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+          >
             <CategoryDropdown
-              className={clsx(
-                // // focused ? classes.height65 : classes.height50,
-                // classes.height50,
-                // isMobile ? classes.searchFilterButtonMobile : classes.searchFilterButtonDesktop,
-                // (isMobile && !focused) && classes.displayNoneDelayed,
-                // // hide on mobile when not focused
-                // categoryFocused && classes.boxShadow,
-              )}
+              // className={clsx()}
               syncUrlToCategory={true}
               currentCategories={props.currentCategories}
               setCurrentCategories={(categories) => {
                 props.setCurrentCategories(categories)
               }}
             />
+          </FilterAccordionRow>
 
-            <MenuItem  className={classes.menuItem}>
-              <CollectionsIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}>Price Range</span>
-            </MenuItem>
-            <SearchOptionsPriceFilter
-              setPriceRange={props.setPriceRange}
-            />
 
-            <MenuItem  className={classes.menuItem}>
-              <CollectionsIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}>Filter Dealer State </span>
-            </MenuItem>
+          <FilterAccordionRow
+            title={"Filter Dealer State"}
+            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+          >
             <DealerStatesMenu
               dealerStates={props.dealerStates}
               setDealerStates={props.setDealerStates}
             />
+          </FilterAccordionRow>
 
-            <MenuItem  className={classes.menuItem}>
-              <CollectionsIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}>Filter Condition </span>
-            </MenuItem>
+          <FilterAccordionRow
+            title={"Filter Condition"}
+            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+          >
             <ConditionsMenu
               conditions={props.conditions}
               setConditions={props.setConditions}
             />
+          </FilterAccordionRow>
 
-
-            <MenuItem  className={classes.menuItem}>
-              <CollectionsIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}>Filter Calibers </span>
-            </MenuItem>
+          <FilterAccordionRow
+            title={"Filter Calibers"}
+            // titleIcon={<CollectionsIcon className={classes.menuIcon}/>}
+          >
             <CaliberMenu
               calibers={props.calibers}
               setCalibers={props.setCalibers}
+              style={{
+                height: 360,
+                width: '100%',
+              }}
             />
+          </FilterAccordionRow>
 
-            <div className={classes.bottomSpacer}></div>
 
-          </div>
+          <FilterAccordionRow
+            title={"Price Range"}
+            openInitially={false}
+            disabled
+          >
+            <SearchOptionsPriceFilter
+              setPriceRange={props.setPriceRange}
+            />
+          </FilterAccordionRow>
+
+          <div className={classes.bottomSpacer}></div>
+
         </div>
       </div>
     </div>
@@ -221,8 +231,22 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   drawerInnerColumn: {
-    // height: '150vh',
-    // overflowY: "scroll",
+  },
+  accordion: {
+    boxShadow: 'unset',
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+  },
+  accordionHeader: {
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+  },
+  accordionDetails: {
+    backgroundColor: isThemeDark(theme)
+      ? `${Colors.uniswapNavy}`
+      : `${Colors.slateGrey}`,
   },
   flexGrow: {
     flexGrow: 1,
@@ -233,8 +257,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   title: {
-    fontSize: '1rem',
-    fontWeight: 500,
+    fontSize: '1.125rem',
+    fontWeight: 600,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
@@ -267,7 +291,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   bottomSpacer: {
-    height: '300px',
+    height: '200px',
   },
 });
 

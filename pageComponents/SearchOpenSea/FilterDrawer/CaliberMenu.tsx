@@ -7,7 +7,7 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 import { styles } from "./styles";
-import DropdownInput from "components/Fields/DropdownInput";
+import CaliberDropdown from "components/Fields/CaliberDropdown";
 import {
   Calibers,
   CaliberGroup,
@@ -48,8 +48,10 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
   })
 
   return (
-    <div className={clsx(classes.innerColumn, classes.innerColumnFlexCol)}>
-      <DropdownInput
+    <div className={clsx(classes.innerColumn, classes.innerColumnFlexCol)}
+      style={props.style}
+    >
+      <CaliberDropdown
         // className={classes.caliberDropdown}
         menuIsOpen={true}
         menuPlacement={"bottom"} // bottom | top | auto
@@ -164,7 +166,7 @@ export interface GroupedSelectOption {
 interface ReactProps extends WithStyles<typeof styles> {
   calibers?: SelectOptionCaliber[];
   setCalibers(c: SelectOptionCaliber[]): void;
-  // setCalibers(c: string[]): void;
+  style?: any
 }
 
 interface QData3 {

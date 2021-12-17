@@ -38,6 +38,9 @@ export const styles = (theme: Theme) => createStyles({
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     // flexGrow: 1,
     flexBasis: '48%',
     "&:hover": {

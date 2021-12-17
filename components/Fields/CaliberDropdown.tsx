@@ -21,27 +21,15 @@ const CaliberDropdown = (props: ReactProps) => {
   const isDarkMode = isThemeDark(theme)
 
   const {
-    // Formik
-    errorMessage,
-    touched = false,
-    disableInitialValidationMessage = false,
-    // CreatableSelect
-    creatable = false,
     isMulti = false,
     isSearchable = true,
     isClearable = false,
     height = 40,
-    limit,
     classes,
     onChange,
     options,
-    delimiter,
-    validationErrorMsgStyle,
     placeholder = "Select an option",
-    ...rest
   } = props;
-
-  let errorInputColor = selectErrorColor(errorMessage, touched)
 
   // // Redux State, for UI updates
   // // Keep separate from Redux updates, which have different data structure
@@ -60,14 +48,11 @@ const CaliberDropdown = (props: ReactProps) => {
         value={state}
         onMenuOpen={props.onMenuOpen}
         onChange={(e) => {
-          // console.log('e: "', e)
           if (e?.length > props.itemLimit) {
             snackbar.enqueueSnackbar(
               `Cannot choose more than ${props.itemLimit}`,
               { variant: 'info'}
             )
-            // setState(e.slice(0, props.itemLimit))
-            // onChange(e.slice(0, props.itemLimit))
             return
           }
           setState(e)
@@ -91,8 +76,6 @@ const CaliberDropdown = (props: ReactProps) => {
         classes={{
           input: clsx(
             classes.input,
-            errorInputColor === "red" ? classes.errorInput : null,
-            errorInputColor === "grey" ? classes.errorInputUntouched : null,
           ),
           multiline: classes.selectMultiline,
         }}
@@ -115,94 +98,97 @@ const CaliberDropdown = (props: ReactProps) => {
               },
             })
         }
-        styles={
-          props.styles
-          ? props.styles
-          : {
-              input: styles => ({
-                color: props.hideCursor
-                  ? 'transparent'
-                  : isThemeDark(theme)
-                    ? Colors.uniswapLightGrey
-                    : Colors.slateGreyBlack
-              }),
-              placeholder: styles => ({
-                ...styles,
-                fontWeight: 400,
-                fontFamily: fontFam,
-                whiteSpace: 'nowrap',
-                color: Colors.grey,
-              }),
-              singleValue: styles => ({
-                ...styles,
-                color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                maxWidth: '250px',
-              }),
-              multiValue: styles => ({
-                ...styles,
-                color: isDarkMode ? Colors.cream : Colors.cream,
-                backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
-              }),
-              multiValueLabel: styles => ({
-                ...styles,
-                fontWeight: 500,
-                color: isDarkMode ? Colors.cream : Colors.cream,
-              }),
-              multiValueRemove: styles => ({
-                ...styles,
-                cursor: "pointer",
-              }),
-              indicatorSeparator: styles => ({
-                ...styles,
-                backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
-                display: props.hideButton ? "none" : "inherit",
-              }),
-              indicatorsContainer: styles => ({
-                ...styles,
-                color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
-                cursor: "pointer",
-                display: props.hideButton ? "none" : "inherit",
-              }),
-              container: styles => ({
-                ...styles,
-                height: height,
-                borderRadius: BorderRadius,
-              }),
-              menu: styles => ({
-                ...styles,
-                zIndex: 10,
-                marginTop: '2px',
-                cursor: "pointer",
-                "&:hover": {
-                  cursor: "pointer",
-                },
-                color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
-                background: isDarkMode
-                  ? Colors.uniswapMediumNavy
-                  : Colors.slateGrey,
-              }),
-              menuList: styles => ({
-                ...styles,
-                maxHeight: '315px',
-              }),
-              control: (base, state) => ({
-                ...base,
-                background: isDarkMode
-                  ? Colors.uniswapMediumNavy
-                  : Colors.slateGrey,
-                // // match with the menu
-                cursor: "text",
-                borderRadius: BorderRadius,
-                height: '100%',
-                border: isDarkMode
-                  ? `1px solid ${Colors.uniswapMediumGrey}`
-                  : `1px solid ${Colors.slateGreyDarker}`,
-              }),
-          }
-        }
+        styles={{
+          input: styles => ({
+            color: props.hideCursor
+              ? 'transparent'
+              : isThemeDark(theme)
+                ? Colors.uniswapLightGrey
+                : Colors.slateGreyBlack,
+          }),
+          placeholder: styles => ({
+            ...styles,
+            fontWeight: 400,
+            fontFamily: fontFam,
+            whiteSpace: 'nowrap',
+            color: Colors.grey,
+          }),
+          singleValue: styles => ({
+            ...styles,
+            color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            maxWidth: '250px',
+          }),
+          multiValue: styles => ({
+            ...styles,
+            color: isDarkMode ? Colors.cream : Colors.cream,
+            backgroundColor: isDarkMode ? Colors.purple : Colors.blue,
+          }),
+          multiValueLabel: styles => ({
+            ...styles,
+            fontWeight: 500,
+            color: isDarkMode ? Colors.cream : Colors.cream,
+          }),
+          multiValueRemove: styles => ({
+            ...styles,
+            cursor: "pointer",
+          }),
+          indicatorSeparator: styles => ({
+            ...styles,
+            backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
+            // display: props.hideButton ? "none" : "inherit",
+            display: "none",
+          }),
+          indicatorsContainer: styles => ({
+            ...styles,
+            color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+            cursor: "pointer",
+            // display: props.hideButton ? "none" : "inherit",
+            display: "none",
+          }),
+          container: styles => ({
+            ...styles,
+            height: height,
+            borderRadius: BorderRadius,
+          }),
+          menu: styles => ({
+            ...styles,
+            zIndex: 10,
+            marginTop: '0.5rem',
+            cursor: "pointer",
+            "&:hover": {
+              cursor: "pointer",
+            },
+            color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
+            background: isDarkMode
+              ? Colors.uniswapDarkNavy
+              : Colors.cream,
+            boxShadow: "unset",
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapGrey}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+          }),
+          menuList: styles => ({
+            ...styles,
+            maxHeight: '315px',
+          }),
+          control: (base, state) => ({
+            ...base,
+            cursor: "text",
+            borderRadius: BorderRadius,
+            height: '100%',
+            background: isDarkMode
+              ? Colors.uniswapDarkNavy
+              : Colors.cream,
+            boxShadow: "unset",
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapGrey}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+          }),
+          ...props.styles,
+        }}
         inputRef={ref}
       />
 
@@ -210,36 +196,14 @@ const CaliberDropdown = (props: ReactProps) => {
   )
 }
 
-const selectErrorColor = (
-  errorMessage: string,
-  touched: boolean,
-) => {
-  if (!touched) {
-    return "grey"
-  }
-  if (!errorMessage) {
-    return "none"
-  }
-  if (errorMessage && touched) {
-    return "red"
-  } else {
-    return "none"
-  }
-}
-
 
 interface ReactProps extends WithStyles<typeof styles> {
-  errorMessage?: string;
-  touched?: boolean; // sets error colors as grey if not-touched, red if so
   initialState: any;
   onChange(...args: any): void;
   onMenuOpen(...args: any): void;
   isMulti?: boolean;
-  limit?: { count: number, max: number };
   options: SelectOption[];
   placeholder: string;
-  delimiter?: string;
-  disableInitialValidationMessage?: boolean;
   inputId?: string;
   className?: any;
   isSearchable?: boolean;
