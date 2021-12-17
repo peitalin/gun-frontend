@@ -20,7 +20,7 @@ const SearchbarPriceFilter = (props: SearchbarProps) => {
   const [borderRadius, setBorderRadius] = React.useState(false);
 
   const minPrice = 0
-  const maxPrice = 10000; //cents
+  const maxPrice = 100000; //cents
 
   const handleClick = (e) => {
     if (!expand) {
@@ -116,7 +116,7 @@ const SearchExpander = (props) => {
 
 
 interface SearchbarProps extends WithStyles<typeof styles> {
-  setPriceRange?(a: number|number[]): void;
+  setPriceRange(a: number|number[]): void;
 }
 
 // const MAX_INPUT_WIDTH = 'calc(100vw - 2rem)';
@@ -126,6 +126,9 @@ let styles = (theme: Theme) => createStyles({
   root: {
     display: "flex",
     alignItems: "center",
+    marginLeft: '1rem',
+    marginBottom: '2rem',
+    marginTop: '1rem',
     // cursor: 'pointer',
     minWidth: 40,
   },

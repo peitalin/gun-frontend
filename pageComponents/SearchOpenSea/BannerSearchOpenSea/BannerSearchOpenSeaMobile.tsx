@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 
 
 
-const BannerSearchMobile: NextPage<ReactProps> = (props) => {
+const BannerSearchOpenSeaMobile: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -112,7 +112,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   isExpanded: boolean
 }
 
-export default withStyles(styles)( BannerSearchMobile );
+export default withStyles(styles)( BannerSearchOpenSeaMobile );
 
 
 

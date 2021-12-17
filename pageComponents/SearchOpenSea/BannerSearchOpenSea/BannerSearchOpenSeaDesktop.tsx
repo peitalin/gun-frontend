@@ -15,11 +15,10 @@ import { NextPage, NextPageContext } from 'next';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
-import StripeArrowButton from "components/StripeArrowButton";
 
 
 
-const BannerSearch: NextPage<ReactProps> = (props) => {
+const BannerSearchOpenSeaDesktop: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -29,7 +28,6 @@ const BannerSearch: NextPage<ReactProps> = (props) => {
     categorySlug,
   } = props;
 
-  const [hoverStripeArrow, setHoverStripeArrow] = React.useState(false)
 
   const router = useRouter()
   const theme = useTheme();
@@ -62,7 +60,6 @@ const BannerSearch: NextPage<ReactProps> = (props) => {
         }}
         bannerContainerStyles={{
           margin: '1rem',
-          maxWidth: '1160px',
           borderRadius: BorderRadius3x,
           border: isThemeDark(theme)
             ? `1px solid ${Colors.uniswapLightNavy}`
@@ -84,13 +81,6 @@ const BannerSearch: NextPage<ReactProps> = (props) => {
           <Typography variant={"subtitle2"} className={classes.subline1}>
             {props.blurb}
           </Typography>
-
-          <StripeArrowButton
-            style={{ marginTop: "1rem", maxWidth: 220 }}
-            buttonStyle={{ backgroundColor: Colors.black1A }}
-            href={"/new2"}
-            title={"Try New Search UI"}
-          />
         </div>
         <div className={clsx(
           classes.bannerInnerBoxRight,
@@ -107,7 +97,6 @@ const BannerSearch: NextPage<ReactProps> = (props) => {
             />
           }
         </div>
-
 
     </Banner>
       {props.children}
@@ -129,7 +118,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)( BannerSearch );
+export default withStyles(styles)( BannerSearchOpenSeaDesktop );
 
 
 

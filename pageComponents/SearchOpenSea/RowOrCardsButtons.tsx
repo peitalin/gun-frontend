@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius3x, Colors } from "layout/AppTheme";
+import { BorderRadius3x, BorderRadius4x, Colors } from "layout/AppTheme";
 // Typings
 import {
 } from "typings/gqlTypes";
@@ -66,30 +66,30 @@ export const styles = (theme: Theme) => createStyles({
   rowToggleContainerMobile: {
     display: 'flex',
     flexDirection: 'column',
-    position: 'absolute',
-    top: '0.5rem',
-    right: '0.5rem',
-    zIndex: 1,
+    // position: 'absolute',
+    // top: '0.5rem',
+    // right: '0.5rem',
+    // zIndex: 1,
   },
   rowToggleContainerDesktop: {
-    width: '100%',
-    padding: '0rem 1rem',
+    // width: '100%',
+    padding: '0rem 0.5rem',
     // marginBottom: '0.5rem',
     // marginTop: '-1.4rem',
-    position: 'absolute',
-    top: '0.5rem',
-    right: '0.5rem',
+    // position: 'absolute',
+    // top: '0.5rem',
+    // right: '0.5rem',
   },
   listOrGridContainer: {
     display: "flex",
     flexDirection: "row",
     // width: '100%',
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
   },
   listOrGridButtonLeft: {
-    height: 48,
-    width: 48,
-    borderRadius: `${BorderRadius3x}px 0px 0px ${BorderRadius3x}px`,
+    height: 50,
+    width: 50,
+    borderRadius: `${BorderRadius4x}px 0px 0px ${BorderRadius4x}px`,
     background: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.darkWhite}`,
@@ -109,10 +109,10 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   listOrGridButtonRight: {
-    height: 48,
-    width: 48,
-    // borderRadius: BorderRadius3x,
-    borderRadius: `0px ${BorderRadius3x}px ${BorderRadius3x}px 0px`,
+    height: 50,
+    width: 50,
+    // borderRadius: BorderRadius4x,
+    borderRadius: `0px ${BorderRadius4x}px ${BorderRadius4x}px 0px`,
     background: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.darkWhite}`,
@@ -132,13 +132,13 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   listOrGridIconSelected: {
-    borderRadius: BorderRadius3x,
+    borderRadius: BorderRadius4x,
     fill: theme.palette.type === 'dark'
       ? Colors.purple
       : Colors.gradientUniswapBlue1,
   },
   listOrGridIcon: {
-    borderRadius: BorderRadius3x,
+    borderRadius: BorderRadius4x,
   },
 });
 

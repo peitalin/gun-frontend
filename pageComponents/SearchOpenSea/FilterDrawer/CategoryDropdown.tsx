@@ -1,7 +1,7 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import {
   Colors,
   BorderRadius4x,
@@ -38,9 +38,6 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
-  const theme = useTheme();
-  // const smDown = useMediaQuery(theme.breakpoints.down("sm"));
-
   // Apollo Graphql
   // const categoryData = useQuery<{ getCategories: Categories[] }, null>(
   //   GET_CATEGORIES,
@@ -62,88 +59,32 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
         ...(categoriesRemovedItems ?? []),
       ]
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen((prev) => !prev);
-    props.setFocused(true)
-    props.setMobileFocused(true)
-  };
-
-  const handleClickAway = () => {
-    // console.log("clicked away")
-    setOpen(false);
-    props.setFocused(false)
-  };
-
-  let selectedCategory = props.currentCategories?.[0]
-  // console.log("dropDownItems: ", dropDownItems)
-  // console.log("currentCategories: ", props.currentCategories)
-  // console.log('selectedCategory: ', selectedCategory)
+  // let selectedCategory = props.currentCategories?.[0]
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <div className={clsx(
-          classes.categoryDropdownRoot,
-          props.className,
-        )}
-        onClick={handleClick}
-      >
-
-        <div className={classes.categoryTitleText}>
-          <span className={classes.iconText}>
-            { selectedCategory?.name || "Category" }
-          </span>
-          <KeyboardArrowDown className={classes.dropdownArrow}/>
-        </div>
-
-        {
-          open &&
-          <div className={classes.categoryDropdownContainer}>
-            <div className={classes.categoryButtonsContainer}>
-              {
-                props.syncUrlToCategory
-                ? categoriesDropdownItems.map((category, i) => {
-                    // a category change triggers a route change
-                    // if we enable syncUrlToCategory
-                    return (
-                      <Link key={category.name + `${i}`}
-                        href={`/new?category=${category?.slug}`}
-                      >
-                        <a>
-                          <Button
-                            key={category.name + `${i}`}
-                            classes={{
-                              root: clsx(
-                                classes.buttonRoot,
-                                (props.currentCategories ?? []).find(c => category?.id === c?.id)
-                                  ? classes.buttonSelected
-                                  : null,
-                              )
-                            }}
-                            variant="outlined"
-                            onClick={() => {
-                              // console.log("setting: ", category)
-                              if (category.slug === 'all') {
-                                props.setCurrentCategories([])
-                              } else {
-                                props.setCurrentCategories([category as any])
-                              }
-                              // if (category.slug) {
-                              // } else {
-                              //   // all-categories, empty category filters
-                              //   props.setCurrentCategories([])
-                              // }
-                            }}
-                          >
-                            {category.name}
-                          </Button>
-                        </a>
-                      </Link>
-                    )
-                  })
-                : categoriesDropdownItems.map((category, i) => {
-                    return (
+    <div className={clsx(
+        classes.categoryDropdownRoot,
+        props.className,
+      )}
+    >
+      {/* <div className={classes.categoryTitleText}>
+        <span className={classes.iconText}>
+          { selectedCategory?.name || "Category" }
+        </span>
+        <KeyboardArrowDown className={classes.dropdownArrow}/>
+      </div> */}
+      <div className={classes.categoryDropdownContainer}>
+        <div className={classes.categoryButtonsContainer}>
+          {
+            props.syncUrlToCategory
+            ? categoriesDropdownItems.map((category, i) => {
+                // a category change triggers a route change
+                // if we enable syncUrlToCategory
+                return (
+                  <Link key={category.name + `${i}`}
+                    href={`/new?category=${category?.slug}`}
+                  >
+                    <a>
                       <Button
                         key={category.name + `${i}`}
                         classes={{
@@ -156,27 +97,59 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                         }}
                         variant="outlined"
                         onClick={() => {
-                          console.log("setting: ", category)
+                          // console.log("setting: ", category)
                           if (category.slug === 'all') {
                             props.setCurrentCategories([])
-                          } else if (category.slug) {
-                            props.setCurrentCategories([category as any])
                           } else {
-                            // all-categories, empty category filters
-                            props.setCurrentCategories([])
+                            props.setCurrentCategories([category as any])
                           }
+                          // if (category.slug) {
+                          // } else {
+                          //   // all-categories, empty category filters
+                          //   props.setCurrentCategories([])
+                          // }
                         }}
                       >
                         {category.name}
                       </Button>
-                    )
-                  })
-              }
-            </div>
-          </div>
-        }
+                    </a>
+                  </Link>
+                )
+              })
+            : categoriesDropdownItems.map((category, i) => {
+                return (
+                  <Button
+                    key={category.name + `${i}`}
+                    classes={{
+                      root: clsx(
+                        classes.buttonRoot,
+                        (props.currentCategories ?? []).find(c => category?.id === c?.id)
+                          ? classes.buttonSelected
+                          : null,
+                      )
+                    }}
+                    variant="outlined"
+                    onClick={() => {
+                      console.log("setting: ", category)
+                      if (category.slug === 'all') {
+                        props.setCurrentCategories([])
+                      } else if (category.slug) {
+                        props.setCurrentCategories([category as any])
+                      } else {
+                        // all-categories, empty category filters
+                        props.setCurrentCategories([])
+                      }
+                    }}
+                  >
+                    {category.name}
+                  </Button>
+                )
+              })
+          }
+        </div>
       </div>
-    </ClickAwayListener>
+
+    </div>
   );
 };
 
@@ -186,8 +159,6 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
-  setFocused?(a: boolean): void;
-  setMobileFocused?(a: boolean): void;
   currentCategories?: Categories[];
   setCurrentCategories(c: Categories[]): void;
   syncUrlToCategory?: boolean;
@@ -202,7 +173,6 @@ export const styles = (theme: Theme) => createStyles({
   categoryDropdownRoot: {
     position: "relative",
     borderRadius: BorderRadius4x,
-    padding: '0rem 1rem',
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
@@ -210,30 +180,6 @@ export const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? Colors.uniswapGreyNavy
-        : Colors.slateGreyDark,
-      // borderBottom: '3px solid',
-      "& > div > span": {
-        color: theme.palette.type === 'dark'
-          ? Colors.purple
-          : Colors.blue,
-        transition: theme.transitions.create(['color'], {
-          easing: theme.transitions.easing.easeIn,
-          duration: '100ms',
-        })
-      },
-      "& > div > svg": {
-        fill: theme.palette.type === 'dark'
-          ? Colors.purple
-          : Colors.blue,
-        transition: theme.transitions.create(['fill'], {
-          easing: theme.transitions.easing.easeIn,
-          duration: '100ms',
-        })
-      },
-    },
   },
   categoryTitleText: {
     color: theme.palette.type === 'dark'
@@ -254,10 +200,11 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   categoryDropdownContainer: {
-    zIndex: 2, // above advancedSearch button
-    position: 'absolute',
+    // zIndex: 2, // above advancedSearch button
+    // position: 'absolute',
     top: '3.5rem',
-    padding: '1rem',
+    // padding: '1rem',
+    width: '100%',
     minWidth: 300,
     display: "flex",
     flexDirection: "row",
@@ -276,14 +223,6 @@ export const styles = (theme: Theme) => createStyles({
     // flexWrap: "wrap",
     padding: '1rem',
     width: '100%',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    borderRadius: BorderRadius3x,
-    boxShadow: BoxShadows.shadow5.boxShadow,
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
   },
   buttonRoot: {
     width: '100%',

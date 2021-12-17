@@ -6,17 +6,22 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { BorderRadius3x, Colors } from "layout/AppTheme";
 // Typings
 import {
-  Categories
+  Categories,
+  SortByNewsItems,
 } from "typings/gqlTypes";
 // Search Component
-import SearchbarAirbnb from "components/SearchbarAirbnb";
+import SearchbarOpenSea from "components/SearchbarOpenSea";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
+import RowOrCardsButtons from "./RowOrCardsButtons";
+import SortByDropdown from "components/SortByDropdown";
 
 
-const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
+const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props) => {
 
   const {
     classes,
+    isDarkMode,
+
     ...facetSearchParams
   } = props;
 
@@ -74,37 +79,36 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
   return (
     <div className={classes.searchContainer}>
       <div className={
-          props.isMobile
-          ? props.focusedOuter
-            ? clsx(
-              classes.searchContainerInnerMobile,
-              classes.searchMobileHeightFocused,
-              "fadeIn",
-            )
-            : clsx(
-              classes.searchContainerInnerMobile,
-              classes.searchMobileHeight,
-              "fadeIn",
-              "slideFromTop",
-            )
-          : classes.searchContainerInner
-        }
-      >
-        <SearchbarAirbnb
-          id={props.id}
+        props.isMobile
+        ? props.focusedOuter
+          ? clsx(
+            classes.searchContainerInnerMobile,
+            classes.searchMobileHeightFocused,
+            "fadeIn",
+          )
+          : clsx(
+            classes.searchContainerInnerMobile,
+            classes.searchMobileHeight,
+            "fadeIn",
+            "slideFromTop",
+          )
+        : classes.searchContainerInner
+      }>
+
+        {/* mobile */}
+
+        {/* <SearchbarOpenSea
+          id={"category-search-1-mobile"}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
-          onClickSearch={onClickSearch}
+          facets={facets}
+          setFacets={setFacets}
+          orderBy={orderBy}
           setOrderBy={setOrderBy}
+          priceRange={priceRange}
           setPriceRange={setPriceRange}
-          // facets
-          // facets={facets}
-          // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-          disableCategoriesFilter={props.disableCategoriesFilter}
-          setCurrentCategories={setCurrentCategories}
           currentCategories={currentCategories}
-          syncUrlToCategory={true}
-          // this turns on category-page specific searchbar syncing
+          setCurrentCategories={setCurrentCategories}
           dealerStates={dealerStates}
           setDealerStates={setDealerStates}
           calibers={calibers}
@@ -113,7 +117,52 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           setActionTypes={setActionTypes}
           conditions={conditions}
           setConditions={setConditions}
-          // end facets
+          paginationParams={{
+            limit: limit,
+            offset: offset,
+            overfetchBy: overfetchBy,
+            totalCount: totalCount,
+            setTotalCount: setTotalCount,
+            pageParam: pageParam,
+            setPageParam: setPageParam,
+            index: index,
+            setIndex: setIndex,
+            debounceSetIndex: debounceSetIndex,
+          }}
+          // Category Page specific callbacks
+          disableCategoriesFilter={props.disableCategoriesFilter}
+          setCategorySlugsForGql={setCategorySlugsForGql}
+          setSearchTermForGql={setSearchTermForGql}
+          setCalibersForGql={setCalibersForGql}
+          setDealerStatesForGql={setDealerStatesForGql}
+          setConditionsForGql={setConditionsForGql}
+          initialDropdownCategories={props.initialDropdownCategories}
+          isMobile={true}
+          setFocusedOuter={setFocusedOuter}
+          focusedOuter={focusedOuter}
+        />
+
+        <div className={classes.positionRelative}>
+          <RowOrCardsButtons
+            rowMode={rowMode}
+            setRowMode={setRowMode}
+            isMobile={true}
+          />
+          <SortByDropdown
+            isMobile={true}
+            isDarkMode={isDarkMode}
+            setOrderBy={setOrderBy}
+            sortByOptions={props.sortByOptions}
+          />
+        </div> */}
+
+        <SearchbarOpenSea
+          id={props.id}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onClickSearch={onClickSearch}
+          setOrderBy={setOrderBy}
+          setPriceRange={setPriceRange}
           placeholder={"Search for products..."}
           paginationParams={{
             totalCount: totalCount,
@@ -125,13 +174,29 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
             setIndex: setIndex,
             debounceSetIndex: debounceSetIndex,
           }}
-          setFocusedOuter={props.setFocusedOuter}
           // disableSearchFilter
-          disableSortby
-          disablePriceFilter
-          // disableCategories
-          maxCategoryInputWidth={250}
           isMobile={props.isMobile}
+        />
+      </div>
+
+      <div className={classes.flexGrow}/>
+
+      <RowOrCardsButtons
+        rowMode={props.rowMode}
+        setRowMode={props.setRowMode}
+        isMobile={false}
+      />
+      <div className={classes.positionRelative}>
+        <SortByDropdown
+          isMobile={false}
+          isDarkMode={isDarkMode}
+          setOrderBy={setOrderBy}
+          sortByOptions={[
+            { label: "Newest", value: SortByNewsItems.CREATED_AT_DESC },
+            { label: "Oldest", value: SortByNewsItems.CREATED_AT_ASC },
+            { label: "Price (High)", value: SortByNewsItems.PRICE_DESC },
+            { label: "Price (Low)", value: SortByNewsItems.PRICE_ASC },
+          ]}
         />
       </div>
     </div>
@@ -152,24 +217,34 @@ interface ReactProps extends WithStyles<typeof styles> {
   isMobile: boolean;
   focusedOuter: boolean
   setFocusedOuter(b: boolean): void;
+  isDarkMode: boolean;
+  rowMode: boolean
+  setRowMode(a: boolean): void
 }
 
 
 export const styles = (theme: Theme) => createStyles({
   searchContainer: {
-    maxWidth: 1160,
     // padding: '0rem 1rem 1rem 1rem',
     width: '100%',
-    bottom: '-4.25rem',
     left: 0,
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  positionRelative: {
+    position: "relative",
+  },
+  flexGrow: {
+    flexGrow: 1,
   },
   searchContainerInner: {
-    height: '3.5rem',
-    marginTop: "-2.5rem",
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingLeft: '1rem', // offset gridOrList buttons padding Right
+    // paddingLeft: '1rem', // offset gridOrList buttons padding Right
+    marginBottom: '0.5rem',
   },
   searchContainerInnerMobile: {
     marginTop: "-0.5rem",
@@ -195,7 +270,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( CategorySearchbar );
+export default withStyles(styles)( SearchbarOpenSeaWrapper );
 
 
 

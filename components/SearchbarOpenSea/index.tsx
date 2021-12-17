@@ -15,20 +15,11 @@ import {
   DealerState,
   Calibers,
 } from "typings/gqlTypes";
-// Select Component
-import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
-import CategoryDropdown from './CategoryDropdown';
-import AdvancedSearchDropdown from './AdvancedSearchDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-// Graphql
-import { GET_CATEGORIES } from "queries/categories-queries";
-import { useQuery } from '@apollo/client';
 import { SelectOptionCaliber } from "typings"
-import { useScrollYPosition } from "utils/hooks"
 
 
 
@@ -43,19 +34,13 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
     setOrderBy,
     paginationParams,
     isMobile,
-    syncUrlToCategory = false,
-    disableCategoriesFilter = false,
-    disableAdvancedSearch = false,
-    disableCalibers = false,
     disableSearchFilter = false,
-    disablePriceFilter = false,
-    disableSortby = false,
     disablePaginators = false,
   } = props;
 
   const router = useRouter();
   // const snackbar = useSnackbar();
-  let y = useScrollYPosition()
+  // let y = useScrollYPosition()
 
   const {
     totalCount,
@@ -76,9 +61,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
     if (isMobile) {
       // clickaway listerner for mobile only
       setMobileFocused(b)
-      if (props.setFocusedOuter) {
-        props.setFocusedOuter(b)
-      }
     }
   }
 
@@ -150,9 +132,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   // console.log('totalCount: ', totalCount)
   // console.log('searchTerm: ', searchTerm)
 
-  const floatPaginator = isMobile
-    ? y > 300
-    : y > 440
 
   return (
     <div className={clsx(
@@ -170,13 +149,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
         style={{ ...props.style }}
       >
 
-        {
-          isMobile && focused &&
-          <div className={classes.clickBackgroundLayer}
-            onClick={() => focusSearchOnMobile(false)}
-            id={clickBackgroundId}
-          />
-        }
 
         <div className={classes.topSection} style={props.topSectionStyles}>
           <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
@@ -190,8 +162,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               !disableSearchFilter &&
               <div className={clsx(
                 classes.searchbar,
-                // focused ? classes.height65 : classes.height50,
-                  classes.height50,
+                classes.height50,
                 searchFocused && classes.boxShadow,
               )}
                 onClick={() => searchRef.current.focus()}
@@ -206,11 +177,11 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                   // inputRef={input => {
                   // }}
                   id={searchBlurId}
-                  placeholder="Search for firearms in…"
+                  placeholder="Search for firearms…"
                   classes={{
                     root: clsx(
                       classes.inputRoot,
-                      focused ? classes.searchWide : classes.searchShort,
+                      classes.searchWide,
                     ),
                     input: classes.inputInput,
                   }}
@@ -236,77 +207,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               </div>
             }
 
-            {
-              !disableCategoriesFilter &&
-              <CategoryDropdown
-                className={clsx(
-                  // focused ? classes.height65 : classes.height50,
-                  classes.height50,
-                  isMobile ? classes.searchFilterButtonMobile : classes.searchFilterButtonDesktop,
-                  (isMobile && !focused) && classes.displayNoneDelayed,
-                  // hide on mobile when not focused
-                  categoryFocused && classes.boxShadow,
-                )}
-                syncUrlToCategory={syncUrlToCategory}
-                currentCategories={props.currentCategories}
-                setCurrentCategories={(categories) => {
-                  props.setCurrentCategories(categories)
-                }}
-                setMobileFocused={(b: boolean) => {
-                  focusSearchOnMobile(true)
-                }}
-                setFocused={(b: boolean) => {
-                  setCategoryFocused(b)
-                }}
-              />
-            }
-
-            {
-              !disableAdvancedSearch &&
-              <AdvancedSearchDropdown
-                className={clsx(
-                  // focused ? classes.height65 : classes.height50,
-                  classes.height50,
-                  isMobile ? classes.searchFilterButtonMobile2 : classes.searchFilterButtonDesktop,
-                  (isMobile && !focused) && classes.displayNoneDelayed,
-                  // hide on mobile when not focused
-                  advancedSearchFocused && classes.boxShadow,
-                )}
-                dealerStates={props.dealerStates}
-                setDealerStates={(d) => {
-                  props.setDealerStates(d)
-                }}
-                conditions={props.conditions}
-                setConditions={(c) => {
-                  props.setConditions(c)
-                }}
-                calibers={props.calibers}
-                setCalibers={(d) => {
-                  props.setCalibers(d)
-                }}
-                setMobileFocused={(b: boolean) => {
-                  focusSearchOnMobile(true)
-                }}
-                setFocused={(b: boolean) => {
-                  setAdvancedSearchFocused(b)
-                }}
-              />
-            }
-
-
-            {
-              props.setPriceRange &&
-              !disablePriceFilter &&
-              <div className={clsx(
-                classes.marginRight05,
-                (isMobile && !focused) && classes.displayNoneDelayed,
-                // hide on mobile when not focused
-              )}>
-                <SearchOptionsPriceFilter
-                  setPriceRange={props.setPriceRange}
-                />
-              </div>
-            }
 
             {props.children}
 
@@ -315,9 +215,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                 classes.searchButtonBluePurple,
                 isMobile ? classes.searchButtonMobile : classes.searchButtonDesktop,
                 (isMobile && !focused) && classes.displayNoneDelayed,
-                // hide on mobile when not focused
-                focused ? classes.searchButtonShort : classes.searchButtonWide,
-                // focused ? classes.height55 : classes.height40,
+                classes.searchButtonWide,
                 classes.height40,
               )}
               classes={{
@@ -340,7 +238,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
         <div className={clsx(
           classes.arrowContainer,
           classes.height50,
-          // focused ? classes.height65 : classes.height50,
           // (floatPaginator) && classes.arrowContainerMobile,
           // (floatPaginator) ? 'alphaInFast' : undefined,
           classes.arrowContainerMobile,
@@ -372,9 +269,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               }
               //////////////////// adding this lags page transitions
               // setIndex(page - 1)
-              if (floatPaginator) {
-                window.scrollTo({ top: 170 })
-              }
+              window.scrollTo({ top: 170 })
 
               // then update pageParams (gQL request) + index change in carousel
               // debounceSetPageParam(page)
@@ -392,70 +287,70 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
 
 
-export const selectStyles = ({ width }: { width?: any }) => ({
-  container: base => ({
-    ...base,
-    flex: 1,
-    border: 'none',
-    width: width || '175px',
-    cursor: "pointer",
-    "&:hover": {
-      cursor: "pointer",
-    },
-  }),
-  control: styles => ({
-    ...styles,
-    // border: '1px solid #eaeaea',
-    border: 'none',
-    boxShadow: 'none',
-    // background: buttonBackgroundColor,
-    backgroundColor: Colors.dropDownGrey,
-    '&:hover': {
-      border: 'none',
-      cursor: "pointer",
-      backgroundColor: Colors.dropDownGreyHover,
-    },
-    "&:focus": {
-      border: 'none',
-    },
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-    color: Colors.darkGrey,
-    // fontSize: '1rem',
-    width: '100%',
-  }),
-  singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
-    color: Colors.darkGrey,
-  }),
-  indicatorSeparator: styles => ({
-    display:'none'
-  }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    return {
-      ...styles,
-      backgroundColor: isSelected
-        ? Colors.charcoal
-        : isFocused
-          ? Colors.lightGrey
-          : Colors.dropDownGrey,
-      fontFamily: '"Helvetica Neue",Arial,sans-serif',
-      fontSize: '1rem',
-      cursor: isDisabled ? 'not-allowed' : 'pointer',
-      "&:hover": {
-        cursor: isDisabled ? 'not-allowed' : 'pointer',
-      },
-    };
-  },
-  menu: styles => ({
-    ...styles,
-    zIndex: 10,
-    marginTop: '2px',
-    cursor: "pointer",
-    "&:hover": {
-      cursor: "pointer",
-    },
-  })
-});
+// export const selectStyles = ({ width }: { width?: any }) => ({
+//   container: base => ({
+//     ...base,
+//     flex: 1,
+//     border: 'none',
+//     width: width || '175px',
+//     cursor: "pointer",
+//     "&:hover": {
+//       cursor: "pointer",
+//     },
+//   }),
+//   control: styles => ({
+//     ...styles,
+//     // border: '1px solid #eaeaea',
+//     border: 'none',
+//     boxShadow: 'none',
+//     // background: buttonBackgroundColor,
+//     backgroundColor: Colors.dropDownGrey,
+//     '&:hover': {
+//       border: 'none',
+//       cursor: "pointer",
+//       backgroundColor: Colors.dropDownGreyHover,
+//     },
+//     "&:focus": {
+//       border: 'none',
+//     },
+//     borderRadius: '4px',
+//     fontSize: '0.9rem',
+//     color: Colors.darkGrey,
+//     // fontSize: '1rem',
+//     width: '100%',
+//   }),
+//   singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+//     color: Colors.darkGrey,
+//   }),
+//   indicatorSeparator: styles => ({
+//     display:'none'
+//   }),
+//   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+//     return {
+//       ...styles,
+//       backgroundColor: isSelected
+//         ? Colors.charcoal
+//         : isFocused
+//           ? Colors.lightGrey
+//           : Colors.dropDownGrey,
+//       fontFamily: '"Helvetica Neue",Arial,sans-serif',
+//       fontSize: '1rem',
+//       cursor: isDisabled ? 'not-allowed' : 'pointer',
+//       "&:hover": {
+//         cursor: isDisabled ? 'not-allowed' : 'pointer',
+//       },
+//     };
+//   },
+//   menu: styles => ({
+//     ...styles,
+//     zIndex: 10,
+//     marginTop: '2px',
+//     cursor: "pointer",
+//     "&:hover": {
+//       cursor: "pointer",
+//     },
+//   })
+// });
 
 
 
@@ -471,16 +366,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   setOrderBy?(a?: SelectOption): void;
   // price range
   setPriceRange?(a?: any): void;
-  currentCategories?: Categories[];
-  setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
-  dealerStates: DealerState[],
-  setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
-  calibers: SelectOptionCaliber[],
-  setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
-  actionTypes: string[],
-  setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
-  conditions: string[],
-  setConditions: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {
     limit: number
     offset?: number
@@ -492,7 +377,6 @@ interface ReactProps extends WithStyles<typeof styles> {
     setIndex(a?: any): void;
     debounceSetIndex?(a?: any): void;
   };
-  setFocusedOuter?(b: boolean): void;
   onClickSearch(searchTerm?: any): void;
   // styles overrrides
   styles?: any;
@@ -503,15 +387,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   // for bottom section, where the child components + paginators are
   bottomSectionStyles?: any;
   paginatorStyles?: any;
-  syncUrlToCategory?: boolean;
-  disableCategoriesFilter?: boolean;
-  disableAdvancedSearch?: boolean;
-  disableCalibers?: boolean;
   disableSearchFilter?: boolean;
-  disablePriceFilter?: boolean;
-  disableSortby?: boolean;
   disablePaginators?: boolean;
-  maxCategoryInputWidth?: any;
   placeholder?: string;
   className?: any;
   style?: any;
@@ -541,13 +418,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: 'center',
-  },
-  clickBackgroundLayer: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    top: 0,
-    left: 0,
   },
   searchOptionsRoot: {
     display: "flex",
@@ -618,34 +488,12 @@ const styles = (theme: Theme) => createStyles({
   bottomSection: {
     width: '100%',
   },
-  facetSection: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    // flexWrap: "wrap",
-    alignItems: 'center',
-  },
   maxWidth100vw: {
     maxWidth: '1160px',
     width: '100vw',
   },
-  marginLeft1: {
-    marginLeft: '1rem',
-  },
-  marginRight05: {
-    marginRight: '0.5rem',
-  },
-  marginLeft05: {
-    marginLeft: '0.5rem',
-  },
-  width100Sm: {
-    width: '100%',
-  },
   marginTop: {
     marginTop: '0.25rem',
-  },
-  marginBottom05: {
-    marginBottom: '0.5rem',
   },
   filterSection: {
     width: '100%',
@@ -655,65 +503,9 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     // flexWrap: "wrap",
   },
-  dropdownContainer: {
-    // flexBasis: '30%',
-    // width: '100%',
-    minWidth: 130,
-    marginRight: '0rem',
-    marginBottom: '0.5rem',
-    // marginLeft: '1rem',
-    display: 'flex',
-    justifyContent: 'center',
-    // justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-  },
-  buttonRoot: {
-    marginRight: '0.5rem',
-    marginBottom: '0.5rem',
-    background: alpha(Colors.slateGrey, 0.4),
-    border: 'none',
-    borderRadius: '2rem',
-    transition:  theme.transitions.create(['background', 'color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: 200,
-    }),
-    "&:hover": {
-      // background: Colors.lightGrey,
-      background: Colors.charcoal,
-      color: Colors.white,
-      transition:  theme.transitions.create(['background', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: 200,
-      })
-    },
-  },
-  buttonSelected: {
-    background: Colors.darkGrey,
-    color: Colors.cream,
-    "&:hover": {
-      background: Colors.charcoal,
-      color: Colors.white,
-      transition:  theme.transitions.create('background', {
-        easing: theme.transitions.easing.easeIn,
-        duration: 100,
-      })
-    },
-  },
   clearIcon: {
     marginLeft: '0.25rem',
   },
-  paginationContainer: {
-    flexBasis: '100%',
-    // marginRight: '1rem',
-    // marginLeft: '1rem',
-    display: 'flex',
-    // justifyContent: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-
   searchbar: {
     position: 'relative',
     cursor: 'pointer',
@@ -731,20 +523,6 @@ const styles = (theme: Theme) => createStyles({
     // borderRadius: BorderRadius4x,
     borderRadius: `${BorderRadius}px ${BorderRadius4x}px ${BorderRadius4x}px ${BorderRadius}px `,
   },
-  height65: {
-    height: 65,
-    transition: theme.transitions.create(['width', 'height'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "0ms",
-    }),
-  },
-  height55: {
-    height: 55,
-    transition: theme.transitions.create(['width', 'height', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "0ms",
-    }),
-  },
   height50: {
     height: 50,
     transition: theme.transitions.create(['width', 'height', 'margin'], {
@@ -761,14 +539,14 @@ const styles = (theme: Theme) => createStyles({
       delay: 150,
     }),
   },
-  searchShort: {
-    width: 260,
-    transition: theme.transitions.create(['width', 'height'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "150ms",
-      delay: 150,
-    }),
-  },
+  // searchShort: {
+  //   width: 260,
+  //   transition: theme.transitions.create(['width', 'height'], {
+  //     easing: theme.transitions.easing.sharp,
+  //     duration: "150ms",
+  //     delay: 150,
+  //   }),
+  // },
   searchWide: {
     width: 260,
     transition: theme.transitions.create(['width', 'height'], {
@@ -776,13 +554,13 @@ const styles = (theme: Theme) => createStyles({
       duration: "0ms",
     }),
   },
-  searchButtonShort: {
-    width: 160,
-    transition: theme.transitions.create(['width', 'height'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "0ms",
-    }),
-  },
+  // searchButtonShort: {
+  //   width: 160,
+  //   transition: theme.transitions.create(['width', 'height'], {
+  //     easing: theme.transitions.easing.sharp,
+  //     duration: "0ms",
+  //   }),
+  // },
   searchButtonWide: {
     width: 160,
     transition: theme.transitions.create(['width', 'height'], {
@@ -815,15 +593,6 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightestGrey
       : Colors.black,
     transition: theme.transitions.create('width'),
-  },
-  searchFilterButtonDesktop: {
-    margin: '0rem',
-  },
-  searchFilterButtonMobile: {
-    margin: '0.5rem',
-  },
-  searchFilterButtonMobile2: {
-    margin: '0rem 0.5rem 0.5rem 0.5rem',
   },
   searchButtonDesktop: {
     margin: '5px',
@@ -886,10 +655,6 @@ const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `4px solid ${Colors.purple}`
       : `4px solid ${Colors.blue}`,
-  },
-  backButton: {
-  },
-  forwardButton: {
   },
   paginationPage: {
     "& > ul > li > button": {

@@ -1,7 +1,7 @@
 import React from "react";
 // Styles
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import {
   Colors,
   isThemeDark,
@@ -52,9 +52,10 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
       <DropdownInput
         // className={classes.caliberDropdown}
         menuIsOpen={true}
+        menuPlacement={"bottom"} // bottom | top | auto
         isMulti={true}
         initialState={initialCalibers}
-        itemLimit={6}
+        itemLimit={8}
         height={'100%'}
         onChange={(options: SelectOptionCaliber[]) => {
           console.log("options:", options)
