@@ -93,7 +93,6 @@ const NewsItemCardRC = (props: ReactProps) => {
 
   const newsItemId = newsItem?.id
   const squishLetters = title?.length > 30
-  console.log("ppppPPP id", productId)
 
 
   const getCardMaxWidth = (cardsPerRow: number) => {
