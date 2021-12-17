@@ -81,7 +81,7 @@ const DropdownInput = (props: ReactProps) => {
               onChange(e)
             }}
             menuIsOpen={props.menuIsOpen}
-            menuPlacement="auto"
+            menuPlacement={props.menuPlacement ?? "auto" }
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
@@ -192,7 +192,7 @@ const DropdownInput = (props: ReactProps) => {
               onChange(e)
             }}
             menuIsOpen={props.menuIsOpen}
-            menuPlacement="auto"
+            menuPlacement={props.menuPlacement ?? "auto" }
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
@@ -384,6 +384,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableAutocomplete?: boolean;
   menuPortalTarget?: any;
   menuIsOpen?: any;
+  menuPlacement?: "bottom" | "top" | "auto"
   hideButton?: boolean;
   components?: any;
   itemLimit?: number;
