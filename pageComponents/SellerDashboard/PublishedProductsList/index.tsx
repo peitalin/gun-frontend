@@ -2,7 +2,7 @@ import React from "react";
 import { useCallback } from "react";
 import clsx from "clsx";
 // Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Router
 import { useRouter } from "next/router";
@@ -11,7 +11,6 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
-  UserPrivate,
   ProductsConnection,
   StorePrivate,
   ConnectionQuery,
@@ -32,13 +31,12 @@ import ResponsivePadding from "../ResponsivePadding";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // pagination
-import { useQuery, useLazyQuery, DocumentNode } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  totalItemsInIsPublishedFacet,
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
@@ -169,15 +167,6 @@ const PublishedProductsList = (props: ReactProps) => {
   const connection: ProductsConnection =
     getProductsResponse?.data?.dashboardProductsConnection
 
-  let totalCountInFacet = totalItemsInIsPublishedFacet({
-    searchTerm: searchTerm,
-    priceRange: priceRange,
-    isPublished: true,
-    facetsDistribution: connection?.facetsDistribution,
-    itemsConnection: connection,
-    totalCount: totalCount,
-    limitOverfetchBy: limit * overfetchBy
-  })
 
   const refetchTheProducts = async () => {
     if (
@@ -218,7 +207,7 @@ const PublishedProductsList = (props: ReactProps) => {
           setPriceRange={setPriceRange}
           filterSectionStyles={{ paddingLeft: 0 }}
           paginationParams={{
-            totalCount: totalCountInFacet || totalCount,
+            totalCount: totalCount,
             overfetchBy: overfetchBy,
             limit: limit,
             pageParam: pageParam,

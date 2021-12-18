@@ -37,7 +37,6 @@ import LoadingBar from "components/LoadingBar";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 import BannerSearchOpenSea from "./BannerSearchOpenSea";
 // Grid Components
@@ -156,13 +155,7 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
       setOpenDrawer(true)
     }
   }, [isMobile])
-  // let totalItemsInFacet = totalItemsInCategoriesFacets({
-  //   facets: facets,
-  //   facetsDistribution: newsItemsConnection?.facetsDistribution as any,
-  //   itemsConnection: newsItemsConnection as any,
-  //   totalCount: totalCount,
-  //   searchTerm: searchTermForGql,
-  // })
+
 
   return (
     <div className={classes.root} >
@@ -264,6 +257,7 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
                   index: index,
                   setIndex: setIndex,
                   debounceSetIndex: debounceSetIndex,
+                  totalPages: newsItemsConnection?.pageInfo?.totalPages
                 }}
                 setSearchTermForGql={setSearchTermForGql}
                 initialDropdownCategories={props.initialDropdownCategories}

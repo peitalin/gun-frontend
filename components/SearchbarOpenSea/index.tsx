@@ -4,22 +4,16 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, alpha } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows, BorderRadius4x } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import ClearIcon from '@material-ui/icons/Clear';
 import Pagination from '@material-ui/lab/Pagination';
 // GraphQL Typings
 import {
   Order_By,
-  Categories,
-  DealerState,
-  Calibers,
 } from "typings/gqlTypes";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 import { useRouter } from "next/router";
-import { SelectOptionCaliber } from "typings"
 
 
 
@@ -114,6 +108,9 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
   const [searchFocused, setSearchFocused] = React.useState(false)
 
+  const totalPages = props.paginationParams?.totalPages > 0
+    ? props.paginationParams?.totalPages
+    : Math.ceil(totalCount / limit)
 
   return (
     <div className={clsx(
@@ -227,7 +224,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
             classes={{
               root: classes.paginationPage,
             }}
-            count={totalCount}
+            count={totalPages}
             disabled={totalCount === 0}
             page={pageUi}
             onMouseDown={(e) => {
@@ -278,6 +275,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     index: number
     setIndex(a?: any): void;
     debounceSetIndex?(a?: any): void;
+    totalPages?: number;
   };
   onClickSearch(searchTerm?: any): void;
   // styles overrrides

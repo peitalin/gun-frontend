@@ -159,7 +159,12 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
   // console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
+  // console.log('limit: ', limit)
   // console.log('searchTerm: ', searchTerm)
+
+  const totalPages = props.paginationParams?.totalPages > 0
+    ? props.paginationParams?.totalPages
+    : Math.ceil(totalCount / limit)
 
   const floatPaginator = isMobile
     ? y > 300
@@ -370,7 +375,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
             classes={{
               root: classes.paginationPage,
             }}
-            count={totalCount}
+            count={totalPages}
             disabled={totalCount === 0}
             page={pageUi}
             onMouseDown={(e) => {
@@ -505,6 +510,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     index: number
     setIndex(a?: any): void;
     debounceSetIndex?(a?: any): void;
+    totalPages?: number;
   };
   setFocusedOuter?(b: boolean): void;
   onClickSearch(searchTerm?: any): void;

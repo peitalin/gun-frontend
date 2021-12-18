@@ -6,9 +6,6 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
-  ID,
-  Product,
-  ProductsConnection,
   NewsItem,
   NewsItemsConnection,
   Categories,
@@ -26,7 +23,7 @@ import {
 import {
   SEARCH_NEWS_ITEMS_CONNECTION,
  } from "queries/news-items-queries";
-import { useQuery, useApolloClient } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -41,7 +38,6 @@ import LoadingBar from "components/LoadingBar";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 import BannerSearchPage from "./BannerSearchPage";
 // Grid Components
@@ -68,7 +64,6 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   /////////////////////////////////// paginator
   let numItemsPerPage = 20;
   let overfetchBy = 1;
-  // overfetch by 2x pages
 
   let {
     orderBy,
@@ -178,8 +173,6 @@ const SearchResults: React.FC<ReactProps> = (props) => {
   });
 
 
-  // console.log("categorySlugsForGql", categorySlugsForGql)
-
   React.useEffect(() => {
     if (!loading && !!newsItemsConnection?.totalCount) {
       setTotalCount(newsItemsConnection?.totalCount)
@@ -188,14 +181,6 @@ const SearchResults: React.FC<ReactProps> = (props) => {
 
   const newsItemsConnection = data?.getNewsItemsSearchConnection
 
-
-  let totalItemsInFacet = totalItemsInCategoriesFacets({
-    facets: facets,
-    facetsDistribution: newsItemsConnection?.facetsDistribution as any,
-    itemsConnection: newsItemsConnection as any,
-    totalCount: totalCount,
-    searchTerm: searchTermForGql,
-  })
   // console.log("newsItemsConnection: ", newsItemsConnection)
   // console.log("totalItemsInFacet: ", totalItemsInFacet)
   // console.log("initialRouteCategory: ", props.initialRouteCategory)
@@ -262,13 +247,14 @@ const SearchResults: React.FC<ReactProps> = (props) => {
             limit: limit,
             offset: offset,
             overfetchBy: overfetchBy,
-            totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
+            totalCount: totalCount,
             setTotalCount: setTotalCount,
             pageParam: pageParam,
             setPageParam: setPageParam,
             index: index,
             setIndex: setIndex,
             debounceSetIndex: debounceSetIndex,
+            totalPages: newsItemsConnection?.pageInfo?.totalPages
           }}
           disableCategoriesFilter={props.disableCategoriesFilter}
           categorySlugsForGql={categorySlugsForGql}

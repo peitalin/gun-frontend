@@ -26,6 +26,30 @@ import { SelectOptionCaliber } from "typings"
 import { defaultCalibersInsertInput } from "utils/calibers"
 
 
+const calcOffset = (
+  page: number,
+  limit: number,
+  overfetchBy: number,
+): number => {
+  if (!page) {
+    // offset = 0
+    return 0
+  }
+  if (!limit) {
+    // offset = 0
+    return 0
+  }
+
+  let offset = (page * limit) - limit
+
+  if (offset < 0) {
+    return 0
+  } else {
+    return Math.floor(offset / overfetchBy)
+    // offset accounts for overfetch (2x overfetch)
+  }
+}
+
 
 
 export const useFacetSearchOptions = ({
@@ -45,26 +69,6 @@ export const useFacetSearchOptions = ({
   scrollToTopOnPagination?: boolean;
   initialOrderBy?: any,
 }): FacetSearchParams => {
-
-  const calcOffset = (page: number, limit: number): number => {
-    if (!page) {
-      // offset = 0
-      return 0
-    }
-    if (!limit) {
-      // offset = 0
-      return 0
-    }
-
-    let offset = (page * limit) - limit
-
-    if (offset < 0) {
-      return 0
-    } else {
-      return Math.floor(offset / overfetchBy)
-      // offset accounts for overfetch (2x overfetch)
-    }
-  }
 
   ///// Search params
   // search filters
@@ -125,7 +129,7 @@ export const useFacetSearchOptions = ({
   // actual page query param dispatched for pagination
   const [pageParam, setPageParam] = React.useState(initialPageParam);
   const [totalCount, setTotalCount] = React.useState(0);
-  const [offset, setOffset] = React.useState(calcOffset(pageParam, limit));
+  const [offset, setOffset] = React.useState(calcOffset(pageParam, limit, overfetchBy));
 
   const [
     currentCategories,
@@ -211,7 +215,7 @@ export const useFacetSearchOptions = ({
     // let path = router.pathname
     // console.log('searchTerm', searchTerm)
 
-    let newOffset = calcOffset(pageParam, limit)
+    let newOffset = calcOffset(pageParam, limit, overfetchBy)
     setOffset(newOffset)
 
 
@@ -360,7 +364,7 @@ export const useFacetSearchOptions = ({
       // Sync conditions
       if (conditions?.length > 0) {
         let encodedConditions = conditions.map(s => encodeURI(s))
-        console.log('encoded conditions: ', encodedConditions)
+        // console.log('encoded conditions: ', encodedConditions)
         if (!params.some(p => p.startsWith('conditions='))) {
           params = [`conditions=${encodedConditions.join(',')}`, ...params]
         } else {
@@ -482,6 +486,7 @@ export interface FacetSearchParams {
     index: number;
     setIndex(a?: any): void;
     debounceSetIndex(a?: any): void;
+    totalPages?: number;
   };
 }
 
@@ -620,106 +625,3 @@ export const useEffectUpdateGridAccum = <T>({
 }
 
 
-
-export const totalItemsInCategoriesFacets = ({
-  facets,
-  facetsDistribution,
-  itemsConnection,
-  totalCount,
-  searchTerm,
-  pageParam,
-}:{
-  facets: string[],
-  facetsDistribution: FacetsDistributionObject,
-  itemsConnection: ProductsConnection | NewsItemsConnection,
-  totalCount: number,
-  searchTerm: string,
-  pageParam?: number,
-}) => {
-
-  // console.log("facet distributions", facetsDistribution)
-  // console.log("facets", facets)
-  let currentCategories = facets
-    .map(f => f.replace("_categoryNameFacet:", "").toLowerCase())
-
-  if (
-    facets.length > 0 &&
-    facetsDistribution &&
-    facetsDistribution.categoryNames
-  ) {
-    let facetCounts = currentCategories
-      .map(category => facetsDistribution.categoryNames[category])
-      .filter(c => !!c)
-      .reduce((acc, count) => acc + count, 0)
-    // console.log('facetCounts: ', facetCounts)
-    return facetCounts
-
-  } else if (!!searchTerm) {
-    // accumu connection will have more products, go with that length
-    let length1 = itemsConnection?.edges?.length ?? 0
-    let length2 = totalCount
-    return length1 > length2 ? length1 : length2
-
-  } else {
-    // console.log("returning original totalCount: ", totalCount)
-    return totalCount
-  }
-
-}
-
-export const totalItemsInIsPublishedFacet = ({
-  searchTerm,
-  priceRange,
-  isPublished,
-  facetsDistribution,
-  itemsConnection,
-  totalCount,
-  limitOverfetchBy,
-}: {
-  searchTerm: string,
-  priceRange?: number[],
-  isPublished: boolean,
-  facetsDistribution: FacetsDistributionObject,
-  itemsConnection: ProductsConnection | NewsItemsConnection,
-  totalCount: number,
-  limitOverfetchBy: number,
-}) => {
-  ///// Note this is imperfect until meili returns totalCounts for
-  // filtered items. Currently it only reports facet distrubtion counts.
-  // so there is no way of knowing how many products are filtered out
-  // When filtercount are release, update this.
-
-  let isPublishedStr = isPublished ? "yes" : "no";
-  // if search term exists, total count will be a subset of all products
-  // to total count will be smaller than N(isPublished||isNotPublished)
-  // otherwise, go with N(isPublished || isNotPublished) facet counts
-
-  let plength = itemsConnection?.edges?.length
-
-  if (!!searchTerm) {
-    // accum connection will have more products, go with that length
-    return plength > totalCount ? plength : totalCount
-
-  } else if (!!priceRange && !!priceRange[0] && !!priceRange[1]) {
-
-    // accum connection will have more products, go with that length
-    return plength > totalCount ? plength : totalCount
-
-  } else if (
-    facetsDistribution &&
-    facetsDistribution.isPublished
-  ) {
-
-    return facetsDistribution.isPublished[isPublishedStr]
-
-    // if (plength < limitOverfetchBy ) {
-    //   // if fetched products are less than what we wanted to fetch,
-    //   // totalCounts are less the limit * overfetch, so return totalCount
-    //   return plength
-    // } else {
-    //   // otherwise there are more products to fetch, use facetCount
-    //   return facetsDistribution.isPublished[isPublishedStr]
-    // }
-
-  }
-}

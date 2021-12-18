@@ -21,7 +21,6 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
   const {
     classes,
     isDarkMode,
-
     ...facetSearchParams
   } = props;
 
@@ -55,6 +54,7 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
       index,
       setIndex,
       debounceSetIndex,
+      totalPages,
     },
   } = facetSearchParams;
 
@@ -96,6 +96,7 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
             index: index,
             setIndex: setIndex,
             debounceSetIndex: debounceSetIndex,
+            totalPages: totalPages
           }}
           // disableSearchFilter
           isMobile={props.isMobile}

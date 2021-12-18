@@ -3,33 +3,20 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius2x, BorderRadius, Colors, isThemeDark, BoxShadows } from "layout/AppTheme";
+import { BorderRadius2x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import {
-  useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
-} from "utils/hooksFacetSearch";
-import {
-  Order_By,
   Categories,
   DealerState,
-  Calibers,
 } from "typings/gqlTypes";
 import { SelectOptionCaliber } from "typings"
-import { MainBarHeight } from "layout/NavBarMain/styles"
 
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-// MUI
-import MenuItem from '@material-ui/core/MenuItem';
-import CollectionsIcon from '@material-ui/icons/Collections';
-
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FilterAccordionRow from "./FilterAccordionRow";
-
 // Select Component
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';

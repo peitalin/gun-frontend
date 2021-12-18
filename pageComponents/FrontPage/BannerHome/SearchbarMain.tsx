@@ -10,7 +10,6 @@ import { Categories, Calibers } from "typings/gqlTypes";
 import SearchbarAirbnb from "components/SearchbarAirbnb";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";

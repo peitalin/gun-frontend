@@ -38,7 +38,6 @@ import { useRouter } from "next/router";
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";

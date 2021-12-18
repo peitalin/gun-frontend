@@ -26,9 +26,6 @@ import {
 // Pagination
 import ErrorDisplay from "components/ErrorDisplay";
 import LoadingBar from "components/LoadingBar";
-// formatters
-import { formatDateTime } from "utils/dates";
-import currency from "currency.js";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -36,10 +33,9 @@ import { useRouter } from "next/router";
 import RowExpander from "./RowExpander";
 
 // Search Component
-import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import SearchOptions from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";

@@ -40,10 +40,9 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 import { useRouter } from "next/router";
 
 // Search Component
-import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import SearchOptions from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";

@@ -10,7 +10,6 @@ import {
   ConnectionQuery,
   Product,
   Store,
-  FacetsDistributionObject,
   ProductsConnection,
 } from "typings/gqlTypes";
 
@@ -34,10 +33,9 @@ import {
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Search Component
-import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import SearchOptions, { setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
@@ -119,15 +117,6 @@ const StoresId: React.FC<ReactProps> = (props) => {
   const store = storeResponse?.data?.store || initialStore;
   let productsForSaleConnection = data?.getStoreProductsForSaleConnection;
 
-  let totalItemsInFacet = totalItemsInCategoriesFacets({
-    facets: facets,
-    facetsDistribution: productsForSaleConnection?.facetsDistribution,
-    itemsConnection: productsForSaleConnection,
-    totalCount: totalCount,
-    searchTerm: searchTerm,
-  })
-
-  // console.log('store: ', store)
 
   if (
     store?.isSuspended === true ||
@@ -202,7 +191,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
             disableSortby={true}
             sortByOptions={[]}
             paginationParams={{
-              totalCount: totalItemsInFacet,
+              totalCount: totalCount,
               overfetchBy: overfetchBy,
               limit: limit,
               pageParam: pageParam,

@@ -50,6 +50,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
       index,
       setIndex,
       debounceSetIndex,
+      totalPages,
     },
   } = facetSearchParams;
 
@@ -124,6 +125,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
             index: index,
             setIndex: setIndex,
             debounceSetIndex: debounceSetIndex,
+            totalPages: totalPages,
           }}
           setFocusedOuter={props.setFocusedOuter}
           // disableSearchFilter

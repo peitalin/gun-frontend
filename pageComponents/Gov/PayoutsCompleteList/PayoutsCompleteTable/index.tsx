@@ -13,8 +13,6 @@ import {
   OrdersConnection,
   Order,
   OrderAdmin,
-  OrderStatus,
-  ConnectionQuery
 } from "typings/gqlTypes";
 import {
   GET_ORDERS_COMPLETE_BY_IDS_CONNECTION,
@@ -33,10 +31,9 @@ import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";
 
 // Search Component
-import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import SearchOptions from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";

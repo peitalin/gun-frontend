@@ -70,6 +70,7 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
       index,
       setIndex,
       debounceSetIndex,
+      totalPages,
     },
   } = facetSearchParams;
 
@@ -147,6 +148,7 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
               index: index,
               setIndex: setIndex,
               debounceSetIndex: debounceSetIndex,
+              totalPages: totalPages,
             }}
             // Category Page specific callbacks
             disableCategoriesFilter={props.disableCategoriesFilter}
@@ -212,6 +214,7 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
               index: index,
               setIndex: setIndex,
               debounceSetIndex: debounceSetIndex,
+              totalPages: totalPages,
             }}
             // Category Page specific callbacks
             disableCategoriesFilter={props.disableCategoriesFilter}
