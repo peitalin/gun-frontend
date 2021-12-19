@@ -27,6 +27,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     $categorySlugs: [String]
     $dealerStates: [String]
     $calibers: [String]
+    $calibersOmit: [String]
     $actionTypes: [String]
     $conditions: [String]
   ) {
@@ -38,6 +39,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
       categorySlugs: $categorySlugs
       dealerStates: $dealerStates
       calibers: $calibers
+      calibersOmit: $calibersOmit
       actionTypes: $actionTypes
       conditions: $conditions
     ) {

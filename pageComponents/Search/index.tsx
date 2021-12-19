@@ -80,6 +80,8 @@ const SearchResults: React.FC<ReactProps> = (props) => {
     setDealerStates,
     calibers,
     setCalibers,
+    calibersOmit,
+    setCalibersOmit,
     actionTypes,
     setActionTypes,
     conditions,
@@ -239,6 +241,8 @@ const SearchResults: React.FC<ReactProps> = (props) => {
           setDealerStates={setDealerStates}
           calibers={calibers}
           setCalibers={setCalibers}
+          calibersOmit={calibersOmit}
+          setCalibersOmit={setCalibersOmit}
           actionTypes={actionTypes}
           setActionTypes={setActionTypes}
           conditions={conditions}

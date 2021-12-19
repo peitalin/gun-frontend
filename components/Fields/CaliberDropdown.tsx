@@ -33,9 +33,10 @@ const CaliberDropdown = (props: ReactProps) => {
 
   // // Redux State, for UI updates
   // // Keep separate from Redux updates, which have different data structure
-  const [state, setState] = React.useState(props.initialState)
+  // const [state, setState] = React.useState(props.initialState)
   const snackbar = useSnackbar()
 
+  // console.log("caliber: state::::", state)
 
   return (
     <div className={clsx(
@@ -45,7 +46,7 @@ const CaliberDropdown = (props: ReactProps) => {
     )}>
       <Select
         // inputId={props.inputId}
-        value={state}
+        value={props.state}
         onMenuOpen={props.onMenuOpen}
         onChange={(e) => {
           if (e?.length > props.itemLimit) {
@@ -55,7 +56,7 @@ const CaliberDropdown = (props: ReactProps) => {
             )
             return
           }
-          setState(e)
+          // setState(e)
           onChange(e)
         }}
         menuIsOpen={props.menuIsOpen}

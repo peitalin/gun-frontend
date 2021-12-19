@@ -21,25 +21,24 @@ import { sortAlphabetical, compareAlphabetical } from "utils/strings"
 
 
 
-const CaliberMenu: React.FC<ReactProps> = (props) => {
+const CaliberOmitMenu: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    calibers,
+    calibersOmit,
   } = props
 
   // const { data } = useQuery<QData3, QVar3>(
   //   GET_CALIBERS, {
   // })
 
-  // let caliberData = data?.getCalibers
   let caliberData = defaultCalibersInsertInput
 
   const caliberOptionGroups = React.useMemo(() => {
     return createCaliberOptionGroups(caliberData)
   }, [caliberData])
 
-  const initialCalibers = (calibers ?? []).map(c => {
+  const initialCalibers = (calibersOmit ?? []).map(c => {
     return {
       label: c.label,
       value: c.value,
@@ -53,7 +52,7 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
     >
       <CaliberDropdown
         // className={classes.caliberDropdown}
-        state={calibers}
+        state={calibersOmit}
         menuIsOpen={true}
         menuPlacement={"bottom"} // bottom | top | auto
         isMulti={true}
@@ -64,17 +63,18 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
           console.log("options:", options)
           if (options?.length === 0) {
             // null -> All states
-            props.setCalibers([])
+            props.setCalibersOmit([])
             return
           } else {
-            props.setCalibers(options)
+            props.setCalibersOmit(options)
           }
-          // if (options.some(o => props.calibersOmit.find(c => c.value === o.value))) {
-          //   // find if added calibers are in caliberOmit list, and
-          //   // remove them from caliberOmit list
+
+          // if (options.some(o => props.calibers.find(c => c.value === o.value))) {
+          //   // find if added calibersOmit are in calibers list, and
+          //   // remove them from calibers list
           // }
-          let newCaliberOmit = props.calibersOmit.filter(c => !options.find(o => o.value === c.value))
-          props.setCalibersOmit(newCaliberOmit)
+          let newCalibers = props.calibers.filter(c => !options.find(o => o.value === c.value))
+          props.setCalibers(newCalibers)
         }}
         options={caliberOptionGroups}
         placeholder={undefined}
@@ -115,51 +115,11 @@ export const createCaliberOptionGroups = (
     .map(c => createCaliberOption(c))
     .sort((a, b) => compareAlphabetical(a.value, b.value))
 
-  // let rimfire = calibers.filter(c => {
-  //   return c.group === CaliberGroup.RIMFIRE_CENTERFIRE
-  // }).map(c => createCaliberOption(c))
-  //   .sort((a, b) => compareAlphabetical(a.value, b.value))
-
-  // let projectile = calibers.filter(c => {
-  //   return c.group === CaliberGroup.PROJECTILE
-  // }).map(c => createCaliberOption(c))
-  //   .sort((a, b) => compareAlphabetical(a.value, b.value))
-
-  // let shotshell = calibers.filter(c => {
-  //   return c.group === CaliberGroup.SHOTSHELL
-  // }).map(c => createCaliberOption(c))
-  //   .sort((a, b) => compareAlphabetical(a.value, b.value))
-
   return [
     {
       label: "Calibers",
       options: allCalibers,
     },
-
-    /// ONLY if you want caliber groups
-    // {
-    //   label: "Rimfire / Centerfire",
-    //   options: rimfire,
-    //   // options: allCalibersOption
-    //   //   ? [
-    //   //       { label: "All Calibers", value: undefined },
-    //   //       ...rimfire,
-    //   //     ]
-    //   //   : [ ...rimfire ]
-    //     // All calibers only for filtering search, not for creating products
-    // },
-    // {
-    //   label: "Projectile",
-    //   options: [
-    //     ...projectile,
-    //   ],
-    // },
-    // {
-    //   label: "Shotshell",
-    //   options: [
-    //     ...shotshell,
-    //   ],
-    // },
   ]
 }
 
@@ -171,10 +131,10 @@ export interface GroupedSelectOption {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  calibers?: SelectOptionCaliber[];
-  setCalibers(c: SelectOptionCaliber[]): void;
   calibersOmit?: SelectOptionCaliber[];
   setCalibersOmit(c: SelectOptionCaliber[]): void;
+  calibers?: SelectOptionCaliber[];
+  setCalibers(c: SelectOptionCaliber[]): void;
   style?: any
 }
 
@@ -185,4 +145,4 @@ interface QVar3 {
 }
 
 
-export default withStyles(styles)( CaliberMenu );
+export default withStyles(styles)( CaliberOmitMenu );

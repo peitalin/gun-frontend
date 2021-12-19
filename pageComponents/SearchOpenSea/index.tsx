@@ -84,6 +84,8 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
     setDealerStates,
     calibers,
     setCalibers,
+    calibersOmit,
+    setCalibersOmit,
     actionTypes,
     setActionTypes,
     conditions,
@@ -130,6 +132,7 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
       categorySlugs: (currentCategories ?? []).map(c => c.slug),
       dealerStates: dealerStates,
       calibers: (calibers ?? []).map(c => c.value),
+      calibersOmit: (calibersOmit ?? []).map(c => c.value),
       actionTypes: actionTypes,
       conditions: conditions,
     },
@@ -155,6 +158,9 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
       setOpenDrawer(true)
     }
   }, [isMobile])
+
+  // console.log("caliberOmit: ", calibersOmit)
+  // console.log("calibers: ", calibers)
 
 
   return (
@@ -212,6 +218,8 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
               setPriceRange={setPriceRange}
               calibers={calibers}
               setCalibers={setCalibers}
+              calibersOmit={calibersOmit}
+              setCalibersOmit={setCalibersOmit}
               dealerStates={dealerStates}
               setDealerStates={setDealerStates}
               conditions={conditions}
@@ -242,6 +250,8 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
                 setDealerStates={setDealerStates}
                 calibers={calibers}
                 setCalibers={setCalibers}
+                calibersOmit={calibersOmit}
+                setCalibersOmit={setCalibersOmit}
                 actionTypes={actionTypes}
                 setActionTypes={setActionTypes}
                 conditions={conditions}
@@ -365,6 +375,7 @@ interface QueryVar1 {
   categorySlugs?: string[];
   dealerStates?: string[];
   calibers?: string[];
+  calibersOmit?: string[];
   actionTypes?: string[];
   conditions?: string[];
 }

@@ -154,6 +154,13 @@ export const useFacetSearchOptions = ({
   )
 
   const [
+    calibersOmit,
+    setCalibersOmit
+  ] = React.useState<SelectOptionCaliber[]>(
+    []
+  )
+
+  const [
     actionTypes,
     setActionTypes
   ] = React.useState<string[]>(undefined)
@@ -433,6 +440,9 @@ export const useFacetSearchOptions = ({
     // calibers filters
     calibers,
     setCalibers,
+    // calibersOmit filters
+    calibersOmit,
+    setCalibersOmit,
     // actionType filters
     actionTypes,
     setActionTypes,
@@ -470,6 +480,8 @@ export interface FacetSearchParams {
   setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
   calibers: SelectOptionCaliber[],
   setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
+  calibersOmit: SelectOptionCaliber[],
+  setCalibersOmit: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
   actionTypes: string[],
   setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
   conditions: string[],

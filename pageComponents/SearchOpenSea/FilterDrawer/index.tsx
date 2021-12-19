@@ -21,6 +21,7 @@ import FilterAccordionRow from "./FilterAccordionRow";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
 import CaliberMenu from "./CaliberMenu";
+import CaliberOmitMenu from "./CaliberOmitMenu";
 
 import DealerStatesMenu from "./DealerStatesMenu";
 import ConditionsMenu from "./ConditionsMenu";
@@ -118,6 +119,8 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
             <CaliberMenu
               calibers={props.calibers}
               setCalibers={props.setCalibers}
+              calibersOmit={props.calibersOmit}
+              setCalibersOmit={props.setCalibersOmit}
               style={{
                 height: 375,
                 width: '100%',
@@ -136,7 +139,30 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
             />
           </FilterAccordionRow>
 
+          <div className={classes.omitSpacer}></div>
+
+          <div className={classes.advancedTitle}>
+            Advanced Filters
+          </div>
+
+          <FilterAccordionRow
+            title={"Omit Calibers"}
+            openInitially={false}
+          >
+            <CaliberOmitMenu
+              calibersOmit={props.calibersOmit}
+              setCalibersOmit={props.setCalibersOmit}
+              calibers={props.calibers}
+              setCalibers={props.setCalibers}
+              style={{
+                height: 375,
+                width: '100%',
+              }}
+            />
+          </FilterAccordionRow>
+
           <div className={classes.bottomSpacer}></div>
+
 
         </div>
       </div>
@@ -157,6 +183,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
   calibers: SelectOptionCaliber[],
   setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
+  calibersOmit: SelectOptionCaliber[],
+  setCalibersOmit: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
   actionTypes: string[],
   setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
   conditions: string[],
@@ -297,6 +325,13 @@ export const styles = (theme: Theme) => createStyles({
       ? Colors.lightGrey
       : Colors.black,
     fontSize: '0.9rem',
+  },
+  omitSpacer: {
+    height: '2rem',
+  },
+  advancedTitle: {
+    fontSize: '1rem',
+    fontWeight: 600,
   },
   bottomSpacer: {
     height: '266px',
