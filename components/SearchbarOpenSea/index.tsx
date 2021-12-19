@@ -112,6 +112,9 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
     ? props.paginationParams?.totalPages
     : Math.ceil(totalCount / limit)
 
+
+  const lessThan400 = window.innerWidth < 375
+
   return (
     <div className={clsx(
       isMobile ? classes.searchRootMobile : classes.searchRoot,
@@ -211,10 +214,11 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
         showPaginator &&
         <div className={clsx(
           classes.arrowContainer,
+          classes.arrowContainerFixed,
           classes.height50,
-          classes.arrowContainerMobile,
           'fadeIn',
-          isMobile && classes.marginTop,
+          isMobile && classes.arrowContainerMobileWidth,
+          // isMobile && classes.marginTop,
         )}
           style={props.paginatorStyles}
         >
@@ -546,16 +550,18 @@ const styles = (theme: Theme) => createStyles({
       : Colors.cream,
     borderRadius: BorderRadius4x,
   },
-  arrowContainerMobile: {
+  arrowContainerFixed: {
     position: "fixed",
     left: '50%',
     transform: 'translateX(-50%)',
-    minWidth: 375,
     bottom: '0rem',
     zIndex: 1,
     border: theme.palette.type === 'dark'
       ? `2px solid ${Colors.purple}`
       : `2px solid ${Colors.blue}`,
+  },
+  arrowContainerMobileWidth: {
+    minWidth: 355,
   },
   paginationPage: {
     "& > ul > li > button": {

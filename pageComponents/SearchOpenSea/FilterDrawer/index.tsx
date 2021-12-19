@@ -141,8 +141,10 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
 
           <div className={classes.omitSpacer}></div>
 
-          <div className={classes.advancedTitle}>
-            Advanced Filters
+          <div className={classes.advancedTitleRow}>
+            <div className={classes.advancedTitle}>
+              Advanced Filters
+            </div>
           </div>
 
           <FilterAccordionRow
@@ -329,9 +331,20 @@ export const styles = (theme: Theme) => createStyles({
   omitSpacer: {
     height: '2rem',
   },
+  advancedTitleRow: {
+    width: '100%',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   advancedTitle: {
-    fontSize: '1rem',
+    fontSize: '1.125rem',
     fontWeight: 600,
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
   },
   bottomSpacer: {
     height: '266px',
