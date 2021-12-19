@@ -73,7 +73,7 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
           //   // find if added calibers are in caliberOmit list, and
           //   // remove them from caliberOmit list
           // }
-          let newCaliberOmit = props.calibersOmit.filter(c => !options?.find(o => o.value === c.value))
+          let newCaliberOmit = (props.calibersOmit ?? []).filter(c => !options?.find(o => o.value === c.value))
           props.setCalibersOmit(newCaliberOmit)
         }}
         options={caliberOptionGroups}
