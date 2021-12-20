@@ -122,6 +122,9 @@ const NewsItemCardRC = (props: ReactProps) => {
   let disableLink = typeof props.onClick === 'function'
   // disable link when onClick is defined
 
+  console.log("as:", as)
+  console.log("sourceSiteUrl:", sourceSiteUrl)
+
   return (
     <div className={classes.rootContainer}
       style={{
@@ -145,6 +148,7 @@ const NewsItemCardRC = (props: ReactProps) => {
       <LinkLoading
         href={href}
         as={as}
+        sourceSiteUrl={sourceSiteUrl}
         disable={disableLink}
         onClick={props.onClick}
       >

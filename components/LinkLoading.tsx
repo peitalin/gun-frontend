@@ -20,6 +20,22 @@ const LinkLoading: React.FC<LinkLoadingProps> = (props) => {
         {props.children}
       </div>
     )
+  } else if (props.sourceSiteUrl) {
+    return (
+      <a className={"link-loading-a-elem"}
+        target={"_blank"}
+        href={props.sourceSiteUrl}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {props.children}
+      </a>
+    )
   } else {
     return (
       <Link href={props.href} as={props.as}>
@@ -40,8 +56,11 @@ const LinkLoading: React.FC<LinkLoadingProps> = (props) => {
 }
 
 interface LinkLoadingProps {
+  // internalProducts only
   href: string;
   as: string;
+  // external products only
+  sourceSiteUrl?: string;
   disable?: boolean;
   onClick?(a: any): void;
 }
