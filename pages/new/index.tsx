@@ -5,9 +5,12 @@ import { GET_CATEGORIES } from "queries/categories-queries";
 import {
   Categories,
 } from "typings/gqlTypes";
-import SearchResults from "pageComponents/Search";
+
+import SearchOpenSea from "pageComponents/SearchOpenSea";
+// import SearchResults from "pageComponents/Search";
+
 // SSR
-import { NextPage, NextPageContext, GetStaticProps } from 'next';
+import { NextPage, GetStaticProps } from 'next';
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
@@ -23,7 +26,7 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
 
 
 
-const NewProductsSSR: NextPage<ReactProps> = (props) => {
+const New2ProductsSSR: NextPage<ReactProps> = (props) => {
 
   return (
     <>
@@ -49,13 +52,12 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
             <>
               {
                 user?.emailVerified
-                ? <SearchResults
+                ? <SearchOpenSea
                     initialRouteCategory={props.selectedCategory}
                     initialDropdownCategories={props.initialCategories}
-                    disableCategoriesFilter={false}
+                    user={user}
                     bannerTitle={"Search New Listings"}
                     bannerBlurb={"Browse and search through new listings"}
-                    user={user}
                   />
                 : <div style={{ padding: '1rem'}}>
                     <VerifyEmailBanner/>
@@ -63,6 +65,24 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
               }
             </>
           )
+          // return (
+          //   <>
+          //     {
+          //       user?.emailVerified
+          //       ? <SearchResults
+          //           initialRouteCategory={props.selectedCategory}
+          //           initialDropdownCategories={props.initialCategories}
+          //           disableCategoriesFilter={false}
+          //           bannerTitle={"Search New Listings"}
+          //           bannerBlurb={"Browse and search through new listings"}
+          //           user={user}
+          //         />
+          //       : <div style={{ padding: '1rem'}}>
+          //           <VerifyEmailBanner/>
+          //         </div>
+          //     }
+          //   </>
+          // )
         }}
       </UserProfileWrapper>
     </>
@@ -115,7 +135,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 }
 
 
-export default NewProductsSSR;
+export default New2ProductsSSR;
 
 
 

@@ -239,7 +239,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   advancedSearchDropdownMenu: {
     zIndex: 1,
-    padding: '1.5rem',
+    // padding: '0.5rem',
     minWidth: 300,
     width: '100%',
   },

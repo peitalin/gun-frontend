@@ -15,6 +15,8 @@ import { SelectOptionCaliber } from "typings"
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Button from '@material-ui/core/Button';
+
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FilterAccordionRow from "./FilterAccordionRow";
 // Select Component
@@ -163,8 +165,21 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
             />
           </FilterAccordionRow>
 
-          <div className={classes.bottomSpacer}></div>
 
+          <div className={classes.closeButtonBox}>
+            <Button
+              className={classes.closeButton}
+              classes={{
+                label: classes.closeButtonLabel
+              }}
+              onClick={() => setOpenDrawer(s => !s)}
+            >
+              <ChevronLeftIcon />
+              Done
+            </Button>
+          </div>
+
+          <div className={classes.bottomSpacer}></div>
 
         </div>
       </div>
@@ -345,6 +360,38 @@ export const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
+  },
+  closeButtonBox: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: "flex-start",
+    alignItems: "center",
+    position: 'fixed',
+    bottom: '0rem',
+    zIndex: 10,
+  },
+  closeButton: {
+    margin: '1rem',
+    // width: 'calc(100% - 4rem)',
+    height: 44,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapGrey
+      : Colors.slateGrey,
+    border: isThemeDark(theme)
+      ? `2px solid ${Colors.uniswapLighterGrey}`
+      : `2px solid ${Colors.slateGreyBlack}`,
+    "&:hover": {
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapGrey
+        : Colors.slateGrey,
+      border: isThemeDark(theme)
+        ? `2px solid ${Colors.purple}`
+        : `2px solid ${Colors.blue}`,
+    },
+    padding: '1rem',
+  },
+  closeButtonLabel: {
+    marginRight: "0.5rem",
   },
   bottomSpacer: {
     height: '266px',
