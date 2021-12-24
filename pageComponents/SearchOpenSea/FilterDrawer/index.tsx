@@ -166,18 +166,21 @@ const FilterDrawer: React.FC<ReactProps> = (props) => {
           </FilterAccordionRow>
 
 
-          <div className={classes.closeButtonBox}>
-            <Button
-              className={classes.closeButton}
-              classes={{
-                label: classes.closeButtonLabel
-              }}
-              onClick={() => setOpenDrawer(s => !s)}
-            >
-              <ChevronLeftIcon />
-              Done
-            </Button>
-          </div>
+          {
+            isMobile &&
+            <div className={classes.closeButtonBox}>
+              <Button
+                className={classes.closeButton}
+                classes={{
+                  label: classes.closeButtonLabel
+                }}
+                onClick={() => setOpenDrawer(s => !s)}
+              >
+                <ChevronLeftIcon />
+                Done
+              </Button>
+            </div>
+          }
 
           <div className={classes.bottomSpacer}></div>
 
