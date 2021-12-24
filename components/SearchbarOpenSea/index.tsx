@@ -561,14 +561,14 @@ const styles = (theme: Theme) => createStyles({
       : `2px solid ${Colors.blue}`,
   },
   arrowContainerMobileWidth: {
-    minWidth: 355,
+    // minWidth: 355,
   },
   paginationPage: {
     "& > ul > li > button": {
       color: theme.palette.type === 'dark'
         ? Colors.uniswapLightestGrey
         : Colors.slateGreyBlack,
-      margin: '0 2.5px', // default 3px but
+      margin: '0px 1px', // default 3px but
       // make pagination buttons overflow when there are 3-digits for last page
     },
   },
