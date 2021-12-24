@@ -914,7 +914,7 @@ const styles = (theme: Theme) => createStyles({
       color: theme.palette.type === 'dark'
         ? Colors.uniswapLightestGrey
         : Colors.slateGreyBlack,
-      margin: '0px 1px', // default 3px but
+      margin: '0px 2px', // default 3px but
       // make pagination buttons overflow when there are 3-digits for last page
     },
   },
