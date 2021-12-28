@@ -122,8 +122,8 @@ const NewsItemCardRC = (props: ReactProps) => {
   let disableLink = typeof props.onClick === 'function'
   // disable link when onClick is defined
 
-  console.log("as:", as)
-  console.log("sourceSiteUrl:", sourceSiteUrl)
+  // console.log("as:", as)
+  // console.log("sourceSiteUrl:", sourceSiteUrl)
 
   return (
     <div className={classes.rootContainer}

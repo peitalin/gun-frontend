@@ -36,6 +36,7 @@ import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { useFocus } from "utils/hooks";
 import RefLink, { refLinks } from "../RefLink";
 import { DZU_UPLOAD_STATUS, handleUploadingStates } from "components/DropzoneUploader/utils";
+import { useSnackbar } from "notistack";
 
 
 
@@ -123,6 +124,8 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       const description = null;
       const tags = "";
 
+      snackbar.enqueueSnackbar("loading images", { variant: 'info'})
+
       google_storage_save_image_to_db(
         googleUpload.googleUploadId,
         description,
@@ -186,7 +189,9 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
 
   let errorMessage = (fprops?.errors?.currentVariants?.[0] as any)?.previewItems
   let touched = fprops.touched?.currentVariants?.[0]?.previewItems
+
   const theme = useTheme()
+  const snackbar = useSnackbar()
 
 
   React.useEffect(() => {
