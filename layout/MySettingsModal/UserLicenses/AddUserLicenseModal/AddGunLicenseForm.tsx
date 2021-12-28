@@ -25,12 +25,10 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from "@material-ui/icons/Clear";
 import Typography from "@material-ui/core/Typography";
 import TextInputUnderline from "components/Fields/TextInputUnderline";
+import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
-// css
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
@@ -43,14 +41,12 @@ import { useRouter } from "next/router";
 // Validation
 import { validationSchemas } from "utils/validation";
 import { useFormik } from 'formik';
-import dynamic from "next/dynamic";
 import {
   createLicenseCategorySuggestions,
   createLicenseStateSuggestions,
   SelectOption,
 } from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
 import DropdownInput from "components/Fields/DropdownInput";
-import SelectTagsPlaceholder from 'pageComponents/ProductCreate/SSR/SelectTagsPlaceholder';
 import MultiDropdownSelect from "components/Fields/MultiDropdownSelect";
 // const MultiDropdownSelect = dynamic(() => import('components/Fields/MultiDropdownSelect'), {
 //   loading: () => <SelectTagsPlaceholder />,
@@ -66,6 +62,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { isValidDate } from 'utils/dates';
 
 
 
@@ -188,11 +185,17 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
     // console.log("incoming date:", date)
     setSelectedDate(date)
     let expiryDate = new Date(date)
-    // setState(s => ({ ...s, licenseExpiry: expiryDate }))
-    formik.setFieldValue("licenseExpiry", expiryDate)
+    let validDate = isValidDate(expiryDate)
+    if (validDate) {
+      // setState(s => ({ ...s, licenseExpiry: expiryDate }))
+      formik.setFieldValue("licenseExpiry", expiryDate)
+    } else {
+      formik.setFieldValue("licenseExpiry", undefined)
+    }
   };
 
-  console.log("errors: ", formik.errors)
+  // console.log("expiry: ", formik.values.licenseExpiry)
+  // console.log("errors expiry: ", formik.errors.licenseExpiry)
 
   if (formik) {
     return (
@@ -303,6 +306,15 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
               }}
             />
           </MuiPickersUtilsProvider>
+          <div className={classes.licenseExpiryErrorBox}>
+            <ValidationErrorMsg
+              // focused={focused}
+              touched={formik.touched.licenseExpiry}
+              errorMessage={formik.errors.licenseExpiry}
+              disableInitialValidationMessage={false}
+              // style={props.validationErrorMsgStyle}
+            />
+          </div>
 
           <Typography variant="body1" className={classes.fieldHeading}>
             License State
@@ -565,6 +577,10 @@ const styles = (theme: Theme) => createStyles({
   },
   dropdownSelect: {
     position: "relative",
+  },
+  licenseExpiryErrorBox: {
+    marginTop: '1rem',
+    position: 'relative',
   },
 });
 

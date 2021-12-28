@@ -101,7 +101,6 @@ const CreateLicense: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-
   let licenseStateOptions = createLicenseStateSuggestions()
   // initial initialState
   let initialStateLicense = undefined
