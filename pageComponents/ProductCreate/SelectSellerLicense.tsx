@@ -223,7 +223,7 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
               touched={fprops.touched.sellerLicenseId}
               focused={false}
               errorMessage={fprops.errors.sellerLicenseId}
-              disableInitialValidationMessage={true}
+              disableInitialValidationMessage={false}
             />
           </div>
         </FormGroup>

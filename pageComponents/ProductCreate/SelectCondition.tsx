@@ -154,7 +154,7 @@ const SelectCondition = (props: ReactProps & FormikProps<FormikFields>) => {
               touched={fprops.touched.condition}
               focused={false}
               errorMessage={fprops.errors.condition}
-              disableInitialValidationMessage={true}
+              disableInitialValidationMessage={false}
             />
           </div>
         </FormGroup>

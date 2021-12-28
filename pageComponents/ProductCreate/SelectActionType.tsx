@@ -150,7 +150,7 @@ const SelectActionType = (props: ReactProps & FormikProps<FormikFields>) => {
               touched={fprops.touched.actionType}
               focused={false}
               errorMessage={fprops.errors.actionType}
-              disableInitialValidationMessage={true}
+              disableInitialValidationMessage={false}
             />
           </div>
         </FormGroup>

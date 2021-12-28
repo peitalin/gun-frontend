@@ -119,7 +119,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     bottom: '0rem',
     right: '0.25rem',
-    fontSize: '12px',
+    fontSize: '11px',
     fontFamily: fontFam,
     color: `${alpha(Colors.grey, 0.7)}`,
     transition: theme.transitions.create('color', {
@@ -147,7 +147,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   errorMessageText: {
-    fontSize: '12px',
+    fontSize: '11px',
   },
   textFieldContainer: {
     display: "flex",

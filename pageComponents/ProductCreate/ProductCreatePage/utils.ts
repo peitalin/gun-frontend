@@ -112,9 +112,11 @@ export const printValidationErrors = (
 
   // watch out for nested objects which may not be strings
   // if using Object.values()
-  let priceError = errors?.currentVariants?.[0]
-  let priceWasError = errors?.currentVariants?.[0]
-  let previewItemsError = errors?.currentVariants?.[0]
+  let errVariants = errors?.currentVariants as FormikErrors<ProductVariantInput[]>
+
+  let priceError = errVariants?.[0]?.price
+  let priceWasError = errVariants?.[0]?.priceWas
+  let previewItemsError = errVariants?.[0]?.previewItems
 
   let { currentVariants, ...filterErrors }: any = errors
 

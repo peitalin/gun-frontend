@@ -58,7 +58,9 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
     label: fprops.values?.caliber,
     value: fprops.values?.caliber,
   }
-  // console.log("fprops.values.caliber: ", fprops.values?.caliber)
+  console.log("fprops.values.caliber: ", fprops.values?.caliber)
+  console.log("fprops.errors.caliber: ", fprops.errors?.caliber)
+  console.log("fprops.touched.caliber: ", fprops.touched?.caliber)
   // console.log("caliberOptionsGRoups", caliberOptionGroups)
 
 
@@ -95,7 +97,7 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
         placeholder={undefined}
         errorMessage={errors.caliber}
         touched={!!touched.caliber}
-        disableInitialValidationMessage={true}
+        disableInitialValidationMessage={false}
       />
 
     </ErrorBounds>

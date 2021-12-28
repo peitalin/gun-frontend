@@ -69,7 +69,7 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.make}
         touched={!!touched.make}
-        disableInitialValidationMessage={true}
+        disableInitialValidationMessage={false}
         limit={{
           max: maxLengthTitle,
           count: values.make.length
@@ -98,7 +98,7 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.model}
         touched={!!touched.model}
-        disableInitialValidationMessage={true}
+        disableInitialValidationMessage={false}
         limit={{
           max: maxLengthTitle,
           count: values.model.length

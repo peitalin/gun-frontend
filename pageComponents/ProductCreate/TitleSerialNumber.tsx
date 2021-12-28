@@ -74,7 +74,7 @@ const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.serialNumber}
         touched={!!touched.serialNumber}
-        disableInitialValidationMessage={true}
+        disableInitialValidationMessage={false}
         limit={{
           max: maxLengthTitle,
           count: values?.serialNumber?.length

@@ -175,7 +175,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
               touched={fprops.touched.categoryId}
               focused={false}
               errorMessage={fprops.errors.categoryId}
-              disableInitialValidationMessage={true}
+              disableInitialValidationMessage={false}
             />
           </div>
         </FormGroup>

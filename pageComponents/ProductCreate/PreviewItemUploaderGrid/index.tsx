@@ -124,7 +124,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       const description = null;
       const tags = "";
 
-      snackbar.enqueueSnackbar("loading images", { variant: 'info'})
+      snackbar.enqueueSnackbar("uploading images", { variant: 'info'})
 
       google_storage_save_image_to_db(
         googleUpload.googleUploadId,
@@ -284,7 +284,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         touched={fprops?.touched?.currentVariants?.[0]?.previewItems}
         focused={focused}
         errorMessage={errorMessage}
-        disableInitialValidationMessage={true}
+        disableInitialValidationMessage={false}
         style={{
           bottom: '-0.75rem',
         }}
