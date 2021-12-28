@@ -80,18 +80,21 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
         }
         height={45}
         onChange={(option: SelectOptionCaliber) => {
-          console.log("option: ", option)
+          // console.log("option: ", option)
           let caliber = option?.value
-          fprops.setFieldValue("caliber", caliber)
-          fprops.setFieldTouched('caliber', true)
-
+          // set validation = false for everyting until last formik update
+          fprops.setFieldTouched('caliber', true, false)
           // add caliber to title for search
           fprops.setFieldValue(
             "title",
-            `${fprops.values?.make} ${fprops.values?.model} ${caliber}`
+            `${fprops.values?.make} ${fprops.values?.model} ${caliber}`,
+            false,
           )
-          fprops.setFieldTouched('make', true)
-          fprops.setFieldTouched('title', true)
+          fprops.setFieldTouched('make', true, false)
+          fprops.setFieldTouched('title', true, false)
+
+          // set validation = true for last formik update
+          fprops.setFieldValue("caliber", caliber, true)
         }}
         options={caliberOptionGroups}
         placeholder={undefined}

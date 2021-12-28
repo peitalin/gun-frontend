@@ -55,16 +55,25 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
         className={classes.textField}
         value={values.make}
         onChange={(e) => {
+
+          // must be before setFieldValue for render order is 1 behind
+          // https://github.com/jaredpalmer/formik/issues/2083#issuecomment-884831583
+          if (!fprops.touched.make) {
+            fprops.setFieldTouched('make', true, false)
+            fprops.setFieldTouched('title', true, false)
+          }
+
           if (e.target.value.length <= maxLengthTitle) {
             let word = (e.target.value as string).toUpperCase()
-            fprops.setFieldValue("make", word)
+            // set title first, then model or you'll have 1 render behind validation bug
             fprops.setFieldValue(
               "title",
-              `${word} ${fprops.values.model.trim()}`.trim()
+              `${word} ${fprops.values.model.trim()}`.trim(),
+              false,
             )
+            // last formik update has validation = true
+            fprops.setFieldValue("make", word, true)
           }
-          fprops.setFieldTouched('make', true)
-          fprops.setFieldTouched('title', true)
         }}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.make}
@@ -85,15 +94,24 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
         className={classes.textField}
         value={values.model}
         onChange={(e) => {
+
+          // must be before setFieldValue for render order is 1 behind
+          // https://github.com/jaredpalmer/formik/issues/2083#issuecomment-884831583
+          if (!fprops.touched.model) {
+            fprops.setFieldTouched('model', true, false)
+            fprops.setFieldTouched('title', true, false)
+          }
           if (e.target.value.length <= maxLengthTitle) {
             let word = (e.target.value as string).toUpperCase()
-            fprops.setFieldValue("model", word)
+            // set title first, then model or you'll have 1 render behind validation bug
             fprops.setFieldValue(
               "title",
-              `${fprops.values.make} ${word.trim()}`.trim()
+              `${fprops.values.make} ${word.trim()}`.trim(),
+              false
             )
+            // last formik update has validation = true
+            fprops.setFieldValue("model", word, true)
           }
-          fprops.setFieldTouched('model', true)
         }}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.model}

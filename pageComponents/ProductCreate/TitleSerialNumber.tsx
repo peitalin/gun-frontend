@@ -66,10 +66,13 @@ const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
         className={classes.textField}
         value={values.serialNumber}
         onChange={(e) => {
+          if (!fprops.touched.serialNumber) {
+            // must be before setFieldValue for render order is 1 behind
+            fprops.setFieldTouched('serialNumber', true)
+          }
           if (e.target.value.length <= maxLengthTitle) {
             fprops.setFieldValue("serialNumber", e.target.value)
           }
-          fprops.setFieldTouched('serialNumber', true)
         }}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.serialNumber}
