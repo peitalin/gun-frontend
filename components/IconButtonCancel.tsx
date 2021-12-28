@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
@@ -61,12 +61,16 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   iconButtonSvg: {
-    fill: Colors.slateGreyLightBlack,
+    fill: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyLightBlack,
     height: '1.5rem',
     width: '1.5rem',
   },
   iconButtonSvgDark: {
-    fill: Colors.uniswapLightGrey,
+    fill: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.uniswapLightGrey,
     height: '1.5rem',
     width: '1.5rem',
   },
