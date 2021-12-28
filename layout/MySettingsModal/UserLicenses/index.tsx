@@ -36,25 +36,27 @@ const UserLicenses: React.FC<ReactProps> = (props) => {
     user,
   } = props;
 
-  const snackbar = useSnackbar();
-
-  console.log("user.license: ", user.licenses)
+  // const snackbar = useSnackbar();
+  // console.log("user.license: ", user.licenses)
 
   return (
     <div className={classes.userLicensesRoot}>
       <div className={classes.addUserLicenseRoot}>
         <div className={classes.flexRow}>
-          <Typography variant="h4">
+          <Typography className={classes.licenseTitle} variant="h4">
             Gun Licenses
           </Typography>
           <AddUserLicenseModal />
         </div>
       </div>
       {
-        (user?.licenses ?? []).filter(l => !!l).map(license => {
+        (user?.licenses ?? [])
+        .filter(l => !!l)
+        .map(license => {
           let isDefaultLicense = license?.id === props.user?.defaultLicense?.id
           return (
             <UserLicenseRowCard
+              key={license?.id}
               license={license}
               user={user}
               isHighlighted={isDefaultLicense}
@@ -73,6 +75,10 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   userLicensesRoot: {
+  },
+  licenseTitle: {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
   },
   addUserLicenseRoot: {
     display: 'flex',

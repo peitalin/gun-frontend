@@ -42,31 +42,29 @@ const MySettingsModal: React.FC<ReactProps> = (props) => {
     return <MySettingsPage goBack={goBack} asModal={asModal}/>
   } else {
     return (
-      <>
-        <Dialog
-          open={mySettingsModalOpen}
-          // full height
-          fullScreen={mdUp ? false : true}
-          fullWidth={mdUp ? false : null}
-          maxWidth={"md"}
-          onClose={() => goBack()}
-          BackdropProps={{
-            classes: {
-              root: classes.modalBackdrop,
-            }
-          }}
-          PaperProps={{
-            classes: {
-              root: mdUp
-                ? classes.modalPaperScrollPaper
-                : classes.modalPaperScrollPaperSm
-            }
-          }}
-          scroll="body"
-        >
-          <MySettingsPage goBack={goBack}/>
-        </Dialog>
-      </>
+      <Dialog
+        open={mySettingsModalOpen}
+        // full height
+        fullScreen={mdUp ? false : true}
+        fullWidth={mdUp ? false : null}
+        maxWidth={"md"}
+        onClose={() => goBack()}
+        BackdropProps={{
+          classes: {
+            root: classes.modalBackdrop,
+          }
+        }}
+        PaperProps={{
+          classes: {
+            root: mdUp
+              ? classes.modalPaperScrollPaper
+              : classes.modalPaperScrollPaperSm
+          }
+        }}
+        scroll="body"
+      >
+        <MySettingsPage goBack={goBack}/>
+      </Dialog>
     )
   }
 }
@@ -80,7 +78,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaperSm: {
-    maxHeight: "calc(100% - rem)",
+    // maxHeight: "calc(100% - 1rem)",
     overflowY: 'hidden',
     borderRadius: BorderRadius2x,
   },

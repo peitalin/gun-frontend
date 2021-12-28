@@ -52,7 +52,7 @@ const AddUserLicenseModal: React.FC<ReactProps> = (props) => {
         open={modalOpen}
         onClose={() => setModalOpen(s => false)}
         fullScreen={false}
-        fullWidth={mdDown}
+        fullWidth={false}
         BackdropProps={{
           classes: {
             root: classes.modalBackdrop,
@@ -114,17 +114,17 @@ const styles = (theme: Theme) => createStyles({
     margin: '0rem',
     minWidth: 360,
     overflow: "scroll", // important for dropdown
-    marginTop: "1rem",
+    maxHeight: "unset",
+    height: '100%',
   },
   modalPaperScrollPaper: {
     background: 'transparent',
     boxShadow: 'unset',
-    margin: '0rem',
-    maxHeight: "calc(100% - 2rem)",
-    overflow: "scroll", // important for dropdown
+    maxHeight: "unset",
     height: '100%',
-    marginTop: "1rem",
-    marginBottom: "1rem",
+    overflow: "scroll", // important for dropdown
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
   },
   addUserLicenseModalButton: {
     height: 40,

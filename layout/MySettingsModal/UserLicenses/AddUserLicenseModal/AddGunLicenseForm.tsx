@@ -56,6 +56,7 @@ import MultiDropdownSelect from "components/Fields/MultiDropdownSelect";
 //   loading: () => <SelectTagsPlaceholder />,
 //   ssr: false
 // })
+import IconButtonCancel from 'components/IconButtonCancel';
 import { createOption } from "components/Fields/MultiDropdownSelect";
 
 import dayjs from 'dayjs'
@@ -76,10 +77,6 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
   const snackbar = useSnackbar();
   const dispatch = useDispatch()
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
-
 
   interface FormikValues {
     firstName: string
@@ -103,7 +100,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
     onSubmit: async (values) => {
       // createChat()
       snackbar.enqueueSnackbar(
-        `Saving search`,
+        `Saving license`,
         { variant: "info" }
       )
       console.log("formik onSubmit, values: ", values)
@@ -167,28 +164,24 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
   const handleSetFirstName = (e: HtmlEvent) => {
     let s = e.target.value;
+    console.log('s:',s)
     formik.setFieldValue("firstName", s)
-    formik.setTouched({ firstName: true }, true)
+    // formik.setFieldTouched('firstName')
   };
 
   const handleSetLastName = (e: HtmlEvent) => {
     let s = e.target.value;
     formik.setFieldValue("lastName", s)
-    formik.setTouched({ lastName: true }, true)
   };
 
   const handleSetLicenseNumber = (e: HtmlEvent) => {
     let s = e.target.value;
     formik.setFieldValue("licenseNumber", s)
-    formik.setTouched({ licenseNumber: true }, true)
   };
 
   const handleSetLicenseCategory = (options: SelectOption[]) => {
     let newCategories = (options ?? []).map(t => t.value)
-    // Formik
     formik.setFieldValue("licenseCategory", newCategories)
-    formik.setFieldTouched("licenseCategory", true)
-    formik.validateForm()
   }
 
   const handleDateChange = (date) => {
@@ -199,7 +192,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
     formik.setFieldValue("licenseExpiry", expiryDate)
   };
 
-  // console.log("formik.values: ", formik.values)
+  console.log("errors: ", formik.errors)
 
   if (formik) {
     return (
@@ -207,6 +200,11 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
         onSubmit={formik.handleSubmit}
         className={classes.addUserLicenseFormRoot}
       >
+        <IconButtonCancel
+          className={classes.closeIcon}
+          onClick={() => props.closeModal()}
+        />
+
         <div className={classes.flexCol}>
           <Typography variant="h4" className={classes.title}>
             Add New License
@@ -391,9 +389,8 @@ interface MVar {
 
 const styles = (theme: Theme) => createStyles({
   addUserLicenseFormRoot: {
+    position: 'relative',
     width: '100%',
-    height: '100%',
-    maxHeight: "calc(100% - 0rem)",
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'flex-start',
@@ -415,7 +412,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   title: {
-    marginTop: "0.5rem",
+    marginTop: "2rem",
     fontSize: "1.25rem",
     marginBottom: '0rem',
     textAlign: "center",
@@ -523,16 +520,9 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
   },
   closeIcon: {
-    width: 32,
-    height: 32,
-    background: isThemeDark(theme)
-      ? Colors.uniswapGrey
-      : Colors.slateGreyDarker,
-    "&:hover": {
-      background: isThemeDark(theme)
-        ? Colors.uniswapMediumGrey
-        : Colors.slateGreyDarkest,
-    },
+    position: "absolute",
+    right: '1rem',
+    top: '1rem',
   },
   closeIconButtonContainer: {
     display: 'flex',
