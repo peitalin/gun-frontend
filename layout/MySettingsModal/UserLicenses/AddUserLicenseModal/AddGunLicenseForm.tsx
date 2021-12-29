@@ -196,6 +196,8 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
   // console.log("expiry: ", formik.values.licenseExpiry)
   // console.log("errors expiry: ", formik.errors.licenseExpiry)
+  console.log("cat: ", formik.values.licenseCategory)
+  console.log("err cat: ", formik.errors.licenseCategory)
 
   if (formik) {
     return (
@@ -335,6 +337,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
             inputProps={{ style: { width: '100%' }}}
             errorMessage={formik.errors.licenseState}
             touched={formik.touched.licenseState}
+            validationErrorMsgStyle={{ bottom: '-1rem' }}
           />
 
           <Typography variant="body1" className={classes.fieldHeading}>
@@ -351,8 +354,12 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
               options={licenseCategoryOptions}
               setTags={handleSetLicenseCategory}
               disableInitialValidationMessage={true}
-              errorMessage={formik.errors?.licenseCategory?.[0]}
-              touched={formik.touched?.licenseCategory?.[0]}
+              errorMessage={formik.errors?.licenseCategory as string}
+              touched={formik.touched?.licenseCategory}
+              validationErrorMsgStyle={{
+                position: 'absolute',
+                bottom: '-1rem'
+               }}
             />
           </div>
         </div>

@@ -41,11 +41,6 @@ const AddUserLicenseModal: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
-
-
   return (
     <>
       <Dialog

@@ -376,9 +376,10 @@ export const validationSchemas = {
       licenseExpiry: Yup.date()
         .required("required"),
       licenseCategory: Yup.array().of(Yup.string())
-        .nullable(),
+        .test({ message: 'Choose a category', test: arr => arr.length > 0 })
+        .required("required"),
       licenseState: Yup.string()
-        .nullable(),
+        .required("required"),
     }),
 
   // Password Reset

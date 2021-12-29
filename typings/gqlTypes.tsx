@@ -6674,6 +6674,7 @@ export type QueryGetNewsItemsSearchConnectionArgs = {
   categorySlugs?: Maybe<Array<Maybe<Scalars['String']>>>;
   dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
   calibers?: Maybe<Array<Maybe<Scalars['String']>>>;
+  calibersOmit?: Maybe<Array<Maybe<Scalars['String']>>>;
   actionTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
   conditions?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
