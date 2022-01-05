@@ -216,7 +216,6 @@ export const useFacetSearchOptions = ({
     }
   }, [initialPageParam])
 
-
   ////////////////////////////////////////////////////
   /// query params syncing
   ////////////////////////////////////////////////////
@@ -232,24 +231,6 @@ export const useFacetSearchOptions = ({
 
       let urlPath = router.asPath.split('?')[0]
       let params: string[];
-      // console.log("router.query:", router?.query)
-      // console.log("router: ", router)
-      // console.log("urlPath:", urlPath)
-      // console.log("params1: ", params)
-      // console.log("currentCategories: ", currentCategories)
-
-      if (syncUrlParams) {
-        if (currentCategories?.[0]?.slug) {
-          // console.log("currentCategories: : :: ", currentCategories)
-          if (urlPath.startsWith('/categories')) {
-            urlPath = `/categories/${currentCategories?.[0]?.slug}`
-          }
-          // if (urlPath.startsWith('/new')) {
-          //   urlPath = `/new/${currentCategories?.[0]?.slug}`
-          // }
-        }
-      }
-
       // sync url query params with the facet Hooks params and inject
       // it into urls
       if (router?.query) {
@@ -270,17 +251,38 @@ export const useFacetSearchOptions = ({
         }).filter(p => !!p)
       }
 
-      // console.log("searchTerm>", searchTerm)
+      // // console.log("searchTerm>", searchTerm)
+      // // Sync url to facetHooks searchterm params
+      // if (searchTerm !== undefined && searchTerm !== "") {
+      //   // console.log("q1 params>>>>>>>>>>>>", params)
+      //   if (!params.some(p => p.startsWith("q="))) {
+      //     // search query doesnt yet exist, add q param
+      //     params = [`q=${searchTerm}`, ...params]
+      //   } else {
+      //     let params2 = params.map(p => {
+      //       if (p.startsWith("q=")) {
+      //         return `q=${searchTerm}`
+      //       } else {
+      //         return p
+      //       }
+      //     })
+      //     params = params2
+      //   }
+      // } else {
+      //   // remove q= query param for empty search terms
+      //   params = params.filter(param => !param.includes("q="))
+      // }
+
       // Sync url to facetHooks searchterm params
-      if (searchTerm !== undefined && searchTerm !== "") {
+      if (syncSearchTerm !== undefined && syncSearchTerm !== "") {
         // console.log("q1 params>>>>>>>>>>>>", params)
         if (!params.some(p => p.startsWith("q="))) {
           // search query doesnt yet exist, add q param
-          params = [`q=${searchTerm}`, ...params]
+          params = [`q=${syncSearchTerm}`, ...params]
         } else {
           let params2 = params.map(p => {
             if (p.startsWith("q=")) {
-              return `q=${searchTerm}`
+              return `q=${syncSearchTerm}`
             } else {
               return p
             }
@@ -289,6 +291,7 @@ export const useFacetSearchOptions = ({
         }
       } else {
         // remove q= query param for empty search terms
+        console.log("params: ", params)
         params = params.filter(param => !param.includes("q="))
       }
 
@@ -413,6 +416,7 @@ export const useFacetSearchOptions = ({
   }, [
     pageParam,
     syncSearchTerm, // only sync when search hits Enter key
+    // have its own hook
     currentCategories,
     calibers,
     dealerStates,

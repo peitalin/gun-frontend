@@ -29,8 +29,8 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
     setOrderBy,
     priceRange,
     setPriceRange,
-    searchTerm,
-    setSearchTerm,
+    // searchTerm,
+    // setSearchTerm,
     facets,
     setFacets,
     currentCategories,
@@ -58,10 +58,13 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
     },
   } = facetSearchParams;
 
+  // LOCAL searchTerm for local UI updates with less UI lag
+  // less re-renders on components higher up component hierarchy
+  const [searchTermUi, setSearchTermUi] = React.useState("")
 
   const onClickSearch = (event) => {
     setPageParam(1) // reset to page 1 every time you hit search button
-    props.setSearchTermForGql(searchTerm)
+    props.setSearchTermForGql(searchTermUi)
   }
 
   return (
@@ -81,8 +84,8 @@ const SearchbarOpenSeaWrapper: React.FC<ReactProps & FacetSearchParams> = (props
       }>
         <SearchbarOpenSea
           id={props.id}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
+          searchTerm={searchTermUi}
+          setSearchTerm={setSearchTermUi}
           onClickSearch={onClickSearch}
           setOrderBy={setOrderBy}
           setPriceRange={setPriceRange}
