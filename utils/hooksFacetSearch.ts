@@ -58,6 +58,7 @@ export const useFacetSearchOptions = ({
   maxPriceCents,
   router,
   syncUrlParams,
+  syncSearchTerm,
   scrollToTopOnPagination = false,
   initialOrderBy = { createdAt: Order_By.DESC },
 }: {
@@ -66,6 +67,7 @@ export const useFacetSearchOptions = ({
   maxPriceCents?: number
   router?: NextRouter,
   syncUrlParams?: boolean;
+  syncSearchTerm?: string;
   scrollToTopOnPagination?: boolean;
   initialOrderBy?: any,
 }): FacetSearchParams => {
@@ -408,7 +410,14 @@ export const useFacetSearchOptions = ({
         )
       }
     }
-  }, [pageParam, searchTerm, currentCategories, calibers, dealerStates, conditions])
+  }, [
+    pageParam,
+    syncSearchTerm, // only sync when search hits Enter key
+    currentCategories,
+    calibers,
+    dealerStates,
+    conditions
+  ])
 
 
   // scroll to top when page changes

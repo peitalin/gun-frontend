@@ -69,6 +69,12 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
   let overfetchBy = 1;
   // overfetch by 2x pages
 
+  // requires "enter" or click to dispath search,
+  // instead of searching as you type
+  const [searchTermForGql, setSearchTermForGql] = React.useState<string>(
+    (router?.query?.q as any)
+  )
+
   let {
     orderBy,
     setOrderBy,
@@ -107,13 +113,8 @@ const SearchOpenSea: React.FC<ReactProps> = (props) => {
     initialOrderBy: SortByNewsItems.CREATED_AT_DESC,
     router: router,
     syncUrlParams: true,
+    syncSearchTerm: searchTermForGql,
   })
-
-  // requires "enter" or click to dispath search,
-  // instead of searching as you type
-  const [searchTermForGql, setSearchTermForGql] = React.useState<string>(
-    (router?.query?.q as any)
-  )
 
   const [rowMode, setRowMode] = React.useState(true)
 
