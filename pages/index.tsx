@@ -26,6 +26,7 @@ import SocialFloatingBanner from "layout/SocialFloatingBanner";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import { useRouter } from "next/router";
 import Trending from "pageComponents/Trending";
+import LandingPageStart from "pageComponents/LandingPage/start";
 
 
 
@@ -78,11 +79,13 @@ const HomePage: NextPage<ReactProps> = (props) => {
       {/* <div className={props.classes.contentContainerPublicPage}>
         <Trending/>
       </div> */}
-      <FrontPage
+
+      <LandingPageStart />
+      {/* <FrontPage
         pageConfig={props?.getPageConfig}
         initialCategories={props.initialCategories}
         initialPromotedLists={props.initialPromotedLists}
-      />
+      /> */}
       {
         showSocialBanner &&
         <ShowOnMobileOrDesktopSSR desktop implementation="js">

@@ -158,15 +158,15 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
 
-        {
+        {/* {
           // showPromotedBanner &&
           true &&
           <div className={classes.bannerPromotionsContainer}>
             <BannerPromotionsLink />
           </div>
-        }
+        } */}
 
-        {
+        {/* {
           showTrending &&
           trendingSection?.map(section => {
             // console.log("section: ", section)
@@ -198,7 +198,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               )
             }
           })
-        }
+        } */}
 
         {/* {
           showCategories &&

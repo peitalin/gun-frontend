@@ -122,7 +122,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
 
       <div className={classes.mainTitleContainer}>
         <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
-          Buy and sell used guns
+          Search used guns across the market
         </Typography>
         <Typography variant={"subtitle2"}
           className={mdDown ? classes.subline1Sm : classes.subline1}

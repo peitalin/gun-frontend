@@ -4,12 +4,9 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 // SSR
 import { NextPage, GetServerSideProps } from 'next';
 // GraphQL
-import { serverApolloClient } from "utils/apollo";
 import LandingPageStart from "pageComponents/LandingPage/start";
-import { useApolloClient, ApolloClient } from "@apollo/client";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import { useRouter } from "next/router";
 import SocialFloatingBanner from "layout/SocialFloatingBanner";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
@@ -18,7 +15,6 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 const StartLandingPageSSR: NextPage<ReactProps> = (props) => {
 
-  let router = useRouter()
   let showSocialBanner = true
 
   return (
