@@ -154,11 +154,11 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
         `Saving search`,
         { variant: "info" }
       )
-      // console.log("formik onSubmit, searchTerm: ", values.searchTerm)
+      // console.log("formik onSubmit, searchTerm: ", values)
       await insertSavedSearch({
         variables: {
-          categorySlug: categorySlugGql?.value,
-          dealerState: dealerStateGql?.value,
+          // categorySlug: categorySlugGql?.value,
+          // dealerState: dealerStateGql?.value,
           make: values.make,
           model: values.model,
           caliber: values.caliber,
