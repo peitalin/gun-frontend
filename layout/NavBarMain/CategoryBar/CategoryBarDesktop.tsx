@@ -101,7 +101,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
 
 
-          <Link href="/trending">
+          {/* <Link href="/trending">
             <a className={classes.categoryLink} >
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
@@ -110,7 +110,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                 Trending
               </Typography>
             </a>
-          </Link>
+          </Link> */}
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}

@@ -76,7 +76,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           {/* {
             emailVerified &&
           } */}
-          <Link href={`/trending`}>
+          {/* <Link href={`/trending`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkAllMobile,
@@ -85,7 +85,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                 Trending
               </Typography>
             </a>
-          </Link>
+          </Link> */}
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}
