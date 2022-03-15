@@ -101,19 +101,16 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
 
 
-          {
-            emailVerified &&
-            <Link href="/trending">
-              <a className={classes.categoryLink} >
-                <Typography className={clsx(
-                  classes.categoryLinkTextMain,
-                  router.asPath === '/trending' && classes.categoryLinkTextSelected,
-                )}>
-                  Trending
-                </Typography>
-              </a>
-            </Link>
-          }
+          <Link href="/trending">
+            <a className={classes.categoryLink} >
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                router.asPath === '/trending' && classes.categoryLinkTextSelected,
+              )}>
+                Trending
+              </Typography>
+            </a>
+          </Link>
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}
@@ -140,34 +137,30 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           </Link>
 
 
-
-          {
+          {/* {
             emailVerified &&
-            <Link href="/sold">
-              <a className={classes.categoryLink} >
-                <Typography className={clsx(
-                  classes.categoryLinkTextMain,
-                  router.asPath === '/sold' && classes.categoryLinkTextSelected,
-                )}>
-                  Sold
-                </Typography>
-              </a>
-            </Link>
-          }
+          } */}
+          <Link href="/sold">
+            <a className={classes.categoryLink} >
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                router.asPath === '/sold' && classes.categoryLinkTextSelected,
+              )}>
+                Sold
+              </Typography>
+            </a>
+          </Link>
 
-          {
-            emailVerified &&
-            <Link href="/trending-items">
-              <a className={classes.categoryLink} >
-                <Typography className={clsx(
-                  classes.categoryLinkTextMain,
-                  router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
-                )}>
-                  Items
-                </Typography>
-              </a>
-            </Link>
-          }
+          <Link href="/trending-items">
+            <a className={classes.categoryLink} >
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                router.asPath === '/trending-items' && classes.categoryLinkTextSelected,
+              )}>
+                Items
+              </Typography>
+            </a>
+          </Link>
 
           <Link href="/sell">
             <a className={classes.categoryLink}
