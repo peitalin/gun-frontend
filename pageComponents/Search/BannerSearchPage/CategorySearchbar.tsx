@@ -183,17 +183,17 @@ export const styles = (theme: Theme) => createStyles({
   },
   searchMobileHeight: {
     height: '2rem',
-    // transition: theme.transitions.create('height', {
-    //   easing: theme.transitions.easing.easeInOut,
-    //   duration: "350ms",
-    // }),
+    transition: theme.transitions.create('height', {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "350ms",
+    }),
   },
   searchMobileHeightFocused: {
     height: 300,
-    // transition: theme.transitions.create('height', {
-    //   easing: theme.transitions.easing.easeInOut,
-    //   duration: "350ms",
-    // }),
+    transition: theme.transitions.create('height', {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "350ms",
+    }),
   },
 });
 
