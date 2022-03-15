@@ -194,6 +194,13 @@ textarea {
   animation-delay: 0.0s;
 }
 
+.slideFromTopNoDelay {
+  -webkit-animation: slideFromTop 0s ease-in-out;
+  animation: slideFromTop 0s ease-in-out;
+  -webkit-animation-delay: 0.0s;
+  animation-delay: 0.0s;
+}
+
 .slideFromBottom {
   -webkit-animation: slideFromBottom 0.4s ease-in-out;
   animation: slideFromBottom 0.4s ease-in-out;

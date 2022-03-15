@@ -113,12 +113,14 @@ const BannerSearchPage = (props: ReactProps & FacetSearchParams) => {
           bannerDither={bannerDitherMobile}
           isExpanded={focusedOuter}
         >
-          <SortByDropdown
-            isMobile={true}
-            isDarkMode={isDarkMode}
-            setOrderBy={setOrderBy}
-            sortByOptions={props.sortByOptions}
-          />
+          <div className={classes.sortByMobileBox}>
+            <SortByDropdown
+              isMobile={true}
+              isDarkMode={isDarkMode}
+              setOrderBy={setOrderBy}
+              sortByOptions={props.sortByOptions}
+            />
+          </div>
           <CategorySearchbar
             id={"category-search-1-mobile"}
             searchTerm={searchTerm}

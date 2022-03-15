@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   rootMobile: {
     position: 'relative',
-    marginBottom: '3rem',
+    marginBottom: '1rem',
   },
   rootMobileExpanded: {
     position: 'relative',
@@ -280,5 +280,9 @@ export const styles = (theme: Theme) => createStyles({
   buttonBox: {
     marginTop: '1rem',
     maxWidth: 180,
+  },
+  sortByMobileBox: {
+    marginTop: '-2rem',
+    marginBottom: '2rem',
   },
 })

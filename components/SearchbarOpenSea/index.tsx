@@ -154,7 +154,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                   value={props.searchTerm}
                   ref={searchRef}
                   type={"text"}
-                  autoComplete={"new-password"} // this disables autofill
+                  autoComplete={"off"} // this disables autofill
                   id={searchBlurId}
                   placeholder={
                     isMobile
@@ -377,12 +377,6 @@ const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDarker}`,
     // borderRadius: BorderRadius4x,
     borderRadius: `${BorderRadius}px ${BorderRadius4x}px ${BorderRadius4x}px ${BorderRadius}px `,
-  },
-  displayNoneDelayed: {
-    // display: 'none',
-    position: 'absolute',
-    zIndex: -1,
-    opacity: 0,
   },
   topSection: {
     display: "flex",

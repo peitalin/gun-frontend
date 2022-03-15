@@ -218,7 +218,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                   value={props.searchTerm}
                   ref={searchRef}
                   type={"text"}
-                  autoComplete={"new-password"} // this disables autofill
+                  autoComplete={"off"} // this disables autofill
                   // inputRef={input => {
                   // }}
                   id={searchBlurId}
@@ -626,6 +626,11 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     zIndex: -1,
     opacity: 0,
+    transition:  theme.transitions.create(['opacity'], {
+      easing: theme.transitions.easing.easeIn,
+      delay: 200,
+      duration: 300,
+    }),
   },
   topSection: {
     display: "flex",
