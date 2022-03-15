@@ -191,9 +191,9 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                         sourceSite={sourceSite}
                       />
                     } */}
-                    <SourceSiteChip
+                    {/* <SourceSiteChip
                       sourceSite={sourceSite}
-                    />
+                    /> */}
                     <AdType
                       className={classes.maxWidthAdType}
                       adType={adType}

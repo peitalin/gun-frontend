@@ -46,25 +46,36 @@ const SoldProductsSSR: NextPage<ReactProps> = (props) => {
           const user = dataUser?.data?.user
 
           return (
-            <>
-              {
-                user?.emailVerified
-                ? <SearchResults
-                    initialRouteCategory={props.selectedCategory}
-                    initialDropdownCategories={props.initialCategories}
-                    disableCategoriesFilter={false}
-                    bannerTitle={"Sold Listings"}
-                    bannerBlurb={"Browse and search through sold guns"}
-                    user={user}
-                    filter={
-                      `_isSold = yes`
-                    }
-                  />
-                : <div style={{ padding: '1rem'}}>
-                    <VerifyEmailBanner/>
-                  </div>
+            <SearchResults
+              initialRouteCategory={props.selectedCategory}
+              initialDropdownCategories={props.initialCategories}
+              disableCategoriesFilter={false}
+              bannerTitle={"Sold Listings"}
+              bannerBlurb={"Browse and search through sold guns"}
+              user={user}
+              filter={
+                `_isSold = yes`
               }
-            </>
+            />
+            // <>
+            //   {
+            //     user?.emailVerified
+            //     ? <SearchResults
+            //         initialRouteCategory={props.selectedCategory}
+            //         initialDropdownCategories={props.initialCategories}
+            //         disableCategoriesFilter={false}
+            //         bannerTitle={"Sold Listings"}
+            //         bannerBlurb={"Browse and search through sold guns"}
+            //         user={user}
+            //         filter={
+            //           `_isSold = yes`
+            //         }
+            //       />
+            //     : <div style={{ padding: '1rem'}}>
+            //         <VerifyEmailBanner/>
+            //       </div>
+            //   }
+            // </>
           )
         }}
       </UserProfileWrapper>

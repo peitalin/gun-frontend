@@ -47,7 +47,14 @@ const New2ProductsSSR: NextPage<ReactProps> = (props) => {
 
           return (
             <>
-              {
+              <SearchOpenSea
+                initialRouteCategory={props.selectedCategory}
+                initialDropdownCategories={props.initialCategories}
+                user={user}
+                bannerTitle={"Search New Listings"}
+                bannerBlurb={"Browse and search through new listings"}
+              />
+              {/* {
                 user?.emailVerified
                 ? <SearchOpenSea
                     initialRouteCategory={props.selectedCategory}
@@ -59,7 +66,7 @@ const New2ProductsSSR: NextPage<ReactProps> = (props) => {
                 : <div style={{ padding: '1rem'}}>
                     <VerifyEmailBanner/>
                   </div>
-              }
+              } */}
             </>
           )
         }}

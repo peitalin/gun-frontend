@@ -43,7 +43,10 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
         {(dataUser: UserProfileProps) => {
           return (
             <div className={classes.contentContainerPublicPage}>
-              {
+              <TrendingItems
+                initialPromotedLists={props.initialPromotedLists}
+              />
+              {/* {
                 dataUser?.data?.user?.emailVerified
                 ? <TrendingItems
                     initialPromotedLists={props.initialPromotedLists}
@@ -51,7 +54,7 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
                 : <div style={{ padding: '1rem'}}>
                     <VerifyEmailBanner/>
                   </div>
-              }
+              } */}
             </div>
           )
         }}
